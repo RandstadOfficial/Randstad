@@ -1,0 +1,62 @@
+#muzica {
+  position: relative;
+  left: 31%;
+  padding: 0 20px;
+  width: 35%;
+  text-align: center;
+  display: inherit;
+  margin-top: 25px;
+}
+
+.fin-heading.blue {
+  color:  #97D5F9;
+  margin-bottom: -30px;
+}
+
+#main-menu a{
+  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+}
+
+.blink {
+	-webkit-animation: blink 5s infinite;
+	-moz-animation: blink 5s infinite;
+	-ms-animation: blink 5s infinite;
+	-o-animation: blink 5s infinite;
+	 animation: blink 5s infinite;
+}
+@-webkit-keyframes blink {
+  0% {background: #97D5F9;}
+  25%{background:red;}
+  50%{background:#97D5F9;}
+  75%{background:red;}
+  100% {background: #97D5F9;}
+}
+@-moz-keyframes blink {
+  0% {background: #97D5F9;}
+  25%{background:red;}
+  50%{background:#97D5F9;}
+  75%{background:red;}
+  100% {background: #97D5F9;}
+}
+@-ms-keyframes blink {
+  0% {background: #97D5F9;}
+  25%{background:red;}
+  50%{background:#97D5F9;}
+  75%{background:red;}
+  100% {background: #97D5F9;}
+}
+@-o-keyframes blink {
+  0% {background: #97D5F9;}
+  25%{background:red;}
+  50%{background:#97D5F9;}
+  75%{background:red;}
+  100% {background: #97D5F9;}
+}
+@keyframes blink {
+  0% {background: #97D5F9;}
+  25%{background:red;}
+  50%{background:#97D5F9;}
+  75%{background:red;}
+  100% {background: #97D5F9;}
+}
+
