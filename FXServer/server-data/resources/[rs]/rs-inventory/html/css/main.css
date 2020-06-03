@@ -1,0 +1,522 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:600&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Balthazar&display=swap');
+
+
+p {
+    margin: 0 !important;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+::-webkit-scrollbar
+{
+	width: 5px;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #03a2b5;
+}
+
+#randstad-inventory {
+    display: none;
+}
+
+.inv-background {
+    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.inv-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* background-color: rgb(153, 147, 147); */
+}
+
+.player-inventory {
+    position: absolute;
+    top: 26%;
+    left: 10.2%;
+    width: 30.95%;
+    max-width: 30.95%;
+    height: 44.16%;
+    max-height: 44.16%;
+    float: left;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    z-index: 100;
+}
+
+.other-inventory {
+    position: absolute;
+    top: 26%;
+    right: 10.2%;
+    width: 30.95%;
+    max-width: 30.95%;
+    height: 44.16%;
+    max-height: 44.16%;
+    float: left;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    z-index: 100;
+}
+
+.ply-hotbar-inventory {
+    position: absolute;
+    bottom: 10%;
+    left: 35.5%;
+    z-index: 105;
+}
+
+.player-inventory > .item-slot > .item-slot-key p {
+    position: absolute;
+    background: #ffffff;
+    color: #000000;
+    padding: 3px;
+    text-align: left;
+    font-size: 10px;
+    border-radius: 0px 0px 2px 0px;
+    font-weight: bold;
+    font-family: 'Open Sans';
+}
+
+.inv-options {
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: 9%;
+    top: 32%;
+}
+
+.combine-option-container {
+    display: none;
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: 9%;
+    top: 48%;
+}
+
+.item-slot {
+    position: relative;
+    width: 115px;
+    height: 140px;
+    float: left;
+    margin-left: 2px;
+    margin-top: 2px;
+    background-color: rgba(235, 235, 235, 0.03); /* 0,02 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s;
+}
+
+.item-slot-hoverClass {
+    background-color: rgba(235, 235, 235, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    transition: background-color 0.2s;
+}
+
+.item-slot:hover {
+    background-color: rgba(235, 235, 235, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: background-color 0.2s;
+}
+
+.inv-option-item {
+    margin-top: 20%;
+}
+
+.btn-inv {
+    width: 100%!important;
+    max-width: 100%!important;
+    padding: 10%!important;
+    background-color: rgba(235, 235, 235, 0);
+}
+
+#item-amount {
+    color: white;
+    text-align: center;
+    font-size: 11px;
+    font-family: 'Roboto Mono', monospace;
+    outline: none;
+}
+
+.inv-option-item > p {
+    color: white;
+    text-align: center;
+    line-height: 48px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.inv-option-item {
+    width: 80%;
+    height: 50px;
+    background-color: rgba(235, 235, 235, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.01);
+    transition: .1s linear;
+}
+
+.inv-option-item:hover {
+    background-color: rgba(235, 235, 235, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: .1s linear;
+}
+
+.btn-combine {
+    width: 80%;
+    height: 50px;
+    background-color: rgba(235, 235, 235, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.01);
+    margin-top: 16%;
+    transition: .1s linear;
+}
+
+.btn-combine > p {
+    color: white;
+    text-align: center;
+    line-height: 48px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.btn-combine:hover {
+    background-color: rgba(235, 235, 235, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: .1s linear;
+}
+
+.item-slot-amount {
+    position: absolute;
+    top:0.3vh;
+    right: 0.3vw;
+}
+
+.item-slot-amount p {
+    color: #ffffff;
+    text-align: right;
+    font-size: 11px;
+}
+
+.item-slot-label {
+    position: absolute;
+    bottom:0;
+    width: 100%;
+    background-color: rgba(14, 14, 14, 0.5);
+    padding: 2.4%;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap');
+
+.item-slot-label p {
+    color: #ffffff;
+    font-size: 9px;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 19px;
+    font-family: 'Source Code Pro', monospace;
+    letter-spacing: 0.05vh;
+    font-weight: lighter;
+}
+
+.item-slot-img {
+    max-width: 100%;
+    max-height: 100%;
+    padding: 0.5vw;
+}
+
+.item-slot-img img {
+    display:block;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 21%;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.ui-draggable-dragging {
+    background: rgba(20,20,20,0.7);
+}
+
+.player-inv-info {
+    position: absolute;
+    left: 10.5%;
+    top: 19.5%;
+}
+
+#player-inv-label {
+    position: relative;
+    color: white;
+    font-size: 18px;
+    font-family: 'Lato', monospace;
+    font-weight: bold;
+    letter-spacing: 0.1vh;
+    bottom: 15px;
+    float: left;
+}
+
+#player-inv-weight {
+    color: white;
+    font-size: 11px;
+    font-family: 'Lato', monospace;
+    letter-spacing: 0.1vh;
+    float: left;
+}
+
+#other-inv-label {
+    position: relative;
+    color: white;
+    font-size: 18px;
+    font-family: 'Lato', monospace;
+    font-weight: bold;
+    letter-spacing: 0.1vh;
+    bottom: 15px;
+    float: left;
+}
+
+#other-inv-weight {
+    color: white;
+    font-size: 11px;
+    font-family: 'Lato', monospace;
+    letter-spacing: 0.1vh;
+    float: left;
+}
+
+.player-inv-weight {
+    position: absolute;
+    left: 38%;
+    top: 12%;
+}
+
+.player-inv-weight p {
+    color: white;
+    font-size: 12px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.other-inv-info {
+    position: absolute;
+    left: 59%;
+    top: 19.5%;
+}
+
+.ply-iteminfo-container {
+    font-family: 'Open Sans';
+    display: none;
+    position: absolute;
+    bottom: 3%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: 350px;
+    height: 230px;
+    /* background: rgba(20,20,20,0.5); */
+}
+
+.item-info-title {
+    font-family: sans-serif;
+    font-size: 18px;
+    color: white;
+    font-family: 'Open Sans';
+    padding-top: 5px;
+    padding-left: 5px;
+}
+
+.item-info-line {
+    position: absolute;
+    font-family: 'Open Sans';
+    width: 100%;
+    background-color: white;
+    height: 1px;
+    top: 45px;
+}
+
+.item-info-description {
+    font-size: 11px;
+    font-family: 'Open Sans';
+    color: white;
+    padding-top: 30px;
+    padding-left: 5px;
+}
+
+.itembox-container {
+    display: none;
+    position: absolute;
+    width: 110px;
+    height: 130px;
+    right: 2%;
+    bottom: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#itembox-action {
+    position: absolute;
+    background-color: white;
+    padding: 3px;
+    font-size: 10px;
+    font-weight: bold;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+#itembox-label {
+    position: absolute;
+    bottom:0;
+    width: 100%;
+    background-color: rgba(24, 0, 0, 0.2);
+    height: 21px;
+}
+
+#itembox-label > p {
+    color: #ffffff;
+    font-size: 11px;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 19px;
+}
+
+.requiredItem-container {
+    display: none;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+}
+
+.requiredItem-box {
+    position: relative;
+    top: 70%;
+    left: 42%;
+    width: 110px;
+    height: 130px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    float: left;
+    margin-left: 20px;
+}
+
+#requiredItem-action {
+    position: absolute;
+    background-color: white;
+    padding: 3px;
+    font-size: 10px;
+    font-weight: bold;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+#requiredItem-label {
+    position: absolute;
+    bottom:0;
+    width: 100%;
+    background-color: rgba(24, 0, 0, 0.2);
+    height: 21px;
+}
+
+#requiredItem-label > p {
+    color: #ffffff;
+    font-size: 11px;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 19px;
+}
+
+.z-hotbar-inventory {
+    display: none;
+    position: absolute;
+    bottom: 10%;
+    left: 35.5%;
+    z-index: 105;
+}
+
+.z-hotbar-inventory > .z-hotbar-item-slot > .z-hotbar-item-slot-key p {
+    position: absolute;
+    background: #ffffff;
+    color: #000000;
+    padding: 3px;
+    text-align: left;
+    font-size: 11px;
+    border-radius: 0px 0px 2px 0px;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.z-hotbar-item-slot {
+    position: relative;
+    width: 110px;
+    height: 130px;
+    float: left;
+    margin-left: 2px;
+    margin-top: 2px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s;
+}
+
+.z-hotbar-item-slot-hoverClass {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.z-hotbar-item-slot:hover {
+    background-color: rgba(31, 31, 31, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.z-hotbar-item-slot-amount {
+    position: absolute;
+    top:0.3vh;
+    right: 0.3vw;
+}
+
+.z-hotbar-item-slot-amount p {
+    color: #ffffff;
+    text-align: right;
+    font-size: 10px;
+}
+
+.z-hotbar-item-slot-label {
+    position: absolute;
+    bottom:0;
+    width: 100%;
+    background-color: rgba(24, 0, 0, 0.2);
+    padding: 3%;
+}
+
+.z-hotbar-item-slot-label p {
+    color: #ffffff;
+    font-size: 10px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.z-hotbar-item-slot-img {
+    max-width: 100%;
+    max-height: 100%;
+    padding: 0.5vw;
+}
+
+.z-hotbar-item-slot-img img {
+    margin-top: 21%;
+    display:block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
