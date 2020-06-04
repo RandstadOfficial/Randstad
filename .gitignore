@@ -1,8 +1,4 @@
 # Server dir
-FXServer/server/**
-FXServer/server/**/*
-FXServer/server/*
-FXServer/server/citizen/
 FXServer/server/crashes/
 FXServer/server-data/cache
 FXServer/server/starter.bat
