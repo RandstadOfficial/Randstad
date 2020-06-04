@@ -1,6 +1,6 @@
 # Server dir
-FXServer/server/
-FXServer/server/citizen
-FXServer/server/crashes
+FXServer/server/**
+FXServer/server/citizen/
+FXServer/server/crashes/
 FXServer/server-data/cache
 
