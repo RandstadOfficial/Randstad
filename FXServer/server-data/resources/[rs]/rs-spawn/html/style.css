@@ -9,6 +9,9 @@
     position: absolute;
     top: 200px;
     left: 100px;
+    background-color: rgba(24, 27, 32, 0.9);
+    border-radius: 20px;
+    color: white;
 }
 .hideContainer :nth-child(n){
     animation-name: an-hideContainer;
@@ -18,10 +21,10 @@
     to{ top: -100px; height: 0px; margin-bottom: 0px; font-size: 0px; }
 }
 .location {
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(62, 65, 71, 0.6);
     width: 280px;
     height: 40px;
-    margin-bottom: 16px;
+    margin: 16px;
     border-radius: 7px;
     transition: 0.2s;
 }
@@ -32,32 +35,34 @@
     text-align: center;
     top: 12.5px;
     font-size: 13px;
+    margin: 16px;
 }
 
 .location:hover {
-    background-color: #c34b4bc2;
+    background-color: #97D5F9;
     border-radius: 9px;
     transition: 0.2s;
 }
 
 .selected {
-    background-color: #b12424a6;
+    background-color: #97D5F9;
 }
 
 .submit-spawn {
-    background-color: rgba(32, 158, 16, 0.75);
-    width: 280px;
-    height: 40px;
-    margin-bottom: 16px;
-    border-radius: 7px;
+    background-color: #97D5F9;
+    width: 100%;
+    height: 50px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     transition: 0.2s;
+    margin-bottom: -2px;
 }
 
 .submit-spawn > p {
     position: relative;
     color: white;
     text-align: center;
-    top: 12.5px;
+    top: 16.5px;
     font-size: 13px;
     font-family: 'Lato';
     letter-spacing: 1px;
@@ -65,8 +70,9 @@
 }
 
 .submit-spawn:hover {
-    background-color: rgba(32, 158, 16, 0.85);
-    border-radius: 9px;
+    background-color: #8193A3;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     transition: 0.2s;
 }
 
@@ -75,12 +81,13 @@
 }
 
 .loclabel {
-    width: 280px;
-    height: 40px;
+    height: 50px;
     margin-bottom: 16px;
-    border-radius: 7px;
     transition: 0.2s;
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: #97D5F9;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    margin-top: -2px;
 }
 
 .loclabel > p {
@@ -88,8 +95,8 @@
     letter-spacing: 1px;
     font-weight: bold;
     position: relative;
-    color: black;
+    color: white;
     text-align: center;
-    top: 12.5px;
+    top: 16.5px;
     font-size: 13px;
 }
