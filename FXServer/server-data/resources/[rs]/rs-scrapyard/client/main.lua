@@ -51,17 +51,21 @@ Citizen.CreateThread(function()
 		if closestScrapyard ~= 0 then
 			local pos = GetEntityCoords(GetPlayerPed(-1))
 			if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations[closestScrapyard]["deliver"].x, Config.Locations[closestScrapyard]["deliver"].y, Config.Locations[closestScrapyard]["deliver"].z, true) < 10.0 then
-				if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+				if IsPedInAnyVehicle(GetPlayerPed(-1)) then
 					local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
 					if vehicle ~= 0 and vehicle ~= nil then 
 						local vehpos = GetEntityCoords(vehicle)
 						if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 2.5 and not isBusy then
 							DrawText3Ds(vehpos.x, vehpos.y, vehpos.z, "~g~E~w~ - Voertuig uit elkaar halen")
 							if IsControlJustReleased(0, Keys["E"]) then
-								if IsVehicleValid(GetEntityModel(vehicle)) then 
-									ScrapVehicle(vehicle)
+								if GetPedInVehicleSeat(vehicle, -1) == GetPlayerPed(-1) then
+									if IsVehicleValid(GetEntityModel(vehicle)) then 
+										ScrapVehicle(vehicle)
+									else
+										RSCore.Functions.Notify("Dit voertuig kan niet worden gesloopt..", "error")
+									end
 								else
-									RSCore.Functions.Notify("Dit voertuig kan niet worden gesloopt..", "error")
+									RSCore.Functions.Notify("Je bent niet de bestuurder..", "error")
 								end
 							end
 						end
@@ -123,6 +127,7 @@ function ScrapVehicle(vehicle)
 	}, {}, {}, {}, function() -- Done
 		StopAnimTask(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic", 1.0)
 		TriggerServerEvent("rs-scrapyard:server:ScrapVehicle", GetVehicleKey(GetEntityModel(vehicle)))
+		SetEntityAsMissionEntity(vehicle, true, true)
 		DeleteVehicle(vehicle)
 		isBusy = false
 	end, function() -- Cancel
