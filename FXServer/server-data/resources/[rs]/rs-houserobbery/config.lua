@@ -14,7 +14,10 @@ Config = {}
 
 Config.MinZOffset = 45
 
-Config.MinimumHouseRobberyPolice = 3
+Config.MinimumHouseRobberyPolice = 0
+
+Config.MinimumTime = 22
+Config.MaximumTime = 5
 
 Config.Rewards = {
     ["cabin"] = {
