@@ -500,12 +500,30 @@ Config.CornerSellingDrugsList = {
 }
 
 Config.DrugsPrice = {
-    ["weed_white-widow"] = 1,
-    ["weed_skunk"] = 2,
-    ["weed_purple-haze"] = 3,
-    ["weed_og-kush"] = 1,
-    ["weed_amnesia"] = 2,
-    ["weed_ak47"] = 10,
+    ["weed_white-widow"] = {
+        min = 15,
+        max = 24,
+    },
+    ["weed_og-kush"] = {
+        min = 15,
+        max = 28,
+    },
+    ["weed_skunk"] = {
+        min = 15,
+        max = 31,
+    },
+    ["weed_amnesia"] = {
+        min = 18,
+        max = 34,
+    },
+    ["weed_purple-haze"] = {
+        min = 18,
+        max = 37,
+    },
+    ["weed_ak47"] = {
+        min = 18,
+        max = 40,
+    },
 }
 
 Config.DeliveryLocations = {
