@@ -380,6 +380,8 @@ end
 RegisterServerEvent('rs-houses:server:LogoutLocation')
 AddEventHandler('rs-houses:server:LogoutLocation', function()
 	local src = source
+	local Player = RSCore.Functions.GetPlayer(src)
+	Player.Functions.Save()
 	RSCore.Player.Logout(src)
 	Citizen.Wait(100)
     TriggerClientEvent('rs-multicharacter:client:chooseChar', src)
