@@ -69,8 +69,8 @@ Citizen.CreateThread(function()
                     RSCore.Functions.DrawText3D(Apartments.Locations[ClosestHouse].coords.enter.x - POIOffsets.stash.x, Apartments.Locations[ClosestHouse].coords.enter.y - POIOffsets.stash.y, Apartments.Locations[ClosestHouse].coords.enter.z - CurrentOffset + POIOffsets.stash.z, '~g~E~w~ - Stash')
                     if IsControlJustPressed(0, Keys["E"]) then
                         if CurrentApartment ~= nil then
-                            TriggerEvent("inventory:client:SetCurrentStash", CurrentApartment)
                             TriggerServerEvent("inventory:server:OpenInventory", "stash", CurrentApartment)
+                            TriggerEvent("inventory:client:SetCurrentStash", CurrentApartment)
                         end
                     end
                 elseif (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Apartments.Locations[ClosestHouse].coords.enter.x - POIOffsets.stash.x, Apartments.Locations[ClosestHouse].coords.enter.y - POIOffsets.stash.y, Apartments.Locations[ClosestHouse].coords.enter.z - CurrentOffset + POIOffsets.stash.z, true) < 3)then
@@ -235,14 +235,12 @@ function EnterApartment(house, apartmentId, new)
     openHouseAnim()
     Citizen.Wait(250)
     RSCore.Functions.TriggerCallback('apartments:GetApartmentOffset', function(offset)
-        print(offset)
         if offset == nil or offset == 0 then
             RSCore.Functions.TriggerCallback('apartments:GetApartmentOffsetNewOffset', function(newoffset)
+                if newoffset > 230 then
+                    newoffset = 210
+                end
                 CurrentOffset = newoffset
-                print(newoffset)
-
-                print(house)
-                print(CurrentOffset)
                 TriggerServerEvent("apartments:server:AddObject", apartmentId, house, CurrentOffset)
                 
                 local coords = { x = Apartments.Locations[house].coords.enter.x, y = Apartments.Locations[house].coords.enter.y, z = Apartments.Locations[house].coords.enter.z - CurrentOffset}
@@ -273,6 +271,9 @@ function EnterApartment(house, apartmentId, new)
                 TriggerServerEvent("RSCore:Server:SetMetaData", "currentapartment", CurrentApartment)
             end, house)
         else
+            if offset > 230 then
+                offset = 210
+            end
             CurrentOffset = offset
             TriggerServerEvent("InteractSound_SV:PlayOnSource", "houses_door_open", 0.1)
             TriggerServerEvent("apartments:server:AddObject", apartmentId, house, CurrentOffset)
@@ -289,15 +290,12 @@ function EnterApartment(house, apartmentId, new)
             Citizen.Wait(500)
             SetRainFxIntensity(0.0)
             TriggerEvent('rs-weathersync:client:DisableSync')
-            -- TriggerEvent('tb-weed:client:getHousePlants', house)
             Citizen.Wait(100)
             SetWeatherTypePersist('EXTRASUNNY')
             SetWeatherTypeNow('EXTRASUNNY')
             SetWeatherTypeNowPersist('EXTRASUNNY')
             NetworkOverrideClockTime(23, 0, 0)
-            --TriggerEvent('instances:client:JoinInstance', apartmentId, house)
-            
-
+           
             TriggerServerEvent("InteractSound_SV:PlayOnSource", "houses_door_close", 0.1)
             TriggerServerEvent("RSCore:Server:SetMetaData", "currentapartment", CurrentApartment)
         end
