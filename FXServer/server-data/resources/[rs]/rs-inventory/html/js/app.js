@@ -6,6 +6,11 @@ var otherMaxWeight = 0;
 
 var otherLabel = "";
 
+var ClickedItemData = {};
+var disableRightMouse = false;
+var selectedItem = null;
+var IsDragging = false;
+
 $(document).on('keydown', function() {
     switch(event.keyCode) {
         case 27: // ESC
@@ -14,11 +19,21 @@ $(document).on('keydown', function() {
         case 9: // TAB
             Inventory.Close();
             break;
+        case 17: // TAB
+            ControlPressed = true;
+            break;
     }
 });
 
-var disableRightMouse = false;
-var selectedItem = null;
+$(document).on('keyup', function(){
+    switch(event.keyCode) {
+        case 17: // TAB
+            ControlPressed = false;
+            break;
+    }
+});
+
+
 $(document).on("mouseenter", ".item-slot", function(e){
     e.preventDefault();
     if ($(this).data("item") != null) {
@@ -46,6 +61,11 @@ $(document).on("mouseenter", ".item-slot", function(e){
             $(".item-info-description").html('<p><strong>Pas-ID: </strong><span>' + itemData.info.id + '</span></p><p><strong>Voornaam: </strong><span>' + itemData.info.firstname + '</span></p><p><strong>Achternaam: </strong><span>' + itemData.info.lastname + '</span></p><p><strong>BSN: </strong><span>' + itemData.info.citizenid + '</span></p>');
         } else if (itemData.type == "weapon") {
             $(".item-info-title").html('<p>'+itemData.label+'</p>')
+            // if (itemData.info.ammo == undefined) {
+            //     itemData.info.ammo = 0;
+            // } else {
+            //     itemData.info.ammo != null ? itemData.info.ammo : 0;
+            // }
             if (itemData.info.attachments != null) {
                 var attachmentString = "";
                 $.each(itemData.info.attachments, function (i, attachment) {
@@ -98,6 +118,7 @@ function handleDragDrop() {
         revert: "invalid",
         cancel: ".item-nodrag",
         start: function(event, ui) {
+            IsDragging = true;
            // $(this).css("background", "rgba(20,20,20,1.0)");
             $(this).find("img").css("filter", "brightness(50%)");
 
@@ -164,6 +185,9 @@ function handleDragDrop() {
             }
         },
         stop: function() {
+            setTimeout(function() {
+                IsDragging = false;
+            }, 300)
             $(this).css("background", "rgba(235, 235, 235, 0.03)");
             $(this).find("img").css("filter", "brightness(100%)");
             $("#item-use").css("background", "rgba(235, 235, 235, 0.08)");
@@ -173,11 +197,14 @@ function handleDragDrop() {
     $(".item-slot").droppable({
         hoverClass: 'item-slot-hoverClass',
         drop: function(event, ui) {
+            setTimeout(function(){
+                IsDragging = false;
+            }, 300)
             fromSlot = ui.draggable.attr("data-slot");
             fromInventory = ui.draggable.parent();
             toSlot = $(this).attr("data-slot");
             toInventory = $(this).parent();
-            toAmount = $("#item-amount").val()
+            toAmount = $("#item-amount").val();
 
             if (fromSlot == toSlot && fromInventory == toInventory) {
                 return;
@@ -193,6 +220,9 @@ function handleDragDrop() {
     $("#item-use").droppable({
         hoverClass: 'button-hover',
         drop: function(event, ui) {
+            setTimeout(function(){
+                IsDragging = false;
+            }, 300)
             fromData = ui.draggable.data("item");
             fromInventory = ui.draggable.parent().attr("data-inventory");
             if(fromData.useable) {
@@ -210,6 +240,9 @@ function handleDragDrop() {
     $("#item-drop").droppable({
         hoverClass: 'item-slot-hoverClass',
         drop: function(event, ui) {
+            setTimeout(function(){
+                IsDragging = false;
+            }, 300)
             fromData = ui.draggable.data("item");
             fromInventory = ui.draggable.parent().attr("data-inventory");
             amount = $("#item-amount").val();
@@ -225,6 +258,15 @@ function handleDragDrop() {
 }
 
 function updateweights($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
+    var otherinventory = otherLabel.toLowerCase();
+    if (otherinventory.split("-")[0] == "dropped") {
+        toData = $toInv.find("[data-slot=" + $toSlot + "]").data("item");
+        if (toData !== null && toData !== undefined) {
+            InventoryError($fromInv, $fromSlot);
+            return false;
+        }
+    }
+
     if (($fromInv.attr("data-inventory") == "hotbar" && $toInv.attr("data-inventory") == "player") || ($fromInv.attr("data-inventory") == "player" && $toInv.attr("data-inventory") == "hotbar") || ($fromInv.attr("data-inventory") == "player" && $toInv.attr("data-inventory") == "player") || ($fromInv.attr("data-inventory") == "hotbar" && $toInv.attr("data-inventory") == "hotbar")) {
         return true;
     }
@@ -377,6 +419,15 @@ function optionSwitch($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, toData, f
 function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
     fromData = $fromInv.find("[data-slot=" + $fromSlot + "]").data("item");
     toData = $toInv.find("[data-slot=" + $toSlot + "]").data("item");
+    var otherinventory = otherLabel.toLowerCase();
+
+    if (otherinventory.split("-")[0] == "dropped") {
+        if (toData !== null && toData !== undefined) {
+            InventoryError($fromInv, $fromSlot);
+            return;
+        }
+    }
+    
     if (fromData !== undefined && fromData.amount >= $toAmount) {
         if (($fromInv.attr("data-inventory") == "player" || $fromInv.attr("data-inventory") == "hotbar") && $toInv.attr("data-inventory").split("-")[0] == "itemshop" && $toInv.attr("data-inventory") == "crafting") {
             InventoryError($fromInv, $fromSlot);
