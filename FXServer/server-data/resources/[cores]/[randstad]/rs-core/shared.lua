@@ -5579,6 +5579,11 @@ RSShared.Jobs = {
 		payment = 150,
 		defaultDuty = true,
 	},
+	["rental"] = {
+		label = "Auto Verhuur",
+		payment = 100,
+		defaultDuty = true,
+	},
 }
 
 RSShared.StarterItems = {

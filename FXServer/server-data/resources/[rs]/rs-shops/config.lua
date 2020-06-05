@@ -303,10 +303,10 @@ Config.Products = {
         --     slot = 4,
         -- },
     },   
-    ["mustapha"] = {
+    ["rental"] = {
         [1] = {
             name = "parachute",
-            price = 2500,
+            price = 1500,
             amount = 10,
             info = {},
             type = "item",
@@ -322,11 +322,19 @@ Config.Products = {
         },    
         [3] = {
             name = "diving_gear",
-            price = 2500,
+            price = 2000,
             amount = 10,
             info = {},
             type = "item",
             slot = 3,
+        },
+        [4] = {
+            name = "advancedrepairkit",
+            price = 1000,
+            amount = 50,
+            info = {},
+            type = "item",
+            slot = 4,
         },
     },    
     ["weapons"] = {
@@ -901,7 +909,7 @@ Config.Locations = {
         ["products"] = Config.Products["leisureshop"],
     },   
     ["mustapha"] = {
-        ["label"] = "Rental Mustapha",
+        ["label"] = "Rental Habibi",
         ["type"] = "leisure",
         ["coords"] = {
             [1] = {
@@ -910,6 +918,6 @@ Config.Locations = {
                 ["z"] = 29.50
             }
         },
-        ["products"] = Config.Products["mustapha"],
+        ["products"] = Config.Products["rental"],
     },    
 }
