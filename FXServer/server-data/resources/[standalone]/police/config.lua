@@ -84,12 +84,13 @@ Config.Locations = {
 }
 
 Config.ArmoryWhitelist = {
-    "RXT56326",
-    "",
-    "",
-    "",
-    "",
-    "",
+    "KZY14747", -- Ryan
+    "DTE65403", -- MaBo
+    "YND19022", -- Maestro
+    "GFE30137", -- Dave
+    "ZOY23072", -- Anton
+    "", -- Danny
+	"LYE72460", -- Birdzor
 }
 
 Config.Helicopter = "pzulu"

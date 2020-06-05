@@ -1,6 +1,6 @@
 RSConfig = {}
 
-RSConfig.MaxPlayers = GetConvarInt('sv_maxclients', 32) -- Gets max players from config file, default 32
+RSConfig.MaxPlayers = GetConvarInt('sv_maxclients', 64) -- Gets max players from config file, default 32
 RSConfig.IdentifierType = "steam" -- Set the identifier type (can be: steam, license)
 RSConfig.DefaultSpawn = {x=-1035.71,y=-2731.87,z=12.86,a=0.0}
 
@@ -23,7 +23,7 @@ RSConfig.Player.Bloodtypes = {
 }
 
 RSConfig.Server = {} -- General server config
-RSConfig.Server.closed = false -- Set server closed (no one can join except people with ace permission 'rsadmin.join')
+RSConfig.Server.closed = true -- Set server closed (no one can join except people with ace permission 'rsadmin.join')
 RSConfig.Server.closedReason = "Nog een klein beetje geduld..." -- Reason message to display when people can't join the server
 RSConfig.Server.uptime = 0 -- Time the server has been up.
 RSConfig.Server.whitelist = false -- Enable or disable whitelist on the server
