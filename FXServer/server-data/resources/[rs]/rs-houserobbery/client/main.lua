@@ -126,11 +126,13 @@ Citizen.CreateThread(function()
                     if not Config.Houses[currentHouse]["furniture"][k]["searched"] then
                         if not Config.Houses[currentHouse]["furniture"][k]["isBusy"] then
                             DrawText3Ds(Config.Houses[currentHouse]["coords"]["x"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["x"], Config.Houses[currentHouse]["coords"]["y"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["y"], Config.Houses[currentHouse]["coords"]["z"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["z"] - Config.MinZOffset, '~g~E~w~ - '..Config.Houses[currentHouse]["furniture"][k]["text"])
-                            if IsControlJustPressed(0, Keys["E"]) then
-                                searchCabin(k)
+                            if not IsLockpicking then
+                                if IsControlJustReleased(0, Keys["E"]) then
+                                    searchCabin(k)
+                                end
                             end
                         else
-                            DrawText3Ds(Config.Houses[currentHouse]["coords"]["x"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["x"], Config.Houses[currentHouse]["coords"]["y"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["y"], Config.Houses[currentHouse]["coords"]["z"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["z"] - Config.MinZOffset, 'Er is al iemand met het kastje bezig..')
+                            DrawText3Ds(Config.Houses[currentHouse]["coords"]["x"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["x"], Config.Houses[currentHouse]["coords"]["y"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["y"], Config.Houses[currentHouse]["coords"]["z"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["z"] - Config.MinZOffset, 'Bezig met lockpicken..')
                         end
                     else
                         DrawText3Ds(Config.Houses[currentHouse]["coords"]["x"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["x"], Config.Houses[currentHouse]["coords"]["y"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["y"], Config.Houses[currentHouse]["coords"]["z"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["z"] - Config.MinZOffset, 'Kastje is leeg..')
@@ -339,41 +341,68 @@ AddEventHandler('rs-houserobbery:client:setHouseState', function(house, state)
 end)
 
 local openingDoor = false
+local SucceededAttempts = 0
+local NeededAttempts = 4
+
 function searchCabin(cabin)
+    local ped = GetPlayerPed(-1)
+
+    local Skillbar = exports['rs-skillbar']:GetSkillbarObject()
     if math.random(1, 100) <= 85 and not IsWearingHandshoes() then
         local pos = GetEntityCoords(GetPlayerPed(-1))
         TriggerServerEvent("evidence:server:CreateFingerDrop", pos)
     end
-    local lockpickTime = math.random(15000, 30000)
     LockpickDoorAnim(lockpickTime)
     TriggerServerEvent('rs-houserobbery:server:SetBusyState', cabin, currentHouse, true)
-    RSCore.Functions.Progressbar("search_cabin", "Kastje aan het doorzoeken..", lockpickTime, false, true, {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {
-        animDict = "veh@break_in@0h@p_m_one@",
-        anim = "low_force_entry_ds",
-        flags = 16,
-    }, {}, {}, function() -- Done
-        openingDoor = false
-        ClearPedTasks(GetPlayerPed(-1))
-        TriggerServerEvent('rs-houserobbery:server:searchCabin', cabin, currentHouse)
-        Config.Houses[currentHouse]["furniture"][cabin]["searched"] = true
-        TriggerServerEvent('rs-houserobbery:server:SetBusyState', cabin, currentHouse, false)
-    end, function() -- Cancel
+
+    FreezeEntityPosition(ped, true)
+
+    IsLockpicking = true
+
+    Skillbar.Start({
+        duration = math.random(7500, 15000),
+        pos = math.random(10, 30),
+        width = math.random(10, 20),
+    }, function()
+        if SucceededAttempts + 1 >= NeededAttempts then
+            -- Finish
+            openingDoor = false
+            ClearPedTasks(GetPlayerPed(-1))
+            TriggerServerEvent('rs-houserobbery:server:searchCabin', cabin, currentHouse)
+            Config.Houses[currentHouse]["furniture"][cabin]["searched"] = true
+            TriggerServerEvent('rs-houserobbery:server:SetBusyState', cabin, currentHouse, false)
+            SucceededAttempts = 0
+            FreezeEntityPosition(ped, false)
+            SetTimeout(500, function()
+                IsLockpicking = false
+            end)
+        else
+            -- Repeat
+            Skillbar.Repeat({
+                duration = math.random(500, 1250),
+                pos = math.random(10, 40),
+                width = math.random(5, 13),
+            })
+            SucceededAttempts = SucceededAttempts + 1
+        end
+    end, function()
+        -- Fail
         openingDoor = false
         ClearPedTasks(GetPlayerPed(-1))
         TriggerServerEvent('rs-houserobbery:server:SetBusyState', cabin, currentHouse, false)
         RSCore.Functions.Notify("Proces geannuleerd..", "error")
+        SucceededAttempts = 0
+        FreezeEntityPosition(ped, false)
+        SetTimeout(500, function()
+            IsLockpicking = false
+        end)
     end)
 end
 
 function LockpickDoorAnim(time)
-    time = time / 1000
-    loadAnimDict("veh@break_in@0h@p_m_one@")
-    TaskPlayAnim(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds" ,3.0, 3.0, -1, 16, 0, false, false, false)
+    -- time = time / 1000
+    -- loadAnimDict("veh@break_in@0h@p_m_one@")
+    -- TaskPlayAnim(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds" ,3.0, 3.0, -1, 16, 0, false, false, false)
     openingDoor = true
     Citizen.CreateThread(function()
         while true do
