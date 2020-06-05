@@ -2,6 +2,11 @@
 @import url('https://fonts.googleapis.com/css?family=B612+Mono&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+
+.container {
+    display: none;
+}
 
 .main-screen {
     position: absolute;
@@ -134,6 +139,9 @@
     margin-top: 15px;
     background-color: rgba(0, 0, 0, 0.75);
     font-family: 'Lato' monospace;
+    border-bottom: 4px solid #74aa3200;
+    transition: .1s linear;
+    border-radius: .2vh;
 }
 
 .character > span {
@@ -146,11 +154,11 @@
     float: right;
     font-size: 11px;
     right: 35px;
-    line-height: 75px;
+    line-height: 80px;
 }
 
 .char-selected {
-    border-bottom: 4px solid #74aa32;
+    background-color: #03808fde;
 }
 
 .disabled {
@@ -159,39 +167,40 @@
 
 #slot-name {
     position: relative;
-    color: rgb(230, 230, 230);
+    color: rgb(255, 255, 255);
     font-size: 17px;
-    line-height: 75px;
+    line-height: 80px;
     left: 20px;
     font-family: 'Lato' monospace;
 }
 
 .character-btn {
     position: relative;
-    width: 100%;
-    height: 60px;
+    width: 30%;
+    height: 50px;
     top: 65%;
     transition: 0.2s;
     float: left;
     margin-top: 10px;
+    margin-right: 10px;
 }
 
 .character-btn > p {
     color: white;
     text-align: center;
     text-transform: uppercase;
-    line-height: 60px;
+    line-height: 50px;
 }
 
 #play {
     display: none;
-    background: linear-gradient(to right, #56ab2f, #74aa32); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background-color: #44bd32;
     border-radius: 4px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 #play:hover {
-    background: linear-gradient(to right, #74aa32, #56ab2f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background-color: #54d441;
     border-radius: 8px;
 }
 
@@ -199,7 +208,7 @@
     display: none;
     background-color: rgba(3, 128, 143, 0.9);
     border-radius: 4px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 #delete:hover {
@@ -268,7 +277,7 @@
 
 .char-info-js {
     position: absolute;
-    left: 40%;
+    left: 50%;
 }
 
 #info-label {
@@ -554,13 +563,18 @@ input[type="date"]::-webkit-clear-button {
 }
 .topbar {
     position: absolute;
-    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.5);
     top: 0;
     left: 0;
     width: 100%;
-    height: 7%;
-    border-bottom: 3px solid #03a2b5;
-    box-shadow: inset 0px 0px 100px 0px rgba(255, 255, 255, 0.1);
+    height: 5%;
+    text-align: center;
+    line-height: 5vh;
+    font-family: 'Lato', monospace;
+    font-weight: bolder;
+    font-size: 1.75vh;
+    color: white;
+    /* border-bottom: 3px solid #b12424; */
 }
 
 .bottombar {
@@ -571,11 +585,9 @@ input[type="date"]::-webkit-clear-button {
     width: 100%;
     height: 7%;
     border-top: 3px solid #03a2b5;
-    box-shadow: inset 0px 0px 100px 0px rgba(255, 255, 255, 0.1);
 }
 
 .server-log {
-    display: none;
     position: relative;
     width: 30%;
     height: 28%;
@@ -628,18 +640,14 @@ input[type="date"]::-webkit-clear-button {
 }
 
 .welcomescreen {
-    position: relative;
     display: block;
-    top: 25%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: rgba(0, 0, 0, 0.9);
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 1%;
     height: 28%;
     width: 30%;
-    border-top: 2px solid #03a2b5;
-    border-bottom: 2px solid #03a2b5;
-    box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.25);
-    box-shadow: inset 0px 0px 100px 0px rgba(255, 255, 255, 0.1);
 	overflow: visible !important;
 }
 
@@ -661,47 +669,57 @@ input[type="date"]::-webkit-clear-button {
 
 #randstad-logo {
     position: absolute;
-    width: 70px;
-    top: 10%;
+    width: 60px;
+    top: 10.5%;
     left: 10%;
 }
 
-.start-btn {
-    position: relative;
-    margin-left: 30px;
-    float: left;
-    top: 45%;
-    left: 25.5%;
+.continue-btn {
+    position: absolute;
+    left: 3.5%;
+    width: 45%;
+    top: 75%;
+    height: 3.6vh;
+    background-color: #03a2b5;
+    border-radius: .2vh;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.342);
+    transition: .1s linear;
 }
 
-.continue-btn {
-    width: 17%;
-    height: 36px;
-    background-color: #03a2b5;
-    border-radius: 4px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.342);
+.continue-btn:hover {
+    background-color: #03808fbb;
 }
 
 .continue-btn > p {
     text-align: center;
-    line-height: 34px;
+    line-height: 3.6vh;
     color: white;
-    font-family: 'B612 Mono', monospace;
+    text-transform: uppercase;
+    font-family: 'Source Sans Pro', monospace;
 }
 
 .disconnect-btn {
-    width: 17%;
-    height: 36px;
+    position: absolute;
+    right: 3.5%;
+    width: 45%;
+    top: 75%;
+    height: 3.6vh;
     background-color: #03a2b5;
-    border-radius: 4px;
+    border-radius: .2vh;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.342);
+    transition: .1s linear;
+}
+
+.disconnect-btn:hover {
+    background-color: #03808fbb;
 }
 
 .disconnect-btn > p {
     text-align: center;
-    line-height: 34px;
+    line-height: 3.6vh;
     color: white;
-    font-family: 'B612 Mono', monospace;
+    text-transform: uppercase;
+    font-family: 'Source Sans Pro', monospace;
 }
 
 ::-webkit-scrollbar-track
@@ -717,5 +735,65 @@ input[type="date"]::-webkit-clear-button {
 
 ::-webkit-scrollbar-thumb
 {
-	background-color: #03808f;
+    background-color: #03808f;
 }
+
+    .loading-rondje {
+        position: absolute;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        top: 50%;
+        width: 150px;
+        height: 150px;
+        transform: translateY(-50%);
+        text-align: center;
+        padding: 1vh;
+    }
+    
+    .loading-rondje > p {
+        color: white;
+        margin-top: 1vh;
+        font-family: 'Lato';
+        text-shadow: 1px 1px 0px #00000085;
+    }
+    
+    .lds-ring {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+        height: 80px;
+    }
+    
+    .lds-ring div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 64px;
+        height: 64px;
+        border: 8px solid #fff;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: #fff transparent transparent transparent;
+    }
+    
+    .lds-ring div:nth-child(1) {
+        animation-delay: -0.45s;
+    }
+    
+    .lds-ring div:nth-child(2) {
+        animation-delay: -0.3s;
+    }
+    
+    .lds-ring div:nth-child(3) {
+        animation-delay: -0.15s;
+    }
+    
+    @keyframes lds-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
