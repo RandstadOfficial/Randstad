@@ -15,7 +15,11 @@ local HasKey = false
 local LastVehicle = nil
 local IsHotwiring = false
 local IsRobbing = false
-local isLoggedIn = true
+local isLoggedIn = false
+local NeededAttempts = 0
+local SucceededAttempts = 0
+local FailedAttemps = 0
+local AlertSend = false
 
 Citizen.CreateThread(function() 
     while true do
@@ -30,7 +34,9 @@ end)
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(5)
-        if IsPedInAnyVehicle(GetPlayerPed(-1), false) and GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), true), -1) == GetPlayerPed(-1) and RSCore ~= nil then
+
+        if RSCore ~= nil then
+            if IsPedInAnyVehicle(GetPlayerPed(-1), false) and GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), true), -1) == GetPlayerPed(-1) then
             local plate = GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), true))
             if LastVehicle ~= GetVehiclePedIsIn(GetPlayerPed(-1), false) then
                 RSCore.Functions.TriggerCallback('vehiclekeys:CheckHasKey', function(result)
@@ -44,7 +50,18 @@ Citizen.CreateThread(function()
                     LastVehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
                 end, plate)
             end
+        else
+            if SucceededAttempts ~= 0 then
+                SucceededAttempts = 0
         end
+        if NeededAttempts ~= 0 then
+            NeededAttempts = 0
+        end
+        if FailedAttemps ~= 0 then
+            FailedAttemps = 0
+        end
+    end
+end
 
         if not HasKey and IsPedInAnyVehicle(GetPlayerPed(-1), false) and GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), -1) == GetPlayerPed(-1) and RSCore ~= nil and not IsHotwiring then
             local veh = GetVehiclePedIsIn(GetPlayerPed(-1), false)
@@ -187,12 +204,14 @@ function LockVehicle()
     local coordB = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 255.0, 0.0)
     local veh = GetClosestVehicleInDirection(coordA, coordB)
     local pos = GetEntityCoords(GetPlayerPed(-1), true)
-    --local veh = GetClosestVehicle(pos.x, pos.y, pos.z, 5.0, 0, 70)
     if IsPedInAnyVehicle(GetPlayerPed(-1)) then
         veh = GetVehiclePedIsIn(GetPlayerPed(-1))
     end
+    local plate = GetVehicleNumberPlateText(veh)
     local vehpos = GetEntityCoords(veh, false)
     if veh ~= nil and GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 7.5 then
+        RSCore.Functions.TriggerCallback('vehiclekeys:CheckHasKey', function(result)
+    if result then
         if HasKey then
             local vehLockStatus = GetVehicleDoorLockStatus(veh)
             loadAnimDict("anim@mp_player_intmenu@key_fob@")
@@ -237,7 +256,11 @@ function LockVehicle()
                 SetVehicleIndicatorLights(veh, 1, false)
             end
         end
+    else
+        RSCore.Functions.Notify('Je hebt de sleutels van dit voertuig niet..', 'error')
     end
+    end, plate)
+end
 end
 
 local openingDoor = false
@@ -249,7 +272,7 @@ function LockpickDoor(isAdvanced)
         if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 1.5 then
             local vehLockStatus = GetVehicleDoorLockStatus(vehicle)
             if (vehLockStatus > 1) then
-                local lockpickTime = math.random(15000, 25000)
+                local lockpickTime = math.random(15000, 30000)
                 if isAdvanced then
                     lockpickTime = math.ceil(lockpickTime*0.5)
                 end
@@ -305,40 +328,148 @@ function LockpickDoorAnim(time)
 end
 
 function LockpickIgnition(isAdvanced)
+    local Skillbar = exports['rs-skillbar']:GetSkillbarObject()
+    if NeededAttempts == 0 then
+        NeededAttempts = math.random(2, 4)
+    end
     if not HasKey then 
         local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
+        if vehicle ~= nil and vehicle ~= 0 then
+            if GetPedInVehicleSeat(vehicle, -1) == GetPlayerPed(-1) then
         IsHotwiring = true
+        SucceededAttempts = 0
         PoliceCall()
-        local lockpickTime = math.random(30000, 40000)
-        if isAdvanced then
-            lockpickTime = math.ceil(lockpickTime*0.5)
-        end
-        RSCore.Functions.Progressbar("lockpick_ignition", "Lockpicken..", lockpickTime, false, true, {
-            disableMovement = true,
-            disableCarMovement = true,
-            disableMouse = false,
-            disableCombat = true,
-        }, {
-            animDict = "anim@amb@clubhouse@tutorial@bkr_tut_ig3@",
-            anim = "machinic_loop_mechandplayer",
-            flags = 16,
-        }, {}, {}, function() -- Done
-            StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
-            IsHotwiring = false
-            if math.random(1, 100) <= 65 then
-                RSCore.Functions.Notify("Lockpick gelukt!")
-                HasKey = true
-                TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle))
-            else
-                RSCore.Functions.Notify("Mislukt!", "error")
+
+       if isAdvanced then
+                    local maxwidth = 10
+                    local maxduration = 1750
+                    if FailedAttemps == 1 then
+                        maxwidth = 10
+                        maxduration = 1500
+                    elseif FailedAttemps == 2 then
+                        maxwidth = 9
+                        maxduration = 1250
+                    elseif FailedAttemps >= 3 then
+                        maxwidth = 8
+                        maxduration = 1000
+                    end
+                    widthAmount = math.random(5, maxwidth)
+                    durationAmount = math.random(500, maxduration)
+                else        
+                    local maxwidth = 10
+                    local maxduration = 1500
+                    if FailedAttemps == 1 then
+                        maxwidth = 9
+                        maxduration = 1250
+                    elseif FailedAttemps == 2 then
+                        maxwidth = 8
+                        maxduration = 1000
+                    elseif FailedAttemps >= 3 then
+                        maxwidth = 7
+                        maxduration = 800
+                    end
+                    widthAmount = math.random(5, maxwidth)
+                    durationAmount = math.random(500, maxduration)
+                end
+                
+                local dict = "anim@amb@clubhouse@tutorial@bkr_tut_ig3@"
+                local anim = "machinic_loop_mechandplayer"
+
+                RequestAnimDict(dict)
+                while not HasAnimDictLoaded(dict) do
+                    RequestAnimDict(dict)
+                    Citizen.Wait(100)
+                end
+
+                Skillbar.Start({
+                    duration = math.random(5000, 10000),
+                    pos = math.random(10, 30),
+                    width = math.random(10, 20),
+                }, function()
+                    if IsHotwiring then
+                        if SucceededAttempts + 1 >= NeededAttempts then
+                            StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
+                            RSCore.Functions.Notify("Lockpicken gelukt!")
+                            HasKey = true
+                            TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle))
+                            IsHotwiring = false
+                            FailedAttemps = 0
+                            SucceededAttempts = 0
+                            NeededAttempts = 0
+                            --TriggerServerEvent('RS-hud:Server:GainStress', math.random(2, 4))
+                        else
+                            if vehicle ~= nil and vehicle ~= 0 then
+                                TaskPlayAnim(GetPlayerPed(-1), dict, anim, 8.0, 8.0, -1, 16, -1, false, false, false)
+                                if isAdvanced then
+                                    local maxwidth = 10
+                                    local maxduration = 1750
+                                    if FailedAttemps == 1 then
+                                        maxwidth = 10
+                                        maxduration = 1500
+                                    elseif FailedAttemps == 2 then
+                                        maxwidth = 9
+                                        maxduration = 1250
+                                    elseif FailedAttemps >= 3 then
+                                        maxwidth = 8
+                                        maxduration = 1000
+                                    end
+                                    widthAmount = math.random(5, maxwidth)
+                                    durationAmount = math.random(400, maxduration)
+                                else        
+                                    local maxwidth = 10
+                                    local maxduration = 1300
+                                    if FailedAttemps == 1 then
+                                        maxwidth = 9
+                                        maxduration = 1150
+                                    elseif FailedAttemps == 2 then
+                                        maxwidth = 8
+                                        maxduration = 900
+                                    elseif FailedAttemps >= 3 then
+                                        maxwidth = 7
+                                        maxduration = 750
+                                    end
+                                    widthAmount = math.random(5, maxwidth)
+                                    durationAmount = math.random(300, maxduration)
+                                end
+
+                                SucceededAttempts = SucceededAttempts + 1
+                                Skillbar.Repeat({
+                                    duration = durationAmount,
+                                    pos = math.random(10, 50),
+                                    width = widthAmount,
+                                })
+                            else
+                                ClearPedTasksImmediately(GetPlayerPed(-1))
+                                HasKey = false
+                                SetVehicleEngineOn(vehicle, false, false, true)
+                                RSCore.Functions.Notify("Je moet in het voertuig zitten", "error")
+                                IsHotwiring = false
+                                FailedAttemps = FailedAttemps + 1
+                                local c = math.random(2)
+                                local o = math.random(2)
+                                if c == o then
+                                    --TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 4))
+                                end
+                            end
+                        end
+                    end
+                end, function()
+                    if IsHotwiring then
+                        StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
+                        HasKey = false
+                        SetVehicleEngineOn(vehicle, false, false, true)
+                        RSCore.Functions.Notify("Lockpicken mislukt!", "error")
+                        IsHotwiring = false
+                        FailedAttemps = FailedAttemps + 1
+                        local c = math.random(2)
+                        local o = math.random(2)
+                        if c == o then
+                            --TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 4))
+                        end
+                    end
+                end)
             end
-        end, function() -- Cancel
-            StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
-            HasKey = false
-            SetVehicleEngineOn(veh, false, false, true)
-            RSCore.Functions.Notify("Lockpick mislukt!", "error")
-            IsHotwiring = false
-        end)
+        end
     end
 end
 
@@ -381,10 +512,11 @@ function Hotwire()
 end
 
 function PoliceCall()
+    
     local pos = GetEntityCoords(GetPlayerPed(-1))
-    local chance = 25
+    local chance = 20
     if GetClockHours() >= 1 and GetClockHours() <= 6 then
-        chance = 3
+        chance = 10
     end
     if math.random(1, 100) <= chance then
         local closestPed = GetNearbyPed()
