@@ -19,6 +19,7 @@ Consumeables = {
     ["coffee"] = math.random(40, 50),
     ["whiskey"] = math.random(20, 30),
     ["beer"] = math.random(30, 40),
+    ["corona"] = math.random(30, 40),
     ["vodka"] = math.random(20, 40),
 }
 
