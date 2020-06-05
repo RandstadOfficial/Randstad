@@ -1635,6 +1635,14 @@ AnimationList.PropEmotes = {
        EmoteLoop = true,
        EmoteMoving = true,
    }},
+   ["corona"] = {"amb@world_human_drinking@coffee@male@idle_a", "idle_c", "Corona", AnimationOptions =
+   {
+       Prop = 'prop_amb_beer_bottle',
+       PropBone = 28422,
+       PropPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+       EmoteLoop = true,
+       EmoteMoving = true,
+   }},
    ["cup"] = {"amb@world_human_drinking@coffee@male@idle_a", "idle_c", "Cup", AnimationOptions =
    {
        Prop = 'prop_plastic_cup_02',

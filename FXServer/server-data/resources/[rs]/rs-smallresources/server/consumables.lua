@@ -63,6 +63,11 @@ RSCore.Functions.CreateUseableItem("beer", function(source, item)
     TriggerClientEvent("consumables:client:DrinkAlcohol", source, item.name)
 end)
 
+RSCore.Functions.CreateUseableItem("corona", function(source, item)
+    local Player = RSCore.Functions.GetPlayer(source)
+    TriggerClientEvent("consumables:client:DrinkAlcohol", source, item.name)
+end)
+
 RSCore.Functions.CreateUseableItem("whiskey", function(source, item)
     local Player = RSCore.Functions.GetPlayer(source)
     TriggerClientEvent("consumables:client:DrinkAlcohol", source, item.name)
