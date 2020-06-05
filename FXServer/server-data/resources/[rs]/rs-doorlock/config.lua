@@ -1107,14 +1107,14 @@ RS.Doors = {
 		}
 	},		
 	----------------
-	-- Pickle Rental
+	-- Maestro Rental
 	----------------
 	-- Voordeur 1
 	{
 		objName = 'apa_prop_apa_cutscene_doorb',
 		objCoords  = vector3(-21.71276, -1392.778, 29.63847),		
 		textCoords = vector3(-22.31276, -1392.778, 29.63847),
-		authorizedJobs = { 'cardealer' },
+		authorizedJobs = { 'rental' },
 		objYaw = -180.0,
 		locking = false,
 		locked = true,
@@ -1127,7 +1127,7 @@ RS.Doors = {
 		objName = 'apa_prop_apa_cutscene_doorb',
 		objCoords  = vector3(-32.67987, -1392.064, 29.63847),		
 		textCoords = vector3(-32.10987, -1392.064, 29.63847),
-		authorizedJobs = { 'cardealer' },
+		authorizedJobs = { 'rental' },
 		objYaw = 0.0,
 		locking = false,
 		locked = true,
@@ -1140,7 +1140,7 @@ RS.Doors = {
 		objName = 'apa_prop_apa_cutscene_doorb',
 		objCoords  = vector3(-24.22668, -1403.067, 29.63847),				
 		textCoords = vector3(-24.22668, -1402.537, 29.63847),
-		authorizedJobs = { 'cardealer' },
+		authorizedJobs = { 'rental' },
 		objYaw = 90.0,
 		locking = false,
 		locked = true,
@@ -1153,7 +1153,7 @@ RS.Doors = {
 		objName = 'apa_prop_apa_cutscene_doorb',
 		objCoords  = vector3(-21.27107, -1406.845, 29.63847),			
 		textCoords = vector3(-21.27107, -1406.245, 29.63847),
-		authorizedJobs = { 'cardealer' },
+		authorizedJobs = { 'rental' },
 		objYaw = 90.0,
 		locking = false,
 		locked = true,
@@ -1166,11 +1166,11 @@ RS.Doors = {
 		objName = 'prop_com_gar_door_01',
 		objCoords  = vector3(-21.04025, -1410.734, 30.51094),			
 		textCoords = vector3(-21.04025, -1410.734, 30.51094),
-		authorizedJobs = { 'cardealer' },
+		authorizedJobs = { 'rental' },
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 15.0,
+		distance = 7.5,
 		size = 2
 	},			
 	-----
