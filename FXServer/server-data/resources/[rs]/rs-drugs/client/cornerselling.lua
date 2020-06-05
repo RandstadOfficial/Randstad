@@ -101,35 +101,27 @@ Citizen.CreateThread(function()
         if cornerselling then
             local player = GetPlayerPed(-1)
             local coords = GetEntityCoords(player)
-            --for _, zone in pairs(Config.CornerSellingZones) do
-                --local zoneDist = GetDistanceBetweenCoords(coords, zone["coords"]["x"], zone["coords"]["y"], zone["coords"]["z"], true)
-                --if zoneDist < 150 then
-                    local hours = GetClockHours()
-                    if hours > 1 and hours < 6 or hours >= 19 and hours <= 23 then
-                        if not hasTarget then
-                            local PlayerPeds = {}
-                            if next(PlayerPeds) == nil then
-                                for _, player in ipairs(GetActivePlayers()) do
-                                    local ped = GetPlayerPed(player)
-                                    table.insert(PlayerPeds, ped)
-                                end
-                            end
-                            
-                            local closestPed, closestDistance = RSCore.Functions.GetClosestPed(coords, PlayerPeds)
-    
-                            if closestDistance < 15.0 and closestPed ~= 0 then
-                                SellToPed(closestPed)
-                            end
-                        end
-    
-                        local startDist = GetDistanceBetweenCoords(startLocation, GetEntityCoords(GetPlayerPed(-1)))
-    
-                        if startDist > 10 then
-                            toFarAway()
-                        end
+            if not hasTarget then
+                local PlayerPeds = {}
+                if next(PlayerPeds) == nil then
+                    for _, player in ipairs(GetActivePlayers()) do
+                        local ped = GetPlayerPed(player)
+                        table.insert(PlayerPeds, ped)
                     end
-                --end
-            --end
+                end
+                
+                local closestPed, closestDistance = RSCore.Functions.GetClosestPed(coords, PlayerPeds)
+
+                if closestDistance < 15.0 and closestPed ~= 0 then
+                    SellToPed(closestPed)
+                end
+            end
+
+            local startDist = GetDistanceBetweenCoords(startLocation, GetEntityCoords(GetPlayerPed(-1)))
+
+            if startDist > 10 then
+                toFarAway()
+            end
         end
 
         if not cornerselling then
@@ -176,12 +168,11 @@ function SellToPed(ped)
     end
     currentOfferDrug = availableDrugs[drugType]
 
-    local randomPrice = math.random(15, 24) * bagAmount + Config.DrugsPrice[currentOfferDrug.item]
+    local ddata = Config.DrugsPrice[currentOfferDrug.item]
+    local randomPrice = math.random(ddata.min, ddata.max) * bagAmount
     if scamChance == 5 then
        randomPrice = math.random(3, 10) * bagAmount
     end
-
-    
 
     SetEntityAsNoLongerNeeded(ped)
     ClearPedTasks(ped)
