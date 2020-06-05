@@ -62,6 +62,8 @@ Citizen.CreateThread(function()
         closestHouse = nil
 
         if RSCore ~= nil then
+            local hours = GetClockHours()
+            if hours >= Config.MinimumTime or hours <= Config.MaximumTime then
             if not inside then
                 for k, v in pairs(Config.Houses) do
                     local dist = GetDistanceBetweenCoords(PlayerPos, Config.Houses[k]["coords"]["x"], Config.Houses[k]["coords"]["y"], Config.Houses[k]["coords"]["z"], true)
@@ -86,6 +88,7 @@ Citizen.CreateThread(function()
                     end
                 end
             end
+        end
 
             if inside then
                 Citizen.Wait(1000)
@@ -111,10 +114,6 @@ Citizen.CreateThread(function()
         local pos = GetEntityCoords(ped)
 
         if inside then
-            -- if IsControlJustPressed(0, Keys["H"]) then
-            --     print(json.encode({x = Config.Houses[currentHouse]["coords"]["x"] - pos.x, y = Config.Houses[currentHouse]["coords"]["y"] - pos.y, z = Config.Houses[currentHouse]["coords"]["z"] - pos.z}))
-            -- end
-
             if(GetDistanceBetweenCoords(pos, Config.Houses[currentHouse]["coords"]["x"] + POIOffsets.exit.x, Config.Houses[currentHouse]["coords"]["y"] + POIOffsets.exit.y, Config.Houses[currentHouse]["coords"]["z"] - Config.MinZOffset + POIOffsets.exit.z, true) < 1.5)then
                 DrawText3Ds(Config.Houses[currentHouse]["coords"]["x"] + POIOffsets.exit.x, Config.Houses[currentHouse]["coords"]["y"] + POIOffsets.exit.y, Config.Houses[currentHouse]["coords"]["z"] - Config.MinZOffset + POIOffsets.exit.z, '~g~E~w~ - Om huis te verlaten')
                 if IsControlJustPressed(0, Keys["E"]) then
@@ -123,7 +122,7 @@ Citizen.CreateThread(function()
             end
 
             for k, v in pairs(Config.Houses[currentHouse]["furniture"]) do
-                if (GetDistanceBetweenCoords(pos, Config.Houses[currentHouse]["coords"]["x"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["x"], Config.Houses[currentHouse]["coords"]["y"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["y"], Config.Houses[currentHouse]["coords"]["z"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["z"] - Config.MinZOffset, true) < 1.5) then
+                if (GetDistanceBetweenCoords(pos, Config.Houses[currentHouse]["coords"]["x"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["x"], Config.Houses[currentHouse]["coords"]["y"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["y"], Config.Houses[currentHouse]["coords"]["z"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["z"] - Config.MinZOffset, true) < 1) then
                     if not Config.Houses[currentHouse]["furniture"][k]["searched"] then
                         if not Config.Houses[currentHouse]["furniture"][k]["isBusy"] then
                             DrawText3Ds(Config.Houses[currentHouse]["coords"]["x"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["x"], Config.Houses[currentHouse]["coords"]["y"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["y"], Config.Houses[currentHouse]["coords"]["z"] + Config.Houses[currentHouse]["furniture"][k]["coords"]["z"] - Config.MinZOffset, '~g~E~w~ - '..Config.Houses[currentHouse]["furniture"][k]["text"])
@@ -223,6 +222,8 @@ end
 
 RegisterNetEvent('lockpicks:UseLockpick')
 AddEventHandler('lockpicks:UseLockpick', function(isAdvanced)
+    local hours = GetClockHours()
+    if hours >= Config.MinimumTime or hours <= Config.MaximumTime then
     usingAdvanced = isAdvanced
     if usingAdvanced then
         if closestHouse ~= nil then
@@ -265,6 +266,7 @@ AddEventHandler('lockpicks:UseLockpick', function(isAdvanced)
             end
         end, "screwdriverset")
     end
+end
 end)
 
 function PoliceCall()
@@ -374,14 +376,14 @@ function LockpickDoorAnim(time)
     TaskPlayAnim(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds" ,3.0, 3.0, -1, 16, 0, false, false, false)
     openingDoor = true
     Citizen.CreateThread(function()
-        while openingDoor do
+        while true do
+            if openingDoor then
             TaskPlayAnim(PlayerPedId(), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 3.0, 3.0, -1, 16, 0, 0, 0, 0)
-            Citizen.Wait(1000)
-            time = time - 1
-            if time <= 0 then
-                openingDoor = false
+            else
                 StopAnimTask(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0)
+                break
             end
+            Citizen.Wait(1000)
         end
     end)
 end
