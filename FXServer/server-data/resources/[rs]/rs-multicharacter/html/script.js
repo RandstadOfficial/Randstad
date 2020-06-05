@@ -214,6 +214,8 @@ function refreshCharacters() {
         $("#delete").css({"display":"none"});
         $("#play").css({"display":"none"});
         rsMultiCharacters.resetAll();
+        rsMultiCharacters.fadeInDown('.character-info', '20%', 400);
+        rsMultiCharacters.fadeInDown('.characters-list', '20%', 400);
     }, 100)
 }
 
