@@ -22,20 +22,26 @@ Citizen.CreateThread(function()
 	end
 end)
 
+Config = {
+    PedCoords = {x = -813.97, y = 176.22, z = 76.74, h = -7.5, r = 1.0}, 
+    HiddenCoords = {x = -812.23, y = 182.54, z = 76.74, h = 156.5, r = 1.0}, 
+    CamCoords = {x = -814.02, y = 179.56, z = 76.74, h = 198.5, r = 1.0}, 
+}
+
 --- CODE
 
 local choosingCharacter = false
 local cam = nil
 
 function openCharMenu(bool)
+    print(bool)
     SetNuiFocus(bool, bool)
     SendNUIMessage({
-        action = "openUI",
+        action = "ui",
         toggle = bool,
     })
     choosingCharacter = bool
     skyCam(bool)
-    print('[Character Menu Loaded]')
 end
 
 RegisterNUICallback('closeUI', function()
@@ -43,6 +49,8 @@ RegisterNUICallback('closeUI', function()
 end)
 
 RegisterNUICallback('disconnectButton', function()
+    SetEntityAsMissionEntity(charPed, true, true)
+    DeleteEntity(charPed)
     TriggerServerEvent('rs-multicharacter:server:disconnect')
 end)
 
@@ -51,37 +59,38 @@ RegisterNUICallback('selectCharacter', function(data)
     DoScreenFadeOut(10)
     TriggerServerEvent('rs-multicharacter:server:loadUserData', cData)
     openCharMenu(false)
+    SetEntityAsMissionEntity(charPed, true, true)
+    DeleteEntity(charPed)
 end)
 
 RegisterNetEvent('rs-multicharacter:client:closeNUI')
 AddEventHandler('rs-multicharacter:client:closeNUI', function()
-    openCharMenu(false)
+    SetNuiFocus(false, false)
 end)
+
+local Countdown = 1
 
 RegisterNetEvent('rs-multicharacter:client:chooseChar')
 AddEventHandler('rs-multicharacter:client:chooseChar', function()
     SetNuiFocus(false, false)
+    DoScreenFadeOut(10)
+    Citizen.Wait(1000)
     -- Sets the loadingscreen shutdown to manual so that it wont dissapear when interior not loaded
     -- Loads Micheals interior
-    local interior = GetInteriorAtCoords(300.38, -991.13, -98.28)
+    local interior = GetInteriorAtCoords(-814.89, 181.95, 76.85 - 18.9)
     LoadInterior(interior)
     while not IsInteriorReady(interior) do
         Citizen.Wait(1000)
         print("[Loading Selector Interior, Please Wait!]")
     end
-    
     -- Freezes player and places player inside interior hidden room
     FreezeEntityPosition(GetPlayerPed(-1), true)
-    SetEntityCoords(GetPlayerPed(-1), 296.22, -992.08, -99.0)
-    Citizen.Wait(100)
+    SetEntityCoords(GetPlayerPed(-1), Config.HiddenCoords.x, Config.HiddenCoords.y, Config.HiddenCoords.z)
+    Citizen.Wait(1500)
     -- Closes loading screen
     ShutdownLoadingScreenNui()
-
     -- Disables NATIVE voicechat (Does not effect TokoVoip)
     NetworkSetTalkerProximity(0.0)
-
-    DoScreenFadeOut(0)
-    DoScreenFadeIn(1000)
     openCharMenu(true)
 end)
 
@@ -91,50 +100,66 @@ end
 
 RegisterNUICallback('cDataPed', function(data)
     local cData = data.cData
-	RequestModel(GetHashKey("mp_m_freemode_01"))
-
-	while not HasModelLoaded(GetHashKey("mp_m_freemode_01")) do
-	    Wait(1)
-    end
-    
     SetEntityAsMissionEntity(charPed, true, true)
     DeleteEntity(charPed)
 
     if cData ~= nil then
         RSCore.Functions.TriggerCallback('rs-multicharacter:server:getSkin', function(model, data)
-            if model ~= nil then
                 model = model ~= nil and tonumber(model) or false
-
-                if not IsModelInCdimage(model) or not IsModelValid(model) then setDefault() return end
-            
+                if model ~= nil then
                 Citizen.CreateThread(function()
-                    RequestModel(model)
-            
+                    RequestModel(model)   
                     while not HasModelLoaded(model) do
                         Citizen.Wait(0)
                     end
-
-                    charPed = CreatePed(3, model, 306.25, -991.09, -99.99, 89.5, false, true)
-                    
+                    charPed = CreatePed(2, model, Config.PedCoords.x, Config.PedCoords.y, Config.PedCoords.z - 0.98, Config.PedCoords.h, false, true)
+                    SetPedComponentVariation(charPed, 0, 0, 0, 2)
+                    FreezeEntityPosition(charPed, false)
+                    SetEntityInvincible(charPed, true)
+                    PlaceObjectOnGroundProperly(charPed)
+                    SetBlockingOfNonTemporaryEvents(charPed, true)         
                     data = json.decode(data)
-            
                     TriggerEvent('rs-clothing:client:loadPlayerClothing', data, charPed)
                 end)
             else
-                charPed = CreatePed(4, GetHashKey("mp_m_freemode_01"), 306.25, -991.09, -99.99, 89.5, false, true)
+                Citizen.CreateThread(function()
+                    local randommodels = {
+                        "mp_m_freemode_01",
+                        "mp_f_freemode_01",
+                    }
+                    local model = GetHashKey(randommodels[math.random(1, #randommodels)])
+                    RequestModel(model)
+                    while not HasModelLoaded(model) do
+                        Citizen.Wait(0)
+                    end
+                    charPed = CreatePed(2, model, Config.PedCoords.x, Config.PedCoords.y, Config.PedCoords.z - 0.98, Config.PedCoords.h, false, true)
+                    SetPedComponentVariation(charPed, 0, 0, 0, 2)
+                    FreezeEntityPosition(charPed, false)
+                    SetEntityInvincible(charPed, true)
+                    PlaceObjectOnGroundProperly(charPed)
+                    SetBlockingOfNonTemporaryEvents(charPed, true)
+                end)
             end
         end, cData.citizenid)
-    else
-        charPed = CreatePed(4, GetHashKey("mp_m_freemode_01"), 306.25, -991.09, -99.99, 89.5, false, true)
+    else 
+        Citizen.CreateThread(function()
+            local randommodels = {
+                "mp_m_freemode_01",
+                "mp_f_freemode_01",
+            }
+            local model = GetHashKey(randommodels[math.random(1, #randommodels)])
+            RequestModel(model)
+            while not HasModelLoaded(model) do
+                Citizen.Wait(0)
+            end
+            charPed = CreatePed(2, model, Config.PedCoords.x, Config.PedCoords.y, Config.PedCoords.z - 0.98, Config.PedCoords.h, false, true)
+            SetPedComponentVariation(charPed, 0, 0, 0, 2)
+            FreezeEntityPosition(charPed, false)
+            SetEntityInvincible(charPed, true)
+            PlaceObjectOnGroundProperly(charPed)
+            SetBlockingOfNonTemporaryEvents(charPed, true)
+        end)
     end
-
-    Citizen.Wait(100)
-    
-    SetEntityHeading(charPed, 89.5)
-    FreezeEntityPosition(charPed, false)
-    SetEntityInvincible(charPed, true)
-    PlaceObjectOnGroundProperly(charPed)
-    SetBlockingOfNonTemporaryEvents(charPed, true)
 end)
 
 RegisterNUICallback('setupCharacters', function()
@@ -143,9 +168,12 @@ RegisterNUICallback('setupCharacters', function()
             action = "setupCharacters",
             characters = result
         })
-        SetTimecycleModifier('default')
     end)
 end)
+
+RegisterNUICallback('removeBlur', function()
+            SetTimecycleModifier('default')
+    end)
 
 RegisterNUICallback('createNewCharacter', function(data)
     local cData = data
@@ -166,12 +194,19 @@ RegisterNUICallback('removeCharacter', function(data)
 end)
 
 function skyCam(bool)
+    SetRainFxIntensity(0.0)
+    TriggerEvent('rs-weathersync:client:DisableSync')
+    SetWeatherTypePersist('EXTRASUNNY')
+    SetWeatherTypeNow('EXTRASUNNY')
+    SetWeatherTypeNowPersist('EXTRASUNNY')
+    NetworkOverrideClockTime(12, 0, 0)
+
     if bool then
-        DoScreenFadeIn(10)
+        DoScreenFadeIn(1000)
         SetTimecycleModifier('hud_def_blur')
         SetTimecycleModifierStrength(1.0)
         FreezeEntityPosition(GetPlayerPed(-1), false)
-        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", 304.31, -991.16, -98.99, -2.00, 0.00, 269.50, 85.00, false, 0)
+        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -813.46, 178.95, 76.85, 0.0 ,0.0, 174.5, 60.00, false, 0)
         SetCamActive(cam, true)
         RenderScriptCams(true, false, 1, true, true)
     else
