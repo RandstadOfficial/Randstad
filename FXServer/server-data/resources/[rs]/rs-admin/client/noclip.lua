@@ -57,6 +57,7 @@ end
 function turnNoClipOff()
     local playerPed = PlayerPedId()
     local inVehicle = IsPedInAnyVehicle( playerPed, false )
+    ResetEntityAlpha(GetPlayerPed(-1))
 
     if ( inVehicle ) then
         local veh = GetVehiclePedIsUsing( playerPed )
@@ -82,9 +83,10 @@ function turnNoClipOn()
     blockinput = true -- Prevent Trainer access while in noclip mode.
     local playerPed = PlayerPedId()
     local inVehicle = IsPedInAnyVehicle( playerPed, false )
+    SetEntityAlpha(GetPlayerPed(-1), 127, false)
 
     if ( not inVehicle ) then
-        LoadAnimDict( noclip_ANIM_A )
+        LoadAnimDict("mp_sleep")
         loadedAnims = true
     end
 
@@ -189,7 +191,7 @@ Citizen.CreateThread( function()
 
                 -- Play animation on foot.
                 if ( not inVehicle ) then
-                    TaskPlayAnim( playerPed, noclip_ANIM_A, noclip_ANIM_B, 8.0, 0.0, -1, 9, 0, 0, 0, 0 )
+                    TaskPlayAnim(playerPed, "mp_sleep", "bind_pose_180", 8.0, 0.0, -1, 9, 0, 0, 0, 0 )
                 end
 
                 local xVect = forwardPush * math.sin( degToRad( curHeading ) ) * -1.0

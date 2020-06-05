@@ -12,6 +12,7 @@ end)
 
 --- CODE
 
+local PlayerBlips = {}
 RSAdmin = {}
 RSAdmin.Functions = {}
 in_noclip_mode = false
@@ -35,27 +36,6 @@ RSAdmin.Functions.DrawText3D = function(x, y, z, text, lines)
     DrawRect(0.0, 0.0+0.0125 * lines, 0.017+ factor, 0.03 * lines, 0, 0, 0, 75)
     ClearDrawOrigin()
 end
-
--- RSAdmin.Functions.GetClosestPlayer = function()
---     local closestPlayers = RSCore.Functions.GetPlayersFromCoords()
---     local closestDistance = -1
---     local closestPlayer = -1
---     local coords = GetEntityCoords(GetPlayerPed(-1))
-
---     for i=1, #closestPlayers, 1 do
---         if closestPlayers[i] ~= PlayerId() then
---             local pos = GetEntityCoords(GetPlayerPed(closestPlayers[i]))
---             local distance = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, coords.x, coords.y, coords.z, true)
-
---             if closestDistance == -1 or closestDistance > distance then
---                 closestPlayer = closestPlayers[i]
---                 closestDistance = distance
---             end
---         end
--- 	end
-
--- 	return closestPlayer, closestDistance
--- end
 
 GetPlayers = function()
     local players = {}
@@ -173,27 +153,34 @@ lastSpectateCoord = nil
 
 myPermissionRank = "user"
 
-function getPlayers()
-    players = {}
+local DealersData = {}
 
-    for _, player in ipairs(GetActivePlayers()) do
-        table.insert(players, {
+function getPlayers()
+    local players = {}
+    for k, player in pairs(GetActivePlayers()) do
+        local playerId = GetPlayerServerId(player)
+        players[k] = {
             ['ped'] = GetPlayerPed(player),
             ['name'] = GetPlayerName(player),
             ['id'] = player,
-            ['serverid'] = GetPlayerServerId(player),
-        })
+            ['serverid'] = playerId,
+        }
     end
+
+    table.sort(players, function(a, b)
+        return a.serverid < b.serverid
+    end)
 
     return players
 end
+
 
 RegisterNetEvent('rs-admin:client:openMenu')
 AddEventHandler('rs-admin:client:openMenu', function(group)
     WarMenu.OpenMenu('admin')
     myPermissionRank = group
+    DealersData = dealers
 end)
-
 
 local currentPlayerMenu = nil
 local currentPlayer = 0
@@ -211,6 +198,9 @@ Citizen.CreateThread(function()
         "adminOptions",
         "adminOpt",
         "selfOptions",
+        "dealerManagement",
+        "allDealers",
+        "createDealer",
     }
 
     local bans = {
@@ -265,6 +255,12 @@ Citizen.CreateThread(function()
     local currentBanIndex = 1
     local selectedBanIndex = 1
 
+    local currentMinTimeIndex = 1
+    local selectedMinTimeIndex = 1
+
+    local currentMaxTimeIndex = 1
+    local selectedMaxTimeIndex = 1
+
     local currentPermIndex = 1
     local selectedPermIndex = 1
 
@@ -275,6 +271,9 @@ Citizen.CreateThread(function()
     WarMenu.CreateSubMenu('selfOptions', 'adminOpt')
 
     WarMenu.CreateSubMenu('weatherOptions', 'serverMan')
+    WarMenu.CreateSubMenu('dealerManagement', 'serverMan')
+    WarMenu.CreateSubMenu('allDealers', 'dealerManagement')
+    WarMenu.CreateSubMenu('createDealer', 'dealerManagement')
 
     for k, v in pairs(menus) do
         WarMenu.SetMenuX(v, 0.71)
@@ -374,6 +373,7 @@ Citizen.CreateThread(function()
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened('serverMan') then
             WarMenu.MenuButton('Weather Options', 'weatherOptions')
+            --WarMenu.MenuButton('Dealer Management', 'dealerManagement')
             if WarMenu.ComboBox('Server time', times, currentBanIndex, selectedBanIndex, function(currentIndex, selectedIndex)
                 currentBanIndex = currentIndex
                 selectedBanIndex = selectedIndex
@@ -505,9 +505,46 @@ Citizen.CreateThread(function()
             end
             
             WarMenu.Display()
-        end
-
-        Citizen.Wait(3)
+        elseif WarMenu.IsMenuOpened('dealerManagement') then
+                WarMenu.MenuButton('Dealers', 'allDealers')
+                WarMenu.MenuButton('Plaats Dealer', 'createDealer')
+    
+                WarMenu.Display()
+            elseif WarMenu.IsMenuOpened('allDealers') then
+                for k, v in pairs(DealersData) do
+                    if WarMenu.MenuButton(v.name, 'allDealers') then
+                        print(v.name)
+                    end
+                end
+                WarMenu.Display()
+            elseif WarMenu.IsMenuOpened('createDealer') then
+                if WarMenu.ComboBox('Min. Tijd', times, currentMinTimeIndex, selectedMinTimeIndex, function(currentIndex, selectedIndex)
+                    currentMinTimeIndex = currentIndex
+                    selectedMinTimeIndex = selectedIndex
+                end) then
+                    RSCore.Functions.Notify('Tijd bevestigd!', 'success')
+                end
+                if WarMenu.ComboBox('Max. Tijd', times, currentMaxTimeIndex, selectedMaxTimeIndex, function(currentIndex, selectedIndex)
+                    currentMaxTimeIndex = currentIndex
+                    selectedMaxTimeIndex = selectedIndex
+                end) then
+                    RSCore.Functions.Notify('Tijd bevestigd!', 'success')
+                end
+    
+                if WarMenu.MenuButton("Bevestig Dealer", 'createDealer') then
+                    DisplayOnscreenKeyboard(1, "Dealer Naam", "Dealer Naam", "", "", "", "", 128 + 1)
+                    while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do
+                        Citizen.Wait(7)
+                    end
+                    local reason = GetOnscreenKeyboardResult()
+                    if reason ~= nil and reason ~= "" then
+                        print('create dealer: ' .. reason)
+                    end
+                end
+                WarMenu.Display()
+            end
+    
+            Citizen.Wait(3)
     end
 end)
 
@@ -568,85 +605,47 @@ Citizen.CreateThread(function()
     end
 end)
 
-local PlayerBlips = {}
-
 function toggleBlips()
-    Citizen.CreateThread(function()
-        -- while true do
-
-            if showBlips then
-                local Players = getPlayers()
-
-                for k, v in pairs(Players) do
-                    local playerPed = v["ped"]
-                    local playerName = v["name"]
-
-                    RemoveBlip(PlayerBlips[k])
-
-                    local PlayerBlip = AddBlipForEntity(playerPed)
-
-                    SetBlipSprite(PlayerBlip, 1)
-                    SetBlipColour(PlayerBlip, 0)
-                    SetBlipScale  (PlayerBlip, 0.75)
-                    SetBlipAsShortRange(PlayerBlip, true)
-                    BeginTextCommandSetBlipName("STRING")
-                    AddTextComponentString('['..v["serverid"]..'] '..playerName)
-                    EndTextCommandSetBlipName(PlayerBlip)
-                    PlayerBlips[k] = PlayerBlip
-                end
-            else
-                if next(PlayerBlips) ~= nil then
-                    for k, v in pairs(PlayerBlips) do
-                        RemoveBlip(PlayerBlips[k])
-                    end
-                    PlayerBlips = {}
-                end
-                Citizen.Wait(1000)
-            end
-    end)
-end
-
-Citizen.CreateThread(function()
-    while true do
-        if showBlips then
-            if next(PlayerBlips) ~= nil then
-                for k, v in pairs(PlayerBlips) do
-                    RemoveBlip(PlayerBlips[k])
-                end
-                PlayerBlips = {}
-            end
+    if showBlips then
+        Citizen.CreateThread(function()
             local Players = getPlayers()
+
             for k, v in pairs(Players) do
                 local playerPed = v["ped"]
-                local playerName = v["name"]
-
-                RemoveBlip(PlayerBlips[k])
-
-                local PlayerBlip = AddBlipForEntity(playerPed)
-
-                SetBlipSprite(PlayerBlip, 1)
-                SetBlipColour(PlayerBlip, 0)
-                SetBlipScale  (PlayerBlip, 0.75)
-                SetBlipAsShortRange(PlayerBlip, true)
-                BeginTextCommandSetBlipName("STRING")
-                AddTextComponentString('['..v["serverid"]..'] '..playerName)
-                EndTextCommandSetBlipName(PlayerBlip)
-                PlayerBlips[k] = PlayerBlip
-            end
-
-            print('blip updated!')
-        else
-            if next(PlayerBlips) ~= nil then
-                for k, v in pairs(PlayerBlips) do
-                    RemoveBlip(PlayerBlips[k])
+                if DoesEntityExist(playerPed) then
+                    if PlayerBlips[k] == nil then
+                        local playerName = v["name"]
+            
+                        PlayerBlips[k] = AddBlipForEntity(playerPed)
+            
+                        SetBlipSprite(PlayerBlips[k], 1)
+                        SetBlipColour(PlayerBlips[k], 0)
+                        SetBlipScale  (PlayerBlips[k], 0.75)
+                        SetBlipAsShortRange(PlayerBlips[k], true)
+                        BeginTextCommandSetBlipName("STRING")
+                        AddTextComponentString('['..v["serverid"]..'] '..playerName)
+                        EndTextCommandSetBlipName(PlayerBlips[k])
+                    end
+                else
+                    if PlayerBlips[k] ~= nil then
+                        RemoveBlip(PlayerBlips[k])
+                        PlayerBlips[k] = nil
+                    end
                 end
-                PlayerBlips = {}
             end
-        end
 
-        Citizen.Wait(30000)
+            Citizen.Wait(5000)
+        end)
+    else
+        if next(PlayerBlips) ~= nil then
+            for k, v in pairs(PlayerBlips) do
+                RemoveBlip(PlayerBlips[k])
+            end
+            PlayerBlips = {}
+        end
+        Citizen.Wait(1000)
     end
-end)
+end
 
 Citizen.CreateThread(function()	
 	while true do
@@ -670,7 +669,8 @@ Citizen.CreateThread(function()
                 if IsControlJustReleased(0, 38) then
                     -- Set as missionEntity so the object can be remove (Even map objects)
                     SetEntityAsMissionEntity(entity, true, true)
-                    SetEntityAsNoLongerNeeded(entity)
+                    --SetEntityAsNoLongerNeeded(entity)
+                    --RequestNetworkControl(entity)
                     DeleteEntity(entity)
                 end
             -- Only draw of not center of map
@@ -799,7 +799,6 @@ end
 -- Raycast function for "Admin Lazer"
 function RayCastGamePlayCamera(distance)
     local cameraRotation = GetGameplayCamRot()
-    -- print(cameraRotation)
 	local cameraCoord = GetGameplayCamCoord()
 	local direction = RotationToDirection(cameraRotation)
 	local destination = 
@@ -841,4 +840,110 @@ end)
 RegisterNetEvent('rs-admin:client:SendStaffChat')
 AddEventHandler('rs-admin:client:SendStaffChat', function(name, msg)
     TriggerServerEvent('rs-admin:server:StaffChatMessage', name, msg)
+end)
+
+RegisterNetEvent('rs-admin:client:SaveCar')
+AddEventHandler('rs-admin:client:SaveCar', function()
+    local ped = GetPlayerPed(-1)
+    local veh = GetVehiclePedIsIn(ped)
+
+    if veh ~= nil and veh ~= 0 then
+        local plate = GetVehicleNumberPlateText(veh)
+        local props = RSCore.Functions.GetVehicleProperties(veh)
+        local hash = props.model
+        if RSCore.Shared.VehicleModels[hash] ~= nil and next(RSCore.Shared.VehicleModels[hash]) ~= nil then
+            TriggerServerEvent('rs-admin:server:SaveCar', props, RSCore.Shared.VehicleModels[hash], GetHashKey(veh), plate)
+        else
+            RSCore.Functions.Notify('Je kan dit voertuig niet in je garage zetten..', 'error')
+        end
+    else
+        RSCore.Functions.Notify('Je zit niet in een voertuig..', 'error')
+    end
+end)
+
+function LoadPlayerModel(skin)
+    RequestModel(skin)
+    while not HasModelLoaded(skin) do
+        
+        Citizen.Wait(0)
+    end
+end
+
+
+local blockedPeds = {
+    "mp_m_freemode_01",
+    "mp_f_freemode_01",
+    "tony",
+    "g_m_m_chigoon_02_m",
+    "u_m_m_jesus_01",
+    "a_m_y_stbla_m",
+    "ig_terry_m",
+    "a_m_m_ktown_m",
+    "a_m_y_skater_m",
+    "u_m_y_coop",
+    "ig_car3guy1_m",
+}
+
+function isPedAllowedRandom(skin)
+    local retval = false
+    for k, v in pairs(blockedPeds) do
+        if v ~= skin then
+            retval = true
+        end
+    end
+    return retval
+end
+
+RegisterNetEvent('rs-admin:client:SetModel')
+AddEventHandler('rs-admin:client:SetModel', function(skin)
+    local ped = GetPlayerPed(-1)
+    local model = GetHashKey(skin)
+    SetEntityInvincible(ped, true)
+
+    if IsModelInCdimage(model) and IsModelValid(model) then
+        LoadPlayerModel(model)
+        SetPlayerModel(PlayerId(), model)
+
+        if isPedAllowedRandom() then
+            SetPedRandomComponentVariation(ped, true)
+        end
+        
+		SetModelAsNoLongerNeeded(model)
+	end
+	SetEntityInvincible(ped, false)
+end)
+
+RegisterNetEvent('rs-admin:client:SetSpeed')
+AddEventHandler('rs-admin:client:SetSpeed', function(speed)
+    local ped = PlayerId()
+    if speed == "fast" then
+        SetRunSprintMultiplierForPlayer(ped, 1.49)
+        SetSwimMultiplierForPlayer(ped, 1.49)
+    else
+        SetRunSprintMultiplierForPlayer(ped, 1.0)
+        SetSwimMultiplierForPlayer(ped, 1.0)
+    end
+end)
+
+RegisterNetEvent('rs-weapons:client:SetWeaponAmmoManual')
+AddEventHandler('rs-weapons:client:SetWeaponAmmoManual', function(weapon, ammo)
+    local ped = GetPlayerPed(-1)
+    if weapon ~= "current" then
+        local weapon = weapon:upper()
+        SetPedAmmo(ped, GetHashKey(weapon), ammo)
+        RSCore.Functions.Notify('+'..ammo..' Ammo voor de '..RSCore.Shared.Weapons[GetHashKey(weapon)]["label"], 'success')
+    else
+        local weapon = GetSelectedPedWeapon(ped)
+        if weapon ~= nil then
+            SetPedAmmo(ped, weapon, ammo)
+            RSCore.Functions.Notify('+'..ammo..' Ammo voor de '..RSCore.Shared.Weapons[weapon]["label"], 'success')
+        else
+            RSCore.Functions.Notify('Je hebt geen wapen vast..', 'error')
+        end
+    end
+end)
+
+RegisterNetEvent('rs-admin:client:GiveNuiFocus')
+AddEventHandler('rs-admin:client:GiveNuiFocus', function(focus, mouse)
+    SetNuiFocus(focus, mouse)
 end)
