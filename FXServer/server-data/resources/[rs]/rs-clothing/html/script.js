@@ -19,7 +19,6 @@ $(document).on('click', '.clothing-menu-header-btn', function(e){
     selectedTab = this;
 
     $(".clothing-menu-"+category+"-container").css({"display": "block"});
-    $.post('http://rs-clothing/PlaySound');
 })
 
 RSClothing.ResetItemTexture = function(obj, category) {
@@ -99,7 +98,6 @@ $(document).on('click', '.clothing-menu-option-item-right', function(e){
                 }
             }
         }
-        $.post('http://rs-clothing/PlaySound');
     }
 });
 
@@ -167,7 +165,6 @@ $(document).on('click', '.clothing-menu-option-item-left', function(e){
                 }
             }
         }
-        $.post('http://rs-clothing/PlaySound');
     }
 });
 
@@ -248,7 +245,6 @@ $(document).on('click', '.clothing-menu-header-camera-btn', function(e){
             selectedCam = this;
         }
     }
-    $.post('http://rs-clothing/PlaySound');
 });
 
 $(document).on('keydown', function() {
@@ -317,7 +313,6 @@ $(document).on('click', "#cancel-menu", function(e){
     e.preventDefault();
     RSClothing.Close();
     $.post('http://rs-clothing/resetOutfit');
-    $.post('http://rs-clothing/PlaySound');
 });
 
 RSClothing.SetCurrentValues = function(clothingValues) {
@@ -332,7 +327,6 @@ RSClothing.SetCurrentValues = function(clothingValues) {
 }
 
 RSClothing.Open = function(data) {
-
     clothingCategorys = data.currentClothing;
 
     if (data.hasTracker) {
@@ -398,7 +392,6 @@ $(document).on('click', '.clothing-menu-outfit-option-button', function(e){
         outfitData: oData.outfitData,
         outfitName: oData.outfitLabel
     }))
-    $.post('http://rs-clothing/PlaySound');
 });
 
 $(document).on('click', '.clothing-menu-myOutfit-option-button', function(e){
@@ -411,7 +404,6 @@ $(document).on('click', '.clothing-menu-myOutfit-option-button', function(e){
         outfitName: outfitData.outfitname,
         outfitId: outfitData.outfitId,
     }))
-    $.post('http://rs-clothing/PlaySound');
 });
 
 $(document).on('click', '.clothing-menu-myOutfit-option-button-remove', function(e){
@@ -424,7 +416,6 @@ $(document).on('click', '.clothing-menu-myOutfit-option-button-remove', function
         outfitName: outfitData.outfitname,
         outfitId: outfitData.outfitId,
     }));
-    $.post('http://rs-clothing/PlaySound');
 });
 
 RSClothing.Close = function() {
@@ -442,7 +433,6 @@ RSClothing.Close = function() {
     selectedCam = null;
     selectedTab = null;
     lastCategory = null;
-    $.post('http://rs-clothing/PlaySound');
     $(".clothing-menu-container").css({"display":"block"}).animate({right: "-25vw",}, 200, function(){
         $(".clothing-menu-container").css({"display":"none"});
     });
@@ -493,17 +483,17 @@ RSClothing.ResetValues = function() {
         $(input).val(cat.defaultItem);
         $(texture).val(cat.defaultTexture);
 
-        $.post('http://rs-clothing/updateSkin', JSON.stringify({
-            clothingType: i,
-            articleNumber: cat.defaultItem,
-            type: "item",
-        }));
+        // $.post('http://rs-clothing/updateSkin', JSON.stringify({
+        //     clothingType: i,
+        //     articleNumber: cat.defaultItem,
+        //     type: "item",
+        // }));
 
-        $.post('http://rs-clothing/updateSkin', JSON.stringify({
-            clothingType: i,
-            articleNumber: cat.defaultTexture,
-            type: "texture",
-        }));
+        // $.post('http://rs-clothing/updateSkin', JSON.stringify({
+        //     clothingType: i,
+        //     articleNumber: cat.defaultTexture,
+        //     type: "texture",
+        // }));
     })
 }
 
@@ -515,7 +505,6 @@ $(document).on('click', '#save-outfit', function(e){
     });
 
     $(".clothing-menu-save-outfit-name").fadeIn(150);
-    $.post('http://rs-clothing/PlaySound');
 });
 
 $(document).on('click', '#save-outfit-save', function(e){
@@ -527,7 +516,6 @@ $(document).on('click', '#save-outfit-save', function(e){
     $.post('http://rs-clothing/saveOutfit', JSON.stringify({
         outfitName: $("#outfit-name").val()
     }));
-    $.post('http://rs-clothing/PlaySound');
 });
 
 $(document).on('click', '#cancel-outfit-save', function(e){
@@ -535,7 +523,6 @@ $(document).on('click', '#cancel-outfit-save', function(e){
 
     $(".clothing-menu-container").css({"display":"block"}).animate({right: 0,}, 200);
     $(".clothing-menu-save-outfit-name").fadeOut(150);
-    $.post('http://rs-clothing/PlaySound');
 });
 
 $(document).on('click', '.change-camera-button', function(e){

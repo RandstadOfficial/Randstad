@@ -515,10 +515,6 @@ AddEventHandler('rs-clothing:client:reloadOutfits', function(myOutfits)
     })
 end)
 
-RegisterNUICallback("PlaySound", function(data, cb)
-    PlaySound(-1, "CLICK_BACK", "WEB_NAVIGATION_SOUNDS_PHONE", 0, 0, 1)
-end)
-
 function enableCam()
     -- Camera
     local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 2.0, 0)
@@ -755,7 +751,7 @@ function ChangeVariation(data)
             SetPedComponentVariation(ped, 2, item, 0, 0)
             skinData["hair"].item = item
         elseif type == "texture" then
-            SetPedHairColor(GetPlayerPed(-1), item, item)
+            SetPedHairColor(ped, item, item)
             skinData["hair"].texture = item
         end
     elseif clothingCategory == "eyebrows" then
@@ -948,17 +944,6 @@ function ChangeVariation(data)
     GetMaxValues()
 end
 
--- Citizen.CreateThread(function()
---     Citizen.Wait(1000)
---     for _, skin in pairs(Config.WomanPlayerModels) do
---         LoadPlayerModel(skin)
---     end
-
---     for _, skin in pairs(Config.ManPlayerModels) do
---         LoadPlayerModel(skin)
---     end
--- end)
-
 function LoadPlayerModel(skin)
     RequestModel(skin)
     while not HasModelLoaded(skin) do
@@ -993,27 +978,69 @@ end
 function ChangeToSkinNoUpdate(skin)
     local ped = GetPlayerPed(-1)
     local model = GetHashKey(skin)
-    SetEntityInvincible(ped, true)
-    if IsModelInCdimage(model) and IsModelValid(model) then
-        LoadPlayerModel(model)
+    Citizen.CreateThread(function()
+        RequestModel(model)
+        while not HasModelLoaded(model) do
+            RequestModel(model)
+            Citizen.Wait(0)
+        end
         SetPlayerModel(PlayerId(), model)
-
-        print('hash: '..model)
+        SetPedComponentVariation(GetPlayerPed(-1), 0, 0, 0, 2)
 
         for k, v in pairs(skinData) do
-            skinData[k].item = skinData[k].defaultItem
-            skinData[k].texture = skinData[k].defaultTexture
+            if skin == "mp_m_freemode_01" or skin == "mp_f_freemode_01" then
+                ChangeVariation({
+                    clothingType = k,
+                    articleNumber = v.defaultItem,
+                    type = "item",
+                })
+            else
+                if k ~= "face" and k ~= "hair" then
+                    ChangeVariation({
+                        clothingType = k,
+                        articleNumber = v.defaultItem,
+                        type = "item",
+                    })
+                end
+            end
+            
+            if skin == "mp_m_freemode_01" or skin == "mp_f_freemode_01" then
+                ChangeVariation({
+                    clothingType = k,
+                    articleNumber = v.defaultTexture,
+                    type = "texture",
+                })
+            else
+                if k ~= "face" and k ~= "hair" then
+                    ChangeVariation({
+                        clothingType = k,
+                        articleNumber = v.defaultTexture,
+                        type = "texture",
+                    })
+                end
+            end
         end
+    end)
 
-        if isPedAllowedRandom() then
-            SetPedRandomComponentVariation(ped, true)
-        end
+    -- SetEntityInvincible(ped, true)
+    -- if IsModelInCdimage(model) and IsModelValid(model) then
+    --     LoadPlayerModel(model)
+    --     SetPlayerModel(PlayerId(), model)
+
+    --     for k, v in pairs(skinData) do
+    --         skinData[k].item = skinData[k].defaultItem
+    --         skinData[k].texture = skinData[k].defaultTexture
+    --     end
+
+    --     if isPedAllowedRandom() then
+    --         SetPedRandomComponentVariation(ped, true)
+    --     end
         
-        SendNUIMessage({action = "toggleChange", allow = true})
-		SetModelAsNoLongerNeeded(model)
-	end
-	SetEntityInvincible(ped, false)
-    GetMaxValues()
+    --     SendNUIMessage({action = "toggleChange", allow = true})
+	-- 	SetModelAsNoLongerNeeded(model)
+	-- end
+	-- SetEntityInvincible(ped, false)
+    -- GetMaxValues()
 end
 
 RegisterNUICallback('setCurrentPed', function(data, cb)
@@ -1062,23 +1089,17 @@ end)
 RegisterNetEvent("rs-clothes:loadSkin")
 AddEventHandler("rs-clothes:loadSkin", function(new, model, data)
     model = model ~= nil and tonumber(model) or false
-
-	SetEntityInvincible(GetPlayerPed(-1),true)
-    if IsModelInCdimage(model) and IsModelValid(model) then
-		RequestModel(model)
-		while not HasModelLoaded(model) do
+    Citizen.CreateThread(function()
+        RequestModel(model)
+        while not HasModelLoaded(model) do
+            RequestModel(model)
             Citizen.Wait(0)
-		end
+        end
         SetPlayerModel(PlayerId(), model)
-
-        SetModelAsNoLongerNeeded(model)
-
-        SetEntityInvincible(GetPlayerPed(-1),false)
-    
+        SetPedComponentVariation(GetPlayerPed(-1), 0, 0, 0, 2)
         data = json.decode(data)
-        
         TriggerEvent('rs-clothing:client:loadPlayerClothing', data, GetPlayerPed(-1))
-	end
+    end)
 end)
 
 RegisterNetEvent('rs-clothing:client:loadPlayerClothing')
