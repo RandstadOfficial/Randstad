@@ -130,8 +130,10 @@ end
 
 knockDealerDoor = function()
     local hours = GetClockHours()
+    local min = Config.Dealers[currentDealer]["time"]["min"]
+    local max = Config.Dealers[currentDealer]["time"]["max"]
 
-    if (hours >= Config.Dealers[currentDealer]["time"]["min"] and hours < 24) or (hours <= Config.Dealers[currentDealer]["time"]["max"] and hours > 0) then
+    if hours >= min and hours <= max then
         knockDoorAnim(true)
     else
         knockDoorAnim(false)
@@ -172,13 +174,16 @@ function knockDoorAnim(home)
         TaskPlayAnim(PlayerPed, knockAnimLib, "exit", 3.0, 3.0, -1, 1, 0, false, false, false)
         knockingDoor = false
         Citizen.Wait(1000)
+        dealerIsHome = true
         if Config.Dealers[currentDealer]["name"] == "Ouweheer" then
             TriggerEvent("chatMessage", "Dealer "..Config.Dealers[currentDealer]["name"], "normal", 'Goedendag mijn kind, wat kan ik voor je betekenen?')
+        elseif Config.Dealers[currentDealer]["name"] == "Fred" then
+            dealerIsHome = false
+            TriggerEvent("chatMessage", "Dealer "..Config.Dealers[currentDealer]["name"], "normal", 'Ik doe helaas geen zaken meer... Hadden jullie maar beter met me om moeten gaan.')
         else
             TriggerEvent("chatMessage", "Dealer "..Config.Dealers[currentDealer]["name"], "normal", 'Yo '..myData.charinfo.firstname..', wat kan ik voor je betekenen?')
         end
         -- knockTimeout()
-        dealerIsHome = true
     else
         TriggerServerEvent("InteractSound_SV:PlayOnSource", "knock_door", 0.2)
         Citizen.Wait(100)
@@ -218,7 +223,7 @@ function requestDelivery()
         ["itemData"] = Config.DeliveryItems[item]
     }
     TriggerServerEvent('rs-drugs:server:giveDeliveryItems', amount)
-    SetTimeout(math.random(10000, 30000), function()
+    SetTimeout(7000, function()
         TriggerServerEvent('rs-phone:server:sendNewMail', {
             sender = Config.Dealers[currentDealer]["name"],
             subject = "Aflever Locatie",
