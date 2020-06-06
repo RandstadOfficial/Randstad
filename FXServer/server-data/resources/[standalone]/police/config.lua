@@ -89,7 +89,7 @@ Config.ArmoryWhitelist = {
     "YND19022", -- Maestro
     "GFE30137", -- Dave
     "ZOY23072", -- Anton
-    "", -- Danny
+    "DHU97474", -- Danny
 	"LYE72460", -- Birdzor
 }
 

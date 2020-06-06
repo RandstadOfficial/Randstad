@@ -23,7 +23,7 @@ RSConfig.Player.Bloodtypes = {
 }
 
 RSConfig.Server = {} -- General server config
-RSConfig.Server.closed = true -- Set server closed (no one can join except people with ace permission 'rsadmin.join')
+RSConfig.Server.closed = false -- Set server closed (no one can join except people with ace permission 'rsadmin.join')
 RSConfig.Server.closedReason = "Nog een klein beetje geduld..." -- Reason message to display when people can't join the server
 RSConfig.Server.uptime = 0 -- Time the server has been up.
 RSConfig.Server.whitelist = false -- Enable or disable whitelist on the server
