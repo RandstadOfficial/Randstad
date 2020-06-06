@@ -36,15 +36,15 @@ end
 
 Config.Dealers = {
     [1] = {
-        ["name"] = "Tony",
+        ["name"] = "Hassan",
         ["coords"] = {
-            ["x"] = -1928.3, 
-            ["y"] = 1779.46, 
-            ["z"] = 173.09, 
+            ["x"] = -3108.523, 
+            ["y"] = 303.976, 
+            ["z"] = 8.38, 
         },
         ["time"] = {
-            ["min"] = 22,
-            ["max"] = 4,
+            ["min"] = 9,
+            ["max"] = 15,
         },
         ["products"] = {
             [1] = {
@@ -86,15 +86,15 @@ Config.Dealers = {
         },
     },
     [2] = {
-        ["name"] = "Garry",
+        ["name"] = "Anita",
         ["coords"] = {
-            ["x"] = 1385.17, 
-            ["y"] = 3659.42, 
-            ["z"] = 34.92, 
+            ["x"] = 378.79, 
+            ["y"] = 792.55, 
+            ["z"] = 190.40, 
         },
         ["time"] = {
-            ["min"] = 1,
-            ["max"] = 4,
+            ["min"] = 17,
+            ["max"] = 23,
         },
         ["products"] = {
             [1] = {
@@ -133,29 +133,29 @@ Config.Dealers = {
                 slot = 4,
                 minrep = 180,
             },
-            [5] = {
-                name = "weapon_snspistol",
-                price = 5000,
-                amount = 1,
-                info = {
-                    serie = tostring(Config.RandomInt(2) .. Config.RandomStr(3) .. Config.RandomInt(1) .. Config.RandomStr(2) .. Config.RandomInt(3) .. Config.RandomStr(4))
-                },
-                type = "item",
-                slot = 5,
-                minrep = 200,
-            },
+            -- [5] = {
+            --     name = "weapon_snspistol",
+            --     price = 5000,
+            --     amount = 1,
+            --     info = {
+            --         serie = tostring(Config.RandomInt(2) .. Config.RandomStr(3) .. Config.RandomInt(1) .. Config.RandomStr(2) .. Config.RandomInt(3) .. Config.RandomStr(4))
+            --     },
+            --     type = "item",
+            --     slot = 5,
+            --     minrep = 200,
+            -- },
         },
     },
     [3] = {
-        ["name"] = "Fred",
+        ["name"] = "Mario",
         ["coords"] = {
-            ["x"] = -1263.55, 
-            ["y"] = -1142.7, 
-            ["z"] = 7.54, 
+            ["x"] = 854.60, 
+            ["y"] = -2112.83, 
+            ["z"] = 31.54, 
         },
         ["time"] = {
-            ["min"] = 22,
-            ["max"] = 10,
+            ["min"] = 6,
+            ["max"] = 14,
         },
         ["products"] = {
             [1] = {
@@ -194,29 +194,29 @@ Config.Dealers = {
                 slot = 4,
                 minrep = 140,
             },
-            [5] = {
-                name = "weapon_snspistol",
-                price = 7000,
-                amount = 3,
-                info = {
-                    serie = tostring(Config.RandomInt(2) .. Config.RandomStr(3) .. Config.RandomInt(1) .. Config.RandomStr(2) .. Config.RandomInt(3) .. Config.RandomStr(4))
-                },
-                type = "item",
-                slot = 5,
-                minrep = 650,
-            },
+            -- [5] = {
+            --     name = "weapon_snspistol",
+            --     price = 7000,
+            --     amount = 3,
+            --     info = {
+            --         serie = tostring(Config.RandomInt(2) .. Config.RandomStr(3) .. Config.RandomInt(1) .. Config.RandomStr(2) .. Config.RandomInt(3) .. Config.RandomStr(4))
+            --     },
+            --     type = "item",
+            --     slot = 5,
+            --     minrep = 650,
+            -- },
         },
     },
     [4] = {
-        ["name"] = "Viktor",
+        ["name"] = "Sjors",
         ["coords"] = {
-            ["x"] = 802.99, 
-            ["y"] = 2174.9, 
-            ["z"] = 53.07, 
+            ["x"] = -829.99, 
+            ["y"] = -1255.31, 
+            ["z"] = 6.58, 
         },
         ["time"] = {
-            ["min"] = 22,
-            ["max"] = 10,
+            ["min"] = 15,
+            ["max"] = 22,
         },
         ["products"] = {
             [1] = {
@@ -312,15 +312,15 @@ Config.Dealers = {
         },
     },
     [5] = {
-        ["name"] = "Julio",
+        ["name"] = "Kevin",
         ["coords"] = {
-            ["x"] = -252.12, 
-            ["y"] = 6235.04, 
-            ["z"] = 31.48, 
+            ["x"] = -679.15, 
+            ["y"] = 5834.33, 
+            ["z"] = 17.33, 
         },
         ["time"] = {
-            ["min"] = 15,
-            ["max"] = 22,
+            ["min"] = 21,
+            ["max"] = 5,
         },
         ["products"] = {
             [1] = {
@@ -416,15 +416,15 @@ Config.Dealers = {
         },
     },
     [6] = {
-        ["name"] = "Ricardo",
+        ["name"] = "Trevor",
         ["coords"] = {
-            ["x"] = -353.43, 
-            ["y"] = -2265.67, 
-            ["z"] = 7.6, 
+            ["x"] = 2162.90, 
+            ["y"] = 3375.08, 
+            ["z"] = 46.46, 
         },
         ["time"] = {
-            ["min"] = 15,
-            ["max"] = 22,
+            ["min"] = 8,
+            ["max"] = 15,
         },
         ["products"] = {
             [1] = {
@@ -456,12 +456,12 @@ Config.Dealers = {
             }
         },
     },
-    [6] = {
-        ["name"] = "Ouweheer",
+    [7] = {
+        ["name"] = "Oma",
         ["coords"] = {
-            ["x"] = 1535.87, 
-            ["y"] = 2231.97, 
-            ["z"] = 77.69,
+            ["x"] = -50.25, 
+            ["y"] = 1911.26, 
+            ["z"] = 195.71,
         },
         ["time"] = {
             ["min"] = 1,
@@ -544,11 +544,11 @@ Config.DeliveryLocations = {
         }
     },
     [3] = {
-        ["label"] = "Vinewood Video",
+        ["label"] = "Taxi",
         ["coords"] = {
-            ["x"] = 223.98,
-            ["y"] = 121.53,
-            ["z"] = 102.76,
+            ["x"] = 882.67,
+            ["y"] = -160.26,
+            ["z"] = 77.11,
         }
     },
     [4] = {
