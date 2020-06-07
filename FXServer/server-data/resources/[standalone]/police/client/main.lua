@@ -467,6 +467,11 @@ AddEventHandler('police:client:SendToJail', function(time)
     TriggerEvent("prison:client:Enter", time)
 end)
 
+RegisterNetEvent('police:client:SendToUnJail')
+AddEventHandler('police:client:SendToUnJail', function(time)
+    TriggerEvent("prison:client:unJail")
+end)
+
 function RadarSound()
     PlaySoundFrontend( -1, "Beep_Green", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1 )
     Citizen.Wait(100)

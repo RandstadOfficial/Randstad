@@ -149,6 +149,35 @@ AddEventHandler('prison:client:Enter', function(time)
 	RSCore.Functions.Notify("Doe wat werk voor strafvermindering, momentele baan: "..Config.Jobs[currentJob])
 end)
 
+RegisterNetEvent('prison:client:unJail')
+AddEventHandler('prison:client:unJail', function()
+	jailTime = 0
+	DoScreenFadeOut(500)
+	while not IsScreenFadedOut() do
+		Citizen.Wait(10)
+	end
+	TriggerServerEvent("prison:server:SetJailStatus", 0)
+	TriggerServerEvent("prison:server:GiveJailItems")
+	TriggerEvent("chatMessage", "SYSTEM", "warning", "Je hebt je bezit weer terug ontvangen..")
+	inJail = false
+	RemoveBlip(currentBlip)
+	RemoveBlip(CellsBlip)
+	CellsBlip = nil
+	RemoveBlip(TimeBlip)
+	TimeBlip = nil
+	RSCore.Functions.Notify("Je bent vervroegd vrijgelaten!")
+	DoScreenFadeOut(500)
+	while not IsScreenFadedOut() do
+		Citizen.Wait(10)
+	end
+	SetEntityCoords(PlayerPedId(), Config.Locations["outside"].coords.x, Config.Locations["outside"].coords.y, Config.Locations["outside"].coords.z, 0, 0, 0, false)
+	SetEntityHeading(PlayerPedId(), Config.Locations["outside"].coords.h)
+
+	Citizen.Wait(500)
+
+	DoScreenFadeIn(1000)
+end)
+
 RegisterNetEvent('prison:client:Leave')
 AddEventHandler('prison:client:Leave', function()
 	if jailTime > 0 then 
