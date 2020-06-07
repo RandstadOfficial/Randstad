@@ -24,16 +24,16 @@ Config.DisableHardCap = true
 Config.ConnectTimeOut = 600
 
 -- will remove players from queue if the server doesn't recieve a message from them within: __ seconds
-Config.QueueTimeOut = 90
+Config.QueueTimeOut = 120
 
 -- will give players temporary priority when they disconnect and when they start loading in
-Config.EnableGrace = false
+Config.EnableGrace = true
 
 -- how much priority power grace time will give
 Config.GracePower = 5
 
 -- how long grace time lasts in seconds
-Config.GraceTime = 480
+Config.GraceTime = 120
 
 -- on resource start, players can join the queue but will not let them join for __ milliseconds
 -- this will let the queue settle and lets other resources finish initializing
