@@ -679,7 +679,7 @@ AddEventHandler('rs-phone:client:RecievedBankNotify', function(amount, iban)
             SendNUIMessage({
                 task = "phoneNotification",
                 message = {
-                    title = '<i class="fas fa-university"></i> EBank',
+                    title = '<i class="fas fa-university"></i> RBank',
                     message = "Je hebt &euro; "..amount..",- ontvangen van "..iban.."!"
                 }
             })
