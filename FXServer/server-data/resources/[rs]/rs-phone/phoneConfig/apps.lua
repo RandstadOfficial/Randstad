@@ -42,7 +42,7 @@ Config.PhoneApps = {
         color = "#e2c833",
         icon = "fas fa-university",
         style = "padding-left: 12px !important;",
-        tooltipText = "EBank",
+        tooltipText = "RBank",
         job = nil,
         slot = 5,
     },
