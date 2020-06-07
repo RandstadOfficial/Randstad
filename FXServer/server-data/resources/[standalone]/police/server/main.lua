@@ -162,6 +162,24 @@ AddEventHandler('police:server:JailPlayer', function(playerId, time)
     end
 end)
 
+RegisterServerEvent('police:server:UnJailPlayer')
+AddEventHandler('police:server:UnJailPlayer', function(playerId, time)
+    local src = source
+    local Player = RSCore.Functions.GetPlayer(src)
+    local OtherPlayer = RSCore.Functions.GetPlayer(playerId)
+    local currentDate = os.date("*t")
+    if currentDate.day == 31 then currentDate.day = 30 end
+
+    if Player.PlayerData.job.name == "police" then
+        if OtherPlayer ~= nil then
+            OtherPlayer.Functions.SetMetaData("injail", 0)
+
+            TriggerClientEvent("police:client:SendToUnJail", OtherPlayer.PlayerData.source, time)
+            TriggerClientEvent('RSCore:Notify', src, "Je hebt de persoon naar de gevangenis gestuurd voor "..time.." maanden")
+        end
+    end
+end)
+
 RegisterServerEvent('police:server:SetHandcuffStatus')
 AddEventHandler('police:server:SetHandcuffStatus', function(isHandcuffed)
 	local src = source
@@ -821,6 +839,16 @@ RSCore.Commands.Add("jail", "Stuur een persoon naar de gevangenis", {{name="id",
         else
             TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Tijd moet hoger zijn dan 0")
         end
+    else
+        TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Dit command is voor hulpdiensten!")
+    end
+end)
+
+RSCore.Commands.Add("unjail", "Stuur een persoon naar de gevangenis", {{name="id", help="Speler ID"}}, true, function(source, args)
+	local Player = RSCore.Functions.GetPlayer(source)
+    if Player.PlayerData.job.name == "police" then
+        local playerId = tonumber(args[1])
+        TriggerClientEvent("police:client:UnJailCommand", source, playerId, 0)
     else
         TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Dit command is voor hulpdiensten!")
     end

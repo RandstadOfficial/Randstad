@@ -162,6 +162,11 @@ AddEventHandler('police:client:JailCommand', function(playerId, time)
     TriggerServerEvent("police:server:JailPlayer", playerId, tonumber(time))
 end)
 
+RegisterNetEvent('police:client:UnJailCommand')
+AddEventHandler('police:client:UnJailCommand', function(playerId, time)
+    TriggerServerEvent("police:server:UnJailPlayer", playerId, tonumber(time))
+end)
+
 RegisterNetEvent('police:client:BillCommand')
 AddEventHandler('police:client:BillCommand', function(playerId, price)
     TriggerServerEvent("police:server:BillPlayer", playerId, tonumber(price))
