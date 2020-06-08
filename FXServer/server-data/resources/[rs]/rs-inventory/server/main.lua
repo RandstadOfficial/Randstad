@@ -1433,6 +1433,6 @@ end)
 RSCore.Functions.CreateUseableItem("walkstick", function(source, item)
     local Player = RSCore.Functions.GetPlayer(source)
 	if Player.Functions.GetItemBySlot(item.slot) ~= nil then
-        TriggerClientEvent("animations:UseWandelStok", -1)
+        TriggerClientEvent("animations:UseWandelStok", source)
     end
 end)

@@ -116,7 +116,7 @@ Config.Products = {
             amount = 50,
             info = {},
             type = "item",
-            slot = 12,
+            slot = 13,
         },
     },
     ["hardware"] = {
