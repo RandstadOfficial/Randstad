@@ -47,6 +47,21 @@ RegisterNetEvent('RSCore:Client:OnJobUpdate')
 AddEventHandler('RSCore:Client:OnJobUpdate', function(JobInfo)
     PlayerJob = JobInfo
     TriggerServerEvent("police:server:UpdateBlips")
+    if JobInfo.name == "police" then
+        if PlayerJob.onduty then
+            TriggerServerEvent("QBCore:ToggleDuty")
+            onDuty = false
+        end
+    end
+
+    if (PlayerJob ~= nil) and PlayerJob.name ~= "police" then
+        if DutyBlips ~= nil then 
+            for k, v in pairs(DutyBlips) do
+                RemoveBlip(v)
+            end
+        end
+        DutyBlips = {}
+    end
 end)
 
 RegisterNetEvent('RSCore:Client:OnPlayerLoaded')
@@ -67,6 +82,15 @@ AddEventHandler('RSCore:Client:OnPlayerLoaded', function()
     else
         local trackerClothingData = {outfitData = {["accessory"]   = { item = -1, texture = 0}}}
         TriggerEvent('rs-clothing:client:loadOutfit', trackerClothingData)
+    end
+
+    if (PlayerJob ~= nil) and PlayerJob.name ~= "police" then
+        if DutyBlips ~= nil then 
+            for k, v in pairs(DutyBlips) do
+                RemoveBlip(v)
+            end
+        end
+        DutyBlips = {}
     end
 end)
 
