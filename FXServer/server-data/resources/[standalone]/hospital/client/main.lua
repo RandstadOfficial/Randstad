@@ -201,13 +201,13 @@ Citizen.CreateThread(function()
             local pos = GetEntityCoords(GetPlayerPed(-1))
 
             if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["checking"].x, Config.Locations["checking"].y, Config.Locations["checking"].z, true) < 1.5) then
-                if doctorCount > 1 then
+                if doctorCount >= Config.MinimalDoctors then
                     RSCore.Functions.DrawText3D(Config.Locations["checking"].x, Config.Locations["checking"].y, Config.Locations["checking"].z, "~g~E~w~ - Arts oproepen")
                 else
                     RSCore.Functions.DrawText3D(Config.Locations["checking"].x, Config.Locations["checking"].y, Config.Locations["checking"].z, "~g~E~w~ - Inchecken")
                 end
                 if IsControlJustReleased(0, Keys["E"]) then
-                    if doctorCount > 1 then
+                    if doctorCount >= Config.MinimalDoctors then
                         TriggerServerEvent("hospital:server:SendDoctorAlert")
                     else
                         TriggerEvent('animations:client:EmoteCommandStart', {"notepad"})
@@ -231,7 +231,7 @@ Citizen.CreateThread(function()
                     end
                 end
             elseif (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["checking"].x, Config.Locations["checking"].y, Config.Locations["checking"].z, true) < 4.5) then
-                if doctorCount > 1 then
+                if doctorCount >= Config.MinimalDoctors then
                     RSCore.Functions.DrawText3D(Config.Locations["checking"].x, Config.Locations["checking"].y, Config.Locations["checking"].z, "Oproepen")
                 else
                     RSCore.Functions.DrawText3D(Config.Locations["checking"].x, Config.Locations["checking"].y, Config.Locations["checking"].z, "Inchecken")
