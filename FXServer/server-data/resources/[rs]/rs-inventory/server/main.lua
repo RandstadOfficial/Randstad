@@ -1249,6 +1249,65 @@ RSCore.Commands.Add("inv", "Open je inventory", {}, false, function(source, args
 	TriggerClientEvent("inventory:client:OpenInventory", source, Player.PlayerData.items)
 end)
 
+RSCore.Commands.Add("checkinv", "Check een inventory", {{name="type", help="stash"},{name="id", help="ID van stash"}}, true, function(source, args)
+	local invType = args[1]:lower()
+	local Player = RSCore.Functions.GetPlayer(source)
+	local id = args[2]
+	if invType ~= nil then
+		local secondInv = {}
+		if invType == "stash" then
+			RSCore.Functions.ExecuteSql(false, "SELECT * FROM `apartments` WHERE `citizenid` = '"..id.."' ", function(result)
+				print(result[1].name)
+				if result ~= nil then 
+					local maxweight = 1000000
+					local slots = 50
+					if other ~= nil then 
+						maxweight = other.maxweight ~= nil and other.maxweight or 1000000
+						slots = other.slots ~= nil and other.slots or 50
+					end
+					secondInv.name = "stash-"..result[1].name
+					secondInv.label = "Stash-"..result[1].name
+					secondInv.maxweight = maxweight
+					secondInv.inventory = {}
+					secondInv.slots = slots
+					if Stashes[result[1].name] ~= nil and Stashes[result[1].name].isOpen then
+						secondInv.name = "none-inv"
+						secondInv.label = "Stash-None"
+						secondInv.maxweight = 1000000
+						secondInv.inventory = {}
+						secondInv.slots = 0
+						Stashes[result[1].name].label = secondInv.label
+						Stashes[result[1].name].isOpen = true
+					else
+						local stashItems = GetStashItems(result[1].name)
+						if next(stashItems) ~= nil then
+							secondInv.inventory = stashItems
+							Stashes[result[1].name] = {}
+							Stashes[result[1].name].items = stashItems
+							Stashes[result[1].name].isOpen = true
+							Stashes[result[1].name].label = secondInv.label
+						else
+							Stashes[result[1].name] = {}
+							Stashes[result[1].name].items = {}
+							Stashes[result[1].name].isOpen = true
+							Stashes[result[1].name].label = secondInv.label
+						end
+					end
+
+					TriggerClientEvent("inventory:client:OpenInventory", source, Player.PlayerData.items, secondInv)
+					TriggerClientEvent("inventory:client:SetCurrentStash",source, result[1].name)
+				else
+					TriggerClientEvent('RSCore:Notify', source,  "Citizen ID niet geldig", "error")
+				end
+			end)
+		else
+			TriggerClientEvent('RSCore:Notify', source,  "Geef een type inventory aan", "error")
+		end
+	else
+		TriggerClientEvent('RSCore:Notify', source,  "Argumenten niet juist ingevuld..", "error")
+	end
+end, "admin")
+
 RSCore.Commands.Add("resetinv", "Reset inventory (in geval met -None)", {{name="type", help="stash/trunk/glovebox"},{name="id/plate", help="ID van stash of kenteken"}}, true, function(source, args)
 	local invType = args[1]:lower()
 	table.remove(args, 1)
