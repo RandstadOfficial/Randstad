@@ -35,3 +35,32 @@ function WalkCommandStart(source, args, raw)
     --EmoteChatMessage("'"..name.."' is not a valid walk")
   end
 end
+
+local WalkstickUsed = false
+local WandelstokObject = nil
+
+RegisterNetEvent('animations:UseWandelStok')
+AddEventHandler('animations:UseWandelStok', function()
+  if not WalkstickUsed then
+    local ped = GetPlayerPed(-1)
+    RequestAnimSet('move_heist_lester')
+    while not HasAnimSetLoaded('move_heist_lester') do
+      Citizen.Wait(1)
+    end
+    SetPedMovementClipset(ped, 'move_heist_lester', 1.0) 
+    WandelstokObject = CreateObject(GetHashKey("prop_cs_walking_stick"), 0, 0, 0, true, true, true)
+    AttachEntityToEntity(WandelstokObject, ped, GetPedBoneIndex(ped, 57005), 0.16, 0.06, 0.0, 335.0, 300.0, 120.0, true, true, false, true, 5, true)
+  else
+    local ped = GetPlayerPed(-1)
+    if PreviousWalkset ~= nil then
+      RequestAnimSet(PreviousWalkset)
+      while not HasAnimSetLoaded(PreviousWalkset) do
+        Citizen.Wait(1)
+      end
+      SetPedMovementClipset(ped, PreviousWalkset, 1.0)
+    end
+    DetachEntity(WandelstokObject, 0, 0)
+    DeleteEntity(WandelstokObject)
+  end
+  WalkstickUsed = not WalkstickUsed
+end)

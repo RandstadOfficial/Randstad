@@ -1,5 +1,7 @@
 Config = {}
 
+Config.MinimalDoctors = 2
+
 Config.Locations = {
     ["checking"] = {x = 309.08, y = -592.91, z = 43.28, h = 0.0},
     ["duty"] = {

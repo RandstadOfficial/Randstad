@@ -1370,3 +1370,10 @@ RSCore.Functions.CreateUseableItem("driver_license", function(source, item)
         TriggerClientEvent("inventory:client:ShowDriverLicense", -1, source, Player.PlayerData.citizenid, item.info)
     end
 end)
+
+RSCore.Functions.CreateUseableItem("walkstick", function(source, item)
+    local Player = RSCore.Functions.GetPlayer(source)
+	if Player.Functions.GetItemBySlot(item.slot) ~= nil then
+        TriggerClientEvent("animations:UseWandelStok", -1)
+    end
+end)

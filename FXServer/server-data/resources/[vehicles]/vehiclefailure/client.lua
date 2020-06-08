@@ -93,6 +93,8 @@ AddEventHandler('vehiclefailure:client:RepairVehicle', function()
 end)
 
 function CleanVehicle(vehicle)
+	local ped = GetPlayerPed(-1)
+	local pos = GetEntityCoords(ped)
 	TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_MAID_CLEAN", 0, true)
 	RSCore.Functions.Progressbar("repair_vehicle", "Bezig met poetsen...", math.random(10000, 20000), false, true, {
 		disableMovement = true,
@@ -101,7 +103,7 @@ function CleanVehicle(vehicle)
 		disableCombat = true,
 	}, {}, {}, {}, function() -- Done
 		RSCore.Functions.Notify("Voertuig schoon!")
-		SetVehicleDirtLevel(vehicle)
+		SetVehicleDirtLevel(vehicle, 0.1)
         SetVehicleUndriveable(vehicle, false)
 		WashDecalsFromVehicle(vehicle, 1.0)
 		TriggerServerEvent('vehiclefailure:server:removewashingkit')
@@ -114,6 +116,13 @@ function CleanVehicle(vehicle)
 		ClearPedTasks(GetPlayerPed(-1))
 	end)
 end
+
+RegisterNetEvent('vehiclefailure:client:SyncWash')
+AddEventHandler('vehiclefailure:client:SyncWash', function(veh)
+	SetVehicleDirtLevel(veh, 0.1)
+	SetVehicleUndriveable(veh, false)
+	WashDecalsFromVehicle(veh, 1.0)
+end)
 
 RegisterNetEvent('vehiclefailure:client:CleanVehicle')
 AddEventHandler('vehiclefailure:client:CleanVehicle', function()
@@ -250,7 +259,7 @@ local function isPedDrivingAVehicle()
 		if GetPedInVehicleSeat(vehicle, -1) == ped then
 			local class = GetVehicleClass(vehicle)
 			-- We don't want planes, helicopters, bicycles and trains
-			if class ~= 15 and class ~= 16 and class ~=21 and class ~=13 then
+			if class ~= 21 and class ~= 13 then
 				return true
 			end
 		end
