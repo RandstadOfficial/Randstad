@@ -82,6 +82,10 @@ Citizen.CreateThread(function()
                     action = "check",
                     data = Skillbar.Data.Data,
                 })
+            elseif IsControlJustPressed(0, 75) then
+                SendNUIMessage({
+                    action = "stop"
+                })
             end
         end
         Citizen.Wait(1)
