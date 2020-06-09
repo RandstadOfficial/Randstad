@@ -8,7 +8,7 @@ AddEventHandler('prison:server:SetJailStatus', function(jailTime)
     Player.Functions.SetMetaData("injail", jailTime)
     if jailTime > 0 then
         if Player.PlayerData.job.name ~= "unemployed" then
-            Player.Functions.SetJob("unemployed")
+            Player.Functions.SetJob("unemployed", 1)
             TriggerClientEvent('RSCore:Notify', src, "Je bent werkloos..")
         end
     end

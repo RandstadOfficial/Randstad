@@ -724,24 +724,32 @@ RSCore.Functions.CreateCallback('police:GetCops', function(source, cb)
 	cb(amount)
 end)
 
-RSCore.Commands.Add("setpolice", "Geef de politie baan aan iemand ", {{name="id", help="Speler ID"}}, true, function(source, args)
+RSCore.Commands.Add("setpolice", "Geef de politie baan aan iemand ", {{name="id", help="Speler ID"}, {name="grade", help="rang"}}, true, function(source, args)
     local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))
     local Myself = RSCore.Functions.GetPlayer(source)
     if Player ~= nil then 
-        if (Myself.PlayerData.job.name == "police" and Myself.PlayerData.job.onduty) and IsHighCommand(Myself.PlayerData.citizenid) then
-            Player.Functions.SetJob("police")
-        end
-    end
+        if Myself.PlayerData.job.name == "police" and Myself.PlayerData.job.gradelabel == "Hoofdcommissaris" then
+            Player.Functions.SetJob("police", tonumber(args[2]))
+        else
+			TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Je hebt hier geen rechten voor")
+		end
+	else
+		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Speler is niet online!")
+	end
 end)
 
 RSCore.Commands.Add("firepolice", "Ontsla een politieagent!", {{name="id", help="Speler ID"}}, true, function(source, args)
     local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))
     local Myself = RSCore.Functions.GetPlayer(source)
     if Player ~= nil then 
-        if (Myself.PlayerData.job.name == "police" and Myself.PlayerData.job.onduty) and IsHighCommand(Myself.PlayerData.citizenid) then
-            Player.Functions.SetJob("unemployed")
-        end
-    end
+        if Myself.PlayerData.job.name == "police" and Myself.PlayerData.job.gradelabel == "Hoofdcommissaris" then
+            Player.Functions.SetJob("unemployed", 1)
+        else
+			TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Je hebt hier geen rechten voor")
+		end
+	else
+		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Speler is niet online!")
+	end
 end)
 
 function IsHighCommand(citizenid)
@@ -1073,10 +1081,20 @@ RSCore.Commands.Add("112r", "Stuur een bericht terug naar een melding", {{name="
     local OtherPlayer = RSCore.Functions.GetPlayer(tonumber(args[1]))
     table.remove(args, 1)
     local message = table.concat(args, " ")
-    if OtherPlayer ~= nil then 
-        TriggerClientEvent('chatMessage', OtherPlayer.PlayerData.source, "(POLITIE) " ..Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname, "error", message)
-        TriggerClientEvent("police:client:EmergencySound", OtherPlayer.PlayerData.source)
-        TriggerClientEvent("police:client:CallAnim", source)
+    if Player.PlayerData.job.name == "police" then
+        if OtherPlayer ~= nil then
+            TriggerClientEvent('chatMessage', OtherPlayer.PlayerData.source, "(POLITIE) " ..Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname, "error", message)
+            TriggerClientEvent("police:client:EmergencySound", OtherPlayer.PlayerData.source)
+            TriggerClientEvent("police:client:CallAnim", source)
+        end
+    elseif Player.PlayerData.job.name == "ambulance" then
+        if OtherPlayer ~= nil then 
+            TriggerClientEvent('chatMessage', OtherPlayer.PlayerData.source, "(AMBULANCE) " ..Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname, "error", message)
+            TriggerClientEvent("police:client:EmergencySound", OtherPlayer.PlayerData.source)
+            TriggerClientEvent("police:client:CallAnim", source)
+        end
+    else
+        TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Dit command is voor hulpdiensten!")
     end
 end)
 

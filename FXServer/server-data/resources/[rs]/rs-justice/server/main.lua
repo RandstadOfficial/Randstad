@@ -13,7 +13,7 @@ RSCore.Commands.Add("setlawyer", "Schrijf iemand in als advocaat", {{name="id", 
                 lastname = OtherPlayer.PlayerData.charinfo.lastname,
                 citizenid = OtherPlayer.PlayerData.citizenid,
             }
-            OtherPlayer.Functions.SetJob("lawyer")
+            OtherPlayer.Functions.SetJob("lawyer", 1)
             OtherPlayer.Functions.AddItem("lawyerpass", 1, false, lawyerInfo)
             TriggerClientEvent("RSCore:Notify", source, "Je hebt " .. OtherPlayer.PlayerData.charinfo.firstname .. " " .. OtherPlayer.PlayerData.charinfo.lastname .. " aangenomen als advocaat")
             TriggerClientEvent("RSCore:Notify", OtherPlayer.PlayerData.source, "Je bent nu advocaat")
@@ -32,7 +32,7 @@ RSCore.Commands.Add("removelawyer", "Verwijder iemand in als advocaat", {{name="
     local OtherPlayer = RSCore.Functions.GetPlayer(playerId)
     if Player.PlayerData.job.name == "judge" then
         if OtherPlayer ~= nil then 
-            --OtherPlayer.Functions.SetJob("unemployed")
+            OtherPlayer.Functions.SetJob("unemployed", 1)
             TriggerClientEvent("RSCore:Notify", OtherPlayer.PlayerData.source, "Je bent nu werkloos")
             TriggerClientEvent("RSCore:Notify", source, "Je hebt " .. OtherPlayer.PlayerData.charinfo.firstname .. " " .. OtherPlayer.PlayerData.charinfo.lastname .. " onstlagen als advocaat")
         else

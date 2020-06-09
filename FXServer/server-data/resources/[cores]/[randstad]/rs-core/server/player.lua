@@ -95,6 +95,8 @@ RSCore.Player.CheckPlayerData = function(source, PlayerData)
 	PlayerData.job.label = PlayerData.job.label ~= nil and PlayerData.job.label or "Werkloos"
 	PlayerData.job.payment = PlayerData.job.payment ~= nil and PlayerData.job.payment or 10
 	PlayerData.job.onduty = PlayerData.job.onduty ~= nil and PlayerData.job.onduty or true
+	PlayerData.job.gradelabel = PlayerData.job.gradelabel ~= nil and PlayerData.job.gradelabel or ""
+	PlayerData.job.grade = PlayerData.job.grade ~= nil and PlayerData.job.grade or 1
 
 	PlayerData.position = PlayerData.position ~= nil and PlayerData.position or RSConfig.DefaultSpawn
 
@@ -112,14 +114,15 @@ RSCore.Player.CreatePlayer = function(PlayerData)
 		RSCore.Commands.Refresh(self.PlayerData.source)
 	end
 
-	self.Functions.SetJob = function(job)
+	self.Functions.SetJob = function(job, grade)
 		local job = job:lower()
-		local grade = tonumber(grade)
 		if RSCore.Shared.Jobs[job] ~= nil then
 			self.PlayerData.job.name = job
 			self.PlayerData.job.label = RSCore.Shared.Jobs[job].label
-			self.PlayerData.job.payment = RSCore.Shared.Jobs[job].payment
 			self.PlayerData.job.onduty = RSCore.Shared.Jobs[job].defaultDuty
+			self.PlayerData.job.grade = grade
+			self.PlayerData.job.gradelabel = RSCore.Shared.Jobs[job].grades[grade].label
+			self.PlayerData.job.payment = RSCore.Shared.Jobs[job].grades[grade].payment
 			self.Functions.UpdatePlayerData()
 			TriggerClientEvent("RSCore:Client:OnJobUpdate", self.PlayerData.source, self.PlayerData.job)
 			--TriggerEvent("RSCore:Server:OnJobUpdate", self.PlayerData.job)

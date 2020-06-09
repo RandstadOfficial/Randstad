@@ -67,7 +67,7 @@ AddEventHandler('rs-cityhall:server:ApplyJob', function(job)
     local Player = RSCore.Functions.GetPlayer(src)
     local JobInfo = RSCore.Shared.Jobs[job]
 
-    Player.Functions.SetJob(job)
+    Player.Functions.SetJob(job, 1)
 
     TriggerClientEvent('RSCore:Notify', src, 'Gefeliciteerd met je nieuwe baan! ('..JobInfo.label..')')
 end)
