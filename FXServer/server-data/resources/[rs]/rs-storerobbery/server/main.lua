@@ -36,7 +36,7 @@ AddEventHandler('rs-storerobbery:server:takeMoney', function(register, isDone)
     local src   = source
     local Player = RSCore.Functions.GetPlayer(src)
 
-    Player.Functions.AddMoney('cash', math.random(30, 69), "robbery-store")
+    Player.Functions.AddMoney('cash', math.random(30, 55), "robbery-store")
     if isDone then
         if math.random(1, 100) <= 17 then
             local code = SafeCodes[Config.Registers[register].safeKey]
