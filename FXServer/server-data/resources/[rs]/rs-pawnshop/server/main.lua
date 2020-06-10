@@ -2,9 +2,9 @@ RSCore = nil
 TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 
 local ItemList = {
-    ["goldchain"] = math.random(100, 250),
-    ["diamond_ring"] = math.random(200, 350),
-    ["rolex"] = math.random(300, 500),
+    ["goldchain"] = math.random(100, 200),
+    ["diamond_ring"] = math.random(200, 300),
+    ["rolex"] = math.random(300, 400),
 }
 
 local ItemListHardware = {
