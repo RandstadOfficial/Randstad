@@ -457,7 +457,7 @@ Config.Dealers = {
         },
     },
     [7] = {
-        ["name"] = "Oma",
+        ["name"] = "Ouweheer",
         ["coords"] = {
             ["x"] = -50.25, 
             ["y"] = 1911.26, 
