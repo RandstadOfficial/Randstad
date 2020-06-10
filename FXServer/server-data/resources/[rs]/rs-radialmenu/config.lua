@@ -271,7 +271,7 @@ Config.MenuItems = {
 }
 
 Config.JobInteractions = {
-    ["doctor"] = {
+    ["ambulance"] = {
         {
             id    = 'statuscheck',
             title = 'Onderzoek Persoon',
@@ -313,40 +313,40 @@ Config.JobInteractions = {
             shouldClose = true,
         },
     },
-    ["ambulance"] = {
-        {
-            id    = 'statuscheck',
-            title = 'Onderzoek Persoon',
-            icon = '#general',
-            type = 'client',
-            event = 'hospital:client:CheckStatus',
-            shouldClose = true,
-        },
-        {
-            id    = 'treatwounds',
-            title = 'Genees Wonden',
-            icon = '#general',
-            type = 'client',
-            event = 'hospital:client:TreatWounds',
-            shouldClose = true,
-        },
-        {
-            id    = 'emergencybutton2',
-            title = 'Noodknop',
-            icon = '#general',
-            type = 'client',
-            event = 'police:client:SendPoliceEmergencyAlert',
-            shouldClose = true,
-        },
-        {
-            id    = 'escort',
-            title = 'Escorteren',
-            icon = '#general',
-            type = 'client',
-            event = 'police:client:EscortPlayer',
-            shouldClose = true,
-        },
-    },
+    -- ["ambulance"] = {
+    --     {
+    --         id    = 'statuscheck',
+    --         title = 'Onderzoek Persoon',
+    --         icon = '#general',
+    --         type = 'client',
+    --         event = 'hospital:client:CheckStatus',
+    --         shouldClose = true,
+    --     },
+    --     {
+    --         id    = 'treatwounds',
+    --         title = 'Genees Wonden',
+    --         icon = '#general',
+    --         type = 'client',
+    --         event = 'hospital:client:TreatWounds',
+    --         shouldClose = true,
+    --     },
+    --     {
+    --         id    = 'emergencybutton2',
+    --         title = 'Noodknop',
+    --         icon = '#general',
+    --         type = 'client',
+    --         event = 'police:client:SendPoliceEmergencyAlert',
+    --         shouldClose = true,
+    --     },
+    --     {
+    --         id    = 'escort',
+    --         title = 'Escorteren',
+    --         icon = '#general',
+    --         type = 'client',
+    --         event = 'police:client:EscortPlayer',
+    --         shouldClose = true,
+    --     },
+    -- },
     ["taxi"] = {
         {
             id    = 'togglemeter',

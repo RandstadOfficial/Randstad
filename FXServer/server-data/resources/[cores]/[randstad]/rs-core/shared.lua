@@ -5706,7 +5706,7 @@ RSShared.Jobs = {
 	},
 	["police"] = {
 		label = "Politie",
-		defaultDuty = false,
+		defaultDuty = true,
 		grades = {
 			[1] = {
 				label = "Aspirant",
@@ -5753,7 +5753,7 @@ RSShared.Jobs = {
 	-- },
 	["ambulance"] = {
 		label = "Ambulance",
-		defaultDuty = false,
+		defaultDuty = true,
 		grades = {
 			[1] = {
 				label = "Hulpverlener",

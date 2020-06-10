@@ -77,7 +77,7 @@ AddEventHandler('police:server:EscortPlayer', function(playerId)
     local Player = RSCore.Functions.GetPlayer(source)
     local EscortPlayer = RSCore.Functions.GetPlayer(playerId)
     if EscortPlayer ~= nil then
-        if (Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance" or Player.PlayerData.job.name == "doctor") or (EscortPlayer.PlayerData.metadata["ishandcuffed"] or EscortPlayer.PlayerData.metadata["isdead"]) then
+        if (Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance") or (EscortPlayer.PlayerData.metadata["ishandcuffed"] or EscortPlayer.PlayerData.metadata["isdead"]) then
             TriggerClientEvent("police:client:GetEscorted", EscortPlayer.PlayerData.source, Player.PlayerData.source)
         else
             TriggerClientEvent('chatMessage', src, "SYSTEM", "error", "Persoon is niet dood of geboeid!")
@@ -348,7 +348,7 @@ AddEventHandler('police:server:UpdateBlips', function()
     for k, v in pairs(RSCore.Functions.GetPlayers()) do
         local Player = RSCore.Functions.GetPlayer(v)
         if Player ~= nil then 
-            if ((Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance" or Player.PlayerData.job.name == "doctor") and Player.PlayerData.job.onduty) then
+            if ((Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance") and Player.PlayerData.job.onduty) then
                 table.insert(dutyPlayers, {
                     source = Player.PlayerData.source,
                     label = Player.PlayerData.metadata["callsign"],
@@ -1129,7 +1129,7 @@ end)
 
 RSCore.Commands.Add("noodknop", "Stuur een bericht terug naar een melding", {}, false, function(source, args)
     local Player = RSCore.Functions.GetPlayer(source)
-    if ((Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance" or Player.PlayerData.job.name == "doctor") and Player.PlayerData.job.onduty) then
+    if ((Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance") and Player.PlayerData.job.onduty) then
         TriggerClientEvent("police:client:SendPoliceEmergencyAlert", source)
     end
 end)

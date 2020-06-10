@@ -19,7 +19,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(1)
         if isLoggedIn and RSCore ~= nil then
             local pos = GetEntityCoords(GetPlayerPed(-1))
-            if PlayerJob.name == "doctor" or PlayerJob.name == "ambulance" then
+            if PlayerJob.name == "ambulance" then
 
                 for k, v in pairs(Config.Locations["duty"]) do
                     if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 5) then
@@ -188,7 +188,7 @@ end)
 
 RegisterNetEvent('112:client:SendAlert')
 AddEventHandler('112:client:SendAlert', function(msg, blipSettings)
-    if (PlayerJob.name == "police" or PlayerJob.name == "ambulance" or PlayerJob.name == "doctor") and onDuty then
+    if (PlayerJob.name == "police" or PlayerJob.name == "ambulance") and onDuty then
         PlaySound(-1, "Event_Start_Text", "GTAO_FM_Events_Soundset", 0, 0, 1)
         TriggerEvent("chatMessage", "112-MELDING", "error", msg)
     
@@ -297,7 +297,7 @@ end
 RegisterNetEvent('hospital:client:RevivePlayer')
 AddEventHandler('hospital:client:RevivePlayer', function()
     RSCore.Functions.GetPlayerData(function(PlayerData)
-        if PlayerJob.name == "doctor" then
+        if PlayerJob.name == "ambulance" then
             local player, distance = GetClosestPlayer()
             if player ~= -1 and distance < 5.0 then
                 local playerId = GetPlayerServerId(player)
@@ -329,7 +329,7 @@ end)
 RegisterNetEvent('hospital:client:CheckStatus')
 AddEventHandler('hospital:client:CheckStatus', function()
     RSCore.Functions.GetPlayerData(function(PlayerData)
-        if PlayerJob.name == "doctor" or PlayerJob.name == "ambulance" or PlayerJob.name == "police" then
+        if PlayerJob.name == "ambulance" or PlayerJob.name == "police" then
             local player, distance = GetClosestPlayer()
             if player ~= -1 and distance < 5.0 then
                 local playerId = GetPlayerServerId(player)
@@ -359,7 +359,7 @@ end)
 RegisterNetEvent('hospital:client:TreatWounds')
 AddEventHandler('hospital:client:TreatWounds', function()
     RSCore.Functions.GetPlayerData(function(PlayerData)
-        if PlayerJob.name == "doctor" or PlayerJob.name == "ambulance" then
+        if PlayerJob.name == "ambulance" then
             local player, distance = GetClosestPlayer()
             if player ~= -1 and distance < 5.0 then
                 local playerId = GetPlayerServerId(player)
