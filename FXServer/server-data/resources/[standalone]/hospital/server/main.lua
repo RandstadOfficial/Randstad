@@ -77,10 +77,10 @@ AddEventHandler('hospital:server:TreatWounds', function(playerId)
 	local Player = RSCore.Functions.GetPlayer(src)
 	local Patient = RSCore.Functions.GetPlayer(playerId)
 	if Patient ~= nil then
-		if Player.PlayerData.job.name == "doctor" then
+		if Player.PlayerData.job.name == "ambulance" then
 			TriggerClientEvent("hospital:client:HealInjuries", Patient.PlayerData.source, "full")
-		elseif Player.PlayerData.job.name == "ambulance" then
-			TriggerClientEvent("hospital:client:HealInjuries", Patient.PlayerData.source, "partial")
+		-- elseif Player.PlayerData.job.name == "ambulance" then
+		-- 	TriggerClientEvent("hospital:client:HealInjuries", Patient.PlayerData.source, "partial")
 		end
 	end
 end)
@@ -91,7 +91,7 @@ AddEventHandler('hospital:server:SetDoctor', function()
 	for k, v in pairs(RSCore.Functions.GetPlayers()) do
         local Player = RSCore.Functions.GetPlayer(v)
         if Player ~= nil then 
-            if (Player.PlayerData.job.name == "doctor" and Player.PlayerData.job.onduty) then
+            if ((Player.PlayerData.job.gradelabel == "doctor" or Player.PlayerData.job.gradelabel == "Chirurg" or Player.PlayerData.job.gradelabel == "Hoofd Chirurg" or Player.PlayerData.job.gradelabel == "Hoofd Medisch Directeur") and Player.PlayerData.job.onduty) then
                 amount = amount + 1
             end
         end
@@ -124,7 +124,7 @@ AddEventHandler('hospital:server:SendDoctorAlert', function()
 	for k, v in pairs(RSCore.Functions.GetPlayers()) do
 		local Player = RSCore.Functions.GetPlayer(v)
 		if Player ~= nil then 
-			if (Player.PlayerData.job.name == "doctor" and Player.PlayerData.job.onduty) then
+			if ((Player.PlayerData.job.gradelabel == "doctor" or Player.PlayerData.job.gradelabel == "Chirurg" or Player.PlayerData.job.gradelabel == "Hoofd Chirurg" or Player.PlayerData.job.gradelabel == "Hoofd Medisch Directeur") and Player.PlayerData.job.onduty) then
 				TriggerClientEvent("hospital:client:SendAlert", v, "Er is een dokter nodig bij Pillbox Ziekenhuis")
 			end
 		end
@@ -150,7 +150,7 @@ RSCore.Functions.CreateCallback('hospital:GetDoctors', function(source, cb)
 	for k, v in pairs(RSCore.Functions.GetPlayers()) do
 		local Player = RSCore.Functions.GetPlayer(v)
 		if Player ~= nil then 
-			if (Player.PlayerData.job.name == "doctor" and Player.PlayerData.job.onduty) then
+			if ((Player.PlayerData.job.gradelabel == "doctor" or Player.PlayerData.job.gradelabel == "Chirurg" or Player.PlayerData.job.gradelabel == "Hoofd Chirurg" or Player.PlayerData.job.gradelabel == "Hoofd Medisch Directeur")  and Player.PlayerData.job.onduty) then
 				amount = amount + 1
 			end
 		end
@@ -212,7 +212,7 @@ end)
 
 RSCore.Commands.Add("status", "Check gezondheid van een persoon", {}, false, function(source, args)
 	local Player = RSCore.Functions.GetPlayer(source)
-	if Player.PlayerData.job.name == "doctor" or Player.PlayerData.job.name == "ambulance" then
+	if Player.PlayerData.job.name == "ambulance" then
 		TriggerClientEvent("hospital:client:CheckStatus", source)
 	else
 		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Dit command is voor hulpdiensten!")
@@ -221,7 +221,7 @@ end)
 
 RSCore.Commands.Add("genees", "Help de verwondingen van een persoon", {}, false, function(source, args)
 	local Player = RSCore.Functions.GetPlayer(source)
-	if Player.PlayerData.job.name == "doctor" or Player.PlayerData.job.name == "ambulance" then
+	if Player.PlayerData.job.name == "ambulance" then
 		TriggerClientEvent("hospital:client:TreatWounds", source)
 	else
 		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Dit command is voor hulpdiensten!")
@@ -230,7 +230,7 @@ end)
 
 RSCore.Commands.Add("revivep", "Help een persoon omhoog", {}, false, function(source, args)
 	local Player = RSCore.Functions.GetPlayer(source)
-	if Player.PlayerData.job.name == "doctor" then
+	if Player.PlayerData.job.name == "ambulance" then
 		TriggerClientEvent("hospital:client:RevivePlayer", source)
 	else
 		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Dit command is voor hulpdiensten!")

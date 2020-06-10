@@ -49,7 +49,7 @@ AddEventHandler('RSCore:Client:OnJobUpdate', function(JobInfo)
     TriggerServerEvent("police:server:UpdateBlips")
     if JobInfo.name == "police" then
         if PlayerJob.onduty then
-            TriggerServerEvent("QBCore:ToggleDuty")
+            TriggerServerEvent("RSCore:ToggleDuty")
             onDuty = false
         end
     end
@@ -444,7 +444,7 @@ RegisterNetEvent('police:server:SendEmergencyMessageCheck')
 AddEventHandler('police:server:SendEmergencyMessageCheck', function(MainPlayer, message, coords)
     local PlayerData = RSCore.Functions.GetPlayerData()
 
-    if ((PlayerData.job.name == "police" or PlayerData.job.name == "ambulance" or PlayerData.job.name == "doctor") and onDuty) then
+    if ((PlayerData.job.name == "police" or PlayerData.job.name == "ambulance") and onDuty) then
         TriggerEvent('chatMessage', "112 MELDING - " .. MainPlayer.PlayerData.charinfo.firstname .. " " .. MainPlayer.PlayerData.charinfo.lastname .. " ("..MainPlayer.PlayerData.source..")", "warning", message)
         TriggerEvent("police:client:EmergencySound")
         local transG = 250
