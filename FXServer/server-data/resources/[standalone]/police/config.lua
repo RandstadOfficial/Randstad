@@ -91,6 +91,8 @@ Config.ArmoryWhitelist = {
     "ZOY23072", -- Anton
     "DHU97474", -- Danny
 	"LYE72460", -- Birdzor
+	"LWP29900", -- Nico
+	"BQL92466", -- Goudenaapje (Dwight)
 }
 
 Config.Helicopter = "pzulu"
