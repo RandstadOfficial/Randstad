@@ -5696,73 +5696,196 @@ RSShared.VehicleModels = {
 RSShared.Jobs = {
 	["unemployed"] = {
 		label = "Werkloos",
-		payment = 10,
 		defaultDuty = true,
+		grades = {
+			[1] = {
+				label = "Uitkering",
+				payment = 10
+			},
+		}
 	},
 	["police"] = {
 		label = "Politie",
-		payment = 300,
-		defaultDuty = true,
+		defaultDuty = false,
+		grades = {
+			[1] = {
+				label = "Aspirant",
+				payment = 300,
+			},
+			[2] = {
+				label = "Surveillant",
+				payment = 300,
+			},
+			[3] = {
+				label = "Agent",
+				payment = 300,
+			},
+			[4] = {
+				label = "Hoofdagent",
+				payment = 300,
+			},
+			[5] = {
+				label = "Brigadier",
+				payment = 300,
+			},
+			[6] = {
+				label = "Inspecteur",
+				payment = 300,
+			},
+			[7] = {
+				label = "Hoofdinspecteur",
+				payment = 300,
+			},
+			[8] = {
+				label = "Commissaris",
+				payment = 300,
+			},
+			[9] = {
+				label = "Hoofdcommissaris",
+				payment = 300,
+			},
+		}
 	},
-	["doctor"] = {
-		label = "Dokter",
-		payment = 400,
-		defaultDuty = true,
-	},
+	-- ["doctor"] = {
+	-- 	label = "Dokter",
+	-- 	payment = 400,
+	-- 	defaultDuty = false,
+	-- },
 	["ambulance"] = {
 		label = "Ambulance",
-		payment = 300,
-		defaultDuty = true,
+		defaultDuty = false,
+		grades = {
+			[1] = {
+				label = "Hulpverlener",
+				payment = 300,
+			},
+			[2] = {
+				label = "Verpleegkundige",
+				payment = 300,
+			},
+			[3] = {
+				label = "Doctor",
+				payment = 400,
+			},
+			[4] = {
+				label = "Chirurg",
+				payment = 400,
+			},
+			[5] = {
+				label = "Hoofd Chirurg",
+				payment = 400,
+			},
+			[6] = {
+				label = "Hoofd Medisch Directeur",
+				payment = 400,
+			},
+		}
 	},
 	["trucker"] = {
-		label = "Vrachtwagenchauffeur",
-		payment = 10,
+		label = "Dumbo",
 		defaultDuty = true,
+		grades = {
+			[1] = {
+				label = "Bezorger",
+				payment = 10,
+			},
+		}
 	},
 	["taxi"] = {
-		label = "Taxi",
-		payment = 10,
+		label = "RTaxi",
 		defaultDuty = true,
+		grades = {
+			[1] = {
+				label = "Chauffeur",
+				payment = 10,
+			},
+		}
 	},
 	["realestate"] = {
 		label = "Makelaar",
-		payment = 10,
+		-- payment = 10,
 		defaultDuty = true,
+		grades = {
+			[1] = {
+				label = "",
+				payment = 10,
+			},
+		}
 	},
 	["tow"] = {
 		label = "Bergnet",
-		payment = 10,
+		-- payment = 10,
 		defaultDuty = true,
+		grades = {
+			[1] = {
+				label = "Chauffeur",
+				payment = 10,
+			},
+		}
 	},
 	["reporter"] = {
-		label = "Verslaggever",
-		payment = 200,
+		label = "Randstad Nieuws",
 		defaultDuty = true,
+		grades = {
+			[1] = {
+				label = "verskaggever",
+				payment = 200,
+			},
+		}
 	},
 	["judge"] = {
-		label = "Rechter",
-		payment = 400,
+		label = "Gerechtshof",
 		defaultDuty = true,
+		grades = {
+			[1] = {
+				label = "rechter",
+				payment = 400,
+			},
+		}
 	},
 	["lawyer"] = {
 		label = "Advocaat",
-		payment = 50,
+		-- payment = 50,
 		defaultDuty = true,
+		grades = {
+			[1] = {
+				label = "",
+				payment = 50,
+			},
+		}
 	},
 	["cardealer"] = {
 		label = "Voertuig Dealer",
-		payment = 150,
+		-- payment = 150,
 		defaultDuty = true,
+		grades = {
+			[1] = {
+				label = "",
+				payment = 150,
+			},
+		}
 	},
 	["mechanic"] = {
 		label = "Voertuig Monteur",
 		payment = 150,
 		defaultDuty = true,
+		grades = {
+			[1] = {
+				label = "",
+				payment = 150,
+			},
+		}
 	},
 	["rental"] = {
 		label = "Auto Verhuur",
 		payment = 50,
 		defaultDuty = true,
+		grades = {
+			[1] = {
+				label = "",
+				payment = 50,
+			},
+		}
 	},
 }
 

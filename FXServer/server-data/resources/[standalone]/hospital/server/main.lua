@@ -276,24 +276,32 @@ RSCore.Commands.Add("kill", "Vermoord een speler of jezelf", {{name="id", help="
 	end
 end, "god")
 
-RSCore.Commands.Add("setambulance", "Geef de ambulance baan aan iemand ", {{name="id", help="Speler ID"}}, true, function(source, args)
+RSCore.Commands.Add("setambulance", "Geef de ambulance baan aan iemand ", {{name="id", help="Speler ID"}, {name="grade", help="rang"}}, true, function(source, args)
     local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))
     local Myself = RSCore.Functions.GetPlayer(source)
     if Player ~= nil then 
-        if ((Myself.PlayerData.job.name == "ambulance" or Myself.PlayerData.job.name == "doctor") and Myself.PlayerData.job.onduty) and IsHighCommand(Myself.PlayerData.citizenid) then
-            Player.Functions.SetJob("ambulance")
-        end
-    end
+        if Myself.PlayerData.job.name == "ambulance" and Myself.PlayerData.job.gradelabel == "Hoofd Medisch Directeur" then
+            Player.Functions.SetJob("ambulance", tonumber(args[2]))
+		else
+			TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Je hebt hier geen rechten voor")
+		end
+	else
+		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Speler is niet online!")
+	end
 end)
 
-RSCore.Commands.Add("setdoctor", "Geef de doctor baan aan iemand ", {{name="id", help="Speler ID"}}, true, function(source, args)
+RSCore.Commands.Add("fireambulance", "Ontsla een ambulance!", {{name="id", help="Speler ID"}}, true, function(source, args)
     local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))
     local Myself = RSCore.Functions.GetPlayer(source)
     if Player ~= nil then 
-        if ((Myself.PlayerData.job.name == "ambulance" or Myself.PlayerData.job.name == "doctor") and Myself.PlayerData.job.onduty) and IsHighCommand(Myself.PlayerData.citizenid) then
-            Player.Functions.SetJob("doctor")
-        end
-    end
+        if Myself.PlayerData.job.name == "ambulance" and Myself.PlayerData.job.gradelabel == "Hoofd Medisch Directeur" then
+            Player.Functions.SetJob("unemployed", 1)
+		else
+			TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Je hebt hier geen rechten voor")
+		end
+	else
+		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Speler is niet online!")
+	end
 end)
 
 RSCore.Functions.CreateUseableItem("bandage", function(source, item)
