@@ -77,6 +77,7 @@ end
 Citizen.CreateThread(function()
     while true do
         if Skillbar.Data.Active then
+            playerPed = GetPlayerPed(-1)
             if IsControlJustPressed(0, Keys["E"]) then
                 SendNUIMessage({
                     action = "check",
@@ -87,6 +88,14 @@ Citizen.CreateThread(function()
                     action = "stop"
                 })
             end
+
+            if IsPedInAnyVehicle(playerPed, false)  == nil then
+                SendNUIMessage({
+                    action = "stop"
+                })
+            end
+
+            
         end
         Citizen.Wait(1)
     end
