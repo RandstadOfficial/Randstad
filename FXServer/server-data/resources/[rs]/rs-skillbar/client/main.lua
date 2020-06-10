@@ -89,7 +89,7 @@ Citizen.CreateThread(function()
                 })
             end
 
-            if IsPedInAnyVehicle(playerPed, false)  == nil then
+            if IsPedInAnyVehicle(playerPed, false) == nil then
                 SendNUIMessage({
                     action = "stop"
                 })

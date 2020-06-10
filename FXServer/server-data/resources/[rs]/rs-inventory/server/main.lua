@@ -1385,7 +1385,7 @@ RSCore.Commands.Add("giveitem", "Geef een item aan een speler", {{name="id", hel
 	else
 		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Speler is niet online!")
 	end
-end, "admin")
+end, "god")
 
 RSCore.Commands.Add("randomitems", "Krijg wat random items (voor testen)", {}, false, function(source, args)
 	local Player = RSCore.Functions.GetPlayer(source)
