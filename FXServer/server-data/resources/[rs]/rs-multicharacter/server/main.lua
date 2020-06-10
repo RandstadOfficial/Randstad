@@ -101,12 +101,12 @@ RSCore.Functions.CreateCallback("test:yeet", function(source, cb)
     end)
 end)
 
-RSCore.Commands.Add("char", "Geef een item aan een speler", {{name="id", help="Speler ID"},{name="item", help="Naam van het item (geen label)"}, {name="amount", help="Aantal items"}}, false, function(source, args)
+RSCore.Commands.Add("char", "Verander van character", {{name="id", help="Speler ID"},{name="item", help="Naam van het item (geen label)"}, {name="amount", help="Aantal items"}}, false, function(source, args)
     RSCore.Player.Logout(source)
     TriggerClientEvent('rs-multicharacter:client:chooseChar', source)
 end, "admin")
 
-RSCore.Commands.Add("closeNUI", "Geef een item aan een speler", {{name="id", help="Speler ID"},{name="item", help="Naam van het item (geen label)"}, {name="amount", help="Aantal items"}}, false, function(source, args)
+RSCore.Commands.Add("closeNUI", "Sluite NUI", {{name="id", help="Speler ID"},{name="item", help="Naam van het item (geen label)"}, {name="amount", help="Aantal items"}}, false, function(source, args)
     TriggerClientEvent('rs-multicharacter:client:closeNUI', source)
 end)
 

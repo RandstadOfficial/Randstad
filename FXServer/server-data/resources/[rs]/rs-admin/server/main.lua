@@ -80,7 +80,7 @@ RSCore.Commands.Add("announce", "Stuur een bericht naar iedereen", {}, false, fu
     for i = 1, 3, 1 do
         TriggerClientEvent('chatMessage', -1, "SYSTEM", "error", msg)
     end
-end, "admin")
+end, "god")
 
 RSCore.Commands.Add("admin", "Open admin menu", {}, false, function(source, args)
     local group = RSCore.Functions.GetPermission(source)
@@ -162,7 +162,7 @@ RSCore.Commands.Add("verwijderwarn", "Verwijder waarschuwing van persoon", {{nam
             RSCore.Functions.ExecuteSql(false, "DELETE FROM `player_warns` WHERE `warnId` = '"..warnings[selectedWarning].warnId.."'")
         end
     end)
-end, "admin")
+end, "god")
 
 function tablelength(table)
     local count = 0

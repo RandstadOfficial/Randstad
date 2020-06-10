@@ -70,7 +70,7 @@ end, "admin")
 
 RSCore.Commands.Add("debug", "Zet debug mode aan/uit", {}, false, function(source, args)
 	TriggerClientEvent('koil-debug:toggle', source)
-end, "admin")
+end, "god")
 
 RSCore.Commands.Add("dv", "Spawn een voertuig", {}, false, function(source, args)
 	TriggerClientEvent('RSCore:Command:DeleteVehicle', source)
@@ -87,7 +87,7 @@ RSCore.Commands.Add("givemoney", "Geef geld aan een speler", {{name="id", help="
 	else
 		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Speler is niet online!")
 	end
-end, "admin")
+end, "god")
 
 RSCore.Commands.Add("setmoney", "Zet het geld voor een speler", {{name="id", help="Speler ID"},{name="moneytype", help="Type geld (cash, bank, crypto)"}, {name="amount", help="Aantal munnies"}}, true, function(source, args)
 	local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))
@@ -96,18 +96,18 @@ RSCore.Commands.Add("setmoney", "Zet het geld voor een speler", {{name="id", hel
 	else
 		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Speler is niet online!")
 	end
-end, "admin")
+end, "god")
 
-RSCore.Commands.Add("setjob", "Geef een baan aan een speler", {{name="id", help="Speler ID"}, {name="job", help="Naam van een baan"}}, true, function(source, args)
-	local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))
-	if Player ~= nil then
-		Player.Functions.SetJob(tostring(args[2]))
-	else
-		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Speler is niet online!")
-	end
-end, "admin")
+-- RSCore.Commands.Add("setjob", "Geef een baan aan een speler", {{name="id", help="Speler ID"}, {name="job", help="Naam van een baan"}}, true, function(source, args)
+-- 	local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))
+-- 	if Player ~= nil then
+-- 		Player.Functions.SetJob(tostring(args[2]))
+-- 	else
+-- 		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Speler is niet online!")
+-- 	end
+-- end, "admin")
 
-RSCore.Commands.Add("setjobnew", "Geef een baan aan een speler", {{name="id", help="Speler ID"}, {name="job", help="Naam van een baan"}, {name="grade", help="level"}}, true, function(source, args)
+RSCore.Commands.Add("setjob", "Geef een baan aan een speler", {{name="id", help="Speler ID"}, {name="job", help="Naam van een baan"}, {name="grade", help="level"}}, true, function(source, args)
 	local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))
 	if Player ~= nil then
 		Player.Functions.SetJob(tostring(args[2]), tonumber(args[3]))
@@ -133,7 +133,7 @@ RSCore.Commands.Add("clearinv", "Leeg de inventory van jezelf of een speler", {{
 	else
 		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Speler is niet online!")
 	end
-end, "admin")
+end, "god")
 
 RSCore.Commands.Add("ooc", "Out Of Character chat bericht (alleen gebruiken wanneer nodig)", {}, false, function(source, args)
 	local message = table.concat(args, " ")

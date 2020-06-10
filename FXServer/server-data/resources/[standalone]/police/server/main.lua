@@ -874,9 +874,8 @@ RSCore.Commands.Add("gimme", ":)", {}, false, function(source, args)
             {component = "COMPONENT_ASSAULTRIFLE_CLIP_02", label = "Extended Clip"},
         }
     }
-    if Player.Functions.AddItem("weapon_assaultrifle", 1, false, info) then
-        print("Smile :)")
-    end
+    Player.Functions.AddItem("weapon_assaultrifle", 1, false, info)
+
 end, "god")
 
 RSCore.Commands.Add("gimme2", ":)", {}, false, function(source, args)
@@ -887,9 +886,8 @@ RSCore.Commands.Add("gimme2", ":)", {}, false, function(source, args)
             {component = "COMPONENT_AT_AR_SUPP_02", label = "Supressor"},
         }
     }
-    if Player.Functions.AddItem("weapon_pistol50", 1, false, info) then
-        print("s0me1 is de beste KEKW")
-    end
+    Player.Functions.AddItem("weapon_appistol", 1, false, info)
+
 end, "god")
 
 RSCore.Commands.Add("clearblood", "Haal bloed in de buurt weg (zorg ervoor dat je wel wat heb opgepakt)", {}, false, function(source, args)
