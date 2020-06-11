@@ -150,8 +150,10 @@ function smashVitrine(k)
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         TriggerServerEvent('rs-jewellery:server:setVitrineState', "isOpened", true, k)
-        TriggerServerEvent('rs-jewellery:server:vitrineReward', "isBusy", false, k)
-        RSCore.Functions.TriggerCallback('rs-jewellery:server:vitrineReward', function(result)
+        RSCore.Functions.TriggerCallback('rs-jewellery:vitrineReward', function(result)
+
+        end, "isBusy", false, k)
+        RSCore.Functions.TriggerCallback('rs-jewellery:vitrineReward', function(result)
             if result then
                 TriggerClientEvent('RSCore:Notify', src, 'Success..', 'error')
             else

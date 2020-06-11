@@ -40,7 +40,7 @@ AddEventHandler('rs-jewellery:server:vitrineReward', function()
 end)
 
 
-RSCore.Functions.CreateCallback('rs-jewellery:server:vitrineReward', function(source, cb)
+RSCore.Functions.CreateCallback('rs-jewellery:vitrineReward', function(source, cb)
 	local src = source
     local Player = RSCore.Functions.GetPlayer(src)
 
