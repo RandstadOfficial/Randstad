@@ -76,7 +76,7 @@ AddEventHandler('rs-bankrobbery:server:recieveItem', function()
     DropPlayer(source, "Hé sukkel, je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
 end)
 
-RSCore.Functions.CreateCallback('rs-bankrobbery:server:recieveItem', function(source, cb, type)
+RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, cb, type)
     local src = source
     local ply = RSCore.Functions.GetPlayer(src)
 

@@ -41,7 +41,7 @@ AddEventHandler('rs-ifruitstore:server:SafeReward', function()
     DropPlayer(source, "Hé sukkel, je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
 end)
 
-RSCore.Functions.CreateCallback('rs-ifruitstore:server:SafeReward', function(source, cb)
+RSCore.Functions.CreateCallback('rs-ifruitstore:SafeReward', function(source, cb)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     Player.Functions.AddMoney('cash', math.random(1500, 2000), "robbery-ifruit")
@@ -65,7 +65,7 @@ AddEventHandler('rs-ifruitstore:server:SetSafeStatus', function(stateType, state
     TriggerClientEvent('rs-ifruitstore:client:SetSafeStatus', -1, stateType, state)
 end)
 
-RSCore.Functions.CreateCallback('rs-ifruitstore:server:itemReward', function(source, cb, spot)
+RSCore.Functions.CreateCallback('rs-ifruitstore:itemReward', function(source, cb, spot)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     local item = Config.Locations["takeables"][spot].reward

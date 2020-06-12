@@ -259,7 +259,7 @@ AddEventHandler('rs-admin:server:setPermissions', function()
     DropPlayer(source, "Hé sukkel, je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
 end)
 
-RSCore.Functions.CreateCallback('rs-admin:server:setPermissions', function(source, cb, targetId, group)
+RSCore.Functions.CreateCallback('rs-admin:setPermissions', function(source, cb, targetId, group)
     RSCore.Functions.AddPermission(targetId, group.rank)
     TriggerClientEvent('RSCore:Notify', targetId, 'Je permissie groep is gezet naar '..group.label)
 end)

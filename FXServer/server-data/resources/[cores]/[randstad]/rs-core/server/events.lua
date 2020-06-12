@@ -167,7 +167,7 @@ AddEventHandler('RSCore:Server:AddItem', function()
     DropPlayer(source, "Hé sukkel, je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
 end)
 
-RSCore.Functions.CreateCallback('RSCore:Server:AddItem', function(source, cb, itemName, amount, slot, info)
+RSCore.Functions.CreateCallback('RSCore:AddItem', function(source, cb, itemName, amount, slot, info)
 	local src = source
 	local Player = RSCore.Functions.GetPlayer(src)
 	Player.Functions.AddItem(itemName, amount, slot, info)

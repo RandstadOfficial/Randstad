@@ -350,7 +350,7 @@ AddEventHandler("inventory:client:PickupSnowballs", function()
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         ClearPedTasks(GetPlayerPed(-1))
-        RSCore.Functions.TriggerCallback('RSCore:Server:AddItem', function()                        
+        RSCore.Functions.TriggerCallback('RSCore:AddItem', function()                        
         end, "snowball", 1)
         TriggerEvent('inventory:client:ItemBox', RSCore.Shared.Items["snowball"], "add")
     end, function() -- Cancel

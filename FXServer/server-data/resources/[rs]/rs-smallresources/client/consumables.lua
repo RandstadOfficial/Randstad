@@ -160,7 +160,7 @@ AddEventHandler("consumables:client:ResetArmor", function()
             SetPedComponentVariation(ped, 9, currentVest, currentVestTexture, 2)
             SetPedArmour(ped, 0)
             TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["heavyarmor"], "add")
-            RSCore.Functions.TriggerCallback('RSCore:Server:AddItem', function()                        
+            RSCore.Functions.TriggerCallback('RSCore:AddItem', function()                        
             end, "heavyarmor", 1)
         end)
     else

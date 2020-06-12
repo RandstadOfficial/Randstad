@@ -222,7 +222,7 @@ function requestDelivery()
         ["dealer"] = currentDealer,
         ["itemData"] = Config.DeliveryItems[item]
     }
-    RSCore.Functions.TriggerCallback('rs-drugs:server:giveDeliveryItems', function()
+    RSCore.Functions.TriggerCallback('rs-drugs:giveDeliveryItems', function()
     end, amount)
     SetTimeout(7000, function()
         TriggerServerEvent('rs-phone:server:sendNewMail', {

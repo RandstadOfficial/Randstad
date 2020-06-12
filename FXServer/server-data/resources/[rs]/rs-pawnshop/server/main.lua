@@ -72,7 +72,7 @@ AddEventHandler("rs-pawnshop:server:getGoldBars", function()
     DropPlayer(source, "Hé sukkel, je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
 end)
 
-RSCore.Functions.CreateCallback('rs-pawnshop:server:getGoldBars', function(source, cb)
+RSCore.Functions.CreateCallback('rs-pawnshop:getGoldBars', function(source, cb)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     if GoldBarsAmount > 0 then

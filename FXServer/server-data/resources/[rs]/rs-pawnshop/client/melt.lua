@@ -12,7 +12,7 @@ Citizen.CreateThread(function()
                     if enablePickup then
                         DrawText3D(Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, "~g~E~w~ - Pak goudstaven")
                         if IsControlJustReleased(0, Keys["E"]) then
-                            RSCore.Functions.TriggerCallback('rs-pawnshop:server:getGoldBars', function()
+                            RSCore.Functions.TriggerCallback('rs-pawnshop:getGoldBars', function()
                             end)
                         end
                     else

@@ -15,7 +15,7 @@ AddEventHandler('rs-drugs:server:giveDeliveryItems', function()
     DropPlayer(source, "Hé sukkel, je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
 end)
 
-RSCore.Functions.CreateCallback('rs-drugs:server:giveDeliveryItems', function(source, cb, amount)
+RSCore.Functions.CreateCallback('rs-drugs:giveDeliveryItems', function(source, cb, amount)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
 
