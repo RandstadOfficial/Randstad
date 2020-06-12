@@ -2959,7 +2959,7 @@
 		    <Item>
       <modelName>pschafter</modelName>
       <txdName>pschafter</txdName>
-      <handlingId>SCHAFTER3</handlingId>
+      <handlingId>pschafter</handlingId>
       <gameName>POLICE</gameName>
       <vehicleMakeName />
       <expressionDictName>null</expressionDictName>
@@ -3089,7 +3089,7 @@
         <Item>
       <modelName>poracle</modelName>
       <txdName>poracle</txdName>
-      <handlingId>ORACLE2</handlingId>
+      <handlingId>poracle</handlingId>
       <gameName>POLICE</gameName>
       <vehicleMakeName>UBERMACH</vehicleMakeName>
       <expressionDictName>null</expressionDictName>
