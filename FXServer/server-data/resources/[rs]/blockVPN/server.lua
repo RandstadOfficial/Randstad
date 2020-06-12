@@ -42,7 +42,7 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason, deferral
 		if string.match(playerIP, ":") then
 			playerIP = splitString(playerIP, ":")[1]
 		end
-		if IsPlayerAceAllowed(source, "blockVPN.bypass") then
+		if IsPlayerAceAllowed(source, "blockVPN.bypass") or isWhitelisted then
 			deferrals.done()
 		else 
 			PerformHttpRequest('http://check.getipintel.net/check.php?ip=' .. playerIP .. '&contact=' .. ownerEmail .. '&flags=' .. flags, function(statusCode, response, headers)
