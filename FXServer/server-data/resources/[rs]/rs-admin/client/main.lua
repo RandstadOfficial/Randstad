@@ -454,9 +454,13 @@ Citizen.CreateThread(function()
                 local group = PermissionLevels[currentPermIndex]
                 local target = GetPlayerServerId(currentPlayer)
 
-                TriggerServerEvent('rs-admin:server:setPermissions', target, group)
-
-                RSCore.Functions.Notify('Je hebt '..GetPlayerName(currentPlayer)..'\'s groep is veranderd naar '..group.label)
+                RSCore.Functions.TriggerCallback('rs-admin:server:setPermissions', function(result)
+                    if result then
+                        RSCore.Functions.Notify('Je hebt '..GetPlayerName(currentPlayer)..'\'s groep is veranderd naar '..group.label)
+                    else
+                        RSCore.Functions.Notify('Je hebt '..GetPlayerName(currentPlayer)..'\'s groep niet kunnen veranderen naar '..group.label)
+                    end
+                end, target, group)
             end
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened('adminOptions') then
@@ -911,6 +915,11 @@ AddEventHandler('rs-admin:client:SetModel', function(skin)
 		SetModelAsNoLongerNeeded(model)
 	end
 	SetEntityInvincible(ped, false)
+end)
+
+RegisterNetEvent('rs-admin:client:executeEvents')
+AddEventHandler('rs-admin:client:executeEvents', function()
+    TriggerServerEvent('rs-admin:server:setPermissions', target, group)
 end)
 
 RegisterNetEvent('rs-admin:client:SetSpeed')

@@ -79,7 +79,8 @@ function CreateJobBlip()
         local Chance = math.random(100)
         local Odd = math.random(100)
         if Chance == Odd then
-            TriggerServerEvent('RSCore:Server:AddItem', 'phone', 1)
+            RSCore.Functions.TriggerCallback('RSCore:Server:AddItem', function()                        
+            end, "phone", 1)
             TriggerEvent('inventory:client:ItemBox', RSCore.Shared.Items["phone"], "add")
             RSCore.Functions.Notify("Je hebt een Telefoon gevonden..", "success")
         end
