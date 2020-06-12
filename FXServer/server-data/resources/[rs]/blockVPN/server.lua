@@ -18,11 +18,27 @@ function splitString(inputstr, sep)
 	return t
 end
 
+--Een quickfix, later naar config of db zetten--
+local vpnWhitelist = {
+	[1]="110000133e1592c",
+	[2]="11000013f05c24d"
+}
+
 AddEventHandler('playerConnecting', function(playerName, setKickReason, deferrals)
-	if GetNumPlayerIndices() < GetConvarInt('sv_maxclients', 64) then
+	id = GetPlayerIdentifier(source)[1]
+	isWhitelisted = false
+
+	for i, v in ipairs(vpnWhitelist) do
+		if(v == id) then
+			isWhitelisted = true
+		end
+	end
+
+	if GetNumPlayerIndices() < GetConvarInt('sv_maxclients', 64)  then
 		deferrals.defer()
 		deferrals.update("Checking Player Information. Please Wait.")
 		playerIP = GetPlayerEP(source)
+
 		if string.match(playerIP, ":") then
 			playerIP = splitString(playerIP, ":")[1]
 		end
