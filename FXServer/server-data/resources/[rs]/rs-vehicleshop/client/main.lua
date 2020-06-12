@@ -127,7 +127,8 @@ RegisterNUICallback('buyVehicle', function(data)
     local vehicleData = data.vehicleData
     local garage = data.garage
 
-    TriggerServerEvent('rs-vehicleshop:server:buyVehicle', vehicleData, garage)
+    RSCore.Functions.TriggerCallback('rs-vehicleshop:buyVehicle', function()
+    end, vehicleData, garage)
     openVehicleShop(false)
 end)
 
@@ -163,6 +164,13 @@ end)
 --         Citizen.Wait(0)
 --     end
 -- end)
+
+
+RegisterNetEvent('rs-vehicleshop:client:executeEvents')
+AddEventHandler('rs-vehicleshop:client:executeEvents', function()
+    TriggerServerEvent('rs-vehicleshop:server:buyVehicle', vehicleData, garage)
+end)
+
 
 Citizen.CreateThread(function()
     for k, v in pairs(RS.VehicleShops) do

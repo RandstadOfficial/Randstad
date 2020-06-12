@@ -343,6 +343,11 @@ function IsNearBank()
   end
 end
 
+RegisterNetEvent('banking:client:executeEvents')
+AddEventHandler('banking:client:executeEvents', function()
+  TriggerServerEvent('banking:server:giveCash', playerId, amount)
+end)
+
 -- Check if player is near another player
 function IsNearPlayer(player)
   local ply = GetPlayerPed(-1)
@@ -382,7 +387,8 @@ AddEventHandler('banking:client:CheckDistance', function(targetId, amount)
   if player ~= -1 and distance < 2.5 then
     local playerId = GetPlayerServerId(player)
     if targetId == playerId then
-      TriggerServerEvent('banking:server:giveCash', playerId, amount)
+      RSCore.Functions.TriggerCallback('banking:giveCash', function()
+      end, playerId, amount)
     end
   else
     RSCore.Functions.Notify('Je bent niet bij het persoon in de buurt..', 'error')
