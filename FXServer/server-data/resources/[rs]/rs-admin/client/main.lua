@@ -455,11 +455,8 @@ Citizen.CreateThread(function()
                 local target = GetPlayerServerId(currentPlayer)
 
                 RSCore.Functions.TriggerCallback('rs-admin:setPermissions', function(result)
-                    if result then
-                        RSCore.Functions.Notify('Je hebt '..GetPlayerName(currentPlayer)..'\'s groep is veranderd naar '..group.label)
-                    else
-                        RSCore.Functions.Notify('Je hebt '..GetPlayerName(currentPlayer)..'\'s groep niet kunnen veranderen naar '..group.label)
-                    end
+                    RSCore.Functions.Notify('Je hebt '..GetPlayerName(currentPlayer)..'\'s groep is veranderd naar '..group.label)
+
                 end, target, group)
             end
             WarMenu.Display()
