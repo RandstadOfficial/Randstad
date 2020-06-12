@@ -20,23 +20,25 @@ end
 
 --Een quickfix, later naar config of db zetten--
 local vpnWhitelist = {
-	[1]="110000133e1592c",
-	[2]="11000013f05c24d",
-	[3]="110000116062103",
-	[4]="11000010f2b7357",
-	[5]="11000011495d1d2",
-	[6]="1100001166ffc8b",
-	[7]="11000011a09febe",
-	[8]="1100001411da9bb",
-	[9]="11000010a3beefd"
+	[1]="steam:110000133e1592c",
+	[2]="steam:11000013f05c24d",
+	[3]="steam:110000116062103",
+	[4]="steam:11000010f2b7357",
+	[5]="steam:11000011495d1d2",
+	[6]="steam:1100001166ffc8b",
+	[7]="steam:11000011a09febe",
+	[8]="steam:1100001411da9bb",
+	[9]="steam:11000010a3beefd",
+	[10]="steam:1100001036ee1b7"
 }
 
 AddEventHandler('playerConnecting', function(playerName, setKickReason, deferrals)
-	id = GetPlayerIdentifier(source)[1]
+	id = GetPlayerIdentifiers(source)[1]
 	isWhitelisted = false
-
+	print(id)
 	for i, v in ipairs(vpnWhitelist) do
 		if(v == id) then
+			print("found one: "..id)
 			isWhitelisted = true
 		end
 	end
@@ -49,7 +51,7 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason, deferral
 		if string.match(playerIP, ":") then
 			playerIP = splitString(playerIP, ":")[1]
 		end
-		if IsPlayerAceAllowed(source, "blockVPN.bypass") or isWhitelisted then
+		if IsPlayerAceAllowed(source, "blockVPN.bypass") or isWhitelisted == true then
 			deferrals.done()
 		else 
 			PerformHttpRequest('http://check.getipintel.net/check.php?ip=' .. playerIP .. '&contact=' .. ownerEmail .. '&flags=' .. flags, function(statusCode, response, headers)
