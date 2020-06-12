@@ -21,7 +21,14 @@ end
 --Een quickfix, later naar config of db zetten--
 local vpnWhitelist = {
 	[1]="110000133e1592c",
-	[2]="11000013f05c24d"
+	[2]="11000013f05c24d",
+	[3]="110000116062103",
+	[4]="11000010f2b7357",
+	[5]="11000011495d1d2",
+	[6]="1100001166ffc8b",
+	[7]="11000011a09febe",
+	[8]="1100001411da9bb",
+	[9]="11000010a3beefd"
 }
 
 AddEventHandler('playerConnecting', function(playerName, setKickReason, deferrals)
