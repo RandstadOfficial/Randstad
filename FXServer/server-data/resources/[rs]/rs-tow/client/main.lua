@@ -219,7 +219,8 @@ Citizen.CreateThread(function()
                         if IsControlJustReleased(0, Keys["E"]) then
                             if JobsDone > 0 then
                                 RemoveBlip(CurrentBlip)
-                                TriggerServerEvent("rs-tow:server:11101110", JobsDone)
+                                RSCore.Functions.TriggerCallback('rs-tow:11101110', function()
+                                end, JobsDone)
                                 JobsDone = 0
                                 NpcOn = false
                             else
@@ -303,6 +304,11 @@ function MenuGarage()
     Menu.addButton("Voertuigen", "VehicleList", nil)
     Menu.addButton("Sluit Menu", "closeMenuFull", nil) 
 end
+
+RegisterNetEvent('rs-tow:client:executeEvents')
+AddEventHandler('rs-tow:client:executeEvents', function()
+    TriggerServerEvent("rs-tow:server:11101110", salary)
+end)
 
 function VehicleList(isDown)
     ped = GetPlayerPed(-1);

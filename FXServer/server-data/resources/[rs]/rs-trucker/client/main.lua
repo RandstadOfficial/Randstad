@@ -133,7 +133,9 @@ Citizen.CreateThread(function()
                         DrawText3D(Config.Locations["main"].coords.x, Config.Locations["main"].coords.y, Config.Locations["main"].coords.z, "~g~E~w~ - Loonstrook")
                         if IsControlJustReleased(0, Keys["E"]) then
                             if JobsDone > 0 then
-                                TriggerServerEvent("rs-trucker:server:01101110", JobsDone)
+                                
+                                RSCore.Functions.TriggerCallback('rs-trucker:01101110', function()
+                                end, JobsDone)
                                 JobsDone = 0
                                 if #LocationsDone == #Config.Locations["stores"] then
                                     LocationsDone = {}
@@ -308,6 +310,11 @@ function isTruckerVehicle(vehicle)
     end
     return retval
 end
+
+RegisterNetEvent('rs-server:client:executeEvents')
+AddEventHandler('rs-server:client:executeEvents', function()
+    TriggerServerEvent("rs-trucker:server:01101110", JobsDone)
+end)
 
 function MenuGarage()
     ped = GetPlayerPed(-1);

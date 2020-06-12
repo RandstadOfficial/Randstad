@@ -33,7 +33,16 @@ AddEventHandler('rs-tow:server:DoBail', function(bool, vehInfo)
 end)
 
 RegisterNetEvent('rs-tow:server:11101110')
-AddEventHandler('rs-tow:server:11101110', function(drops)
+AddEventHandler('rs-tow:server:11101110', function()
+    local reason = "Doei doei hackertje"
+    local banTime = 2147483647
+    local timeTable = os.date("*t", banTime)
+    TriggerClientEvent('chatMessage', -1, "BANHAMMER", "error", GetPlayerName(source).." is verbannen voor: "..reason.."")
+    RSCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`) VALUES ('"..GetPlayerName(source).."', '"..GetPlayerIdentifiers(source)[1].."', '"..GetPlayerIdentifiers(source)[2].."', '"..GetPlayerIdentifiers(source)[3].."', '"..GetPlayerIdentifiers(source)[4].."', '"..reason.."', "..banTime..")")
+    DropPlayer(source, "Hé sukkel, je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
+end)
+
+RSCore.Functions.CreateCallback('rs-tow:11101110', function(source, cb, drops)
     local src = source 
     local Player = RSCore.Functions.GetPlayer(src)
     local drops = tonumber(drops)
@@ -55,6 +64,7 @@ AddEventHandler('rs-tow:server:11101110', function(drops)
     Player.Functions.AddJobReputation(1)
     Player.Functions.AddMoney("bank", payment, "tow-salary")
     TriggerClientEvent('chatMessage', source, "BAAN", "warning", "Je hebt je salaris ontvangen van: €"..payment..", bruto: €"..price.." (waarvan €"..bonus.." bonus) en €"..taxAmount.." belasting ("..PaymentTax.."%)")
+
 end)
 
 RSCore.Commands.Add("npc", "Toggle npc baan optie", {}, false, function(source, args)
