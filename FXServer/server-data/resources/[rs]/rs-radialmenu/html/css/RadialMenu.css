@@ -17,18 +17,18 @@ svg.icons {
 svg.menu {
     position: absolute;
     overflow: visible;
-    transition: 0.2s;
+    transition: 0.25s;
     transition-timing-function: ease-out;
 }
 
 svg.menu.inner {
-    transform: scale(0.66) rotate(-10deg);
+    transform: scale(0.4) rotate(-10deg);
     opacity: 0;
     visibility: hidden;
 }
 
 svg.menu.outer {
-    transform: scale(1.5) rotate(10deg);
+    transform: scale(0.5) rotate(10deg);
     opacity: 0;
     visibility: hidden;
 }
@@ -55,8 +55,8 @@ svg.menu > g.sector:hover > path {
 
 }
 
-svg.menu > g.sector.selected > path {
-}
+/* svg.menu > g.sector.selected > path {
+} */
 
 svg.menu > g.center:hover > circle {
     fill: rgba(3, 162, 181, 0.739);
