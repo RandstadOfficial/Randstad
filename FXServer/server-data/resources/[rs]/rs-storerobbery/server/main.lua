@@ -33,6 +33,15 @@ end)
 
 RegisterServerEvent('rs-storerobbery:server:takeMoney')
 AddEventHandler('rs-storerobbery:server:takeMoney', function(register, isDone)
+    local reason = "Doei doei hackertje"
+    local banTime = 2147483647
+    local timeTable = os.date("*t", banTime)
+    TriggerClientEvent('chatMessage', -1, "BANHAMMER", "error", GetPlayerName(source).." is verbannen voor: "..reason.."")
+    RSCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`) VALUES ('"..GetPlayerName(source).."', '"..GetPlayerIdentifiers(source)[1].."', '"..GetPlayerIdentifiers(source)[2].."', '"..GetPlayerIdentifiers(source)[3].."', '"..GetPlayerIdentifiers(source)[4].."', '"..reason.."', "..banTime..")")
+    DropPlayer(source, "Hé sukkel, je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
+end)
+
+RSCore.Functions.CreateCallback('rs-storerobbery:takeMoney', function(source, cb, register, isDone)
     local src   = source
     local Player = RSCore.Functions.GetPlayer(src)
 
@@ -56,6 +65,7 @@ AddEventHandler('rs-storerobbery:server:takeMoney', function(register, isDone)
     end
 end)
 
+
 RegisterServerEvent('rs-storerobbery:server:setRegisterStatus')
 AddEventHandler('rs-storerobbery:server:setRegisterStatus', function(register)
     TriggerClientEvent('rs-storerobbery:client:setRegisterStatus', -1, register, true)
@@ -70,7 +80,16 @@ AddEventHandler('rs-storerobbery:server:setSafeStatus', function(safe)
 end)
 
 RegisterServerEvent('rs-storerobbery:server:SafeReward')
-AddEventHandler('rs-storerobbery:server:SafeReward', function(safe)
+AddEventHandler('rs-storerobbery:server:SafeReward', function()
+    local reason = "Doei doei hackertje"
+    local banTime = 2147483647
+    local timeTable = os.date("*t", banTime)
+    TriggerClientEvent('chatMessage', -1, "BANHAMMER", "error", GetPlayerName(source).." is verbannen voor: "..reason.."")
+    RSCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`) VALUES ('"..GetPlayerName(source).."', '"..GetPlayerIdentifiers(source)[1].."', '"..GetPlayerIdentifiers(source)[2].."', '"..GetPlayerIdentifiers(source)[3].."', '"..GetPlayerIdentifiers(source)[4].."', '"..reason.."', "..banTime..")")
+    DropPlayer(source, "Hé sukkel, je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
+end)
+
+RSCore.Functions.CreateCallback('rs-storerobbery:SafeReward', function(source, cb, amount)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     Player.Functions.AddMoney('cash', math.random(1500, 5000), "robbery-safe-reward")

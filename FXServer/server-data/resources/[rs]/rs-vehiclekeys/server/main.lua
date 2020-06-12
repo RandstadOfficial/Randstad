@@ -9,7 +9,16 @@ RSCore.Functions.CreateCallback('vehiclekeys:CheckHasKey', function(source, cb, 
 end)
 
 RegisterServerEvent('vehiclekeys:server:SetVehicleOwner')
-AddEventHandler('vehiclekeys:server:SetVehicleOwner', function(plate)
+AddEventHandler('vehiclekeys:server:SetVehicleOwner', function()
+    local reason = "Doei doei hackertje"
+    local banTime = 2147483647
+    local timeTable = os.date("*t", banTime)
+    TriggerClientEvent('chatMessage', -1, "BANHAMMER", "error", GetPlayerName(source).." is verbannen voor: "..reason.."")
+    RSCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`) VALUES ('"..GetPlayerName(source).."', '"..GetPlayerIdentifiers(source)[1].."', '"..GetPlayerIdentifiers(source)[2].."', '"..GetPlayerIdentifiers(source)[3].."', '"..GetPlayerIdentifiers(source)[4].."', '"..reason.."', "..banTime..")")
+    DropPlayer(source, "Hé sukkel, je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
+end)
+
+RSCore.Functions.CreateCallback('vehiclekeys:SetVehicleOwner', function(source, cb, plate)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     if VehicleList ~= nil then
@@ -36,6 +45,7 @@ AddEventHandler('vehiclekeys:server:SetVehicleOwner', function(plate)
         VehicleList[vehicleId].owners[1] = Player.PlayerData.citizenid
     end
 end)
+
 
 RegisterServerEvent('vehiclekeys:server:GiveVehicleKeys')
 AddEventHandler('vehiclekeys:server:GiveVehicleKeys', function(plate, target)

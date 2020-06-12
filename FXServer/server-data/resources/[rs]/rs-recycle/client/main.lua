@@ -122,7 +122,8 @@ Citizen.CreateThread(function ()
                                 disableCombat = true,
                             }, {}, {}, {}, function() -- Done
                                 StopAnimTask(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic", 1.0)
-                                TriggerServerEvent('rs-recycle:server:getItem')
+                                RSCore.Functions.TriggerCallback('rs-recycle:getItem', function()
+                                end)
                                 GetRandomPackage()
                             end)
                         end
@@ -161,6 +162,11 @@ function loadAnimDict(dict)
         Citizen.Wait(5)
     end
 end
+
+RegisterNetEvent('rs-recycle:client:executeEvents')
+AddEventHandler('rs-recycle:client:executeEvents', function()
+    TriggerServerEvent('rs-recycle:server:getItem')
+end)
 
 function DrawText3D(x, y, z, text)
 	SetTextScale(0.35, 0.35)

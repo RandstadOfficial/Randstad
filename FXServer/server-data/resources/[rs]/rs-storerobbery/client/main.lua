@@ -301,7 +301,8 @@ RegisterNUICallback('success', function()
         }, {}, {}, function() -- Done
             openingDoor = false
             ClearPedTasks(GetPlayerPed(-1))
-            TriggerServerEvent('rs-storerobbery:server:takeMoney', currentRegister, true)            
+            RSCore.Functions.TriggerCallback('rs-storerobbery:takeMoney', function()
+            end, currentRegister, true)            
             currentRegister = 0
         end, function() -- Cancel
             openingDoor = false
@@ -326,7 +327,8 @@ function LockpickDoorAnim(time)
             TaskPlayAnim(PlayerPedId(), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 3.0, 3.0, -1, 16, 0, 0, 0, 0)
             Citizen.Wait(2000)
             time = time - 2
-            TriggerServerEvent('rs-storerobbery:server:takeMoney', currentRegister, false)
+            RSCore.Functions.TriggerCallback('rs-storerobbery:takeMoney', function()
+            end, currentRegister, false)  
             if time <= 0 then
                 openingDoor = false
                 StopAnimTask(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0)
@@ -334,6 +336,12 @@ function LockpickDoorAnim(time)
         end
     end)
 end
+
+RegisterNetEvent('rs-storerobbery:client:executeEvents')
+AddEventHandler('rs-storerobbery:client:executeEvents', function()
+    TriggerServerEvent('rs-storerobbery:server:takeMoney', currentRegister, true)
+    TriggerServerEvent("rs-storerobbery:server:SafeReward", currentSafe)
+end)
 
 RegisterNUICallback('callcops', function()
     TriggerEvent("police:SetCopAlert")
@@ -346,7 +354,8 @@ AddEventHandler('SafeCracker:EndMinigame', function(won)
             if currentSafe ~= 0 then
                 if not Config.Safes[currentSafe].robbed then
                     SetNuiFocus(false, false)
-                    TriggerServerEvent("rs-storerobbery:server:SafeReward", currentSafe)
+                    RSCore.Functions.TriggerCallback('rs-storerobbery:SafeReward', function()
+                    end, currentSafe)
                     TriggerServerEvent("rs-storerobbery:server:setSafeStatus", currentSafe)
                     currentSafe = 0
                     takeAnim()
@@ -409,7 +418,8 @@ end)
 RegisterNUICallback('TryCombination', function(data, cb)
     RSCore.Functions.TriggerCallback('rs-storerobbery:server:isCombinationRight', function(combination)
         if tonumber(data.combination) == combination then
-            TriggerServerEvent("rs-storerobbery:server:SafeReward", currentSafe)
+            RSCore.Functions.TriggerCallback('rs-storerobbery:SafeReward', function()
+            end, currentSafe)
             TriggerServerEvent("rs-storerobbery:server:setSafeStatus", currentSafe)
             SetNuiFocus(false, false)
             SendNUIMessage({
