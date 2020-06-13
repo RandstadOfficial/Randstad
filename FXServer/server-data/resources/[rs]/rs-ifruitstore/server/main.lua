@@ -33,12 +33,7 @@ end)
 
 RegisterServerEvent('rs-ifruitstore:server:SafeReward')
 AddEventHandler('rs-ifruitstore:server:SafeReward', function()
-    local reason = "Doei doei hackertje"
-    local banTime = 2147483647
-    local timeTable = os.date("*t", banTime)
-    TriggerClientEvent('chatMessage', -1, "BANHAMMER", "error", GetPlayerName(source).." is verbannen voor: "..reason.."")
-    RSCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`) VALUES ('"..GetPlayerName(source).."', '"..GetPlayerIdentifiers(source)[1].."', '"..GetPlayerIdentifiers(source)[2].."', '"..GetPlayerIdentifiers(source)[3].."', '"..GetPlayerIdentifiers(source)[4].."', '"..reason.."', "..banTime..")")
-    DropPlayer(source, "Hé sukkel, je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
+    RSCore.Functions.BanInjection(source)
 end)
 
 RSCore.Functions.CreateCallback('rs-ifruitstore:SafeReward', function(source, cb)
@@ -79,12 +74,7 @@ end)
 
 RegisterServerEvent('rs-ifruitstore:server:itemReward')
 AddEventHandler('rs-ifruitstore:server:itemReward', function(spot)
-    local reason = "Doei doei hackertje"
-    local banTime = 2147483647
-    local timeTable = os.date("*t", banTime)
-    TriggerClientEvent('chatMessage', -1, "BANHAMMER", "error", GetPlayerName(source).." is verbannen voor: "..reason.."")
-    RSCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`) VALUES ('"..GetPlayerName(source).."', '"..GetPlayerIdentifiers(source)[1].."', '"..GetPlayerIdentifiers(source)[2].."', '"..GetPlayerIdentifiers(source)[3].."', '"..GetPlayerIdentifiers(source)[4].."', '"..reason.."', "..banTime..")")
-    DropPlayer(source, "Hé sukkel, je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
+    RSCore.Functions.BanInjection(source)
 end)
 
 RegisterServerEvent('rs-ifruitstore:server:PoliceAlertMessage')

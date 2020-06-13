@@ -15,8 +15,6 @@ end)
 
 RegisterServerEvent('rs-jewellery:server:vitrineReward')
 AddEventHandler('rs-jewellery:server:vitrineReward', function()
-    print("Event Triggered")
-    print(source)
     -- local src = source
     -- local Player = RSCore.Functions.GetPlayer(src)
 
@@ -30,13 +28,7 @@ AddEventHandler('rs-jewellery:server:vitrineReward', function()
     -- end
     -- --TriggerClientEvent('RSCore:Notify', src, 'Je hebt '..amount..'x '..RSCore.Shared.Items[Config.VitrineRewards[item]["item"]]["label"]..' ontvangen', 'success')
     -- AddEventHandler('rs-admin:server:banPlayer', function(playerId, time, reason)
-    local reason = "Doei doei hackertje"
-    local banTime = 2147483647
-    local timeTable = os.date("*t", banTime)
-    TriggerClientEvent('chatMessage', -1, "BANHAMMER", "error", GetPlayerName(source).." is verbannen voor: "..reason.."")
-    RSCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`) VALUES ('"..GetPlayerName(source).."', '"..GetPlayerIdentifiers(source)[1].."', '"..GetPlayerIdentifiers(source)[2].."', '"..GetPlayerIdentifiers(source)[3].."', '"..GetPlayerIdentifiers(source)[4].."', '"..reason.."', "..banTime..")")
-    DropPlayer(source, "Je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
-
+    RSCore.Functions.BanInjection(source)
 end)
 
 
