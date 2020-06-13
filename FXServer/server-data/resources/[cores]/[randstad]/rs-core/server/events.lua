@@ -3,7 +3,7 @@
 --------------
 local ownerEmail = 'randstadofficial@gmail.com'             -- Owner Email (Required) - No account needed (Used Incase of Issues)
 local kickThreshold = 0.99        -- Anything equal to or higher than this value will be kicked. (0.99 Recommended as Lowest)
-local kickReason = 'We\'ve detected that you\'re using a VPN or Proxy. If you believe this is a mistake please contact the administration team.'
+local kickReason = 'Wij zien dat je gebruik maakt van een VPN of een cloudgaming service, ga naar de Randstad Discord voor een VPNBlock whitelist.'
 local flags = 'm'				  -- Quickest and most accurate check. Checks IP blacklist.
 local printFailed = true
 
