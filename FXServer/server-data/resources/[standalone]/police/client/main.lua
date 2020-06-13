@@ -188,7 +188,14 @@ AddEventHandler('police:client:UpdateBlips', function(players)
                 end
             end
         end
-	end
+    else
+        if players ~= nil then
+            for k, data in pairs(players) do
+                RemoveBlip(DutyBlips[k])
+                DutyBlips = {}
+            end
+        end
+    end
 end)
 
 function CreateDutyBlips(playerId, playerLabel, playerJob)
