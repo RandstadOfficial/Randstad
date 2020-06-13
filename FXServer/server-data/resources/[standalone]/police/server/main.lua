@@ -151,7 +151,7 @@ AddEventHandler('police:server:JailPlayer', function(playerId, time)
     DropPlayer(source, "Hé sukkel, je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
 end)
 
-RSCore.Functions.CreateCallback('police:JailPlayer', function(source, cb, playerId)
+RSCore.Functions.CreateCallback('police:JailPlayer', function(source, cb, playerId, time)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     local OtherPlayer = RSCore.Functions.GetPlayer(playerId)
