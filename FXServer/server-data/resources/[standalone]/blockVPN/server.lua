@@ -29,7 +29,8 @@ local vpnWhitelist = {
 	[7]="steam:11000011a09febe",
 	[8]="steam:1100001411da9bb",
 	[9]="steam:11000010a3beefd",
-	[10]="steam:1100001036ee1b7"
+	[10]="steam:1100001036ee1b7",
+	[11]="steam:11000011aeeddd8"
 }
 
 AddEventHandler('playerConnecting', function(playerName, setKickReason, deferrals)
