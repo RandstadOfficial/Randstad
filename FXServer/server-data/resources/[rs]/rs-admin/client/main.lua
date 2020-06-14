@@ -71,10 +71,10 @@ GetPlayersFromCoords = function(coords, distance)
 end
 
 RegisterNetEvent('RSCore:ClearArea')
-AddEventHandler('RSCore:ClearPeds', function(x, y, z)
+AddEventHandler('RSCore:ClearArea', function(x, y, z)
     local x, y, z = table.unpack(GetEntityCoords(GetPlayerPed(-1), true))
-    -- ClearAreaOfEverything(x, y, z, 50.0)
-    ClearAreaOfPeds(x, y, z, 500.0, 1)
+    ClearAreaOfEverything(x, y, z, 50.0)
+    -- ClearAreaOfPeds(x, y, z, 500.0, 1)
 end)
 
 RegisterNetEvent('RSCore:Client:OnPlayerLoaded')

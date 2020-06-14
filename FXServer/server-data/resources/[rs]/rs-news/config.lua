@@ -31,5 +31,5 @@ Config.Locations = {
 }
 
 Config.Vehicles = {
-    ["rumpo"] = "Rumpo",
+    ["rumpo"] = "Randstad Nieuws Busje",
 }
