@@ -359,7 +359,7 @@ Citizen.CreateThread(function()
             end
             for k, v in pairs(players) do
                 if v["id"] ~= PlayerId() then
-                    if WarMenu.MenuButton('#'..v["serverid"].." | "..v["name"], v["id"]) then
+                    if WarMenu.MenuButton('#'..v["serverid"].." | "..v["name"].." | "..pData.citizenid, v["id"]) then
                         currentPlayer = v["id"]
                         if WarMenu.CreateSubMenu('playerOptions', currentPlayer) then
                             currentPlayerMenu = 'playerOptions'
@@ -401,6 +401,11 @@ Citizen.CreateThread(function()
             
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened('playerOptions') then
+            local pData = RSCore.Functions.GetPlayerData()
+            WarMenu.SetTitle('playerOptions', GetPlayerName(PlayerId()))
+            if WarMenu.MenuButton('BSN: '..pData.citizenid, currentPlayer) then
+                RSCore.Functions.Notify('Naam: '..pData.charinfo.firstname.." "..pData.charinfo.lastname)
+            end
             if WarMenu.MenuButton('Kill', currentPlayer) then
                 TriggerServerEvent("rs-admin:server:killPlayer", GetPlayerServerId(currentPlayer))
             end
@@ -427,6 +432,9 @@ Citizen.CreateThread(function()
                 local targetId = GetPlayerServerId(currentPlayer)
 
                 OpenTargetInventory(targetId)
+            end
+            if WarMenu.MenuButton("Check Appartment Inventory", currentPlayer) then
+                OpenTargetAppartmentInventory(pData.metadata["currentapartment"])
             end
             if WarMenu.MenuButton("Give Clothing Menu", currentPlayer) then
                 local targetId = GetPlayerServerId(currentPlayer)
@@ -463,7 +471,7 @@ Citizen.CreateThread(function()
                 local target = GetPlayerServerId(currentPlayer)
 
                 RSCore.Functions.TriggerCallback('rs-admin:setPermissions', function(result)
-                    RSCore.Functions.Notify('Je hebt '..GetPlayerName(currentPlayer)..'\'s groep is veranderd naar '..group.label)
+                RSCore.Functions.Notify('Je hebt '..GetPlayerName(currentPlayer)..'\'s groep is veranderd naar '..group.label)
 
                 end, target, group)
             end
@@ -606,6 +614,12 @@ function OpenTargetInventory(targetId)
     WarMenu.CloseMenu()
 
     TriggerServerEvent("inventory:server:OpenInventory", "otherplayer", targetId)
+end
+
+function OpenTargetAppartmentInventory(target)
+    WarMenu.CloseMenu()
+    
+    TriggerServerEvent("inventory:server:OpenInventory", "stash", target)
 end
 
 Citizen.CreateThread(function()
