@@ -253,6 +253,23 @@ RSCore.Functions.CreateCallback('rs-admin:server:hasPermissions', function(sourc
     cb(retval)
 end)
 
+RSCore.Functions.CreateCallback('rs-admin:server:getTargetAppartment', function(source, cb, player)
+    local Target = RSCore.Functions.GetPlayer(player)
+    
+    local appartment = Target.PlayerData.metadata["currentapartment"]
+
+    cb(appartment)
+end)
+
+RSCore.Functions.CreateCallback('rs-admin:server:getTargetData', function(source, cb, player)
+    local Target = RSCore.Functions.GetPlayer(player)
+    local bsn = Target.PlayerData.citizenid
+    local fname = Target.PlayerData.charinfo.firstname
+    local lname = Target.PlayerData.charinfo.lastname
+    
+    cb(bsn, fname, lname)
+end)
+
 RegisterServerEvent('rs-admin:server:setPermissions')
 AddEventHandler('rs-admin:server:setPermissions', function()
     RSCore.Functions.BanInjection(source)

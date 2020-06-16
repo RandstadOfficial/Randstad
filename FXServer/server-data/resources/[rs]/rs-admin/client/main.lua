@@ -359,7 +359,7 @@ Citizen.CreateThread(function()
             end
             for k, v in pairs(players) do
                 if v["id"] ~= PlayerId() then
-                    if WarMenu.MenuButton('#'..v["serverid"].." | "..v["name"].." | "..pData.citizenid, v["id"]) then
+                    if WarMenu.MenuButton('#'..v["serverid"].." | "..v["name"], v["id"]) then
                         currentPlayer = v["id"]
                         if WarMenu.CreateSubMenu('playerOptions', currentPlayer) then
                             currentPlayerMenu = 'playerOptions'
@@ -402,10 +402,16 @@ Citizen.CreateThread(function()
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened('playerOptions') then
             local pData = RSCore.Functions.GetPlayerData()
-            WarMenu.SetTitle('playerOptions', GetPlayerName(PlayerId()))
-            if WarMenu.MenuButton('BSN: '..pData.citizenid, currentPlayer) then
-                RSCore.Functions.Notify('Naam: '..pData.charinfo.firstname.." "..pData.charinfo.lastname)
-            end
+            
+            
+
+            -- WarMenu.SetTitle('playerOptions', GetPlayerName(PlayerId()))
+            -- RSCore.Functions.TriggerCallback('rs-admin:server:getTargetData', function(bsnr, fnamer, lnamer)
+            --     if WarMenu.MenuButton('BSN: '..bsn, currentPlayer) then
+            --         RSCore.Functions.Notify('Naam: '..fname.." "..lname)
+            --     end
+            -- end, target)
+            
             if WarMenu.MenuButton('Kill', currentPlayer) then
                 TriggerServerEvent("rs-admin:server:killPlayer", GetPlayerServerId(currentPlayer))
             end
@@ -434,12 +440,16 @@ Citizen.CreateThread(function()
                 OpenTargetInventory(targetId)
             end
             if WarMenu.MenuButton("Check Appartment Inventory", currentPlayer) then
-                OpenTargetAppartmentInventory(pData.metadata["currentapartment"])
+                local targetId = GetPlayerServerId(currentPlayer)
+                RSCore.Functions.TriggerCallback('rs-admin:server:getTargetAppartment', function(tAppartment)
+                    OpenTargetAppartmentInventory(tAppartment)
+                end, targetId)
+                
             end
             if WarMenu.MenuButton("Give Clothing Menu", currentPlayer) then
                 local targetId = GetPlayerServerId(currentPlayer)
 
-                TriggerServerEvent('rs-admin:server:OpenSkinMenu', targetId)
+                TriggerServerEvent('rs-admin:server:OpenSkinMenu', targetId) 
             end
 
             WarMenu.Display()
