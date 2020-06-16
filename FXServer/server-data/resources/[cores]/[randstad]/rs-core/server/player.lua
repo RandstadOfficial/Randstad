@@ -1,12 +1,23 @@
 RSCore.Players = {}
 RSCore.Player = {}
+RSCore.playTime = {}
 
 RSCore.Player.Login = function(source, citizenid, newData)
 	if source ~= nil then
 		if citizenid then
+			-- Add players citizenID to RSCore.playTime table
+			RSCore.playTime[citizenid] = { source = src, joinTime = os.time(), timePlayed = 0}
+
 			RSCore.Functions.ExecuteSql(true, "SELECT * FROM `players` WHERE `citizenid` = '"..citizenid.."'", function(result)
 				local PlayerData = result[1]
 				if PlayerData ~= nil then
+
+					-- Retrieve players total playtime
+					local playTimeP = PlayerData.playtime
+
+					-- Replace timePlayed with current playtime
+					RSCore.playTime[citizenid].timePlayed = playTimeP
+
 					PlayerData.money = json.decode(PlayerData.money)
 					PlayerData.job = json.decode(PlayerData.job)
 					PlayerData.position = json.decode(PlayerData.position)
@@ -339,6 +350,14 @@ end
 RSCore.Player.Save = function(source)
 	local PlayerData = RSCore.Players[source].PlayerData
 	if PlayerData ~= nil then
+		
+		if RSCore.playTime[PlayerData.citizenid] ~= nil then
+			local leaveTime = os.time()
+			local saveTime = os.difftime(leaveTime, RSCore.playTime[PlayerData.citizenid].joinTime) + RSCore.playTime[PlayerData.citizenid].timePlayed
+	
+			RSCore.Functions.ExecuteSql(true, "UPDATE `players` SET playtime='"..saveTime.."' WHERE `citizenid` = '"..PlayerData.citizenid.."'")
+		end	
+
 		RSCore.Functions.ExecuteSql(true, "SELECT * FROM `players` WHERE `citizenid` = '"..PlayerData.citizenid.."'", function(result)
 			if result[1] == nil then
 				RSCore.Functions.ExecuteSql(true, "INSERT INTO `players` (`citizenid`, `cid`, `steam`, `license`, `name`, `money`, `charinfo`, `job`, `position`, `metadata`) VALUES ('"..PlayerData.citizenid.."', '"..tonumber(PlayerData.cid).."', '"..PlayerData.steam.."', '"..PlayerData.license.."', '"..PlayerData.name.."', '"..json.encode(PlayerData.money).."', '"..RSCore.EscapeSqli(json.encode(PlayerData.charinfo)).."', '"..json.encode(PlayerData.job).."', '"..json.encode(PlayerData.position).."', '"..json.encode(PlayerData.metadata).."')")
