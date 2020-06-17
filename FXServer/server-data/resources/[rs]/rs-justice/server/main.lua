@@ -1,6 +1,38 @@
 RSCore = nil
 TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 
+AddEventHandler('entityCreated', function(entity)
+    print('entityCreated')
+    local entity = entity
+    --for i, v in ipairs(entity) do print(v) end
+    print(entity)
+    -- if not DoesEntityExist(entity) then
+    --     return
+    -- end
+
+    local src = NetworkGetEntityOwner(entity)
+    local entID = NetworkGetNetworkIdFromEntity(entity)
+
+    local ownerID = GetPlayerIdentifiers(src)[1]
+
+    print("Entity ID: "..entID)
+    print("Owner ID: "..ownerID)
+    local model = GetEntityModel(entity)
+    print(model)
+
+    -- if GetEntityType(entity) ~= 0 then
+    --     local model = GetEntityModel(entity)
+
+    --     for i, objName in ipairs(BlacklistedThings) do
+    --         if model == GetHashKey(objName) then
+    --             TriggerClientEvent('DespawnObj', src, entity)
+    --             --DropPlayer(src, 'new cheat detection lol.')
+    --         end
+    --     end
+    -- end
+end)
+  
+
 RSCore.Commands.Add("setlawyer", "Schrijf iemand in als advocaat", {{name="id", help="Id van de speler"}}, true, function(source, args)
     local Player = RSCore.Functions.GetPlayer(source)
     local playerId = tonumber(args[1])
