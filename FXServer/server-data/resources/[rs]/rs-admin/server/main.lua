@@ -48,10 +48,10 @@ AddEventHandler('rs-admin:server:serverKick', function(reason)
 end)
 
 local suffix = {
-    "hihi",
-    "#yolo",
-    "hmm slurpie",
-    "yeet terug naar esx",
+    "- Huts",
+    "- Challaz",
+    "- Adios Amigos",
+    "- Yeet terug naar ESX",
 }
 
 RegisterServerEvent('rs-admin:server:banPlayer')
@@ -266,7 +266,7 @@ RSCore.Functions.CreateCallback('rs-admin:server:getTargetData', function(source
     local bsn = Target.PlayerData.citizenid
     local fname = Target.PlayerData.charinfo.firstname
     local lname = Target.PlayerData.charinfo.lastname
-    
+
     cb(bsn, fname, lname)
 end)
 

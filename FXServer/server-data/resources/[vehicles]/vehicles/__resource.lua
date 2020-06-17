@@ -9,6 +9,7 @@ files {
     'stream/[police]/ptouran/PTOURAN.xml',
     'stream/[police]/pbklasse/PBKLASSE.xml',
     'stream/[police]/paudi/PAUDI.xml',
+    'stream/[police]/pmaserati/pmaserati.xml',
     'stream/[police]/pamarok/PAMAROK.xml',
     'stream/[police]/pfosprinter/PFOSPRINTER.xml',
     'stream/[police]/ptouran11/PTOURAN11.xml',
