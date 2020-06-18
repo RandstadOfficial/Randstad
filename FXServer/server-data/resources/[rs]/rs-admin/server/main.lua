@@ -80,7 +80,7 @@ RSCore.Commands.Add("announce", "Stuur een bericht naar iedereen", {}, false, fu
     for i = 1, 3, 1 do
         TriggerClientEvent('chatMessage', -1, "SYSTEM", "error", msg)
     end
-end, "god")
+end, "admin")
 
 RSCore.Commands.Add("admin", "Open admin menu", {}, false, function(source, args)
     local group = RSCore.Functions.GetPermission(source)
