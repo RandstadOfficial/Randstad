@@ -13,19 +13,6 @@ RSCore.Functions.CreateCallback('rs-occasions:server:getVehicles', function(sour
     end)
 end)
 
-RSCore.Functions.CreateCallback("rs-garage:server:checkVehicleOwner", function(source, cb, plate)
-    local src = source
-    local pData = RSCore.Functions.GetPlayer(src)
-
-    exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE plate = @plate AND citizenid = @citizenid', {['@plate'] = plate, ['@citizenid'] = pData.PlayerData.citizenid}, function(result)
-        if result[1] ~= nil then
-            cb(true)
-        else
-            cb(false)
-        end
-    end)
-end)
-
 RSCore.Functions.CreateCallback("rs-occasions:server:getSellerInformation", function(source, cb, citizenid)
     local src = source
 
@@ -83,12 +70,16 @@ AddEventHandler('rs-occasions:server:buyVehicle', function(vehicleData)
         local cashAmount = Player.PlayerData.money["cash"]
         if result[1] ~= nil then 
             if cashAmount >= result[1].price then
-                Player.Functions.RemoveMoney('cash', result[1].price)
-                RSCore.Functions.ExecuteSql(true, "INSERT INTO `player_vehicles` (`steam`, `citizenid`, `vehicle`, `hash`, `mods`, `plate`, `state`) VALUES ('"..Player.PlayerData.steam.."', '"..Player.PlayerData.citizenid.."', '"..vehicleData["model"].."', '"..GetHashKey(vehicleData["model"]).."', '"..vehicleData["mods"].."', '"..vehicleData["plate"].."', '0')")
                 RSCore.Functions.ExecuteSql(true, "DELETE FROM `occasion_vehicles` WHERE `occasionId` = '"..vehicleData["oid"].."'")
+                print("gaat nog goed")
+                TriggerClientEvent('rs-occasions:client:DeleteVehicle', src)
+                RSCore.Functions.ExecuteSql(true, "INSERT INTO `player_vehicles` (`steam`, `citizenid`, `vehicle`, `hash`, `mods`, `plate`, `state`) VALUES ('"..Player.PlayerData.steam.."', '"..Player.PlayerData.citizenid.."', '"..vehicleData["model"].."', '"..GetHashKey(vehicleData["model"]).."', '"..vehicleData["mods"].."', '"..vehicleData["plate"].."', '0')")               
+                Player.Functions.RemoveMoney('cash', result[1].price)
                 TriggerClientEvent('rs-occasions:client:BuyFinished', src, result[1].mods)
                 RSCore.Functions.ExecuteSql(false, "SELECT * FROM `players` WHERE citizenid = '"..result[1].seller.."'", function(player)
+                    print("player citizenid: "..player[1].citizenid)
                     local recieverSteam = RSCore.Functions.GetPlayerByCitizenId(player[1].citizenid)
+                    --player1.citizenid is wrs leeg.
             
                     if recieverSteam ~= nil then
                         recieverSteam.Functions.AddMoney('bank', math.ceil((result[1].price / 100) * 77))
