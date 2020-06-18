@@ -71,7 +71,6 @@ AddEventHandler('rs-occasions:server:buyVehicle', function(vehicleData)
         if result[1] ~= nil then 
             if cashAmount >= result[1].price then
                 RSCore.Functions.ExecuteSql(true, "DELETE FROM `occasion_vehicles` WHERE `occasionId` = '"..vehicleData["oid"].."'")
-                print("gaat nog goed")
                 TriggerClientEvent('rs-occasions:client:DeleteVehicle', src)
                 RSCore.Functions.ExecuteSql(true, "INSERT INTO `player_vehicles` (`steam`, `citizenid`, `vehicle`, `hash`, `mods`, `plate`, `state`) VALUES ('"..Player.PlayerData.steam.."', '"..Player.PlayerData.citizenid.."', '"..vehicleData["model"].."', '"..GetHashKey(vehicleData["model"]).."', '"..vehicleData["mods"].."', '"..vehicleData["plate"].."', '0')")               
                 Player.Functions.RemoveMoney('cash', result[1].price)
@@ -102,10 +101,11 @@ AddEventHandler('rs-occasions:server:buyVehicle', function(vehicleData)
                     TriggerEvent("rs-log:server:CreateLog", "vehicleshop", "Occasion gekocht", "green", "**"..GetPlayerName(src) .. "** heeft een occasian gekocht voor "..result[1].price .. " (" .. result[1].plate .. ") van **"..player[1].citizenid.."**")
                     TriggerClientEvent('rs-occasion:client:refreshVehicles', -1)
                 end)
-            elseif bankAmount >= result[1].price then
-                Player.Functions.RemoveMoney('bank', result[1].price, "occasions-bought-vehicle")
-                RSCore.Functions.ExecuteSql(true, "INSERT INTO `player_vehicles` (`steam`, `citizenid`, `vehicle`, `hash`, `mods`, `plate`, `state`) VALUES ('"..Player.PlayerData.steam.."', '"..Player.PlayerData.citizenid.."', '"..vehicleData["model"].."', '"..GetHashKey(vehicleData["model"]).."', '"..vehicleData["mods"].."', '"..vehicleData["plate"].."', '0')")
+            elseif bankAmount >= result[1].price then               
                 RSCore.Functions.ExecuteSql(true, "DELETE FROM `occasion_vehicles` WHERE `occasionId` = '"..vehicleData["oid"].."'")
+                TriggerClientEvent('rs-occasions:client:DeleteVehicle', src)
+                RSCore.Functions.ExecuteSql(true, "INSERT INTO `player_vehicles` (`steam`, `citizenid`, `vehicle`, `hash`, `mods`, `plate`, `state`) VALUES ('"..Player.PlayerData.steam.."', '"..Player.PlayerData.citizenid.."', '"..vehicleData["model"].."', '"..GetHashKey(vehicleData["model"]).."', '"..vehicleData["mods"].."', '"..vehicleData["plate"].."', '0')")
+                Player.Functions.RemoveMoney('bank', result[1].price, "occasions-bought-vehicle")
                 TriggerClientEvent('rs-occasions:client:BuyFinished', src, result[1].model, result[1].plate, result[1].mods)
         
                 RSCore.Functions.ExecuteSql(false, "SELECT * FROM `players` WHERE citizenid = '"..ownerCid.."'", function(player)
