@@ -161,6 +161,7 @@ AddEventHandler('RSCore:Client:OnPlayerUnload', function()
     isLoggedIn = false
     isHandcuffed = false
     isEscorted = false
+    onDuty = false
     ClearPedTasks(GetPlayerPed(-1))
     DetachEntity(GetPlayerPed(-1), true, false)
     if DutyBlips ~= nil then 
@@ -170,6 +171,7 @@ AddEventHandler('RSCore:Client:OnPlayerUnload', function()
         DutyBlips = {}
     end
 end)
+
 local DutyBlips = {}
 RegisterNetEvent('police:client:UpdateBlips')
 AddEventHandler('police:client:UpdateBlips', function(players)
@@ -481,7 +483,6 @@ end)
 RegisterNetEvent('police:client:Send112AMessage')
 AddEventHandler('police:client:Send112AMessage', function(message)
     local PlayerData = RSCore.Functions.GetPlayerData()
-
     if ((PlayerData.job.name == "police" or PlayerData.job.name == "ambulance") and onDuty) then
         TriggerEvent('chatMessage', "ANONIEME MELDING", "warning", message)
         TriggerEvent("police:client:EmergencySound")

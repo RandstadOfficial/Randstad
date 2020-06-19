@@ -1,6 +1,16 @@
 TokoVoip = {};
 TokoVoip.__index = TokoVoip;
 local lastTalkState = false
+local CanTalkOnRadio = true
+
+RegisterNetEvent("tokovoip_script:ToggleRadioTalk")
+AddEventHandler("tokovoip_script:ToggleRadioTalk", function(bool)
+	if not bool then
+		CanTalkOnRadio = true
+	else
+		CanTalkOnRadio = false
+	end
+end)
 
 function TokoVoip.init(self, config)
 	local self = setmetatable(config, TokoVoip);
@@ -39,9 +49,9 @@ end
 function TokoVoip.updateTokoVoipInfo(self, forceUpdate) -- Update the top-left info
 	local info = "";
 	if (self.mode == 1) then
-		info = "Normaal";
-	elseif (self.mode == 2) then
 		info = "Fluisteren";
+	elseif (self.mode == 2) then
+		info = "Normaal";
 	elseif (self.mode == 3) then
 		info = "Schreeuwen";
 	end
@@ -80,6 +90,7 @@ end
 function TokoVoip.initialize(self)
 	self:updateConfig();
 	self:updatePlugin("initializeSocket", nil);
+	TriggerEvent('qb-hud:client:UpdateVoiceProximity', self.mode)
 	Citizen.CreateThread(function()
 		while (true) do
 			Citizen.Wait(5);
@@ -116,10 +127,12 @@ function TokoVoip.initialize(self)
 				end
 				setPlayerData(self.serverId, "voip:mode", self.mode, true);
 				self:updateTokoVoipInfo();
+				TriggerEvent('qb-hud:client:UpdateVoiceProximity', self.mode)
 			end
 
 
 			if (IsControlPressed(0, self.radioKey) and self.plugin_data.radioChannel ~= -1 and self.config.radioEnabled) then -- Talk on radio
+				if CanTalkOnRadio then
 				self.plugin_data.radioTalking = true;
 				self.plugin_data.localRadioClicks = true;
 				if (self.plugin_data.radioChannel > self.config.radioClickMaxChannel) then
@@ -139,6 +152,7 @@ function TokoVoip.initialize(self)
 					end
 					lastTalkState = true
 				end
+			end
 			else
 				self.plugin_data.radioTalking = false;
 				if (getPlayerData(self.serverId, "radio:talking")) then

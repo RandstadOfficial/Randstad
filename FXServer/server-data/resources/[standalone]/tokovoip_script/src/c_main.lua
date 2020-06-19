@@ -65,9 +65,11 @@ RegisterNUICallback("setPlayerTalking", function(data)
 	if (voip.talking == 1) then
 		setPlayerData(voip.serverId, "voip:talking", 1, true);
 		PlayFacialAnim(GetPlayerPed(PlayerId()), "mic_chatter", "mp_facial");
+		TriggerEvent('rs-hud:client:ProximityActive', true)
 	else
 		setPlayerData(voip.serverId, "voip:talking", 0, true);
 		PlayFacialAnim(PlayerPedId(), "mood_normal_1", "facials@gen_male@base");
+		TriggerEvent('rs-hud:client:ProximityActive', false)
 	end
 end)
 
