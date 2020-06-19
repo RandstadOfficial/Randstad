@@ -34,6 +34,7 @@ Citizen.CreateThread(function()
                                 TriggerServerEvent("police:server:UpdateCurrentCops")
                                 TriggerServerEvent("RSCore:ToggleDuty")
                                 TriggerServerEvent("police:server:UpdateBlips")
+                                TriggerEvent('rs-policealerts:ToggleDuty', onDuty)
                             end
                         elseif (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 2.5) then
                             DrawText3D(v.x, v.y, v.z, "In/Uit dienst")
@@ -471,11 +472,6 @@ function VehicleList(isDown)
     ClearMenu()
     for k, v in pairs(Config.Vehicles) do
         Menu.addButton(Config.Vehicles[k], "TakeOutVehicle", k, "Garage", " Motor: 100%", " Body: 100%", " Fuel: 100%")
-    end
-    if IsArmoryWhitelist() then
-        for veh, label in pairs(Config.WhitelistedVehicles) do
-            Menu.addButton(label, "TakeOutVehicle", veh, "Garage", " Motor: 100%", " Body: 100%", " Fuel: 100%")
-        end
     end
         
     Menu.addButton("Terug", "MenuGarage",nil)

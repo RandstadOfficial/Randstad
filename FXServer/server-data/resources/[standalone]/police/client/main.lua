@@ -233,7 +233,34 @@ AddEventHandler('police:client:SendPoliceEmergencyAlert', function(callsign, str
     if street2 ~= nil then 
         streetLabel = streetLabel .. " " .. street2
     end
+    local alertTitle = "Assistentie collega"
+    if PlayerJob.name == "ambulance" or PlayerJob.name == "doctor" then
+        alertTitle = "Assistentie " .. PlayerJob.label
+    end
+
+    local MyId = GetPlayerServerId(PlayerId())
+
     TriggerServerEvent("police:server:SendPoliceEmergencyAlert", streetLabel, pos, RSCore.Functions.GetPlayerData().metadata["callsign"])
+    TriggerServerEvent('rs-policealerts:server:AddPoliceAlert', {
+        timeOut = 10000,
+        alertTitle = alertTitle,
+        coords = {
+            x = pos.x,
+            y = pos.y,
+            z = pos.z,
+        },
+        details = {
+            [1] = {
+                icon = '<i class="fas fa-passport"></i>',
+                detail = MyId .. ' | ' .. RSCore.Functions.GetPlayerData().charinfo.firstname .. ' ' .. RSCore.Functions.GetPlayerData().charinfo.lastname,
+            },
+            [2] = {
+                icon = '<i class="fas fa-globe-europe"></i>',
+                detail = streetLabel,
+            },
+        },
+        callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+    }, true)
 end)
 
 RegisterNetEvent('police:PlaySound')

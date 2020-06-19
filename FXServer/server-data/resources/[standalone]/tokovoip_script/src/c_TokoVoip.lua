@@ -90,7 +90,7 @@ end
 function TokoVoip.initialize(self)
 	self:updateConfig();
 	self:updatePlugin("initializeSocket", nil);
-	TriggerEvent('qb-hud:client:UpdateVoiceProximity', self.mode)
+	TriggerEvent('rs-hud:client:UpdateVoiceProximity', self.mode)
 	Citizen.CreateThread(function()
 		while (true) do
 			Citizen.Wait(5);
@@ -127,7 +127,7 @@ function TokoVoip.initialize(self)
 				end
 				setPlayerData(self.serverId, "voip:mode", self.mode, true);
 				self:updateTokoVoipInfo();
-				TriggerEvent('qb-hud:client:UpdateVoiceProximity', self.mode)
+				TriggerEvent('rs-hud:client:UpdateVoiceProximity', self.mode)
 			end
 
 
