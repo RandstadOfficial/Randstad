@@ -472,6 +472,11 @@ function VehicleList(isDown)
     for k, v in pairs(Config.Vehicles) do
         Menu.addButton(Config.Vehicles[k], "TakeOutVehicle", k, "Garage", " Motor: 100%", " Body: 100%", " Fuel: 100%")
     end
+    if IsArmoryWhitelist() then
+        for veh, label in pairs(Config.WhitelistedVehicles) do
+            Menu.addButton(label, "TakeOutVehicle", veh, "Garage", " Motor: 100%", " Body: 100%", " Fuel: 100%")
+        end
+    end
         
     Menu.addButton("Terug", "MenuGarage",nil)
 end

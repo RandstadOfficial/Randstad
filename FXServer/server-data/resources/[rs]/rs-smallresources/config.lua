@@ -70,6 +70,7 @@ Config.BlacklistedVehs = {
     [`BLIMP`] = true,
     [`AIRTUG`] = true,
     [`CAMPER`] = true,  
+    [`pranger`] = true,  
 }
 
 Config.BlacklistedPeds = {
