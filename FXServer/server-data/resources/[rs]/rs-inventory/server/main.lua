@@ -1331,6 +1331,7 @@ RSCore.Commands.Add("resetinv", "Reset inventory (in geval met -None)", {{name="
 		elseif invType == "house" then
 			if Stashes[invId] ~= nil then
 				Stashes[invId].isOpen = false
+			end
 		else
 			TriggerClientEvent('RSCore:Notify', source,  "Geen geldig type..", "error")
 		end
