@@ -1308,7 +1308,7 @@ RSCore.Commands.Add("checkinv", "Check een inventory", {{name="type", help="stas
 	end
 end, "admin")
 
-RSCore.Commands.Add("resetinv", "Reset inventory (in geval met -None)", {{name="type", help="stash/trunk/glovebox"},{name="id/plate", help="ID van stash of kenteken"}}, true, function(source, args)
+RSCore.Commands.Add("resetinv", "Reset inventory (in geval met -None)", {{name="type", help="stash/trunk/glovebox/house"},{name="id/plate", help="ID van stash of kenteken"}}, true, function(source, args)
 	local invType = args[1]:lower()
 	
 	if invType ~= nil and args[2] ~= nil then 
@@ -1328,6 +1328,9 @@ RSCore.Commands.Add("resetinv", "Reset inventory (in geval met -None)", {{name="
 			if Stashes[stash] ~= nil then 
 				Stashes[stash].isOpen = false
 			end
+		elseif invType == "house" then
+			if Stashes[invId] ~= nil then
+				Stashes[invId].isOpen = false
 		else
 			TriggerClientEvent('RSCore:Notify', source,  "Geen geldig type..", "error")
 		end
