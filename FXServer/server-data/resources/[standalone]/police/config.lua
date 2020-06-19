@@ -139,15 +139,23 @@ Config.Vehicles = {
     ["paudi"] = "Audi A6",
     ["pamarok"] = "Volkswagen Amarok",
     ["pt5"] = "Volkswagen T5",
-    --["pt6"] = "Volkswagen T6",
-    --["pfosprinter"] = "Mercedes-Benz Sprinter (FO)",
     ["pyamahamotor"] = "Yamaha Motor",
     ["pbmwmotor2"] = "BMW Motor",
     ["pschafter"] = "Unmarked Schafter",
     ["poracle"] = "Unmarked Oracle",
     --["dsimerc"] = "Mercedes (DSI)",
-   -- ["dsivito"] = "Mercedes Vito (DSI)",
+    --["dsivito"] = "Mercedes Vito (DSI)",
     --["dsiq5"] = "Audi Q5 (DSI)",
+    --["pt6"] = "Volkswagen T6",
+    --["pfosprinter"] = "Mercedes-Benz Sprinter (FO)",
+}
+
+Config.WhitelistedVehicles = {
+    ["pa45"] = "Mercedes A45 Unmarked",
+    ["pbmwm5"] = "BMW M5 Unmarked (DSI)",
+    --["paudia4"] = "Audi A4 Unmarked",
+    --["pbmw330"] = "BMW 330D Unmarked",
+    --["pfpace"] = "Jaguar F-Pace Unmarked",
 }
 
 Config.AmmoLabels = {
