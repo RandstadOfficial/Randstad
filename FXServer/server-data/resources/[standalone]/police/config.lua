@@ -210,13 +210,13 @@ Config.Items = {
     slots = 30,
     items = {
         [1] = {
-            name = "weapon_pistol_mk2",
+            name = "weapon_pistol",
             price = 0,
             amount = 1,
             info = {
                 serie = "",                
                 attachments = {
-                    {component = "COMPONENT_AT_PI_FLSH_02", label = "Flashlight"},
+                    {component = "COMPONENT_AT_PI_FLSH", label = "Flashlight"},
                 }
             },
             type = "weapon",

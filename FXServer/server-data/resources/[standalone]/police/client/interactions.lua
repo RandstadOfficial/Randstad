@@ -257,6 +257,10 @@ AddEventHandler('police:client:EscortPlayer', function()
     end
 end)
 
+function IsHandcuffed()
+    return isHandcuffed
+end
+
 RegisterNetEvent('police:client:KidnapPlayer')
 AddEventHandler('police:client:KidnapPlayer', function()
     local player, distance = GetClosestPlayer()
@@ -426,6 +430,13 @@ AddEventHandler('police:client:GetCuffed', function(playerId, isSoftcuff)
         TriggerServerEvent("police:server:SetHandcuffStatus", false)
         ClearPedTasksImmediately(GetPlayerPed(-1))
         RSCore.Functions.Notify("Je bent ontboeid!")
+    end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        TriggerEvent("tokovoip_script:ToggleRadioTalk", isHandcuffed)
+        Citizen.Wait(2000)
     end
 end)
 
