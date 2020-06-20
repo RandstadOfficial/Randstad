@@ -28,6 +28,69 @@ Citizen.CreateThread(function()
     end
 end)
 
+function GetClosestVending()
+    local ped = GetPlayerPed(-1)
+    local pos = GetEntityCoords(ped)
+    local object = nil
+    for _, machine in pairs(Config.VendingObjects) do
+        local ClosestObject = GetClosestObjectOfType(pos.x, pos.y, pos.z, 50.0, GetHashKey(machine), 0, 0, 0)
+        if ClosestObject ~= 0 and ClosestObject ~= nil then
+            if object == nil then
+                object = ClosestObject
+            end
+        end
+    end
+    return object
+end
+
+function DrawText3Ds(x, y, z, text)
+	SetTextScale(0.35, 0.35)
+    SetTextFont(4)
+    SetTextProportional(1)
+    SetTextColour(255, 255, 255, 215)
+    SetTextEntry("STRING")
+    SetTextCentre(true)
+    AddTextComponentString(text)
+    SetDrawOrigin(x,y,z, 0)
+    DrawText(0.0, 0.0)
+    local factor = (string.len(text)) / 370
+    DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
+    ClearDrawOrigin()
+end
+
+Citizen.CreateThread(function()
+    while true do
+        local ped = GetPlayerPed(-1)
+        local pos = GetEntityCoords(ped)
+        local inRange = false
+        local VendingMachine = GetClosestVending()
+
+        if VendingMachine ~= nil then
+            local VendingPos = GetEntityCoords(VendingMachine)
+            local Distance = GetDistanceBetweenCoords(pos, VendingPos.x, VendingPos.y, VendingPos.z, true)
+            if Distance < 20 then
+                inRange = true
+                if Distance < 1.5 then
+                    DrawText3Ds(VendingPos.x, VendingPos.y, VendingPos.z, '~g~E~w~ - Drinken kopen')
+                    if IsControlJustPressed(0, Keys["E"]) then
+                        local ShopItems = {}
+                        ShopItems.label = "Drankautomaat"
+                        ShopItems.items = Config.VendingItem
+                        ShopItems.slots = #Config.VendingItem
+                        TriggerServerEvent("inventory:server:OpenInventory", "shop", "Vendingshop_"..math.random(1, 99), ShopItems)
+                    end
+                end
+            end
+        end
+
+        if not inRange then
+            Citizen.Wait(1000)
+        end
+
+        Citizen.Wait(1)
+    end
+end)
+
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(7)
