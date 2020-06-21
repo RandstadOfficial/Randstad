@@ -166,11 +166,33 @@ function CreateTrevorsShell(spawn)
     return { objects, POIOffsets }
 end
 
-function CreateGunshopShell(spawn)
+function CreateLesterShell(spawn)
 	local objects = {}
 
     local POIOffsets = {}
 	POIOffsets.exit = json.decode('{"z":7.9,"y":-3.9,"x":0.1,"h":358.633972168}')
+	DoScreenFadeOut(500)
+    while not IsScreenFadedOut() do
+        Citizen.Wait(10)
+    end
+	RequestModel(`playerhouse_tier2`)
+	while not HasModelLoaded(`playerhouse_tier2`) do
+	    Citizen.Wait(1000)
+	end
+	local house = CreateObject(`playerhouse_tier2`, spawn.x, spawn.y, spawn.z, false, false, false)
+    FreezeEntityPosition(house, true)
+	table.insert(objects, house)
+
+	TeleportToInterior(spawn.x + 0.0, spawn.y - 3.20144140625, spawn.z + 6.5, POIOffsets.exit.h)
+
+    return { objects, POIOffsets }
+end
+
+function CreateGunshopShell(spawn)
+	local objects = {}
+
+    local POIOffsets = {}
+	POIOffsets.exit = json.decode('{"z":5.9,"y":-5.5,"x":-1.0,"h":358.633972168}')
 	DoScreenFadeOut(500)
     while not IsScreenFadedOut() do
         Citizen.Wait(10)
@@ -183,7 +205,29 @@ function CreateGunshopShell(spawn)
     FreezeEntityPosition(house, true)
 	table.insert(objects, house)
 
-	TeleportToInterior(spawn.x + 0.0, spawn.y - 3.20144140625, spawn.z + 6.5, POIOffsets.exit.h)
+	TeleportToInterior(spawn.x + -1.0, spawn.y + -5.2, spawn.z + 6.5, POIOffsets.exit.h)
+
+    return { objects, POIOffsets }
+end
+
+function CreateTrapHouseShell(spawn)
+	local objects = {}
+
+    local POIOffsets = {}
+	POIOffsets.exit = json.decode('{"z":6.5,"y":-6.20144140625,"x":-0.5,"h":358.633972168}')
+	DoScreenFadeOut(500)
+    while not IsScreenFadedOut() do
+        Citizen.Wait(10)
+    end
+	RequestModel(`traphouse_shell`)
+	while not HasModelLoaded(`traphouse_shell`) do
+	    Citizen.Wait(1000)
+	end
+	local house = CreateObject(`traphouse_shell`, spawn.x, spawn.y, spawn.z, false, false, false)
+    FreezeEntityPosition(house, true)
+	table.insert(objects, house)
+
+	TeleportToInterior(spawn.x + POIOffsets.exit.x, spawn.y + POIOffsets.exit.y, spawn.z + POIOffsets.exit.z, POIOffsets.exit.h)
 
     return { objects, POIOffsets }
 end

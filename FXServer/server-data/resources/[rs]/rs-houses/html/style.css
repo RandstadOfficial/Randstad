@@ -269,7 +269,7 @@
     width: auto;
     padding-left: 1.5vh;
     padding-right: 1.5vh;
-    max-width: 10vh;
+    max-width: 12vh;
     margin-left: 5px;
     text-align: center;
     border-bottom: 2px solid rgba(255, 255, 255, 0);
@@ -438,4 +438,87 @@
     margin: auto;
     text-transform: uppercase!important;
     margin-top: 2vh;
+}
+
+.object-load-status {
+    display: none;
+    left:48vw;
+    top:48vh;
+    position: absolute;
+}
+
+/* OBJECT LOADER  */
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 8.0vh;
+    height: 8.0vh;
+  }
+  .lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 6.4vh;
+    height: 6.4vh;
+    margin: 0.8vh;
+    border: 0.8vh solid #d83737ea;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #d83737ea transparent transparent transparent;
+  }
+  .lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+#house-cam {
+    display: none;
+    height: 100vh;
+    /* background-color: black; */
+}
+
+#cam-label {
+    position: absolute;
+    font-family: 'Roboto Mono';
+    font-size: 2.5vh;
+    padding: 8vh;
+    text-transform: uppercase;
+    color: white;
+    font-weight: bold;
+}
+
+#cam-type {
+    position: absolute;
+    font-family: 'Roboto Mono';
+    font-size: 2.5vh;
+    padding: 8vh;
+    top: 4vh;
+    text-transform: uppercase;
+    color: white;
+    font-weight: bold;
+}
+
+#cam-connection {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-family: 'Roboto Mono';
+    font-size: 2vh;
+    padding: 8vh;
+    text-transform: uppercase;
+    color: rgb(37, 146, 23);
+    font-weight: bold;
 }
