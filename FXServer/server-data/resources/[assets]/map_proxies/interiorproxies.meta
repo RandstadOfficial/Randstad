@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <SInteriorOrderData>
-<startFrom value="7000" />
+<startFrom value="7500" />
 <filePathHash value="0" />
 <proxies>
 <Item>vw_int_placement_vw_interior_0_dlc_casino_main_milo_</Item>
@@ -126,7 +126,6 @@
 <Item>int_vesp_smole_stair_milo_</Item>
 <Item>int_wnews_milo_</Item>
 <Item>nutt_mosleys_milo_</Item>
-<Item>gabz_pillbox_milo_</Item>
 <Item>smokin_axels_milo_</Item>
 <Item>smokin_axels_basement_milo_</Item>
 <Item>lr_sc1_rd_strm_1</Item>
