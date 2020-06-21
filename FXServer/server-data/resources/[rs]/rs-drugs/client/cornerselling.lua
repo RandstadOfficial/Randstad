@@ -82,9 +82,7 @@ Citizen.CreateThread(function()
                         TaskPlayAnim(GetPlayerPed(-1), "pickup_object" ,"pickup_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
                         Citizen.Wait(2000)
                         ClearPedTasks(GetPlayerPed(-1))
-                        RSCore.Functions.TriggerCallback('RSCore:AddItem', function()                        
-                        end, stealData.item, stealData.amount)
-                        
+                        TriggerServerEvent("RSCore:Server:AddItem", stealData.item, stealData.amount)
                         TriggerEvent('inventory:client:ItemBox', RSCore.Shared.Items[stealData.item], "add")
                         stealingPed = nil
                         stealData = {}
@@ -287,11 +285,6 @@ function SellToPed(ped)
         Citizen.Wait(math.random(4000, 7000))
     end
 end
-
-RegisterNetEvent('RSCore:client:executeEvents')
-AddEventHandler('RSCore:client:executeEvents', function()
-    TriggerServerEvent("RSCore:Server:AddItem")
-end)
 
 function loadAnimDict(dict)
     RequestAnimDict(dict)

@@ -5828,28 +5828,8 @@ RSShared.Jobs = {
 		defaultDuty = true,
 		grades = {
 			[1] = {
-				label = "Stagiar",
+				label = "verskaggever",
 				payment = 200,
-			},
-			[2] = {
-				label = "Technicus",
-				payment = 200,
-			},
-			[3] = {
-				label = "Verslaggever",
-				payment = 200,
-			},
-			[4] = {
-				label = "Redacteur",
-				payment = 200,
-			},
-			[5] = {
-				label = "Bestuurslid",
-				payment = 220,
-			},
-			[6] = {
-				label = "Directeur",
-				payment = 220,
 			},
 		}
 	},

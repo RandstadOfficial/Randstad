@@ -93,19 +93,6 @@ RSCore.Functions.CreateCallback("rs-garage:server:checkVehicleHouseOwner", funct
     end)
 end)
 
-RSCore.Functions.CreateCallback("rs-garage:server:checkVehicleOwner", function(source, cb, plate)
-    local src = source
-    local pData = RSCore.Functions.GetPlayer(src)
-
-    exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE plate = @plate AND citizenid = @citizenid', {['@plate'] = plate, ['@citizenid'] = pData.PlayerData.citizenid}, function(result)
-        if result[1] ~= nil then
-            cb(true)
-        else
-            cb(false)
-        end
-    end)
-end)
-
 RegisterServerEvent('rs-garage:server:PayDepotPrice')
 AddEventHandler('rs-garage:server:PayDepotPrice', function(vehicle, garage)
     local src = source

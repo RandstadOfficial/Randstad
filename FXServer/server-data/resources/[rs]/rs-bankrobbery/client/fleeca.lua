@@ -354,8 +354,7 @@ function openLocker(bankId, lockerId)
                     DeleteObject(DrillObject)
                     TriggerServerEvent('rs-bankrobbery:server:setLockerState', bankId, lockerId, 'isOpened', true)
                     TriggerServerEvent('rs-bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
-                    RSCore.Functions.TriggerCallback('rs-bankrobbery:recieveItem', function()                    
-                    end, 'paleto')
+                    TriggerServerEvent('rs-bankrobbery:server:recieveItem', 'paleto')
                     RSCore.Functions.Notify("Gelukt!", "success")
                 end, function() -- Cancel
                     StopAnimTask(GetPlayerPed(-1), "anim@heists@fleeca_bank@drilling", "drill_straight_idle", 1.0)
@@ -388,8 +387,7 @@ function openLocker(bankId, lockerId)
                     DeleteObject(DrillObject)
                     TriggerServerEvent('rs-bankrobbery:server:setLockerState', bankId, lockerId, 'isOpened', true)
                     TriggerServerEvent('rs-bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
-                    RSCore.Functions.TriggerCallback('rs-bankrobbery:recieveItem', function()                    
-                    end, 'pacific')
+                    TriggerServerEvent('rs-bankrobbery:server:recieveItem', 'pacific')
                     RSCore.Functions.Notify("Gelukt!", "success")
                 end, function() -- Cancel
                     StopAnimTask(GetPlayerPed(-1), "anim@heists@fleeca_bank@drilling", "drill_straight_idle", 1.0)
@@ -417,8 +415,7 @@ function openLocker(bankId, lockerId)
             StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
             TriggerServerEvent('rs-bankrobbery:server:setLockerState', bankId, lockerId, 'isOpened', true)
             TriggerServerEvent('rs-bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
-            RSCore.Functions.TriggerCallback('rs-bankrobbery:recieveItem', function()                    
-            end, 'small')
+            TriggerServerEvent('rs-bankrobbery:server:recieveItem', 'small')
             RSCore.Functions.Notify("Gelukt!", "success")
         end, function() -- Cancel
             StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
@@ -516,13 +513,6 @@ function loadAnimDict( dict )
         Citizen.Wait( 5 )
     end
 end 
-
-RegisterNetEvent('rs-bankrobbery:client:executeEvents')
-AddEventHandler('rs-bankrobbery:client:executeEvents', function()
-    TriggerServerEvent('rs-bankrobbery:server:recieveItem', 'paleto')
-    TriggerServerEvent('rs-bankrobbery:server:recieveItem', 'pacific')
-    TriggerServerEvent('rs-bankrobbery:server:recieveItem', 'small')
-end)
 
 function searchPockets()
     if ( DoesEntityExist( GetPlayerPed(-1) ) and not IsEntityDead( GetPlayerPed(-1) ) ) then 

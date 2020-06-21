@@ -177,9 +177,9 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(1)
-		if IsPedShooting(GetPlayerPed(-1)) or IsPedDoingDriveby(GetPlayerPed(-1)) then
+		if IsPedShooting(GetPlayerPed(-1)) then
 			local weapon = GetSelectedPedWeapon(GetPlayerPed(-1))
-			if weapon ~= GetHashKey("WEAPON_UNARMED") and weapon ~= GetHashKey("WEAPON_SNOWBALL") and weapon ~= GetHashKey("WEAPON_STUNGUN") and weapon ~= GetHashKey("WEAPON_PETROLCAN") and weapon ~= GetHashKey("WEAPON_FIREEXTINGUISHER") then
+			if weapon ~= GetHashKey("WEAPON_SNOWBALL") and weapon ~= GetHashKey("WEAPON_STUNGUN") and weapon ~= GetHashKey("WEAPON_PETROLCAN") and weapon ~= GetHashKey("WEAPON_FIREEXTINGUISHER") then
 				shotAmount = shotAmount + 1
 				if shotAmount > 5 and (CurrentStatusList == nil or CurrentStatusList["gunpowder"] == nil) then
 					if math.random(1, 10) <= 7 then
@@ -401,7 +401,6 @@ local SilentWeapons = {
 	"WEAPON_PETROLCAN",
 	"WEAPON_STUNGUN",
 	"WEAPON_FIREEXTINGUISHER",
-	"WEAPON_UNARMED",
 }
 Citizen.CreateThread( function()
     local currentWeapon = GetSelectedPedWeapon(GetPlayerPed(-1))

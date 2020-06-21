@@ -172,8 +172,7 @@ function GrabItem(spot)
         StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
         TriggerServerEvent('rs-ifruitstore:server:setSpotState', "isDone", true, spot)
         TriggerServerEvent('rs-ifruitstore:server:setSpotState', "isBusy", false, spot)
-        RSCore.Functions.TriggerCallback('rs-ifruitstore:itemReward', function()
-        end, spot)
+        TriggerServerEvent('rs-ifruitstore:server:itemReward', spot)
         TriggerServerEvent('rs-ifruitstore:server:PoliceAlertMessage', 'Personen proberen spullen te stelen bij de iFruit winkel', pos, true)
     end, function() -- Cancel
         StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
@@ -188,9 +187,7 @@ AddEventHandler('SafeCracker:EndMinigame', function(won)
         if won then
             if not Config.Locations["safe"].isDone then
                 SetNuiFocus(false, false)
-                                                
-                RSCore.Functions.TriggerCallback('rs-ifruitstore:SafeReward', function()
-                end, amount)
+                TriggerServerEvent("rs-ifruitstore:server:SafeReward")
                 TriggerServerEvent("rs-ifruitstore:server:SetSafeStatus", "isBusy", false)
                 TriggerServerEvent("rs-ifruitstore:server:SetSafeStatus", "isDone", false)
                 takeAnim()
@@ -255,12 +252,6 @@ AddEventHandler('rs-ifruitstore:client:setSpotState', function(stateType, state,
     elseif stateType == "isDone" then
         Config.Locations["takeables"][spot].isDone = state
     end
-end)
-
-RegisterNetEvent('rs-ifruitstore:client:executeEvents')
-AddEventHandler('rs-ifruitstore:client:executeEvents', function()
-    TriggerServerEvent("rs-ifruitstore:server:SafeReward")
-    TriggerServerEvent('rs-ifruitstore:server:itemReward')
 end)
 
 RegisterNetEvent('rs-ifruitstore:client:SetSafeStatus')

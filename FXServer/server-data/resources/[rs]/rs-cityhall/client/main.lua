@@ -181,7 +181,7 @@ AddEventHandler('rs-cityhall:client:sendDriverEmail', function(charinfo)
         TriggerServerEvent('rs-phone:server:sendNewMail', {
             sender = "Gemeente",
             subject = "Aanvraag Rijles",
-            message = "Beste " .. gender .. " " .. charinfo.lastname .. ",<br /><br />Wij hebben zojuist een bericht gehad dat er iemand rijles wilt volgen.<br />Mocht u bereid zijn om les te geven kunt u contact opnemen:<br />Naam: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Telefoonnummer: <strong>"..charinfo.phone.."</strong><br/><br/>Met vriendelijke groet,<br />Gemeente Randstad",
+            message = "Beste " .. gender .. " " .. charinfo.lastname .. ",<br /><br />Wij hebben zojuist een bericht gehad dat er iemand rijles wilt volgen.<br />Mocht u bereid zijn om les te geven kunt u contact opnemen:<br />Naam: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Telefoonnummer: <strong>"..charinfo.phone.."</strong><br/><br/>Met vriendelijke groet,<br />Gemeente Los Santos",
             button = {}
         })
     end)

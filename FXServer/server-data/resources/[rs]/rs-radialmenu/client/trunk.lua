@@ -151,6 +151,7 @@ AddEventHandler('rs-trunk:client:KidnapGetIn', function(veh)
                 if not inTrunk then
                     if not isBusy then
                         if not isKidnapped then
+                            print('veh: '..closestVehicle..' class: '..vehClass)
                             -- if GetVehicleDoorAngleRatio(closestVehicle, 5) > 0 then
                                 offset = {
                                     x = Config.TrunkClasses[vehClass].x,

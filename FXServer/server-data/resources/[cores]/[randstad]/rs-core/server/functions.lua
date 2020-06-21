@@ -244,15 +244,3 @@ RSCore.Functions.IsPlayerBanned = function (source)
 	return retval, message
 end
 
-RSCore.Functions.BanInjection = function(source)
-	local reason = "[AUTO BAN] Bedankt voor het uittesten hackertje!"
-	local banTime = 2147483647
-	local timeTable = os.date("*t", banTime)
-	TriggerClientEvent('chatMessage', -1, "BANHAMMER", "error", GetPlayerName(source).." is verbannen voor: "..reason.."")
-	
-	TriggerEvent("rs-log:server:CreateLog", "bans", "Player Banned", "orange", "Speler: "..GetPlayerName(source).." is verbannen voor het gebruiken van ServerTriggerEvents via een externe programma")
-
-	RSCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`) VALUES ('"..GetPlayerName(source).."', '"..GetPlayerIdentifiers(source)[1].."', '"..GetPlayerIdentifiers(source)[2].."', '"..GetPlayerIdentifiers(source)[3].."', '"..GetPlayerIdentifiers(source)[4].."', '"..reason.."', "..banTime..")")
-	DropPlayer(source, "Hé sukkel, je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
-	
-end

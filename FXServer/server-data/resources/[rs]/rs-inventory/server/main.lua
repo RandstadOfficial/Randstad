@@ -1308,28 +1308,21 @@ RSCore.Commands.Add("checkinv", "Check een inventory", {{name="type", help="stas
 	end
 end, "admin")
 
-RSCore.Commands.Add("resetinv", "Reset inventory (in geval met -None)", {{name="type", help="stash/trunk/glovebox/house"},{name="id/plate", help="ID van stash of kenteken"}}, true, function(source, args)
+RSCore.Commands.Add("resetinv", "Reset inventory (in geval met -None)", {{name="type", help="stash/trunk/glovebox"},{name="id/plate", help="ID van stash of kenteken"}}, true, function(source, args)
 	local invType = args[1]:lower()
-	
-	if invType ~= nil and args[2] ~= nil then 
+	table.remove(args, 1)
+	local invId = table.concat(args, " ")
+	if invType ~= nil and invId ~= nil then 
 		if invType == "trunk" then
-			local invId = args[2]
 			if Trunks[invId] ~= nil then 
 				Trunks[invId].isOpen = false
 			end
 		elseif invType == "glovebox" then
-			local invId = args[2]
 			if Gloveboxes[invId] ~= nil then 
 				Gloveboxes[invId].isOpen = false
 			end
 		elseif invType == "stash" then
-			local Player = RSCore.Functions.GetPlayer(tonumber(args[2]))
-			local stash = Player.PlayerData.metadata["currentapartment"]
-			if Stashes[stash] ~= nil then 
-				Stashes[stash].isOpen = false
-			end
-		elseif invType == "house" then
-			if Stashes[invId] ~= nil then
+			if Stashes[invId] ~= nil then 
 				Stashes[invId].isOpen = false
 			end
 		else

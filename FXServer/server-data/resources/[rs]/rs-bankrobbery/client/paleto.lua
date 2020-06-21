@@ -81,63 +81,63 @@ Citizen.CreateThread(function()
     end
 end)
 
--- RegisterNetEvent('rs-bankrobbery:UseBankcardA')
--- AddEventHandler('rs-bankrobbery:UseBankcardA', function()
---     local ped = GetPlayerPed(-1)
---     local pos = GetEntityCoords(ped)
---     local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["paleto"]["coords"]["x"], Config.BigBanks["paleto"]["coords"]["y"],Config.BigBanks["paleto"]["coords"]["z"])
---     if math.random(1, 100) <= 85 and not IsWearingHandshoes() then
---         TriggerServerEvent("evidence:server:CreateFingerDrop", pos)
---     end
---     if dist < 1.5 then
---         RSCore.Functions.TriggerCallback('rs-bankrobbery:server:isRobberyActive', function(isBusy)
---             if not isBusy then
---                 if CurrentCops >= Config.MinimumPaletoPolice then
---                     if not Config.BigBanks["paleto"]["isOpened"] then 
---                         TriggerEvent('inventory:client:requiredItems', requiredItems, false)
---                         RSCore.Functions.Progressbar("security_pass", "Pas aan het valideren..", math.random(5000, 10000), false, true, {
---                             disableMovement = true,
---                             disableCarMovement = true,
---                             disableMouse = false,
---                             disableCombat = true,
---                         }, {
---                             animDict = "anim@gangops@facility@servers@",
---                             anim = "hotwire",
---                             flags = 16,
---                         }, {}, {}, function() -- Done
---                             StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
---                             TriggerServerEvent('rs-bankrobbery:server:setBankState', "paleto", true)
---                             TriggerServerEvent("RSCore:Server:RemoveItem", "security_card_01", 1)
---                             TriggerServerEvent('rs-doorlock:server:updateState', 65, false)
---                             if not copsCalled then
---                                 local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
---                                 local street1 = GetStreetNameFromHashKey(s1)
---                                 local street2 = GetStreetNameFromHashKey(s2)
---                                 local streetLabel = street1
---                                 if street2 ~= nil then 
---                                     streetLabel = streetLabel .. " " .. street2
---                                 end
---                                 if Config.BigBanks["paleto"]["alarm"] then
---                                     TriggerServerEvent("rs-bankrobbery:server:callCops", "paleto", 0, streetLabel, pos)
---                                     copsCalled = true
---                                 end
---                             end
---                         end, function() -- Cancel
---                             StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
---                             RSCore.Functions.Notify("Geannuleerd..", "error")
---                         end)
---                     else
---                         RSCore.Functions.Notify("Het lijkt erop dat de bank al open is..", "error")
---                     end
---                 else
---                     RSCore.Functions.Notify("Niet genoeg politie.. (5 nodig)", "error")
---                 end
---             else
---                 RSCore.Functions.Notify("Het beveiligingsslot is actief, het openen van de deur is momenteel niet mogelijk..", "error", 5500)
---             end
---         end)
---     end 
--- end)
+RegisterNetEvent('rs-bankrobbery:UseBankcardA')
+AddEventHandler('rs-bankrobbery:UseBankcardA', function()
+    local ped = GetPlayerPed(-1)
+    local pos = GetEntityCoords(ped)
+    local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["paleto"]["coords"]["x"], Config.BigBanks["paleto"]["coords"]["y"],Config.BigBanks["paleto"]["coords"]["z"])
+    if math.random(1, 100) <= 85 and not IsWearingHandshoes() then
+        TriggerServerEvent("evidence:server:CreateFingerDrop", pos)
+    end
+    if dist < 1.5 then
+        RSCore.Functions.TriggerCallback('rs-bankrobbery:server:isRobberyActive', function(isBusy)
+            if not isBusy then
+                if CurrentCops >= Config.MinimumPaletoPolice then
+                    if not Config.BigBanks["paleto"]["isOpened"] then 
+                        TriggerEvent('inventory:client:requiredItems', requiredItems, false)
+                        RSCore.Functions.Progressbar("security_pass", "Pas aan het valideren..", math.random(5000, 10000), false, true, {
+                            disableMovement = true,
+                            disableCarMovement = true,
+                            disableMouse = false,
+                            disableCombat = true,
+                        }, {
+                            animDict = "anim@gangops@facility@servers@",
+                            anim = "hotwire",
+                            flags = 16,
+                        }, {}, {}, function() -- Done
+                            StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                            TriggerServerEvent('rs-bankrobbery:server:setBankState', "paleto", true)
+                            TriggerServerEvent("RSCore:Server:RemoveItem", "security_card_01", 1)
+                            TriggerServerEvent('rs-doorlock:server:updateState', 65, false)
+                            if not copsCalled then
+                                local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
+                                local street1 = GetStreetNameFromHashKey(s1)
+                                local street2 = GetStreetNameFromHashKey(s2)
+                                local streetLabel = street1
+                                if street2 ~= nil then 
+                                    streetLabel = streetLabel .. " " .. street2
+                                end
+                                if Config.BigBanks["paleto"]["alarm"] then
+                                    TriggerServerEvent("rs-bankrobbery:server:callCops", "paleto", 0, streetLabel, pos)
+                                    copsCalled = true
+                                end
+                            end
+                        end, function() -- Cancel
+                            StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                            RSCore.Functions.Notify("Geannuleerd..", "error")
+                        end)
+                    else
+                        RSCore.Functions.Notify("Het lijkt erop dat de bank al open is..", "error")
+                    end
+                else
+                    RSCore.Functions.Notify("Niet genoeg politie.. (5 nodig)", "error")
+                end
+            else
+                RSCore.Functions.Notify("Het beveiligingsslot is actief, het openen van de deur is momenteel niet mogelijk..", "error", 5500)
+            end
+        end)
+    end 
+end)
 
 function OpenPaletoDoor()
     TriggerServerEvent('rs-doorlock:server:updateState', 41, false)

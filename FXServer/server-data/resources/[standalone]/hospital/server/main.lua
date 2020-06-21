@@ -158,12 +158,6 @@ RSCore.Functions.CreateCallback('hospital:GetDoctors', function(source, cb)
 	cb(amount)
 end)
 
-RSCore.Functions.CreateCallback('hospital:whipeInv', function(source, cb)
-	local Player = RSCore.Functions.GetPlayer(source)
-	if Player ~= nil then
-		Player.Functions.ClearInventory()  
-	end
-end)
 
 function GetCharsInjuries(source)
     return PlayerInjuries[source]

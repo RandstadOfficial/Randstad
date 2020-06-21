@@ -161,7 +161,6 @@ AddEventHandler('RSCore:Client:OnPlayerUnload', function()
     isLoggedIn = false
     isHandcuffed = false
     isEscorted = false
-    onDuty = false
     ClearPedTasks(GetPlayerPed(-1))
     DetachEntity(GetPlayerPed(-1), true, false)
     if DutyBlips ~= nil then 
@@ -171,7 +170,6 @@ AddEventHandler('RSCore:Client:OnPlayerUnload', function()
         DutyBlips = {}
     end
 end)
-
 local DutyBlips = {}
 RegisterNetEvent('police:client:UpdateBlips')
 AddEventHandler('police:client:UpdateBlips', function(players)
@@ -190,14 +188,7 @@ AddEventHandler('police:client:UpdateBlips', function(players)
                 end
             end
         end
-    else
-        if players ~= nil then
-            for k, data in pairs(players) do
-                RemoveBlip(DutyBlips[k])
-                DutyBlips = {}
-            end
-        end
-    end
+	end
 end)
 
 function CreateDutyBlips(playerId, playerLabel, playerJob)
@@ -233,34 +224,7 @@ AddEventHandler('police:client:SendPoliceEmergencyAlert', function(callsign, str
     if street2 ~= nil then 
         streetLabel = streetLabel .. " " .. street2
     end
-    local alertTitle = "Assistentie collega"
-    if PlayerJob.name == "ambulance" or PlayerJob.name == "doctor" then
-        alertTitle = "Assistentie " .. PlayerJob.label
-    end
-
-    local MyId = GetPlayerServerId(PlayerId())
-
     TriggerServerEvent("police:server:SendPoliceEmergencyAlert", streetLabel, pos, RSCore.Functions.GetPlayerData().metadata["callsign"])
-    TriggerServerEvent('rs-policealerts:server:AddPoliceAlert', {
-        timeOut = 10000,
-        alertTitle = alertTitle,
-        coords = {
-            x = pos.x,
-            y = pos.y,
-            z = pos.z,
-        },
-        details = {
-            [1] = {
-                icon = '<i class="fas fa-passport"></i>',
-                detail = MyId .. ' | ' .. RSCore.Functions.GetPlayerData().charinfo.firstname .. ' ' .. RSCore.Functions.GetPlayerData().charinfo.lastname,
-            },
-            [2] = {
-                icon = '<i class="fas fa-globe-europe"></i>',
-                detail = streetLabel,
-            },
-        },
-        callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
-    }, true)
 end)
 
 RegisterNetEvent('police:PlaySound')
@@ -510,6 +474,7 @@ end)
 RegisterNetEvent('police:client:Send112AMessage')
 AddEventHandler('police:client:Send112AMessage', function(message)
     local PlayerData = RSCore.Functions.GetPlayerData()
+
     if ((PlayerData.job.name == "police" or PlayerData.job.name == "ambulance") and onDuty) then
         TriggerEvent('chatMessage', "ANONIEME MELDING", "warning", message)
         TriggerEvent("police:client:EmergencySound")

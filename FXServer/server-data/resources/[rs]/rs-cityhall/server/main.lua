@@ -2,10 +2,12 @@ RSCore = nil
 TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 
 local DrivingSchools = {
-    "YND19022", -- Maestro (Mahmut)
-    "FTL45116", -- Maestro (Admin)
-    "GJU69592", -- Maestro (Mr Epic)
-    "",
+    "PAE31194",
+    "TRB56419",
+    "UNA59325",
+    "LWR55470",
+    "APJ79416",
+    "FUN28030",
 }
 
 RegisterServerEvent('rs-cityhall:server:requestId')
@@ -50,7 +52,7 @@ AddEventHandler('rs-cityhall:server:sendDriverTest', function()
             local mailData = {
                 sender = "Gemeente",
                 subject = "Aanvraag Rijles",
-                message = "Beste,<br /><br />Wij hebben zojuist een bericht gehad dat er iemand rijles wilt volgen.<br />Mocht u bereid zijn om les te geven kunt u contact opnemen:<br />Naam: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Telefoonnummer: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br/><br/>Met vriendelijke groet,<br />Gemeente Randstad",
+                message = "Beste,<br /><br />Wij hebben zojuist een bericht gehad dat er iemand rijles wilt volgen.<br />Mocht u bereid zijn om les te geven kunt u contact opnemen:<br />Naam: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Telefoonnummer: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br/><br/>Met vriendelijke groet,<br />Gemeente Los Santos",
                 button = {}
             }
             TriggerEvent("rs-phone:server:sendNewEventMail", v, mailData)

@@ -245,16 +245,6 @@ AddEventHandler('rs-occasions:client:BuyFinished', function(model, plate, mods)
     currentVehicle = nil
 end)
 
-RegisterNetEvent('rs-occasions:client:DeleteVehicle')
-AddEventHandler('rs-occasions:client:DeleteVehicle', function()
-	if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-		RSCore.Functions.DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1), false))
-	else
-		local vehicle = RSCore.Functions.GetClosestVehicle()
-		RSCore.Functions.DeleteVehicle(vehicle)
-	end
-end)
-
 RegisterNetEvent('rs-occasions:client:ReturnOwnedVehicle')
 AddEventHandler('rs-occasions:client:ReturnOwnedVehicle', function(mods)
     local vehData = Config.OccasionSlots[currentVehicle]

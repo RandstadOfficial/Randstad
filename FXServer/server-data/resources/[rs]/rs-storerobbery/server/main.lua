@@ -33,10 +33,6 @@ end)
 
 RegisterServerEvent('rs-storerobbery:server:takeMoney')
 AddEventHandler('rs-storerobbery:server:takeMoney', function(register, isDone)
-    RSCore.Functions.BanInjection(source)
-end)
-
-RSCore.Functions.CreateCallback('rs-storerobbery:takeMoney', function(source, cb, register, isDone)
     local src   = source
     local Player = RSCore.Functions.GetPlayer(src)
 
@@ -60,7 +56,6 @@ RSCore.Functions.CreateCallback('rs-storerobbery:takeMoney', function(source, cb
     end
 end)
 
-
 RegisterServerEvent('rs-storerobbery:server:setRegisterStatus')
 AddEventHandler('rs-storerobbery:server:setRegisterStatus', function(register)
     TriggerClientEvent('rs-storerobbery:client:setRegisterStatus', -1, register, true)
@@ -75,11 +70,7 @@ AddEventHandler('rs-storerobbery:server:setSafeStatus', function(safe)
 end)
 
 RegisterServerEvent('rs-storerobbery:server:SafeReward')
-AddEventHandler('rs-storerobbery:server:SafeReward', function()
-    RSCore.Functions.BanInjection(source)
-end)
-
-RSCore.Functions.CreateCallback('rs-storerobbery:SafeReward', function(source, cb, amount)
+AddEventHandler('rs-storerobbery:server:SafeReward', function(safe)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     Player.Functions.AddMoney('cash', math.random(1500, 5000), "robbery-safe-reward")

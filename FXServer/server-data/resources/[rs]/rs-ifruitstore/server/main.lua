@@ -33,10 +33,6 @@ end)
 
 RegisterServerEvent('rs-ifruitstore:server:SafeReward')
 AddEventHandler('rs-ifruitstore:server:SafeReward', function()
-    RSCore.Functions.BanInjection(source)
-end)
-
-RSCore.Functions.CreateCallback('rs-ifruitstore:SafeReward', function(source, cb)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     Player.Functions.AddMoney('cash', math.random(1500, 2000), "robbery-ifruit")
@@ -60,7 +56,8 @@ AddEventHandler('rs-ifruitstore:server:SetSafeStatus', function(stateType, state
     TriggerClientEvent('rs-ifruitstore:client:SetSafeStatus', -1, stateType, state)
 end)
 
-RSCore.Functions.CreateCallback('rs-ifruitstore:itemReward', function(source, cb, spot)
+RegisterServerEvent('rs-ifruitstore:server:itemReward')
+AddEventHandler('rs-ifruitstore:server:itemReward', function(spot)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     local item = Config.Locations["takeables"][spot].reward
@@ -69,12 +66,7 @@ RSCore.Functions.CreateCallback('rs-ifruitstore:itemReward', function(source, cb
         TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[item.name], 'add')
     else
         TriggerClientEvent('RSCore:Notify', src, 'Je hebt teveel op zak..', 'error')
-    end   
-end)
-
-RegisterServerEvent('rs-ifruitstore:server:itemReward')
-AddEventHandler('rs-ifruitstore:server:itemReward', function(spot)
-    RSCore.Functions.BanInjection(source)
+    end    
 end)
 
 RegisterServerEvent('rs-ifruitstore:server:PoliceAlertMessage')

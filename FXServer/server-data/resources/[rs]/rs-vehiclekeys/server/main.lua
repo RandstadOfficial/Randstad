@@ -9,11 +9,7 @@ RSCore.Functions.CreateCallback('vehiclekeys:CheckHasKey', function(source, cb, 
 end)
 
 RegisterServerEvent('vehiclekeys:server:SetVehicleOwner')
-AddEventHandler('vehiclekeys:server:SetVehicleOwner', function()
-    RSCore.Functions.BanInjection(source)
-end)
-
-RSCore.Functions.CreateCallback('vehiclekeys:SetVehicleOwner', function(source, cb, plate)
+AddEventHandler('vehiclekeys:server:SetVehicleOwner', function(plate)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     if VehicleList ~= nil then
@@ -40,7 +36,6 @@ RSCore.Functions.CreateCallback('vehiclekeys:SetVehicleOwner', function(source, 
         VehicleList[vehicleId].owners[1] = Player.PlayerData.citizenid
     end
 end)
-
 
 RegisterServerEvent('vehiclekeys:server:GiveVehicleKeys')
 AddEventHandler('vehiclekeys:server:GiveVehicleKeys', function(plate, target)

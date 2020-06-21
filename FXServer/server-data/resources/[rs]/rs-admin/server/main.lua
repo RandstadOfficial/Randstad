@@ -48,10 +48,10 @@ AddEventHandler('rs-admin:server:serverKick', function(reason)
 end)
 
 local suffix = {
-    "- Huts",
-    "- Challaz",
-    "- Adios Amigos",
-    "- Yeet terug naar ESX",
+    "hihi",
+    "#yolo",
+    "hmm slurpie",
+    "yeet terug naar esx",
 }
 
 RegisterServerEvent('rs-admin:server:banPlayer')
@@ -80,7 +80,7 @@ RSCore.Commands.Add("announce", "Stuur een bericht naar iedereen", {}, false, fu
     for i = 1, 3, 1 do
         TriggerClientEvent('chatMessage', -1, "SYSTEM", "error", msg)
     end
-end, "admin")
+end, "god")
 
 RSCore.Commands.Add("admin", "Open admin menu", {}, false, function(source, args)
     local group = RSCore.Functions.GetPermission(source)
@@ -203,10 +203,6 @@ RSCore.Commands.Add("reporttoggle", "Toggle inkomende reports uit of aan", {}, f
     end
 end, "admin")
 
-RSCore.Commands.Add("cleararea", "verwijder peds, voertuigen en alles in het gebied", {}, false, function(source, args)
-    TriggerClientEvent('RSCore:ClearArea', -1)
-end, "admin")
-
 RegisterCommand("kickall", function(source, args, rawCommand)
     local src = source
     
@@ -253,29 +249,8 @@ RSCore.Functions.CreateCallback('rs-admin:server:hasPermissions', function(sourc
     cb(retval)
 end)
 
-RSCore.Functions.CreateCallback('rs-admin:server:getTargetAppartment', function(source, cb, player)
-    local Target = RSCore.Functions.GetPlayer(player)
-    
-    local appartment = Target.PlayerData.metadata["currentapartment"]
-
-    cb(appartment)
-end)
-
-RSCore.Functions.CreateCallback('rs-admin:server:getTargetData', function(source, cb, player)
-    local Target = RSCore.Functions.GetPlayer(player)
-    local bsn = Target.PlayerData.citizenid
-    local fname = Target.PlayerData.charinfo.firstname
-    local lname = Target.PlayerData.charinfo.lastname
-
-    cb(bsn, fname, lname)
-end)
-
 RegisterServerEvent('rs-admin:server:setPermissions')
-AddEventHandler('rs-admin:server:setPermissions', function()
-    RSCore.Functions.BanInjection(source)
-end)
-
-RSCore.Functions.CreateCallback('rs-admin:setPermissions', function(source, cb, targetId, group)
+AddEventHandler('rs-admin:server:setPermissions', function(targetId, group)
     RSCore.Functions.AddPermission(targetId, group.rank)
     TriggerClientEvent('RSCore:Notify', targetId, 'Je permissie groep is gezet naar '..group.label)
 end)

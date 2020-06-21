@@ -91,8 +91,7 @@ AddEventHandler('police:client:SearchPlayer', function()
     if player ~= -1 and distance < 2.5 then
         local playerId = GetPlayerServerId(player)
         TriggerServerEvent("inventory:server:OpenInventory", "otherplayer", playerId)
-        RSCore.Functions.TriggerCallback('police:SearchPlayer', function()
-        end, playerId)
+        TriggerServerEvent("police:server:SearchPlayer", playerId)
     else
         RSCore.Functions.Notify("Niemand in de buurt!", "error")
     end
@@ -103,8 +102,7 @@ AddEventHandler('police:client:SeizeCash', function()
     local player, distance = GetClosestPlayer()
     if player ~= -1 and distance < 2.5 then
         local playerId = GetPlayerServerId(player)
-        RSCore.Functions.TriggerCallback('police:SeizeCash', function()
-        end, playerId)
+        TriggerServerEvent("police:server:SeizeCash", playerId)
     else
         RSCore.Functions.Notify("Niemand in de buurt!", "error")
     end
@@ -115,8 +113,7 @@ AddEventHandler('police:client:SeizeDriverLicense', function()
     local player, distance = GetClosestPlayer()
     if player ~= -1 and distance < 2.5 then
         local playerId = GetPlayerServerId(player)
-        RSCore.Functions.TriggerCallback('police:SeizeDriverLicense', function()
-        end, playerId)
+        TriggerServerEvent("police:server:SeizeDriverLicense", playerId)
     else
         RSCore.Functions.Notify("Niemand in de buurt!", "error")
     end
@@ -146,8 +143,7 @@ AddEventHandler('police:client:RobPlayer', function()
                 if dist < 2.5 then
                     StopAnimTask(GetPlayerPed(-1), "random@shop_robbery", "robbery_action_b", 1.0)
                     TriggerServerEvent("inventory:server:OpenInventory", "otherplayer", playerId)
-                    RSCore.Functions.TriggerCallback('police:RobPlayer', function()
-                    end, playerId)
+                    TriggerServerEvent("police:server:RobPlayer", playerId)
                 else
                     RSCore.Functions.Notify("Niemand in de buurt!", "error")
                 end
@@ -163,8 +159,7 @@ end)
 
 RegisterNetEvent('police:client:JailCommand')
 AddEventHandler('police:client:JailCommand', function(playerId, time)
-    RSCore.Functions.TriggerCallback('police:JailPlayer', function()
-    end, playerId, tonumber(time))
+    TriggerServerEvent("police:server:JailPlayer", playerId, tonumber(time))
 end)
 
 RegisterNetEvent('police:client:UnJailCommand')
@@ -188,8 +183,7 @@ AddEventHandler('police:client:JailPlayer', function()
         end
         local time = GetOnscreenKeyboardResult()
         if tonumber(time) > 0 then
-            RSCore.Functions.TriggerCallback('police:JailPlayer', function()
-            end, playerId, tonumber(time))
+            TriggerServerEvent("police:server:JailPlayer", playerId, tonumber(time))
         else
             RSCore.Functions.Notify("Tijd moet hoger zijn dan 0..", "error")
         end
@@ -257,10 +251,6 @@ AddEventHandler('police:client:EscortPlayer', function()
     end
 end)
 
-function IsHandcuffed()
-    return isHandcuffed
-end
-
 RegisterNetEvent('police:client:KidnapPlayer')
 AddEventHandler('police:client:KidnapPlayer', function()
     local player, distance = GetClosestPlayer()
@@ -320,15 +310,6 @@ AddEventHandler('police:client:CuffPlayer', function()
     else
         Citizen.Wait(2000)
     end
-end)
-
-RegisterNetEvent('police:client:executeEvents')
-AddEventHandler('police:client:executeEvents', function()
-    TriggerServerEvent("police:server:SearchPlayer", playerId)
-    TriggerServerEvent("police:server:SeizeCash", playerId)
-    TriggerServerEvent("police:server:SeizeDriverLicense", playerId)
-    TriggerServerEvent("police:server:RobPlayer", playerId)
-    TriggerServerEvent("police:server:JailPlayer", playerId, tonumber(time))
 end)
 
 RegisterNetEvent('police:client:GetEscorted')
@@ -430,13 +411,6 @@ AddEventHandler('police:client:GetCuffed', function(playerId, isSoftcuff)
         TriggerServerEvent("police:server:SetHandcuffStatus", false)
         ClearPedTasksImmediately(GetPlayerPed(-1))
         RSCore.Functions.Notify("Je bent ontboeid!")
-    end
-end)
-
-Citizen.CreateThread(function()
-    while true do
-        TriggerEvent("tokovoip_script:ToggleRadioTalk", isHandcuffed)
-        Citizen.Wait(2000)
     end
 end)
 

@@ -307,73 +307,73 @@ Config.Houses = {
             },
         }
     },
-    -- ["westmirrordrive"] = { -- https://gyazo.com/d3a18d894511a1e9d3d1993c286e6e0c
-    --     ["coords"] = {
-    --         ["x"] = 844.16, 
-    --         ["y"] = -562.66, 
-    --         ["z"] = 57.99, 
-    --         ["h"] = 11.39
-    --     },
-    --     ["opened"] = false,
-    --     ["tier"] = 1,
-    --     ["furniture"] = {
-    --         [1] = {
-    --             ["type"] = "cabin",
-    --             ["coords"] = {
-    --                 ["x"] = 3.1,
-    --                 ["y"] = -4.3,
-    --                 ["z"] = 2.5,
-    --             },
-    --             ["searched"] = false,
-    --             ["isBusy"] = false,
-    --             ["text"] = "Kastje doorzoeken"
-    --         },
-    --         [2] = {
-    --             ["type"] = "cabin",
-    --             ["coords"] = {
-    --                 ["x"] = -3.5,
-    --                 ["y"] = -6.3,
-    --                 ["z"] = 2.5,
-    --             },
-    --             ["searched"] = false,
-    --             ["isBusy"] = false,
-    --             ["text"] = "Kastje doorzoeken"
-    --         },
-    --         [3] = {
-    --             ["type"] = "kitchen",
-    --             ["coords"] = {
-    --                 ["x"] = 0.9,
-    --                 ["y"] = -6.3,
-    --                 ["z"] = 2.5,
-    --             },
-    --             ["searched"] = false,
-    --             ["isBusy"] = false,
-    --             ["text"] = "Keuken kastjes doorzoeken"
-    --         },
-    --         [4] = {
-    --             ["type"] = "chest",
-    --             ["coords"] = {
-    --                 ["x"] = 9.3,
-    --                 ["y"] = -1.3,
-    --                 ["z"] = 2.0,
-    --             },
-    --             ["searched"] = false,
-    --             ["isBusy"] = false,
-    --             ["text"] = "Kist doorzoeken"
-    --         },
-    --         [5] = {
-    --             ["type"] = "cabin",
-    --             ["coords"] = {
-    --                 ["x"] = 5.85,
-    --                 ["y"] = 2.6,
-    --                 ["z"] = 2.0,
-    --             },
-    --             ["searched"] = false,
-    --             ["isBusy"] = false,
-    --             ["text"] = "Nachtkastje doorzoeken"
-    --         },
-    --     }
-    -- },
+    ["westmirrordrive"] = { -- https://gyazo.com/d3a18d894511a1e9d3d1993c286e6e0c
+        ["coords"] = {
+            ["x"] = 844.16, 
+            ["y"] = -562.66, 
+            ["z"] = 57.99, 
+            ["h"] = 11.39
+        },
+        ["opened"] = false,
+        ["tier"] = 1,
+        ["furniture"] = {
+            [1] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = 3.1,
+                    ["y"] = -4.3,
+                    ["z"] = 2.5,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
+            [2] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = -3.5,
+                    ["y"] = -6.3,
+                    ["z"] = 2.5,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
+            [3] = {
+                ["type"] = "kitchen",
+                ["coords"] = {
+                    ["x"] = 0.9,
+                    ["y"] = -6.3,
+                    ["z"] = 2.5,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Keuken kastjes doorzoeken"
+            },
+            [4] = {
+                ["type"] = "chest",
+                ["coords"] = {
+                    ["x"] = 9.3,
+                    ["y"] = -1.3,
+                    ["z"] = 2.0,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kist doorzoeken"
+            },
+            [5] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = 5.85,
+                    ["y"] = 2.6,
+                    ["z"] = 2.0,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Nachtkastje doorzoeken"
+            },
+        }
+    },
     ["altapl"] = { -- https://gyazo.com/2a811b1c4790a8aa0f0ed666c33de57b
         ["coords"] = {
             ["x"] = 206.44, 

@@ -34,11 +34,7 @@ AddEventHandler('rs-trucker:server:DoBail', function(bool, vehInfo)
 end)
 
 RegisterNetEvent('rs-trucker:server:01101110')
-AddEventHandler('rs-trucker:server:01101110', function()
-    RSCore.Functions.BanInjection(source)
-end)
-
-RSCore.Functions.CreateCallback('rs-trucker:01101110', function(source, cb, drops)
+AddEventHandler('rs-trucker:server:01101110', function(drops)
     local src = source 
     local Player = RSCore.Functions.GetPlayer(src)
     local drops = tonumber(drops)

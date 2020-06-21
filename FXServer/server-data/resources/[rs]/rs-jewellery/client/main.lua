@@ -150,17 +150,8 @@ function smashVitrine(k)
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         TriggerServerEvent('rs-jewellery:server:setVitrineState', "isOpened", true, k)
-        RSCore.Functions.TriggerCallback('rs-jewellery:vitrineReward', function(result)
-
-        end, "isBusy", false, k)
-        RSCore.Functions.TriggerCallback('rs-jewellery:vitrineReward', function(result)
-            if result then
-                TriggerClientEvent('RSCore:Notify', src, 'Success..', 'error')
-            else
-                TriggerClientEvent('RSCore:Notify', src, 'Je hebt teveel op zak..', 'error')
-            end
-        end)
-        
+        TriggerServerEvent('rs-jewellery:server:setVitrineState', "isBusy", false, k)
+        TriggerServerEvent('rs-jewellery:server:vitrineReward')
         TriggerServerEvent('rs-jewellery:server:setTimeout')
         TriggerServerEvent('rs-jewellery:server:PoliceAlertMessage', "Er is een overval gaande bij Vangelico Juwelier", plyCoords, false)
         TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
@@ -185,11 +176,6 @@ end)
 RegisterNetEvent('rs-jewellery:client:setAlertState')
 AddEventHandler('rs-jewellery:client:setAlertState', function(bool)
     robberyAlert = bool
-end)
-
-RegisterNetEvent('rs-jewellery:client:executeEvents')
-AddEventHandler('rs-jewellery:client:executeEvents', function()
-    TriggerServerEvent('rs-jewellery:server:vitrineReward')
 end)
 
 RegisterNetEvent('rs-jewellery:client:PoliceAlertMessage')

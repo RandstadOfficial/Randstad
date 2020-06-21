@@ -70,13 +70,6 @@ GetPlayersFromCoords = function(coords, distance)
     return closePlayers
 end
 
-RegisterNetEvent('RSCore:ClearArea')
-AddEventHandler('RSCore:ClearArea', function(x, y, z)
-    local x, y, z = table.unpack(GetEntityCoords(GetPlayerPed(-1), true))
-    ClearAreaOfEverything(x, y, z, 50.0)
-    -- ClearAreaOfPeds(x, y, z, 500.0, 1)
-end)
-
 RegisterNetEvent('RSCore:Client:OnPlayerLoaded')
 AddEventHandler('RSCore:Client:OnPlayerLoaded', function()
     TriggerServerEvent("rs-admin:server:loadPermissions")
@@ -205,7 +198,6 @@ Citizen.CreateThread(function()
         "adminOptions",
         "adminOpt",
         "selfOptions",
-        "recording",
         "dealerManagement",
         "allDealers",
         "createDealer",
@@ -277,7 +269,6 @@ Citizen.CreateThread(function()
     WarMenu.CreateSubMenu('serverMan', 'admin')
     WarMenu.CreateSubMenu('adminOpt', 'admin')
     WarMenu.CreateSubMenu('selfOptions', 'adminOpt')
-    WarMenu.CreateSubMenu('recording', 'admin')
 
     WarMenu.CreateSubMenu('weatherOptions', 'serverMan')
     WarMenu.CreateSubMenu('dealerManagement', 'serverMan')
@@ -297,7 +288,6 @@ Citizen.CreateThread(function()
             WarMenu.MenuButton('Admin Options', 'adminOpt')
             WarMenu.MenuButton('Player Management', 'playerMan')
             WarMenu.MenuButton('Server Management', 'serverMan')
-            WarMenu.MenuButton('Recoring Options', 'recording');
 
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened('adminOpt') then
@@ -339,12 +329,11 @@ Citizen.CreateThread(function()
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened('playerMan') then
             local players = getPlayers()
-            local pData = RSCore.Functions.GetPlayerData()
 
             for k, v in pairs(players) do
                 WarMenu.CreateSubMenu(v["id"], 'playerMan', v["serverid"].." | "..v["name"])
             end
-            if WarMenu.MenuButton('#'..GetPlayerServerId(PlayerId()).." | "..GetPlayerName(PlayerId()).." | "..pData.citizenid, PlayerId()) then
+            if WarMenu.MenuButton('#'..GetPlayerServerId(PlayerId()).." | "..GetPlayerName(PlayerId()), PlayerId()) then
                 currentPlayer = PlayerId()
                 if WarMenu.CreateSubMenu('playerOptions', currentPlayer) then
                     currentPlayerMenu = 'playerOptions'
@@ -394,26 +383,6 @@ Citizen.CreateThread(function()
             end
             
             WarMenu.Display()
-        elseif WarMenu.IsMenuOpened('recording') then
-            if WarMenu.MenuButton('Start Recording', 'recording') then
-                if (IsRecording()) then
-                    RSCore.Functions.Notify('Je bent al aan het opnemen.')
-                else
-                    StartRecording(1)
-                end
-            end
-            if WarMenu.MenuButton('Stop Recording', 'recording') then
-                if not (IsRecording()) then
-                    RSCore.Functions.Notify('Je bent niet aan het opnemen.')
-                else
-                    StopRecordingAndSaveClip()
-                end
-            end
-            -- if WarMenu.MenuButton('Open Editor', 'recording') then
-
-            -- end
-
-            WarMenu.Display()
         elseif WarMenu.IsMenuOpened(currentPlayer) then
             WarMenu.MenuButton('Player Options', 'playerOptions')
             WarMenu.MenuButton('Teleport Options', 'teleportOptions')
@@ -424,17 +393,6 @@ Citizen.CreateThread(function()
             
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened('playerOptions') then
-            local pData = RSCore.Functions.GetPlayerData()
-            
-            
-
-            -- WarMenu.SetTitle('playerOptions', GetPlayerName(PlayerId()))
-            -- RSCore.Functions.TriggerCallback('rs-admin:server:getTargetData', function(bsnr, fnamer, lnamer)
-            --     if WarMenu.MenuButton('BSN: '..bsn, currentPlayer) then
-            --         RSCore.Functions.Notify('Naam: '..fname.." "..lname)
-            --     end
-            -- end, target)
-            
             if WarMenu.MenuButton('Kill', currentPlayer) then
                 TriggerServerEvent("rs-admin:server:killPlayer", GetPlayerServerId(currentPlayer))
             end
@@ -450,29 +408,22 @@ Citizen.CreateThread(function()
                 local target = GetPlayerServerId(currentPlayer)
                 TriggerServerEvent("rs-admin:server:Freeze", target, isFreeze)
             end
-            if WarMenu.CheckBox("Spectate", isSpectating, function(checked) isSpectating = checked end) then
-                local target = GetPlayerFromServerId(GetPlayerServerId(currentPlayer))
-                local targetPed = GetPlayerPed(target)
-                local targetCoords = GetEntityCoords(targetPed)
+            -- if WarMenu.CheckBox("Spectate", isSpectating, function(checked) isSpectating = checked end) then
+            --     local target = GetPlayerFromServerId(GetPlayerServerId(currentPlayer))
+            --     local targetPed = GetPlayerPed(target)
+            --     local targetCoords = GetEntityCoords(targetPed)
 
-                SpectatePlayer(targetPed, isSpectating) --//TODO check if spectating works
-            end
+            --     SpectatePlayer(targetPed, isSpectating)
+            -- end
             if WarMenu.MenuButton("Open Inventory", currentPlayer) then
                 local targetId = GetPlayerServerId(currentPlayer)
 
                 OpenTargetInventory(targetId)
             end
-            if WarMenu.MenuButton("Check Appartment Inventory", currentPlayer) then
-                local targetId = GetPlayerServerId(currentPlayer)
-                RSCore.Functions.TriggerCallback('rs-admin:server:getTargetAppartment', function(tAppartment)
-                    OpenTargetAppartmentInventory(tAppartment)
-                end, targetId)
-                
-            end
             if WarMenu.MenuButton("Give Clothing Menu", currentPlayer) then
                 local targetId = GetPlayerServerId(currentPlayer)
 
-                TriggerServerEvent('rs-admin:server:OpenSkinMenu', targetId) 
+                TriggerServerEvent('rs-admin:server:OpenSkinMenu', targetId)
             end
 
             WarMenu.Display()
@@ -503,10 +454,9 @@ Citizen.CreateThread(function()
                 local group = PermissionLevels[currentPermIndex]
                 local target = GetPlayerServerId(currentPlayer)
 
-                RSCore.Functions.TriggerCallback('rs-admin:setPermissions', function(result)
-                RSCore.Functions.Notify('Je hebt '..GetPlayerName(currentPlayer)..'\'s groep is veranderd naar '..group.label)
+                TriggerServerEvent('rs-admin:server:setPermissions', target, group)
 
-                end, target, group)
+                RSCore.Functions.Notify('Je hebt '..GetPlayerName(currentPlayer)..'\'s groep is veranderd naar '..group.label)
             end
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened('adminOptions') then
@@ -599,60 +549,40 @@ Citizen.CreateThread(function()
 end)
 
 function SpectatePlayer(targetPed, toggle)
-    -- local myPed = GetPlayerPed(-1)
+    local myPed = GetPlayerPed(-1)
 
-    -- if toggle then
-    --     showNames = true
-    --     SetEntityVisible(myPed, false)
-    --     SetEntityInvincible(myPed, true)
-    --     lastSpectateCoord = GetEntityCoords(myPed)
-    --     DoScreenFadeOut(150)
-    --     SetTimeout(250, function()
-    --         SetEntityVisible(myPed, false)
-    --         SetEntityCoords(myPed, GetOffsetFromEntityInWorldCoords(targetPed, 0.0, 0.45, 0.0))
-    --         AttachEntityToEntity(myPed, targetPed, 11816, 0.0, -1.3, 1.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
-    --         SetEntityVisible(myPed, false)
-    --         SetEntityInvincible(myPed, true)
-    --         DoScreenFadeIn(150)
-    --     end)
-    -- else
-    --     showNames = false
-    --     DoScreenFadeOut(150)
-    --     DetachEntity(myPed, true, false)
-    --     SetTimeout(250, function()
-    --         SetEntityCoords(myPed, lastSpectateCoord)
-    --         SetEntityVisible(myPed, true)
-    --         SetEntityInvincible(myPed, false)
-    --         DoScreenFadeIn(150)
-    --         lastSpectateCoord = nil
-    --     end)
-    -- end
-
-    local playerPed = PlayerPedId() -- yourself
-
-	if toggle then
-		--local targetx,targety,targetz = table.unpack(GetEntityCoords(targetPed, false))
-		NetworkSetInSpectatorMode(true, targetPed)	
-		SetEntityInvincible(GetPlayerPed(-1), true) 
-		SetEntityVisible(GetPlayerPed(-1), false, 0)
-	else
-		--local targetx,targety,targetz = table.unpack(GetEntityCoords(targetPed, false))
-		NetworkSetInSpectatorMode(false, targetPed)
-		SetEntityInvincible(GetPlayerPed(-1), false)
-		SetEntityVisible(GetPlayerPed(-1), true, 0)
-	end
+    if toggle then
+        showNames = true
+        SetEntityVisible(myPed, false)
+        SetEntityInvincible(myPed, true)
+        lastSpectateCoord = GetEntityCoords(myPed)
+        DoScreenFadeOut(150)
+        SetTimeout(250, function()
+            SetEntityVisible(myPed, false)
+            SetEntityCoords(myPed, GetOffsetFromEntityInWorldCoords(targetPed, 0.0, 0.45, 0.0))
+            AttachEntityToEntity(myPed, targetPed, 11816, 0.0, -1.3, 1.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
+            SetEntityVisible(myPed, false)
+            SetEntityInvincible(myPed, true)
+            DoScreenFadeIn(150)
+        end)
+    else
+        showNames = false
+        DoScreenFadeOut(150)
+        DetachEntity(myPed, true, false)
+        SetTimeout(250, function()
+            SetEntityCoords(myPed, lastSpectateCoord)
+            SetEntityVisible(myPed, true)
+            SetEntityInvincible(myPed, false)
+            DoScreenFadeIn(150)
+            lastSpectateCoord = nil
+        end)
+    end
 end
 
 function OpenTargetInventory(targetId)
     WarMenu.CloseMenu()
 
     TriggerServerEvent("inventory:server:OpenInventory", "otherplayer", targetId)
-end
-
-function OpenTargetAppartmentInventory(target)
-    WarMenu.CloseMenu()
-    
-    TriggerServerEvent("inventory:server:OpenInventory", "stash", target)
 end
 
 Citizen.CreateThread(function()
@@ -981,11 +911,6 @@ AddEventHandler('rs-admin:client:SetModel', function(skin)
 		SetModelAsNoLongerNeeded(model)
 	end
 	SetEntityInvincible(ped, false)
-end)
-
-RegisterNetEvent('rs-admin:client:executeEvents')
-AddEventHandler('rs-admin:client:executeEvents', function()
-    TriggerServerEvent('rs-admin:server:setPermissions', target, group)
 end)
 
 RegisterNetEvent('rs-admin:client:SetSpeed')

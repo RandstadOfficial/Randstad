@@ -222,8 +222,7 @@ function requestDelivery()
         ["dealer"] = currentDealer,
         ["itemData"] = Config.DeliveryItems[item]
     }
-    RSCore.Functions.TriggerCallback('rs-drugs:giveDeliveryItems', function()
-    end, amount)
+    TriggerServerEvent('rs-drugs:server:giveDeliveryItems', amount)
     SetTimeout(7000, function()
         TriggerServerEvent('rs-phone:server:sendNewMail', {
             sender = Config.Dealers[currentDealer]["name"],
@@ -411,11 +410,6 @@ AddEventHandler('rs-drugs:client:robberyCall', function(msg, streetLabel, coords
             return
         end
     end
-end)
-
-RegisterNetEvent('rs-drugs:client:executeEvents')
-AddEventHandler('rs-drugs:client:executeEvents', function()
-    TriggerServerEvent('rs-drugs:server:giveDeliveryItems', amount)
 end)
 
 RegisterNetEvent('rs-drugs:client:sendDeliveryMail')

@@ -143,10 +143,6 @@ end)
 
 RegisterServerEvent('police:server:JailPlayer')
 AddEventHandler('police:server:JailPlayer', function(playerId, time)
-    RSCore.Functions.BanInjection(source)
-end)
-
-RSCore.Functions.CreateCallback('police:JailPlayer', function(source, cb, playerId, time)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     local OtherPlayer = RSCore.Functions.GetPlayer(playerId)
@@ -287,10 +283,6 @@ end)
 
 RegisterServerEvent('police:server:SearchPlayer')
 AddEventHandler('police:server:SearchPlayer', function(playerId)
-    RSCore.Functions.BanInjection(source)
-end)
-
-RSCore.Functions.CreateCallback('police:SearchPlayer', function(source, cb, playerId)
     local src = source
     local SearchedPlayer = RSCore.Functions.GetPlayer(playerId)
     if SearchedPlayer ~= nil then 
@@ -301,10 +293,6 @@ end)
 
 RegisterServerEvent('police:server:SeizeCash')
 AddEventHandler('police:server:SeizeCash', function(playerId)
-    RSCore.Functions.BanInjection(source)
-end)
-
-RSCore.Functions.CreateCallback('police:SeizeCash', function(source, cb, playerId)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     local SearchedPlayer = RSCore.Functions.GetPlayer(playerId)
@@ -322,10 +310,6 @@ end)
 
 RegisterServerEvent('police:server:SeizeDriverLicense')
 AddEventHandler('police:server:SeizeDriverLicense', function(playerId)
-    RSCore.Functions.BanInjection(source)
-end)
-
-RSCore.Functions.CreateCallback('police:SeizeDriverLicense', function(source, cb, playerId)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     local SearchedPlayer = RSCore.Functions.GetPlayer(playerId)
@@ -346,10 +330,6 @@ end)
 
 RegisterServerEvent('police:server:RobPlayer')
 AddEventHandler('police:server:RobPlayer', function(playerId)
-    RSCore.Functions.BanInjection(source)
-end)
-
-RSCore.Functions.CreateCallback('police:RobPlayer', function(source, cb, playerId)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     local SearchedPlayer = RSCore.Functions.GetPlayer(playerId)

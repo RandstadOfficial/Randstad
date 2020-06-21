@@ -18,7 +18,7 @@ function setupSubItems()
             if PlayerData.job.name == "police" or PlayerData.job.name == "ambulance" then
                 Config.MenuItems[4].items = {
                     [1] = {
-                        id = 'emergencybutton2',
+                        id    = 'emergencybutton2',
                         title = 'Noodknop',
                         icon = '#general',
                         type = 'client',
@@ -35,95 +35,6 @@ function setupSubItems()
             end
         end
     end)
-
-    local Vehicle = GetVehiclePedIsIn(GetPlayerPed(-1))
-
-    if Vehicle ~= nil or Vehicle ~= 0 then
-        local AmountOfSeats = GetVehicleModelNumberOfSeats(GetEntityModel(Vehicle))
-
-        if AmountOfSeats == 2 then
-            Config.MenuItems[3].items[3].items = {
-                [1] = {
-                    id    = -1,
-                    title = 'Bestuurder',
-                    icon = '#vehicleseat',
-                    type = 'client',
-                    event = 'rs-radialmenu:client:ChangeSeat',
-                    shouldClose = false,
-                },
-                [2] = {
-                    id    = 0,
-                    title = 'Bijrijder',
-                    icon = '#vehicleseat',
-                    type = 'client',
-                    event = 'rs-radialmenu:client:ChangeSeat',
-                    shouldClose = false,
-                },
-            }
-        elseif AmountOfSeats == 3 then
-            Config.MenuItems[3].items[3].items = {
-                [4] = {
-                    id    = -1,
-                    title = 'Bestuurder',
-                    icon = '#vehicleseat',
-                    type = 'client',
-                    event = 'rs-radialmenu:client:ChangeSeat',
-                    shouldClose = false,
-                },
-                [1] = {
-                    id    = 0,
-                    title = 'Bijrijder',
-                    icon = '#vehicleseat',
-                    type = 'client',
-                    event = 'rs-radialmenu:client:ChangeSeat',
-                    shouldClose = false,
-                },
-                [3] = {
-                    id    = 1,
-                    title = 'Overige',
-                    icon = '#vehicleseat',
-                    type = 'client',
-                    event = 'rs-radialmenu:client:ChangeSeat',
-                    shouldClose = false,
-                },
-            }
-        elseif AmountOfSeats == 4 then
-            Config.MenuItems[3].items[3].items = {
-                [4] = {
-                    id    = -1,
-                    title = 'Bestuurder',
-                    icon = '#vehicleseat',
-                    type = 'client',
-                    event = 'rs-radialmenu:client:ChangeSeat',
-                    shouldClose = false,
-                },
-                [1] = {
-                    id    = 0,
-                    title = 'Bijrijder',
-                    icon = '#vehicleseat',
-                    type = 'client',
-                    event = 'rs-radialmenu:client:ChangeSeat',
-                    shouldClose = false,
-                },
-                [3] = {
-                    id    = 1,
-                    title = 'Achterbank Links',
-                    icon = '#vehicleseat',
-                    type = 'client',
-                    event = 'rs-radialmenu:client:ChangeSeat',
-                    shouldClose = false,
-                },
-                [2] = {
-                    id    = 2,
-                    title = 'Achterbank Rechts',
-                    icon = '#vehicleseat',
-                    type = 'client',
-                    event = 'rs-radialmenu:client:ChangeSeat',
-                    shouldClose = false,
-                },
-            }
-        end
-    end
 end
 
 function openRadial(bool)    
@@ -172,6 +83,7 @@ RegisterNUICallback('selectItem', function(data)
 
     if itemData.type == 'client' then
         TriggerEvent(itemData.event, itemData)
+        --print('yeey')
     elseif itemData.type == 'server' then
         TriggerServerEvent(itemData.event, itemData)
     end
@@ -229,45 +141,6 @@ AddEventHandler('rs-radialmenu:client:openDoor', function(data)
     end
 end)
 
-RegisterNetEvent('rs-radialmenu:client:setExtra')
-AddEventHandler('rs-radialmenu:client:setExtra', function(data)
-    local string = data.id
-    local replace = string:gsub("extra", "")
-    local extra = tonumber(replace)
-    local ped = GetPlayerPed(-1)
-    local veh = GetVehiclePedIsIn(ped)
-    local enginehealth = 1000.0
-    local bodydamage = 1000.0
-
-    if veh ~= nil then
-        local plate = GetVehicleNumberPlateText(closestVehicle)
-    
-        if GetPedInVehicleSeat(veh, -1) == GetPlayerPed(-1) then
-            if DoesExtraExist(veh, extra) then 
-                if IsVehicleExtraTurnedOn(veh, extra) then
-                    enginehealth = GetVehicleEngineHealth(veh)
-                    bodydamage = GetVehicleBodyHealth(veh)
-                    SetVehicleExtra(veh, extra, 1)
-                    SetVehicleEngineHealth(veh, enginehealth)
-                    SetVehicleBodyHealth(veh, bodydamage)
-                    RSCore.Functions.Notify('Extra ' .. extra .. ' uitgeschakeld', 'error', 2500)
-                else
-                    enginehealth = GetVehicleEngineHealth(veh)
-                    bodydamage = GetVehicleBodyHealth(veh)
-                    SetVehicleExtra(veh, extra, 0)
-                    SetVehicleEngineHealth(veh, enginehealth)
-                    SetVehicleBodyHealth(veh, bodydamage)
-                    RSCore.Functions.Notify('Extra ' .. extra .. ' geactiveerd', 'success', 2500)
-                end    
-            else
-                RSCore.Functions.Notify('Extra ' .. extra .. ' is niet aanwezig op dit voertuig', 'error', 2500)
-            end
-        else
-            RSCore.Functions.Notify('Je bent geen bestuurder van een voertuig!', 'error', 2500)
-        end
-    end
-end)
-
 RegisterNetEvent('rs-radialmenu:trunk:client:Door')
 AddEventHandler('rs-radialmenu:trunk:client:Door', function(plate, door, open)
     local veh = GetVehiclePedIsIn(GetPlayerPed(-1))
@@ -284,49 +157,3 @@ AddEventHandler('rs-radialmenu:trunk:client:Door', function(plate, door, open)
         end
     end
 end)
-
-local Seats = {
-    ["-1"] = "Bestuurder's stoel",
-    ["0"] = "Bijrijder's stoel",
-    ["1"] = "Achterbank Links",
-    ["2"] = "Achterbank Rechts",
-}
-
-RegisterNetEvent('rs-radialmenu:client:ChangeSeat')
-AddEventHandler('rs-radialmenu:client:ChangeSeat', function(data)
-    local Veh = GetVehiclePedIsIn(GetPlayerPed(-1))
-    local IsSeatFree = IsVehicleSeatFree(Veh, data.id)
-    local speed = GetEntitySpeed(Veh)
-    --local HasHarnass = exports['rs-smallresources']:HasHarness()
-    if not HasHarnass then
-        local kmh = (speed * 3.6);  
-
-        if IsSeatFree then
-            if kmh <= 100.0 then
-                SetPedIntoVehicle(GetPlayerPed(-1), Veh, data.id)
-                RSCore.Functions.Notify('Je zit nu op de '..data.title..'!')
-            else
-                RSCore.Functions.Notify('Het voertuig gaat te snel..')
-            end
-        else
-            RSCore.Functions.Notify('Deze stoel is bezet..')
-        end
-    else
-        RSCore.Functions.Notify('Je hebt een race harnas om, je kunt niet switchen..', 'error')
-    end
-end)
-
-function DrawText3Ds(x, y, z, text)
-	SetTextScale(0.35, 0.35)
-    SetTextFont(4)
-    SetTextProportional(1)
-    SetTextColour(255, 255, 255, 215)
-    SetTextEntry("STRING")
-    SetTextCentre(true)
-    AddTextComponentString(text)
-    SetDrawOrigin(x,y,z, 0)
-    DrawText(0.0, 0.0)
-    local factor = (string.len(text)) / 370
-    DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
-    ClearDrawOrigin()
-end

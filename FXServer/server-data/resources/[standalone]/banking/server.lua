@@ -63,14 +63,10 @@ RSCore.Commands.Add("geefcontant", "Geef contant geld aan een persoon", {{name="
 end)
 
 RegisterServerEvent('banking:server:giveCash')
-AddEventHandler('banking:server:giveCash', function()
-  RSCore.Functions.BanInjection(source)
-end)
-
-RSCore.Functions.CreateCallback('banking:giveCash', function(source, cb, trgetId, amount)
+AddEventHandler('banking:server:giveCash', function(trgtId, amount)
   local src = source
   local Player = RSCore.Functions.GetPlayer(src)
-  local Target = RSCore.Functions.GetPlayer(trgetId)
+  local Target = RSCore.Functions.GetPlayer(trgtId)
 
   Player.Functions.RemoveMoney('cash', amount, "Cash given to "..Player.PlayerData.citizenid)
   Target.Functions.AddMoney('cash', amount, "Cash received from "..Target.PlayerData.citizenid)

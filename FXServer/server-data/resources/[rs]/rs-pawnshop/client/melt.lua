@@ -12,8 +12,7 @@ Citizen.CreateThread(function()
                     if enablePickup then
                         DrawText3D(Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, "~g~E~w~ - Pak goudstaven")
                         if IsControlJustReleased(0, Keys["E"]) then
-                            RSCore.Functions.TriggerCallback('rs-pawnshop:getGoldBars', function()
-                            end)
+                            TriggerServerEvent("rs-pawnshop:server:getGoldBars")
                         end
                     else
                         DrawText3D(Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, "~g~E~w~ - Gouden items smelten")
@@ -112,11 +111,6 @@ function ScrapAnim(time)
         end
     end)
 end
-
-RegisterNetEvent('rs-pawnshop:client:executeEvents')
-AddEventHandler('rs-pawnshop:client:executeEvents', function()
-    TriggerServerEvent("rs-pawnshop:server:getGoldBars")
-end)
 
 function HasPlayerGold()
 	local retval = false

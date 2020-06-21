@@ -64,10 +64,6 @@ end)
 
 RegisterServerEvent("rs-pawnshop:server:getGoldBars")
 AddEventHandler("rs-pawnshop:server:getGoldBars", function()
-    RSCore.Functions.BanInjection(source)
-end)
-
-RSCore.Functions.CreateCallback('rs-pawnshop:getGoldBars', function(source, cb)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     if GoldBarsAmount > 0 then

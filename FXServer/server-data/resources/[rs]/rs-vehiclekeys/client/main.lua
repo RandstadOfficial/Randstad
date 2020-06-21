@@ -138,19 +138,12 @@ AddEventHandler('vehiclekeys:client:SetOwner', function(plate)
     if VehPlate == nil then
         VehPlate = GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), true))
     end
-    
-    RSCore.Functions.TriggerCallback('vehiclekeys:SetVehicleOwner', function()
-    end, VehPlate)
+    TriggerServerEvent('vehiclekeys:server:SetVehicleOwner', VehPlate)
     if IsPedInAnyVehicle(GetPlayerPed(-1)) and plate == GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), true)) then
         SetVehicleEngineOn(GetVehiclePedIsIn(GetPlayerPed(-1), true), true, false, true)
     end
     HasKey = true
     --RSCore.Functions.Notify('Je hebt de sleutels van het voertuig ontvangen', 'success', 3500)
-end)
-
-RegisterNetEvent('vehiclekeys:client:executeEvents')
-AddEventHandler('vehiclekeys:client:executeEvents', function()
-    TriggerServerEvent('vehiclekeys:server:SetVehicleOwner', VehPlate)
 end)
 
 RegisterNetEvent('vehiclekeys:client:GiveKeys')

@@ -20,7 +20,6 @@ Config.Webhooks = {
     ["powerplants"] = "https://discordapp.com/api/webhooks/716441389117997119/JDz-iwybVKoRzdm7C4Mx_Cnq9ar8KqRQbVLGaw9a83VyjpWO20LiNdI_v44Js6ilbbkn",
     ["death"] = "https://discordapp.com/api/webhooks/716440902100320316/_D91g4lXySpGzmXuX2AfY_d6i5tt30VePFWm_10IZ6DbKc1gC78TwPeP5jUW9d07zsyg",
     ["joinleave"] = "https://discordapp.com/api/webhooks/716423788824363110/52jmqfVEwU7rYhxg7vfjSpc-jQo9mRUrDrwbHLoRnbc87fygLSVP7meVm62hJd1zbxHZ",
-    ["bans"] = "https://discordapp.com/api/webhooks/721132528856989816/MRMH2YijFk-Gr1uRCBFMQSSHEVdrNvEaK7pQ5GxuG4B4qMSeHRxLbofHPOHzE7SyBF0P",
 }
 
 Config.Colors = {

@@ -130,7 +130,7 @@ local function SetupModPrices()
 end
 
 --Setup main menu
-local LSCMenu = Menu.new("Randstad Customs","CATEGORIES", 0.16,0.13,0.24,0.36,0,{255,255,255,255})
+local LSCMenu = Menu.new("Los Santos Customs","CATEGORIES", 0.16,0.13,0.24,0.36,0,{255,255,255,255})
 LSCMenu.config.pcontrol = false
 
 --Add mod to menu
@@ -215,7 +215,7 @@ local function DriveInGarage()
 			LSCMenu:setTitle("Benny's Motorworks")
 			LSCMenu.title_sprite = "shopui_title_supermod"
 		else
-			LSCMenu:setTitle("Randstrad Customs")
+			LSCMenu:setTitle("Los Santos Customs")
 			LSCMenu.title_sprite = "shopui_title_carmod"
 		end
 

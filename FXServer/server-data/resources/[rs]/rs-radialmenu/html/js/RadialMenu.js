@@ -117,22 +117,17 @@ RadialMenu.prototype.returnToParentMenu = function () {
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-RadialMenu.prototype.handleClick = function (index) {
+RadialMenu.prototype.handleClick = function () {
     var self = this;
 
     var selectedIndex = self.getSelectedIndex();
-    if (index !== undefined) {
-        selectedIndex = index - 1;
-    }
     if (selectedIndex >= 0) {
         var item = self.levelItems[selectedIndex];
-        if (self.levelItems[selectedIndex] != null) {
         if (item.items) {
             self.showNestedMenu(item);
         } else {
-                if (self.onClick) {
-                    self.onClick(item);
-                }
+            if (self.onClick) {
+                self.onClick(item);
             }
         }
     }
@@ -313,18 +308,20 @@ RadialMenu.prototype.onKeyDown = function (event) {
                 self.handleCenterClick();
                 event.preventDefault();
                 break;
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                    var PressedKey = parseInt(event.key);
-                    self.handleClick(PressedKey);
-                    break;
+            case 'Enter':
+                self.handleClick();
+                event.preventDefault();
+                break;
+            case 'ArrowRight':
+            case 'ArrowUp':
+                self.selectDelta(1);
+                event.preventDefault();
+                break;
+            case 'ArrowLeft':
+            case 'ArrowDown':
+                self.selectDelta(-1);
+                event.preventDefault();
+                break;
         }
     }
 };
@@ -419,7 +416,7 @@ RadialMenu.prototype.appendSectorPath = function (startAngleDeg, endAngleDeg, sv
         g.setAttribute('data-index', index);
 
         if (item.title) {
-            var text = self.createText(centerPoint.x, centerPoint.y, item.title + " (" + (index + 1) + ")");
+            var text = self.createText(centerPoint.x, centerPoint.y, item.title);
             if (item.icon) {
                 text.setAttribute('transform', 'translate(0,8)');
             } else {
@@ -474,8 +471,7 @@ RadialMenu.prototype.createText = function (x, y, title) {
     text.setAttribute('text-anchor', 'middle');
     text.setAttribute('x', RadialMenu.numberToString(x));
     text.setAttribute('y', RadialMenu.numberToString(y));
-    text.setAttribute('font-size', '.35vh');
-    text.setAttribute('font-family', 'Lato');
+    text.setAttribute('font-size', '38%');
     text.innerHTML = title;
     return text;
 };

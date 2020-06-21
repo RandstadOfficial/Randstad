@@ -12,9 +12,9 @@ Keys = {
 Config = {}
 
 Config.MenuItems = {
-    [1] = {
+    {
         id = 'citizen',
-        title = 'Burger',
+        title = 'Burger Interactie',
         icon = '#citizen',
         items = {
             {
@@ -34,14 +34,6 @@ Config.MenuItems = {
                 shouldClose = true,
             },
             {
-                id    = 'cornerselling',
-                title = 'Corner Selling',
-                icon = '#cornerselling',
-                type = 'client',
-                event = 'rs-drugs:client:cornerselling',
-                shouldClose = true,
-            },
-            {
                 id    = 'getintrunk',
                 title = 'Stap in kofferbak',
                 icon = '#vehiclekey',
@@ -49,6 +41,14 @@ Config.MenuItems = {
                 event = 'rs-trunk:client:GetIn',
                 shouldClose = true,
             },
+            -- {
+            --     id    = 'getintrunk',
+            --     title = 'Kidnap in kofferbak',
+            --     icon = '#vehiclekey',
+            --     type = 'client',
+            --     event = 'rs-trunk:client:KidnapTrunk',
+            --     shouldClose = true,
+            -- },
             {
                 id = 'interactions',
                 title = 'Interactie',
@@ -102,19 +102,11 @@ Config.MenuItems = {
                         event = 'police:client:EscortPlayer',
                         shouldClose = true,
                     },
-                    {
-                        id    = 'escort554',
-                        title = 'Hostage',
-                        icon = '#general',
-                        type = 'client',
-                        event = 'A5:Client:TakeHostage',
-                        shouldClose = true,
-                    },
                 }
             },
         }
     },
-    [2] = {
+    {
         id = 'general',
         title = 'Algemeen',
         icon = '#general',
@@ -191,11 +183,26 @@ Config.MenuItems = {
                     },
                 }
             },
+            {
+                id = 'illegalactions',
+                title = 'Illegale Actie\'s',
+                icon = '#illegal',
+                items = {
+                    {
+                        id    = 'cornerselling',
+                        title = 'Corner Selling',
+                        icon = '#cornerselling',
+                        type = 'client',
+                        event = 'rs-drugs:client:cornerselling',
+                        shouldClose = true,
+                    }
+                }
+            },
         }
     },
-    [3] = {
+    {
         id = 'vehicle',
-        title = 'Voertuig',
+        title = 'Voertuig Interactie',
         icon = '#vehicle',
         items = {
             {
@@ -253,105 +260,11 @@ Config.MenuItems = {
                     },
                 }
             },
-            {
-                id    = 'vehicleextras',
-                title = 'Voertuig Extras',
-                icon = '#plus',
-                items = {
-                    {
-                        id    = 'extra1',
-                        title = 'Extra 1',
-                        icon = '#plus',
-                        type = 'client',
-                        event = 'rs-radialmenu:client:setExtra',
-                        shouldClose = false,
-                    },
-                    {
-                        id    = 'extra2',
-                        title = 'Extra 2',
-                        icon = '#plus',
-                        type = 'client',
-                        event = 'rs-radialmenu:client:setExtra',
-                        shouldClose = false,
-                    },
-                    {
-                        id    = 'extra3',
-                        title = 'Extra 3',
-                        icon = '#plus',
-                        type = 'client',
-                        event = 'rs-radialmenu:client:setExtra',
-                        shouldClose = false,
-                    },
-                    {
-                        id    = 'extra4',
-                        title = 'Extra 4',
-                        icon = '#plus',
-                        type = 'client',
-                        event = 'rs-radialmenu:client:setExtra',
-                        shouldClose = false,
-                    },
-                    {
-                        id    = 'extra5',
-                        title = 'Extra 5',
-                        icon = '#plus',
-                        type = 'client',
-                        event = 'rs-radialmenu:client:setExtra',
-                        shouldClose = false,
-                    },
-                    {
-                        id    = 'extra6',
-                        title = 'Extra 6',
-                        icon = '#plus',
-                        type = 'client',
-                        event = 'rs-radialmenu:client:setExtra',
-                        shouldClose = false,
-                    },
-                    {
-                        id    = 'extra7',
-                        title = 'Extra 7',
-                        icon = '#plus',
-                        type = 'client',
-                        event = 'rs-radialmenu:client:setExtra',
-                        shouldClose = false,
-                    },
-                    {
-                        id    = 'extra8',
-                        title = 'Extra 8',
-                        icon = '#plus',
-                        type = 'client',
-                        event = 'rs-radialmenu:client:setExtra',
-                        shouldClose = false,
-                    },
-                    {
-                        id    = 'extra9',
-                        title = 'Extra 9',
-                        icon = '#plus',
-                        type = 'client',
-                        event = 'rs-radialmenu:client:setExtra',
-                        shouldClose = false,
-                    },                                                                                                                  
-                }
-            },
-            {
-                id    = 'vehicleseats',
-                title = 'Voertuig Stoelen',
-                icon = '#vehicledoors',
-                items = {
-                    {
-                        id    = 'door0',
-                        title = 'Bestuurder',
-                        icon = '#plus',
-                        type = 'client',
-                        event = 'rs-radialmenu:client:ChangeSeat',
-                        shouldClose = false,
-                    },
-                }
-            },
         }
     },
-    [4] = {
+    {
         id = 'jobinteractions',
-        title = 'Werk',
+        title = 'Werk Interactie',
         icon = '#vehicle',
         items = {},
     },
@@ -449,14 +362,6 @@ Config.JobInteractions = {
             icon = '#general',
             type = 'client',
             event = 'rs-taxi:client:enableMeter',
-            shouldClose = true,
-        },
-        {
-            id    = 'npc_mission',
-            title = 'NPC Missie',
-            icon = '#general',
-            type = 'client',
-            event = 'rs-taxi:client:DoTaxiNpc',
             shouldClose = true,
         },
     },

@@ -544,14 +544,10 @@ Citizen.CreateThread(function()
                 if putDist <= 1.5 then
                     DrawText3Ds(Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z + 0.5, '~g~E~w~ - Parkeer Voertuig')
                     if IsControlJustPressed(0, 38) then
-                        print("control is pressed")
-                        RSCore.Functions.Notify("Pressed in car", "primary", 4500)
                         local curVeh = GetVehiclePedIsIn(ped)
                         local plate = GetVehicleNumberPlateText(curVeh)
-                        print("plate is: "..plate)
                         RSCore.Functions.TriggerCallback('rs-garage:server:checkVehicleOwner', function(owned)
                             if owned then
-                                print("is owned")
                                 local bodyDamage = math.ceil(GetVehicleBodyHealth(curVeh))
                                 local engineDamage = math.ceil(GetVehicleEngineHealth(curVeh))
                                 local totalFuel = exports['LegacyFuel']:GetFuel(curVeh)
@@ -569,7 +565,6 @@ Citizen.CreateThread(function()
                                 RSCore.Functions.Notify("Niemand is in bezit van dit voertuig...", "error", 3500)
                             end
                         end, plate)
-                        print("screw this im out")
                     end
                 end
             end
