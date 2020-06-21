@@ -1172,7 +1172,65 @@ RS.Doors = {
 		pickable = false,
 		distance = 7.5,
 		size = 2
-	},			
+	},
+	----------------
+	-- Reporter building
+	----------------
+	-- Voordeuren
+	{
+		textCoords = vector3(-1082.297, -259.71, 38.1867),
+		authorizedJobs = { 'reporter' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'v_ilev_fb_door01',
+				objYaw = 28.0,
+				objCoords = vector3(-1083.62, -260.416, 38.18)
+			},
+			{
+				objName = 'v_ilev_fb_door02',
+				objYaw = 28.0,
+				objCoords = vector3(-1080.974, -259.020, 38.18)
+			}
+		}
+	},
+	-- -- Achtedeuren
+	{
+		textCoords = vector3(-1045.818, -230.68, 39.43794),
+		authorizedJobs = { 'reporter' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'v_ilev_fb_doorshortl',
+				objYaw = -243.0,
+				objCoords = vector3(-1045.12, -232.004, 39.43794)
+			},
+			{
+				objName = 'v_ilev_fb_doorshortr',
+				objYaw = -243.0,
+				objCoords = vector3(-1046.516, -229.3581, 39.43794)
+			}
+		}
+	},
+	-- zijdeur
+	{
+		objName = 'v_ilev_gtdoor02',
+		objCoords  = vector3(-1042.518, -240.6915, 38.11796),		
+		textCoords = vector3(-1041.804, -240.6915, 38.11796),
+		authorizedJobs = { 'reporter' },
+		objYaw = 28.0,
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 7.5,
+		size = 2
+	},
 	-----
 	-- Import Garage
 	-----
