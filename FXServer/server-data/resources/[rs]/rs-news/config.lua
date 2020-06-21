@@ -13,23 +13,24 @@ Config = {}
 
 Config.Locations = {
     ["main"] = {
-        label = "Weazle News HQ",
-        coords = {x = -597.89, y = -929.95, z = 24.0, h = 271.5},
+        label = "Randstad Nieuws HQ",
+        coords = {x = -1082.62, y = -251.31, z = 37.76, h = 293.6},
     },
     ["inside"] = {
-        label = "Weazle News HQ Binnen",
-        coords = {x = -77.46, y = -833.77, z = 243.38, h = 67.5},
+        label = "Ga naar het dak",
+        coords = {x = -1075.45, y = -253.19, z = 44.02, h = 205.97},
     },
     ["outside"] = {
-        label = "Weazle News HQ Buiten",
-        coords = {x = -598.25, y = -929.86, z = 23.86, h = 86.5},
+        label = "Ga naar binnen",
+        coords = {x = -1072.75, y = -246.61, z = 54.0, h = 116.13},
     },
     ["vehicle"] = {
         label = "Voertuig Opslag",
-        coords = {x = -552.24, y = -925.61, z = 23.86, h = 242.5},
+        coords = {x = -1100.63, y = -261.281, z = 37.687, h = 199.86},
     },
 }
 
 Config.Vehicles = {
     ["rumpo"] = "Randstad Nieuws Busje",
+    ["Warrener"] = "Randstad Warrener Auto"
 }
