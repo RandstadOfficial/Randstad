@@ -205,6 +205,7 @@ Citizen.CreateThread(function()
         "adminOptions",
         "adminOpt",
         "selfOptions",
+        "recording",
         "dealerManagement",
         "allDealers",
         "createDealer",
@@ -276,6 +277,7 @@ Citizen.CreateThread(function()
     WarMenu.CreateSubMenu('serverMan', 'admin')
     WarMenu.CreateSubMenu('adminOpt', 'admin')
     WarMenu.CreateSubMenu('selfOptions', 'adminOpt')
+    WarMenu.CreateSubMenu('recording', 'admin')
 
     WarMenu.CreateSubMenu('weatherOptions', 'serverMan')
     WarMenu.CreateSubMenu('dealerManagement', 'serverMan')
@@ -295,6 +297,7 @@ Citizen.CreateThread(function()
             WarMenu.MenuButton('Admin Options', 'adminOpt')
             WarMenu.MenuButton('Player Management', 'playerMan')
             WarMenu.MenuButton('Server Management', 'serverMan')
+            WarMenu.MenuButton('Recoring Options', 'recording');
 
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened('adminOpt') then
@@ -390,6 +393,26 @@ Citizen.CreateThread(function()
                 TriggerServerEvent("rs-weathersync:server:setTime", time.hour, time.minute)
             end
             
+            WarMenu.Display()
+        elseif WarMenu.IsMenuOpened('recording') then
+            if WarMenu.MenuButton('Start Recording', 'recording') then
+                if (IsRecording()) then
+                    RSCore.Functions.Notify('Je bent al aan het opnemen.')
+                else
+                    StartRecording(1)
+                end
+            end
+            if WarMenu.MenuButton('Stop Recording', 'recording') then
+                if not (IsRecording()) then
+                    RSCore.Functions.Notify('Je bent niet aan het opnemen.')
+                else
+                    StopRecordingAndSaveClip()
+                end
+            end
+            -- if WarMenu.MenuButton('Open Editor', 'recording') then
+
+            -- end
+
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened(currentPlayer) then
             WarMenu.MenuButton('Player Options', 'playerOptions')
