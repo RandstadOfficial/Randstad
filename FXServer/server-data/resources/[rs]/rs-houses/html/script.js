@@ -43,6 +43,20 @@ $('document').ready(function() {
             $(".decorate-confirm").css("display", "block");
             $(".decorate-confirm").find("p").html("Weet je zeker dat je het object wilt kopen voor €"+selectedObjectData.price+"?");
         }
+        
+        if (item.type == "objectLoaded") {
+            $(".decorate-item").css({'pointer-events': 'auto'});
+            $(".object-load-status").css("display", "none");
+        }
+
+        if (item.type == "frontcam") {
+            if (item.toggle) {
+                $("#house-cam").fadeIn(150);
+                $("#cam-label").html(item.label);
+            } else {
+                $("#house-cam").fadeOut(150)
+            }
+        }
     })
 
     document.onkeyup = function (data) {
@@ -138,6 +152,8 @@ $(document).on('click', '.header-btn', function(){
         }
     }
 
+    $.post('http://rs-houses/ResetSelectedProp');
+
     selectedHeaderButton = this;
 })
 
@@ -146,7 +162,7 @@ $(document).on('click', '.footer-btn', function(){
     if (selectedCategory != "remove-owned-obj") {
         $('.decorate-items').html("");
         $.each(houseCategorys[selectedCategory].items, function(i, item){
-            var elem = '<div class="decorate-item" id="object-'+i+'" data-type="newObject"><span id="decorate-item-name"><b>Object: </b>'+item.label+'</span><span id="decorate-item-category"><strong>Prijs: </strong><span id="item-price" style="color: green;">€'+item.price+'</span></span></div>';
+            var elem = '<div class="decorate-item" id="object-'+i+'" data-type="newObject"><span id="decorate-item-name"><b>Object: </b>'+(item.label).charAt(0).toUpperCase() +''+(item.label).substr(1).toLowerCase()+'</span><span id="decorate-item-category"><strong>Prijs: </strong><span id="item-price" style="color: green;">€'+item.price+'</span></span></div>';
             $('.decorate-items').append(elem);
             $('#object-'+i).data('objectData', item);
         });
@@ -192,6 +208,8 @@ $(document).on('click', '.decorate-item', function(){
             $.post("http://rs-houses/chooseobject", JSON.stringify({
                 object: objData.object,
             }));
+            $(".decorate-item").css({'pointer-events': 'none'});
+            $(".object-load-status").css("display", "block");
         }
     } else if ($("#"+objId).data('type') == "myObject") {
         if (selectedObject == this) {
@@ -216,6 +234,11 @@ $(document).on('click', '.decorate-item', function(){
 Decorations.Close = function() {
     $("#decorate").css("display", "none");
     $(".decorate-confirm").css("display", "none");
+    $(".decorate-items").css("display", "none");
+    $(".decorate-footer-buttons").css("display", "none");
+    if (selectedHeaderButton != null) {
+        $(selectedHeaderButton).removeClass('header-btn-selected');
+    }
     selectedObjectData = null;
     $.post("http://rs-houses/closedecorations", JSON.stringify({}));
 }
