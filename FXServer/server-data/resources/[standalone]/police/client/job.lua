@@ -34,6 +34,7 @@ Citizen.CreateThread(function()
                                 TriggerServerEvent("police:server:UpdateCurrentCops")
                                 TriggerServerEvent("RSCore:ToggleDuty")
                                 TriggerServerEvent("police:server:UpdateBlips")
+                                TriggerEvent('rs-policealerts:ToggleDuty', onDuty)
                             end
                         elseif (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 2.5) then
                             DrawText3D(v.x, v.y, v.z, "In/Uit dienst")
@@ -46,11 +47,11 @@ Citizen.CreateThread(function()
                         if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.0) then
                             DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Bewijskast")
                             if IsControlJustReleased(0, Keys["E"]) then
-                                TriggerEvent("inventory:client:SetCurrentStash", "policeevidence")
                                 TriggerServerEvent("inventory:server:OpenInventory", "stash", "policeevidence", {
                                     maxweight = 4000000,
                                     slots = 500,
                                 })
+                                TriggerEvent("inventory:client:SetCurrentStash", "policeevidence")
                             end
                         elseif (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, v.x, v.y, v.z, true) < 1.5) then
                             DrawText3D(v.x, v.y, v.z, "Bewijskast")
@@ -63,11 +64,11 @@ Citizen.CreateThread(function()
                         if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.0) then
                             DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Bewijskast")
                             if IsControlJustReleased(0, Keys["E"]) then
-                                TriggerEvent("inventory:client:SetCurrentStash", "policeevidence2")
                                 TriggerServerEvent("inventory:server:OpenInventory", "stash", "policeevidence2", {
                                     maxweight = 4000000,
                                     slots = 500,
                                 })
+                                TriggerEvent("inventory:client:SetCurrentStash", "policeevidence2")
                             end
                         elseif (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.5) then
                             DrawText3D(v.x, v.y, v.z, "Bewijskast")
@@ -80,11 +81,11 @@ Citizen.CreateThread(function()
                         if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.0) then
                             DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Bewijskast")
                             if IsControlJustReleased(0, Keys["E"]) then
-                                TriggerEvent("inventory:client:SetCurrentStash", "policeevidence3")
                                 TriggerServerEvent("inventory:server:OpenInventory", "stash", "policeevidence3", {
                                     maxweight = 4000000,
                                     slots = 500,
                                 })
+                                TriggerEvent("inventory:client:SetCurrentStash", "policeevidence3")
                             end
                         elseif (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.5) then
                             DrawText3D(v.x, v.y, v.z, "Bewijskast")
@@ -97,11 +98,11 @@ Citizen.CreateThread(function()
                         if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.0) then
                             DrawText3D(v.x, v.y, v.z, "~r~E~w~ - Prullenbak")
                             if IsControlJustReleased(0, Keys["E"]) then
-                                TriggerEvent("inventory:client:SetCurrentStash", "policetrash")
                                 TriggerServerEvent("inventory:server:OpenInventory", "stash", "policetrash", {
                                     maxweight = 4000000,
                                     slots = 300,
                                 })
+                                TriggerEvent("inventory:client:SetCurrentStash", "policetrash")
                             end
                         elseif (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, v.x, v.y, v.z, true) < 1.5) then
                             DrawText3D(v.x, v.y, v.z, "Prullenbak")
@@ -212,8 +213,8 @@ Citizen.CreateThread(function()
                             if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.5) then
                                 DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Persoonlijke kluis")
                                 if IsControlJustReleased(0, Keys["E"]) then
-                                    TriggerEvent("inventory:client:SetCurrentStash", "policestash_"..RSCore.Functions.GetPlayerData().citizenid)
                                     TriggerServerEvent("inventory:server:OpenInventory", "stash", "policestash_"..RSCore.Functions.GetPlayerData().citizenid)
+                                    TriggerEvent("inventory:client:SetCurrentStash", "policestash_"..RSCore.Functions.GetPlayerData().citizenid)
                                 end
                             elseif (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 2.5) then
                                 DrawText3D(v.x, v.y, v.z, "Persoonlijke kluis")
@@ -472,6 +473,11 @@ function VehicleList(isDown)
     for k, v in pairs(Config.Vehicles) do
         Menu.addButton(Config.Vehicles[k], "TakeOutVehicle", k, "Garage", " Motor: 100%", " Body: 100%", " Fuel: 100%")
     end
+    if IsArmoryWhitelist() then
+        for veh, label in pairs(Config.WhitelistedVehicles) do
+            Menu.addButton(label, "TakeOutVehicle", veh, "Garage", " Motor: 100%", " Body: 100%", " Fuel: 100%")
+        end
+    end
         
     Menu.addButton("Terug", "MenuGarage",nil)
 end
@@ -578,6 +584,7 @@ function IsArmoryWhitelist()
     for k, v in pairs(Config.ArmoryWhitelist) do
         if v == citizenid then
             retval = true
+            break
         end
     end
     return retval

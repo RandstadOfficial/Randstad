@@ -48,10 +48,10 @@ AddEventHandler('rs-admin:server:serverKick', function(reason)
 end)
 
 local suffix = {
-    "hihi",
-    "#yolo",
-    "hmm slurpie",
-    "yeet terug naar esx",
+    "- Huts",
+    "- Challaz",
+    "- Adios Amigos",
+    "- Yeet terug naar ESX",
 }
 
 RegisterServerEvent('rs-admin:server:banPlayer')
@@ -80,7 +80,7 @@ RSCore.Commands.Add("announce", "Stuur een bericht naar iedereen", {}, false, fu
     for i = 1, 3, 1 do
         TriggerClientEvent('chatMessage', -1, "SYSTEM", "error", msg)
     end
-end, "god")
+end, "admin")
 
 RSCore.Commands.Add("admin", "Open admin menu", {}, false, function(source, args)
     local group = RSCore.Functions.GetPermission(source)
@@ -251,6 +251,23 @@ RSCore.Functions.CreateCallback('rs-admin:server:hasPermissions', function(sourc
         retval = true
     end
     cb(retval)
+end)
+
+RSCore.Functions.CreateCallback('rs-admin:server:getTargetAppartment', function(source, cb, player)
+    local Target = RSCore.Functions.GetPlayer(player)
+    
+    local appartment = Target.PlayerData.metadata["currentapartment"]
+
+    cb(appartment)
+end)
+
+RSCore.Functions.CreateCallback('rs-admin:server:getTargetData', function(source, cb, player)
+    local Target = RSCore.Functions.GetPlayer(player)
+    local bsn = Target.PlayerData.citizenid
+    local fname = Target.PlayerData.charinfo.firstname
+    local lname = Target.PlayerData.charinfo.lastname
+
+    cb(bsn, fname, lname)
 end)
 
 RegisterServerEvent('rs-admin:server:setPermissions')

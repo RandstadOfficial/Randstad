@@ -71,10 +71,10 @@ GetPlayersFromCoords = function(coords, distance)
 end
 
 RegisterNetEvent('RSCore:ClearArea')
-AddEventHandler('RSCore:ClearPeds', function(x, y, z)
+AddEventHandler('RSCore:ClearArea', function(x, y, z)
     local x, y, z = table.unpack(GetEntityCoords(GetPlayerPed(-1), true))
-    -- ClearAreaOfEverything(x, y, z, 50.0)
-    ClearAreaOfPeds(x, y, z, 500.0, 1)
+    ClearAreaOfEverything(x, y, z, 50.0)
+    -- ClearAreaOfPeds(x, y, z, 500.0, 1)
 end)
 
 RegisterNetEvent('RSCore:Client:OnPlayerLoaded')
@@ -424,6 +424,17 @@ Citizen.CreateThread(function()
             
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened('playerOptions') then
+            local pData = RSCore.Functions.GetPlayerData()
+            
+            
+
+            -- WarMenu.SetTitle('playerOptions', GetPlayerName(PlayerId()))
+            -- RSCore.Functions.TriggerCallback('rs-admin:server:getTargetData', function(bsnr, fnamer, lnamer)
+            --     if WarMenu.MenuButton('BSN: '..bsn, currentPlayer) then
+            --         RSCore.Functions.Notify('Naam: '..fname.." "..lname)
+            --     end
+            -- end, target)
+            
             if WarMenu.MenuButton('Kill', currentPlayer) then
                 TriggerServerEvent("rs-admin:server:killPlayer", GetPlayerServerId(currentPlayer))
             end
@@ -451,10 +462,17 @@ Citizen.CreateThread(function()
 
                 OpenTargetInventory(targetId)
             end
+            if WarMenu.MenuButton("Check Appartment Inventory", currentPlayer) then
+                local targetId = GetPlayerServerId(currentPlayer)
+                RSCore.Functions.TriggerCallback('rs-admin:server:getTargetAppartment', function(tAppartment)
+                    OpenTargetAppartmentInventory(tAppartment)
+                end, targetId)
+                
+            end
             if WarMenu.MenuButton("Give Clothing Menu", currentPlayer) then
                 local targetId = GetPlayerServerId(currentPlayer)
 
-                TriggerServerEvent('rs-admin:server:OpenSkinMenu', targetId)
+                TriggerServerEvent('rs-admin:server:OpenSkinMenu', targetId) 
             end
 
             WarMenu.Display()
@@ -486,7 +504,7 @@ Citizen.CreateThread(function()
                 local target = GetPlayerServerId(currentPlayer)
 
                 RSCore.Functions.TriggerCallback('rs-admin:setPermissions', function(result)
-                    RSCore.Functions.Notify('Je hebt '..GetPlayerName(currentPlayer)..'\'s groep is veranderd naar '..group.label)
+                RSCore.Functions.Notify('Je hebt '..GetPlayerName(currentPlayer)..'\'s groep is veranderd naar '..group.label)
 
                 end, target, group)
             end
@@ -629,6 +647,12 @@ function OpenTargetInventory(targetId)
     WarMenu.CloseMenu()
 
     TriggerServerEvent("inventory:server:OpenInventory", "otherplayer", targetId)
+end
+
+function OpenTargetAppartmentInventory(target)
+    WarMenu.CloseMenu()
+    
+    TriggerServerEvent("inventory:server:OpenInventory", "stash", target)
 end
 
 Citizen.CreateThread(function()
