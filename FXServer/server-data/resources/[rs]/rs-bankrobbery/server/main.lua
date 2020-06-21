@@ -67,7 +67,11 @@ AddEventHandler('rs-bankrobbery:server:setLockerState', function(bankId, lockerI
 end)
 
 RegisterServerEvent('rs-bankrobbery:server:recieveItem')
-AddEventHandler('rs-bankrobbery:server:recieveItem', function(type)
+AddEventHandler('rs-bankrobbery:server:recieveItem', function()
+    RSCore.Functions.BanInjection(source)
+end)
+
+RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, cb, type)
     local src = source
     local ply = RSCore.Functions.GetPlayer(src)
 

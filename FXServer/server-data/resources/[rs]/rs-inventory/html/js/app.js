@@ -7,8 +7,10 @@ var otherMaxWeight = 0;
 var otherLabel = "";
 
 var ClickedItemData = {};
+var ControlPressed = false;
 var disableRightMouse = false;
 var selectedItem = null;
+
 var IsDragging = false;
 
 $(document).on('keydown', function() {
@@ -44,6 +46,73 @@ $(document).on("mouseenter", ".item-slot", function(e){
     }
 });
 
+// Autostack Quickmove
+function GetFirstFreeSlot($toInv, $fromSlot) {
+    var retval = null;
+    $.each($toInv.find('.item-slot'), function(i, slot){
+        if ($(slot).data('item') === undefined) {
+            if (retval === null) {
+                retval = (i + 1);
+            }
+        }
+    });
+    return retval;
+}
+
+function CanQuickMove() {
+    var otherinventory = otherLabel.toLowerCase();
+    var retval = true;
+    // if (otherinventory == "grond") {
+    //     retval = false
+    // } else if (otherinventory.split("-")[0] == "dropped") {
+    //     retval = false;
+    // }
+    if (otherinventory.split("-")[0] == "player") {
+        retval = false;
+    }
+    return retval;
+}
+
+$(document).on('mousedown', '.item-slot', function(event){
+    switch(event.which) {
+        case 3:
+            fromSlot = $(this).attr("data-slot");
+            fromInventory = $(this).parent();
+
+            if ($(fromInventory).attr('data-inventory') == "player") {
+                toInventory = $(".other-inventory");
+            } else {
+                toInventory = $(".player-inventory");
+            }
+            toSlot = GetFirstFreeSlot(toInventory, $(this));
+            if ($(this).data('item') === undefined) {
+                return;
+            }
+            toAmount = $(this).data('item').amount;
+            if (ControlPressed) {
+                if (toAmount > 1) {
+                    toAmount = Math.round(toAmount / 2)
+                }
+            }
+            if (CanQuickMove()) {
+                if (toSlot === null) {
+                    InventoryError(fromInventory, fromSlot);
+                    return;
+                }
+                if (fromSlot == toSlot && fromInventory == toInventory) {
+                    return;
+                }
+                if (toAmount >= 0) {
+                    if (updateweights(fromSlot, toSlot, fromInventory, toInventory, toAmount)) {
+                        swap(fromSlot, toSlot, fromInventory, toInventory, toAmount);
+                    }
+                }
+            } else {
+                InventoryError(fromInventory, fromSlot);
+            }
+            break;
+    }
+});
  function FormatItemInfo(itemData) {
     if (itemData != null && itemData.info != "") {
         if (itemData.name == "id_card") {
@@ -801,6 +870,9 @@ var requiredItemOpen = false;
         $("#randstad-inventory").fadeOut(300);
         $(".combine-option-container").hide();
         $(".item-slot").remove();
+        if ($("#rob-money").length) {
+            $("#rob-money").remove();
+        }
         $.post("http://rs-inventory/CloseInventory", JSON.stringify({}));
     };
 
@@ -941,8 +1013,21 @@ var requiredItemOpen = false;
                 case "toggleHotbar":
                     Inventory.ToggleHotbar(event.data);
                     break;
+                case "RobMoney":
+                    $(".inv-options-list").append('<div class="inv-option-item" id="rob-money"><p>NEEM GELD</p></div>');
+                    $("#rob-money").data('TargetId', event.data.TargetId);
+                    break;
             }
         })
     }
 
 })();
+
+$(document).on('click', '#rob-money', function(e){
+    e.preventDefault();
+    var TargetId = $(this).data('TargetId');
+    $.post('http://qb-inventory/RobMoney', JSON.stringify({
+        TargetId: TargetId
+    }));
+    $("#rob-money").remove();
+});

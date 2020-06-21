@@ -6,7 +6,11 @@ AddEventHandler('rs-drugs:server:updateDealerItems', function(itemData, amount, 
 end)
 
 RegisterServerEvent('rs-drugs:server:giveDeliveryItems')
-AddEventHandler('rs-drugs:server:giveDeliveryItems', function(amount)
+AddEventHandler('rs-drugs:server:giveDeliveryItems', function()
+    RSCore.Functions.BanInjection(source)
+end)
+
+RSCore.Functions.CreateCallback('rs-drugs:giveDeliveryItems', function(source, cb, amount)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
 

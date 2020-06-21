@@ -13,6 +13,10 @@ local ItemTable = {
 
 RegisterServerEvent("rs-recycle:server:getItem")
 AddEventHandler("rs-recycle:server:getItem", function()
+    RSCore.Functions.BanInjection(source)
+end)
+
+RSCore.Functions.CreateCallback('rs-recycle:getItem', function(source, cb)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     for i = 1, math.random(2, 4), 1 do
@@ -21,6 +25,5 @@ AddEventHandler("rs-recycle:server:getItem", function()
         Player.Functions.AddItem(randItem, amount)
         TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[randItem], 'add')
         Citizen.Wait(500)
-    end
-    
+    end  
 end)

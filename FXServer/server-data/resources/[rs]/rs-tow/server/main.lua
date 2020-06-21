@@ -33,7 +33,11 @@ AddEventHandler('rs-tow:server:DoBail', function(bool, vehInfo)
 end)
 
 RegisterNetEvent('rs-tow:server:11101110')
-AddEventHandler('rs-tow:server:11101110', function(drops)
+AddEventHandler('rs-tow:server:11101110', function()
+    RSCore.Functions.BanInjection(source)
+end)
+
+RSCore.Functions.CreateCallback('rs-tow:11101110', function(source, cb, drops)
     local src = source 
     local Player = RSCore.Functions.GetPlayer(src)
     local drops = tonumber(drops)
@@ -55,6 +59,7 @@ AddEventHandler('rs-tow:server:11101110', function(drops)
     Player.Functions.AddJobReputation(1)
     Player.Functions.AddMoney("bank", payment, "tow-salary")
     TriggerClientEvent('chatMessage', source, "BAAN", "warning", "Je hebt je salaris ontvangen van: €"..payment..", bruto: €"..price.." (waarvan €"..bonus.." bonus) en €"..taxAmount.." belasting ("..PaymentTax.."%)")
+
 end)
 
 RSCore.Commands.Add("npc", "Toggle npc baan optie", {}, false, function(source, args)

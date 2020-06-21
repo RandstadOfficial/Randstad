@@ -14,6 +14,10 @@ for i = 97, 122 do table.insert(Charset, string.char(i)) end
 
 RegisterNetEvent('rs-vehicleshop:server:buyVehicle')
 AddEventHandler('rs-vehicleshop:server:buyVehicle', function(vehicleData, garage)
+    RSCore.Functions.BanInjection(source)
+end)
+
+RSCore.Functions.CreateCallback('rs-vehicleshop:buyVehicle', function(source, cb, vehicleData, garage)
     local src = source
     local pData = RSCore.Functions.GetPlayer(src)
     local cid = pData.PlayerData.citizenid

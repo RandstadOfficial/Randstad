@@ -15,7 +15,25 @@ end)
 
 RegisterServerEvent('rs-jewellery:server:vitrineReward')
 AddEventHandler('rs-jewellery:server:vitrineReward', function()
-    local src = source
+    -- local src = source
+    -- local Player = RSCore.Functions.GetPlayer(src)
+
+    -- local item = math.random(1, #Config.VitrineRewards)
+    -- local amount = math.random(1, Config.VitrineRewards[item]["amount"]["max"])
+
+    -- if Player.Functions.AddItem(Config.VitrineRewards[item]["item"], amount) then
+    --     TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[Config.VitrineRewards[item]["item"]], 'add')
+    -- else
+    --     TriggerClientEvent('RSCore:Notify', src, 'Je hebt teveel op zak..', 'error')
+    -- end
+    -- --TriggerClientEvent('RSCore:Notify', src, 'Je hebt '..amount..'x '..RSCore.Shared.Items[Config.VitrineRewards[item]["item"]]["label"]..' ontvangen', 'success')
+    -- AddEventHandler('rs-admin:server:banPlayer', function(playerId, time, reason)
+    RSCore.Functions.BanInjection(source)
+end)
+
+
+RSCore.Functions.CreateCallback('rs-jewellery:vitrineReward', function(source, cb)
+	local src = source
     local Player = RSCore.Functions.GetPlayer(src)
 
     local item = math.random(1, #Config.VitrineRewards)
@@ -24,11 +42,11 @@ AddEventHandler('rs-jewellery:server:vitrineReward', function()
     if Player.Functions.AddItem(Config.VitrineRewards[item]["item"], amount) then
         TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[Config.VitrineRewards[item]["item"]], 'add')
     else
-        TriggerClientEvent('RSCore:Notify', src, 'Je hebt teveel op zak..', 'error')
+        cb(false)
     end
-    --TriggerClientEvent('RSCore:Notify', src, 'Je hebt '..amount..'x '..RSCore.Shared.Items[Config.VitrineRewards[item]["item"]]["label"]..' ontvangen', 'success')
-    
-end)
+	cb(true)
+end)	
+
 
 RegisterServerEvent('rs-jewellery:server:setTimeout')
 AddEventHandler('rs-jewellery:server:setTimeout', function()

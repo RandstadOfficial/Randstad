@@ -87,9 +87,8 @@ Config.ArmoryWhitelist = {
     "KZY14747", -- Ryan
     "DTE65403", -- MaBo
     "YND19022", -- Maestro
-    "GFE30137", -- Dave
     "ZOY23072", -- Anton
-    "DHU97474", -- Danny
+    "CKQ80729", -- Danny
 	"LYE72460", -- Birdzor
 	"LWP29900", -- Nico
 	"BQL92466", -- Goudenaapje (Dwight)
@@ -140,15 +139,23 @@ Config.Vehicles = {
     ["paudi"] = "Audi A6",
     ["pamarok"] = "Volkswagen Amarok",
     ["pt5"] = "Volkswagen T5",
-    --["pt6"] = "Volkswagen T6",
-    --["pfosprinter"] = "Mercedes-Benz Sprinter (FO)",
     ["pyamahamotor"] = "Yamaha Motor",
     ["pbmwmotor2"] = "BMW Motor",
     ["pschafter"] = "Unmarked Schafter",
     ["poracle"] = "Unmarked Oracle",
     --["dsimerc"] = "Mercedes (DSI)",
-   -- ["dsivito"] = "Mercedes Vito (DSI)",
+    --["dsivito"] = "Mercedes Vito (DSI)",
     --["dsiq5"] = "Audi Q5 (DSI)",
+    --["pt6"] = "Volkswagen T6",
+    --["pfosprinter"] = "Mercedes-Benz Sprinter (FO)",
+}
+
+Config.WhitelistedVehicles = {
+    ["pa45"] = "Mercedes A45 Unmarked",
+    ["pbmwm5"] = "BMW M5 Unmarked (DSI)",
+    --["paudia4"] = "Audi A4 Unmarked",
+    --["pbmw330"] = "BMW 330D Unmarked",
+    --["pfpace"] = "Jaguar F-Pace Unmarked",
 }
 
 Config.AmmoLabels = {
@@ -203,13 +210,13 @@ Config.Items = {
     slots = 30,
     items = {
         [1] = {
-            name = "weapon_pistol_mk2",
+            name = "weapon_pistol",
             price = 0,
             amount = 1,
             info = {
                 serie = "",                
                 attachments = {
-                    {component = "COMPONENT_AT_PI_FLSH_02", label = "Flashlight"},
+                    {component = "COMPONENT_AT_PI_FLSH", label = "Flashlight"},
                 }
             },
             type = "weapon",

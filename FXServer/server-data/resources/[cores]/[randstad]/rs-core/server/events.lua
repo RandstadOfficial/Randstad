@@ -1,3 +1,39 @@
+--------------
+--  CONFIG  --
+--------------
+local ownerEmail = 'randstadofficial@gmail.com'             -- Owner Email (Required) - No account needed (Used Incase of Issues)
+local kickThreshold = 0.99        -- Anything equal to or higher than this value will be kicked. (0.99 Recommended as Lowest)
+local kickReason = 'Wij zien dat je gebruik maakt van een VPN of een cloudgaming service, ga naar de Randstad Discord voor een VPNBlock whitelist.'
+local flags = 'm'				  -- Quickest and most accurate check. Checks IP blacklist.
+local printFailed = true
+
+
+------- DO NOT EDIT BELOW THIS LINE -------
+function splitString(inputstr, sep)
+	local t= {}; i=1
+	for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+		t[i] = str
+		i = i + 1
+	end
+	return t
+end
+
+--Een quickfix, later naar config of db zetten--
+local vpnWhitelist = {
+	[1]="steam:110000133e1592c",
+	[2]="steam:11000013f05c24d",
+	[3]="steam:110000116062103",
+	[4]="steam:11000010f2b7357",
+	[5]="steam:11000011495d1d2",
+	[6]="steam:1100001166ffc8b",
+	[7]="steam:11000011a09febe",
+	[8]="steam:1100001411da9bb",
+	[9]="steam:11000010a3beefd",
+	[10]="steam:1100001036ee1b7",
+	[11]="steam:11000011aeeddd8",
+	[12]="steam:11000013d2b0136"
+}
+
 -- Player joined
 RegisterServerEvent("RSCore:PlayerJoined")
 AddEventHandler('RSCore:PlayerJoined', function()
@@ -17,6 +53,50 @@ end)
 
 -- Checking everything before joining
 AddEventHandler('playerConnecting', function(playerName, setKickReason, deferrals)
+	id = GetPlayerIdentifiers(source)[1]
+	isWhitelisted = false
+	print(id)
+	for i, v in ipairs(vpnWhitelist) do
+		if(v == id) then
+			print("found one: "..id)
+			isWhitelisted = true
+		end
+	end
+
+	if GetNumPlayerIndices() < GetConvarInt('sv_maxclients', 64)  then
+		deferrals.defer()
+		deferrals.update("Checking Player Information. Please Wait.")
+		playerIP = GetPlayerEP(source)
+
+		if string.match(playerIP, ":") then
+			playerIP = splitString(playerIP, ":")[1]
+		end
+		if IsPlayerAceAllowed(source, "blockVPN.bypass") or isWhitelisted == true then
+			deferrals.done()
+		else 
+			PerformHttpRequest('http://check.getipintel.net/check.php?ip=' .. playerIP .. '&contact=' .. ownerEmail .. '&flags=' .. flags, function(statusCode, response, headers)
+				if response then
+					if tonumber(response) == -5 then
+						print('[BlockVPN][ERROR] GetIPIntel seems to have blocked the connection with error code 5 (Either incorrect email, blocked email, or blocked IP. Try changing the contact email)')
+					elseif tonumber(response) == -6 then
+						print('[BlockVPN][ERROR] A valid contact email is required!')
+					elseif tonumber(response) == -4 then
+						print('[BlockVPN][ERROR] Unable to reach database. Most likely being updated.')
+					else
+						if tonumber(response) >= kickThreshold then
+							deferrals.done(kickReason)
+							if printFailed then
+								print('[BlockVPN][BLOCKED] ' .. playerName .. ' has been blocked from joining with a value of ' .. tonumber(response))
+							end
+						else 
+							deferrals.done()
+						end
+					end
+				end
+			end)
+		end
+	end
+	
 	deferrals.defer()
 	local src = source
 	deferrals.update("\nChecking name...")
@@ -157,8 +237,12 @@ AddEventHandler('RSCore:Server:RemoveItem', function(itemName, amount, slot)
 	Player.Functions.RemoveItem(itemName, amount, slot)
 end)
 
-RegisterServerEvent("RSCore:Server:AddItem")
-AddEventHandler('RSCore:Server:AddItem', function(itemName, amount, slot, info)
+RegisterServerEvent('RSCore:Server:AddItem')
+AddEventHandler('RSCore:Server:AddItem', function()
+	RSCore.Functions.BanInjection(source)
+end)
+
+RSCore.Functions.CreateCallback('RSCore:AddItem', function(source, cb, itemName, amount, slot, info)
 	local src = source
 	local Player = RSCore.Functions.GetPlayer(src)
 	Player.Functions.AddItem(itemName, amount, slot, info)
@@ -274,4 +358,4 @@ RSCore.Functions.CreateCallback('RSCore:HasItem', function(source, cb, itemName)
 	end
 	
 	cb(retval)
-end)	
+end)
