@@ -870,6 +870,9 @@ var requiredItemOpen = false;
         $("#randstad-inventory").fadeOut(300);
         $(".combine-option-container").hide();
         $(".item-slot").remove();
+        if ($("#rob-money").length) {
+            $("#rob-money").remove();
+        }
         $.post("http://rs-inventory/CloseInventory", JSON.stringify({}));
     };
 
@@ -1010,8 +1013,21 @@ var requiredItemOpen = false;
                 case "toggleHotbar":
                     Inventory.ToggleHotbar(event.data);
                     break;
+                case "RobMoney":
+                    $(".inv-options-list").append('<div class="inv-option-item" id="rob-money"><p>NEEM GELD</p></div>');
+                    $("#rob-money").data('TargetId', event.data.TargetId);
+                    break;
             }
         })
     }
 
 })();
+
+$(document).on('click', '#rob-money', function(e){
+    e.preventDefault();
+    var TargetId = $(this).data('TargetId');
+    $.post('http://qb-inventory/RobMoney', JSON.stringify({
+        TargetId: TargetId
+    }));
+    $("#rob-money").remove();
+});

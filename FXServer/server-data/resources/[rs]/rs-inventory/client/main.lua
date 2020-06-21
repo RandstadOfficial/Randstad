@@ -339,6 +339,22 @@ AddEventHandler("RSCore:Client:OnPlayerLoaded", function()
     --TriggerServerEvent("inventory:server:LoadDrops")
 end)
 
+RegisterNetEvent('inventory:server:RobPlayer')
+AddEventHandler('inventory:server:RobPlayer', function(TargetId)
+    SendNUIMessage({
+        action = "RobMoney",
+        TargetId = TargetId,
+    })
+end)
+
+RegisterNUICallback('RobMoney', function(data, cb)
+    TriggerServerEvent("police:server:RobPlayer", data.TargetId)
+end)
+
+RegisterNUICallback('Notify', function(data, cb)
+    QBCore.Functions.Notify(data.message, data.type)
+end)
+
 RegisterNetEvent("inventory:client:OpenInventory")
 AddEventHandler("inventory:client:OpenInventory", function(inventory, other)
     if not IsEntityDead(GetPlayerPed(-1)) then
