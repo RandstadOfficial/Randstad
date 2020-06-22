@@ -364,6 +364,14 @@ RSCore.Commands.Add("decorate", "Decoreer je huisie :)", {}, false, function(sou
 	TriggerClientEvent("rs-houses:client:decorate", source)
 end)
 
+RSCore.Commands.Add("enter", "Ga naar binnen", {}, false, function(source, args)
+    TriggerClientEvent('rs-houses:client:EnterHouse', source)
+end)
+
+RSCore.Commands.Add("ring", "Huis aanbellen", {}, false, function(source, args)
+    TriggerClientEvent('rs-houses:client:RequestRing', source)
+end)
+
 function GetHouseStreetCount(street)
 	local count = 1
 	RSCore.Functions.ExecuteSql(true, "SELECT * FROM `houselocations` WHERE `name` LIKE '%"..street.."%'", function(result)

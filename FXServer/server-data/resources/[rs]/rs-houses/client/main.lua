@@ -15,11 +15,13 @@ closesthouse = nil
 hasKey = false
 isOwned = false
 
-isLoggedIn = false
+isLoggedIn = true
 local contractOpen = false
 
 local cam = nil
 local viewCam = false
+
+local FrontCam = false
 
 stashLocation = nil
 outfitLocation = nil
@@ -29,6 +31,13 @@ local OwnedHouseBlips = {}
 
 local CurrentDoorBell = 0
 local rangDoorbell = nil
+
+local houseObj = {}
+local POIOffsets = nil
+local entering = false
+local data = nil
+
+local CurrentHouse = nil
 
 RSCore = nil
 
@@ -56,12 +65,55 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(10000)
+        Citizen.Wait(5000)
 
         if isLoggedIn then
+            if not inside then
             SetClosestHouse()
+            end
         end
     end
+end)
+
+RegisterNetEvent('rs-houses:client:EnterHouse')
+AddEventHandler('rs-houses:client:EnterHouse', function()
+    local ped = GetPlayerPed(-1)
+    local pos = GetEntityCoords(ped)
+
+    if closesthouse ~= nil then
+        local dist = GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, true)
+        if dist < 1.5 then
+            if hasKey then
+                enterOwnedHouse(closesthouse)
+            else
+                if not Config.Houses[closesthouse].locked then
+                    enterNonOwnedHouse(closesthouse)
+                end
+            end
+        end
+    end
+end)
+
+RegisterNetEvent('rs-houses:client:RequestRing')
+AddEventHandler('rs-houses:client:RequestRing', function()
+    local ped = GetPlayerPed(-1)
+    local pos = GetEntityCoords(ped)
+
+    if closesthouse ~= nil then
+        TriggerServerEvent('rs-houses:server:RingDoor', closesthouse)
+    end
+end)
+
+Citizen.CreateThread(function()
+    Wait(1000)
+    
+    TriggerServerEvent('rs-houses:client:setHouses')
+    isLoggedIn = true
+    SetClosestHouse()
+    TriggerEvent('rs-houses:client:setupHouseBlips')
+    Citizen.Wait(100)
+    TriggerEvent('rs-garages:client:setHouseGarage', closesthouse, hasKey)
+    TriggerServerEvent("rs-houses:server:setHouses")
 end)
 
 function doorText(x, y, z, text)
@@ -78,11 +130,6 @@ function doorText(x, y, z, text)
     DrawRect(0.0, 0.0+0.011, -0.025+ factor, 0.03, 0, 0, 0, 68)
     ClearDrawOrigin()
 end
-
-local houseObj = {}
-local POIOffsets = nil
-local entering = false
-local data = nil
 
 RegisterNetEvent('RSCore:Client:OnPlayerLoaded')
 AddEventHandler('RSCore:Client:OnPlayerLoaded', function()
@@ -128,6 +175,7 @@ AddEventHandler('rs-houses:client:createHouses', function(price, tier)
         enter 	= { x = pos.x, y = pos.y, z = pos.z, h = heading},
         cam 	= { x = pos.x, y = pos.y, z = pos.z, h = heading, yaw = -10.00},
     }
+    street = street:gsub("%-", " ")
     TriggerServerEvent('rs-houses:server:addNewHouse', street, coords, price, tier)
 end)
 
@@ -199,14 +247,7 @@ Citizen.CreateThread(function()
                     if not inside then
                         if closesthouse ~= nil then
                             if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, true) < 1.5)then
-                                if Config.Houses[closesthouse].locked then
-                                    DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, '~r~E~w~ - Ga naar binnen')
-                                elseif not Config.Houses[closesthouse].locked then
-                                    DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, '~g~E~w~ - Ga naar binnen')
-                                end
-                                if IsControlJustPressed(0, Keys["E"]) then
-                                    enterOwnedHouse(closesthouse)
-                                end
+                                DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, '~b~/enter~w~ - Om naar binnen te gaan')
                             end
                         end
                     end
@@ -223,10 +264,18 @@ Citizen.CreateThread(function()
                     -- EXIT HOUSE
                     if inside then
                         if not entering then
-                            if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, true) < 1.5)then
-                                DrawText3Ds(Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, '~g~E~w~ - Om huis te verlaten')
-                                if IsControlJustPressed(0, Keys["E"]) then
-                                    leaveOwnedHouse(closesthouse)
+                            if POIOffsets ~= nil then
+                                if POIOffsets.exit ~= nil then
+                                    if(GetDistanceBetweenCoords(pos, Config.Houses[CurrentHouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[CurrentHouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[CurrentHouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, true) < 1.5)then
+                                        DrawText3Ds(Config.Houses[CurrentHouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[CurrentHouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[CurrentHouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, '~g~E~w~ - Om huis te verlaten')
+                                        DrawText3Ds(Config.Houses[CurrentHouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[CurrentHouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[CurrentHouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z - 0.1, '~g~H~w~ - Camera bekijken')
+                                        if IsControlJustPressed(0, Keys["E"]) then
+                                            leaveOwnedHouse(CurrentHouse)
+                                        end
+                                        if IsControlJustPressed(0, Keys["H"]) then
+                                            FrontDoorCam(Config.Houses[CurrentHouse].coords.enter)
+                                        end
+                                    end
                                 end
                             end
                         end
@@ -236,39 +285,43 @@ Citizen.CreateThread(function()
                         if closesthouse ~= nil then
                             if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, true) < 1.5)then
                                 if not viewCam and Config.Houses[closesthouse].locked then
-                                    DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, '[~g~E~w~] Om het huis te bezichtigen')
+                                    DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, '~g~E~w~ - Om het huis te bezichtigen')
                                     if IsControlJustPressed(0, Keys["E"]) then
                                         TriggerServerEvent('rs-houses:server:viewHouse', closesthouse)
                                     end
-                                elseif not viewCam and not Config.Houses[closesthouse].locked then
-                                    DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z + 1.2, '[~g~E~w~] Om naar ~b~binnen~w~ te gaan')
-                                    if IsControlJustPressed(0, Keys["E"])  then
-                                        enterNonOwnedHouse(closesthouse)
-                                    end
+                                -- elseif not viewCam and not Config.Houses[closesthouse].locked then
+                                --     DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, '[~g~E~w~] Om naar ~b~binnen~w~ te gaan')
+                                --     if IsControlJustPressed(0, Keys["E"])  then
+                                --         enterNonOwnedHouse(closesthouse)
+                                --     end
                                 end
                             end
                         end
                     elseif isOwned then
                         if closesthouse ~= nil then
                             if not inOwned then
-                                if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, true) < 1.5)then
-                                    if not Config.Houses[closesthouse].locked then
-                                        DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z + 1.2, '[~g~E~w~] Om naar ~b~binnen~w~ te gaan')
-                                        if IsControlJustPressed(0, Keys["E"])  then
-                                            enterNonOwnedHouse(closesthouse)
-                                        end
-                                    else
-                                        DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z + 1.2, 'De deur is ~r~vergrendeld / ~g~G~w~ - Aanbellen')
-                                        if IsControlJustPressed(0, Keys["G"]) then
-                                            TriggerServerEvent('rs-houses:server:RingDoor', closesthouse)
-                                        end
-                                    end
-                                end
+                                -- if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, true) < 1.5)then
+                                    -- if not Config.Houses[closesthouse].locked then
+                                    --     DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, '[~g~E~w~] Om naar ~b~binnen~w~ te gaan')
+                                    --     if IsControlJustPressed(0, Keys["E"])  then
+                                    --         enterNonOwnedHouse(closesthouse)
+                                    --     end
+                                    -- else
+                                    --     DrawText3Ds(Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, 'De deur is ~r~vergrendeld / ~g~G~w~ - Aanbellen')
+                                    --     if IsControlJustPressed(0, Keys["G"]) then
+                                    --         TriggerServerEvent('rs-houses:server:RingDoor', closesthouse)
+                                    --     end
+                                    -- end
+                                -- end
                             elseif inOwned then
-                                if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, true) < 1.5)then
-                                    DrawText3Ds(Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, '~g~E~w~ - Om huis te verlaten')
-                                    if IsControlJustPressed(0, Keys["E"]) then
-                                        leaveNonOwnedHouse(closesthouse)
+                                if POIOffsets ~= nil then
+                                    if POIOffsets.exit ~= nil then
+                                        if(GetDistanceBetweenCoords(pos, Config.Houses[CurrentHouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[CurrentHouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[CurrentHouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, true) < 1.5)then
+                                            DrawText3Ds(Config.Houses[CurrentHouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[CurrentHouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[CurrentHouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, '~g~E~w~ - Om huis te verlaten')
+                                            if IsControlJustPressed(0, Keys["E"]) then
+                                                leaveNonOwnedHouse(CurrentHouse)
+                                            end
+                                        end
                                     end
                                 end
                             end
@@ -276,10 +329,14 @@ Citizen.CreateThread(function()
                     end
                     if inside and not isOwned then
                         if not entering then
-                            if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, true) < 1.5)then
-                                DrawText3Ds(Config.Houses[closesthouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[closesthouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, '~g~E~w~ - Om huis te verlaten')
-                                if IsControlJustPressed(0, Keys["E"]) then
-                                    leaveNonOwnedHouse(closesthouse)
+                            if POIOffsets ~= nil then
+                                if POIOffsets.exit ~= nil then
+                                    if(GetDistanceBetweenCoords(pos, Config.Houses[CurrentHouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[CurrentHouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[CurrentHouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, true) < 1.5)then
+                                        DrawText3Ds(Config.Houses[CurrentHouse].coords.enter.x + POIOffsets.exit.x, Config.Houses[CurrentHouse].coords.enter.y + POIOffsets.exit.y, Config.Houses[CurrentHouse].coords.enter.z - Config.MinZOffset + POIOffsets.exit.z, '~g~E~w~ - Om huis te verlaten')
+                                        if IsControlJustPressed(0, Keys["E"]) then
+                                            leaveNonOwnedHouse(CurrentHouse)
+                                        end
+                                    end
                                 end
                             end
                         end
@@ -289,13 +346,13 @@ Citizen.CreateThread(function()
                 local StashObject = nil
                 -- STASH
                 if inside then
-                    if closesthouse ~= nil then
+                    if CurrentHouse ~= nil then
                         if stashLocation ~= nil then
                             if(GetDistanceBetweenCoords(pos, stashLocation.x, stashLocation.y, stashLocation.z, true) < 1.5)then
                                 DrawText3Ds(stashLocation.x, stashLocation.y, stashLocation.z, '~g~E~w~ - Stash')
                                 if IsControlJustPressed(0, Keys["E"]) then
-                                    TriggerEvent("inventory:client:SetCurrentStash", closesthouse)
-                                    TriggerServerEvent("inventory:server:OpenInventory", "stash", closesthouse)
+                                    TriggerServerEvent("inventory:server:OpenInventory", "stash", CurrentHouse)
+                                    TriggerEvent("inventory:client:SetCurrentStash", CurrentHouse)
                                 end
                             elseif(GetDistanceBetweenCoords(pos, stashLocation.x, stashLocation.y, stashLocation.z, true) < 3)then
                                 DrawText3Ds(stashLocation.x, stashLocation.y, stashLocation.z, 'Stash')
@@ -305,7 +362,7 @@ Citizen.CreateThread(function()
                 end
 
                 if inside then
-                    if closesthouse ~= nil then
+                    if CurrentHouse ~= nil then
                         if outfitLocation ~= nil then
                             if(GetDistanceBetweenCoords(pos, outfitLocation.x, outfitLocation.y, outfitLocation.z, true) < 1.5)then
                                 DrawText3Ds(outfitLocation.x, outfitLocation.y, outfitLocation.z, '~g~E~w~ - Outfits')
@@ -320,7 +377,7 @@ Citizen.CreateThread(function()
                 end
 
                 if inside then
-                    if closesthouse ~= nil then
+                    if CurrentHouse ~= nil then
                         if logoutLocation ~= nil then
                             if(GetDistanceBetweenCoords(pos, logoutLocation.x, logoutLocation.y, logoutLocation.z, true) < 1.5)then
                                 DrawText3Ds(logoutLocation.x, logoutLocation.y, logoutLocation.z, '~g~E~w~ - Uitloggen')
@@ -331,8 +388,8 @@ Citizen.CreateThread(function()
                                     end
                                     exports['rs-interior']:DespawnInterior(houseObj, function()
                                         TriggerEvent('rs-weathersync:client:EnableSync')
-                                        SetEntityCoords(GetPlayerPed(-1), Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z + 0.5)
-                                        SetEntityHeading(GetPlayerPed(-1), Config.Houses[closesthouse].coords.enter.h)
+                                        SetEntityCoords(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.x, Config.Houses[CurrentHouse].coords.enter.y, Config.Houses[CurrentHouse].coords.enter.z + 0.5)
+                                        SetEntityHeading(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.h)
                                         inOwned = false
                                         inside = false
                                         TriggerServerEvent('rs-houses:server:LogoutLocation')
@@ -538,11 +595,14 @@ function openContract(bool)
 end
 
 function enterOwnedHouse(house)
+    CurrentHouse = house
     TriggerServerEvent("InteractSound_SV:PlayOnSource", "houses_door_open", 0.25)
     openHouseAnim()
+    inside = true
     Citizen.Wait(250)
     local coords = { x = Config.Houses[house].coords.enter.x, y = Config.Houses[house].coords.enter.y, z= Config.Houses[house].coords.enter.z - Config.MinZOffset}
     LoadDecorations(house)
+
     if Config.Houses[house].tier == 1 then
         data = exports['rs-interior']:CreateTier1House(coords)
     elseif Config.Houses[house].tier == 2 then
@@ -550,12 +610,21 @@ function enterOwnedHouse(house)
     elseif Config.Houses[house].tier == 3 then
         data = exports['rs-interior']:CreateMichaelShell(coords)
     elseif Config.Houses[house].tier == 4 then
-        data = exports['rs-interior']:CreateGunshopShell(coords)
+    --     data = exports['rs-interior']:CreateApartmentShell(coords)
+    -- elseif Config.Houses[house].tier == 5 then
+    --     data = exports['rs-interior']:CreateCaravanShell(coords)
+    -- elseif Config.Houses[house].tier == 6 then
+    --     data = exports['rs-interior']:CreateFranklinShell(coords)
+    -- elseif Config.Houses[house].tier == 7 then
+    --     data = exports['rs-interior']:CreateFranklinAuntShell(coords)
     end
+
     Citizen.Wait(100)
     houseObj = data[1]
     POIOffsets = data[2]
-    inside = true
+    print(POIOffsets)
+    print(data[2])
+    print(POIOffsets.exit.x)
     entering = true
     TriggerServerEvent('rs-houses:server:SetInsideMeta', house, true)
     Citizen.Wait(500)
@@ -596,30 +665,36 @@ AddEventHandler('rs-houses:client:LastLocationHouse', function(houseId)
 end)
 
 function leaveOwnedHouse(house)
-    TriggerServerEvent("InteractSound_SV:PlayOnSource", "houses_door_open", 0.25)
-    openHouseAnim()
-    Citizen.Wait(250)
-    DoScreenFadeOut(250)
-    Citizen.Wait(500)
-    exports['rs-interior']:DespawnInterior(houseObj, function()
-        UnloadDecorations()
-        TriggerEvent('rs-weathersync:client:EnableSync')
-        Citizen.Wait(250)
-        DoScreenFadeIn(250)
-        SetEntityCoords(GetPlayerPed(-1), Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z + 0.5)
-        SetEntityHeading(GetPlayerPed(-1), Config.Houses[closesthouse].coords.enter.h)
+    if not FrontCam then
         inside = false
-        TriggerEvent('rs-weed:client:leaveHouse')
-        TriggerServerEvent('rs-houses:server:SetInsideMeta', house, false)
-    end)
+        TriggerServerEvent("InteractSound_SV:PlayOnSource", "houses_door_open", 0.25)
+        openHouseAnim()
+        Citizen.Wait(250)
+        DoScreenFadeOut(250)
+        Citizen.Wait(500)
+        exports['rs-interior']:DespawnInterior(houseObj, function()
+            UnloadDecorations()
+            TriggerEvent('rs-weathersync:client:EnableSync')
+            Citizen.Wait(250)
+            DoScreenFadeIn(250)
+            SetEntityCoords(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.x, Config.Houses[CurrentHouse].coords.enter.y, Config.Houses[CurrentHouse].coords.enter.z + 0.2)
+                SetEntityHeading(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.h)
+                TriggerEvent('rs-weed:client:leaveHouse')
+                TriggerServerEvent('rs-houses:server:SetInsideMeta', house, false)
+                CurrentHouse = nil
+        end)
+    end
 end
 
 function enterNonOwnedHouse(house)
+    CurrentHouse = house
     TriggerServerEvent("InteractSound_SV:PlayOnSource", "houses_door_open", 0.25)
     openHouseAnim()
+    inside = true
     Citizen.Wait(250)
     local coords = { x = Config.Houses[closesthouse].coords.enter.x, y = Config.Houses[closesthouse].coords.enter.y, z= Config.Houses[closesthouse].coords.enter.z - Config.MinZOffset}
     LoadDecorations(house)
+
     if Config.Houses[house].tier == 1 then
         data = exports['rs-interior']:CreateTier1House(coords)
     elseif Config.Houses[house].tier == 2 then
@@ -627,11 +702,17 @@ function enterNonOwnedHouse(house)
     elseif Config.Houses[house].tier == 3 then
         data = exports['rs-interior']:CreateMichaelShell(coords)
     elseif Config.Houses[house].tier == 4 then
-        data = exports['rs-interior']:CreateGunshopShell(coords)
+    --     data = exports['rs-interior']:CreateApartmentShell(coords)
+    -- elseif Config.Houses[house].tier == 5 then
+    --     data = exports['rs-interior']:CreateCaravanShell(coords)
+    -- elseif Config.Houses[house].tier == 6 then
+    --     data = exports['rs-interior']:CreateFranklinShell(coords)
+    -- elseif Config.Houses[house].tier == 7 then
+    --     data = exports['rs-interior']:CreateFranklinAuntShell(coords)
     end
+
     houseObj = data[1]
     POIOffsets = data[2]
-    inside = true
     entering = true
     Citizen.Wait(500)
     SetRainFxIntensity(0.0)
@@ -649,23 +730,26 @@ function enterNonOwnedHouse(house)
 end
 
 function leaveNonOwnedHouse(house)
-    TriggerServerEvent("InteractSound_SV:PlayOnSource", "houses_door_open", 0.25)
-    openHouseAnim()
-    Citizen.Wait(250)
-    DoScreenFadeOut(250)
-    Citizen.Wait(500)
-    exports['rs-interior']:DespawnInterior(houseObj, function()
-        UnloadDecorations()
-        TriggerEvent('rs-weathersync:client:EnableSync')
-        Citizen.Wait(250)
-        DoScreenFadeIn(250)
-        SetEntityCoords(GetPlayerPed(-1), Config.Houses[house].coords.enter.x, Config.Houses[house].coords.enter.y, Config.Houses[house].coords.enter.z + 0.5)
-        SetEntityHeading(GetPlayerPed(-1), Config.Houses[house].coords.enter.h)
-        inOwned = false
+    if not FrontCam then
         inside = false
-        TriggerEvent('rs-weed:client:leaveHouse')
-        TriggerServerEvent('rs-houses:server:SetInsideMeta', house, false)
-    end)
+        TriggerServerEvent("InteractSound_SV:PlayOnSource", "houses_door_open", 0.25)
+        openHouseAnim()
+        Citizen.Wait(250)
+        DoScreenFadeOut(250)
+        Citizen.Wait(500)
+        exports['rs-interior']:DespawnInterior(houseObj, function()
+            UnloadDecorations()
+            TriggerEvent('rs-weathersync:client:EnableSync')
+            Citizen.Wait(250)
+            DoScreenFadeIn(250)
+            SetEntityCoords(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.x, Config.Houses[CurrentHouse].coords.enter.y, Config.Houses[CurrentHouse].coords.enter.z + 0.2)
+            SetEntityHeading(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.h)
+            inOwned = false
+            TriggerEvent('rs-weed:client:leaveHouse')
+            TriggerServerEvent('rs-houses:server:SetInsideMeta', house, false)
+            CurrentHouse = nil
+        end)
+    end
 end
 
 RegisterNetEvent('rs-houses:client:setupHouseBlips')
@@ -707,6 +791,119 @@ function setViewCam(coords, h, yaw)
     SetCamActive(cam, true)
     RenderScriptCams(true, true, 500, true, true)
     viewCam = true
+end
+
+function FrontDoorCam(coords)
+    DoScreenFadeOut(150)
+    Citizen.Wait(500)
+    cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", coords.x, coords.y, coords.z + 0.5, 0.0, 0.00, coords.h - 180, 80.00, false, 0)
+    SetCamActive(cam, true)
+    RenderScriptCams(true, true, 500, true, true)
+    FrontCam = true
+    FreezeEntityPosition(GetPlayerPed(-1), true)
+    Citizen.Wait(500)
+    DoScreenFadeIn(150)
+    SendNUIMessage({
+        type = "frontcam",
+        toggle = true,
+        label = Config.Houses[closesthouse].adress
+    })
+    Citizen.CreateThread(function()
+        while FrontCam do
+
+            local instructions = CreateInstuctionScaleform("instructional_buttons")
+            DrawScaleformMovieFullscreen(instructions, 255, 255, 255, 255, 0)
+            SetTimecycleModifier("scanline_cam_cheap")
+            SetTimecycleModifierStrength(1.0)
+
+            if IsControlJustPressed(1, Keys["BACKSPACE"]) then
+                DoScreenFadeOut(150)
+                SendNUIMessage({
+                    type = "frontcam",
+                    toggle = false,
+                })
+                Citizen.Wait(500)
+                RenderScriptCams(false, true, 500, true, true)
+                FreezeEntityPosition(GetPlayerPed(-1), false)
+                SetCamActive(cam, false)
+                DestroyCam(cam, true)
+                ClearTimecycleModifier("scanline_cam_cheap")
+                cam = nil
+                FrontCam = false
+                Citizen.Wait(500)
+                DoScreenFadeIn(150)
+            end
+
+            local getCameraRot = GetCamRot(cam, 2)
+
+            -- ROTATE UP
+            if IsControlPressed(0, Keys["W"]) then
+                if getCameraRot.x <= 0.0 then
+                    SetCamRot(cam, getCameraRot.x + 0.7, 0.0, getCameraRot.z, 2)
+                end
+            end
+
+            -- ROTATE DOWN
+            if IsControlPressed(0, Keys["S"]) then
+                if getCameraRot.x >= -50.0 then
+                    SetCamRot(cam, getCameraRot.x - 0.7, 0.0, getCameraRot.z, 2)
+                end
+            end
+
+            -- ROTATE LEFT
+            if IsControlPressed(0, Keys["A"]) then
+                SetCamRot(cam, getCameraRot.x, 0.0, getCameraRot.z + 0.7, 2)
+            end
+
+            -- ROTATE RIGHT
+            if IsControlPressed(0, Keys["D"]) then
+                SetCamRot(cam, getCameraRot.x, 0.0, getCameraRot.z - 0.7, 2)
+            end
+
+            Citizen.Wait(1)
+        end
+    end)
+end
+
+function CreateInstuctionScaleform(scaleform)
+    local scaleform = RequestScaleformMovie(scaleform)
+    while not HasScaleformMovieLoaded(scaleform) do
+        Citizen.Wait(0)
+    end
+    PushScaleformMovieFunction(scaleform, "CLEAR_ALL")
+    PopScaleformMovieFunctionVoid()
+    
+    PushScaleformMovieFunction(scaleform, "SET_CLEAR_SPACE")
+    PushScaleformMovieFunctionParameterInt(200)
+    PopScaleformMovieFunctionVoid()
+
+    PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
+    PushScaleformMovieFunctionParameterInt(1)
+    InstructionButton(GetControlInstructionalButton(1, 194, true))
+    InstructionButtonMessage("Sluit Camera")
+    PopScaleformMovieFunctionVoid()
+
+    PushScaleformMovieFunction(scaleform, "DRAW_INSTRUCTIONAL_BUTTONS")
+    PopScaleformMovieFunctionVoid()
+
+    PushScaleformMovieFunction(scaleform, "SET_BACKGROUND_COLOUR")
+    PushScaleformMovieFunctionParameterInt(0)
+    PushScaleformMovieFunctionParameterInt(0)
+    PushScaleformMovieFunctionParameterInt(0)
+    PushScaleformMovieFunctionParameterInt(80)
+    PopScaleformMovieFunctionVoid()
+
+    return scaleform
+end
+
+function InstructionButton(ControlButton)
+    N_0xe83a3e3557a56640(ControlButton)
+end
+
+function InstructionButtonMessage(text)
+    BeginTextCommandScaleformString("STRING")
+    AddTextComponentScaleform(text)
+    EndTextCommandScaleformString()
 end
 
 function disableViewCam()

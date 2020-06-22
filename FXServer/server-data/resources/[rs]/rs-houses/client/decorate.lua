@@ -50,7 +50,9 @@ Citizen.CreateThread(function()
 			CheckRotationInput()
             CheckMovementInput()
             
-            if SelectedObj ~= nil and peanut then
+			if SelectedObj ~= nil and peanut then
+				local color = {r = 116, g = 189, b = 252, a = 100}
+				DrawEntityBoundingBox(SelectedObj, color)
                 DrawMarker(21, SelObjPos.x, SelObjPos.y, SelObjPos.z + 1.28, 0.0, 0.0, 0.0, 180.0, 0.0, 0.0, 0.6, 0.6, 0.6, 28, 149, 255, 100, true, true, 2, false, false, false, false)
                 if rotateActive then 
                     CheckObjRotationInput()
@@ -259,6 +261,11 @@ RegisterNUICallback('deselectOwnedObject', function()
 	peanut = false
 end)
 
+RegisterNUICallback('ResetSelectedProp', function()
+	SelectedObj = nil
+	peanut = false
+end)
+
 RegisterNUICallback("spawnobject", function(data, cb)
 	SetNuiFocus(false, false)
 	cursorEnabled = not cursorEnabled
@@ -280,7 +287,8 @@ RegisterNUICallback("spawnobject", function(data, cb)
     SelObjRot = {x = rot.x, y = rot.y, z = rot.z}
 	SelObjPos = {x = pos.x, y = pos.y, z = pos.z}
 	SelObjHash = data.object
-    PlaceObjectOnGroundProperly(SelectedObj)
+	PlaceObjectOnGroundProperly(SelectedObj)
+	SetEntityCompletelyDisableCollision(SelectedObj, true) -- Prevents crazy physics when collidin with other entitys
     peanut = true
 end)
 
@@ -290,9 +298,22 @@ RegisterNUICallback("chooseobject", function(data, cb)
 	end
     local modelHash = GetHashKey(tostring(data.object))
 	RequestModel(modelHash)
+	
+	local count = 0
 	while not HasModelLoaded(modelHash) do
+		-- Counter to prevent infinite loading when object does not exist
+		if count > 10 then
+			break
+		end
+		count = count + 1
 	    Citizen.Wait(1000)
 	end
+	
+	-- Make buttons selectable again
+	SendNUIMessage({
+		type = "objectLoaded",
+	})
+
 	local rotation = GetCamRot(MainCamera, 2)
 	local xVect = 2.5 * math.sin( degToRad( rotation.z ) ) * -1.0
     local yVect = 2.5 * math.cos( degToRad( rotation.z ) )
@@ -304,6 +325,8 @@ function EnableEditMode()
 	local pos = GetEntityCoords(GetPlayerPed(-1), true)
 	curPos = {x = pos.x, y = pos.y, z = pos.z}
 	SetEntityVisible(GetPlayerPed(-1), false)
+	FreezeEntityPosition(GetPlayerPed(-1), true)
+	SetEntityCollision(GetPlayerPed(-1), false, false)
 	CreateEditCamera()
 	DecoMode = true
 end
@@ -311,6 +334,8 @@ end
 function DisableEditMode()
 	SaveDecorations()
 	SetEntityVisible(GetPlayerPed(-1), true)
+	FreezeEntityPosition(GetPlayerPed(-1), false)
+	SetEntityCollision(GetPlayerPed(-1), true, true)
 	SetDefaultCamera()
 	EnableAllControlActions(0)
 	ObjectList = nil
@@ -536,4 +561,98 @@ end
 
 function degToRad( degs )
     return degs * 3.141592653589793 / 180
+end
+
+-- Draws boundingbox around the object with given color parms
+function DrawEntityBoundingBox(entity, color)
+	local model = GetEntityModel(entity)
+    local min, max = GetModelDimensions(model)
+    local rightVector, forwardVector, upVector, position = GetEntityMatrix(entity)
+
+    -- Calculate size
+    local dim = 
+	{ 
+		x = 0.5*(max.x - min.x), 
+		y = 0.5*(max.y - min.y), 
+		z = 0.5*(max.z - min.z)
+	}
+
+    local FUR = 
+    {
+		x = position.x + dim.y*rightVector.x + dim.x*forwardVector.x + dim.z*upVector.x, 
+		y = position.y + dim.y*rightVector.y + dim.x*forwardVector.y + dim.z*upVector.y, 
+		z = 0
+    }
+
+    local FUR_bool, FUR_z = GetGroundZFor_3dCoord(FUR.x, FUR.y, 1000.0, 0)
+    FUR.z = FUR_z
+    FUR.z = position.z + 2 * dim.z
+
+    local BLL = 
+    {
+        x = position.x - dim.y*rightVector.x - dim.x*forwardVector.x - dim.z*upVector.x,
+        y = position.y - dim.y*rightVector.y - dim.x*forwardVector.y - dim.z*upVector.y,
+        z = 0
+    }
+    local BLL_bool, BLL_z = GetGroundZFor_3dCoord(FUR.x, FUR.y, 1000.0, 0)
+    BLL.z = position.z
+
+    -- DEBUG
+    local edge1 = BLL
+    local edge5 = FUR
+
+    local edge2 = 
+    {
+        x = edge1.x + 2 * dim.y*rightVector.x,
+        y = edge1.y + 2 * dim.y*rightVector.y,
+        z = edge1.z + 2 * dim.y*rightVector.z
+    }
+
+    local edge3 = 
+    {
+        x = edge2.x + 2 * dim.z*upVector.x,
+        y = edge2.y + 2 * dim.z*upVector.y,
+        z = edge2.z + 2 * dim.z*upVector.z
+    }
+
+    local edge4 = 
+    {
+        x = edge1.x + 2 * dim.z*upVector.x,
+        y = edge1.y + 2 * dim.z*upVector.y,
+        z = edge1.z + 2 * dim.z*upVector.z
+    }
+
+    local edge6 = 
+    {
+        x = edge5.x - 2 * dim.y*rightVector.x,
+        y = edge5.y - 2 * dim.y*rightVector.y,
+        z = edge5.z - 2 * dim.y*rightVector.z
+    }
+
+    local edge7 = 
+    {
+        x = edge6.x - 2 * dim.z*upVector.x,
+        y = edge6.y - 2 * dim.z*upVector.y,
+        z = edge6.z - 2 * dim.z*upVector.z
+    }
+
+    local edge8 = 
+    {
+        x = edge5.x - 2 * dim.z*upVector.x,
+        y = edge5.y - 2 * dim.z*upVector.y,
+        z = edge5.z - 2 * dim.z*upVector.z
+    }
+
+    DrawLine(edge1.x, edge1.y, edge1.z, edge2.x, edge2.y, edge2.z, color.r, color.g, color.b, color.a)
+    DrawLine(edge1.x, edge1.y, edge1.z, edge4.x, edge4.y, edge4.z, color.r, color.g, color.b, color.a)
+    DrawLine(edge2.x, edge2.y, edge2.z, edge3.x, edge3.y, edge3.z, color.r, color.g, color.b, color.a)
+    DrawLine(edge3.x, edge3.y, edge3.z, edge4.x, edge4.y, edge4.z, color.r, color.g, color.b, color.a)
+    DrawLine(edge5.x, edge5.y, edge5.z, edge6.x, edge6.y, edge6.z, color.r, color.g, color.b, color.a)
+    DrawLine(edge5.x, edge5.y, edge5.z, edge8.x, edge8.y, edge8.z, color.r, color.g, color.b, color.a)
+    DrawLine(edge6.x, edge6.y, edge6.z, edge7.x, edge7.y, edge7.z, color.r, color.g, color.b, color.a)
+    DrawLine(edge7.x, edge7.y, edge7.z, edge8.x, edge8.y, edge8.z, color.r, color.g, color.b, color.a)
+    DrawLine(edge1.x, edge1.y, edge1.z, edge7.x, edge7.y, edge7.z, color.r, color.g, color.b, color.a)
+    DrawLine(edge2.x, edge2.y, edge2.z, edge8.x, edge8.y, edge8.z, color.r, color.g, color.b, color.a)
+    DrawLine(edge3.x, edge3.y, edge3.z, edge5.x, edge5.y, edge5.z, color.r, color.g, color.b, color.a)
+    DrawLine(edge4.x, edge4.y, edge4.z, edge6.x, edge6.y, edge6.z, color.r, color.g, color.b, color.a)
 end
