@@ -8,10 +8,10 @@ local ItemList = {
 }
 
 local ItemListHardware = {
-    ["tablet"] = math.random(400, 600),
-    ["iphone"] = math.random(600, 800),
-    ["samsungphone"] = math.random(550, 750),
-    ["laptop"] = math.random(600, 900),
+    ["tablet"] = math.random(400, 500),
+    ["iphone"] = math.random(300, 500),
+    ["samsungphone"] = math.random(300, 500),
+    ["laptop"] = math.random(300, 500),
 }
 
 local MeltItems = {
@@ -90,7 +90,7 @@ AddEventHandler("rs-pawnshop:server:sellGold", function()
         for k, v in pairs(Player.PlayerData.items) do 
             if Player.PlayerData.items[k] ~= nil then 
                 if Player.PlayerData.items[k].name == "goldbar" then 
-                    price = price + (math.random(2500, 4500) * Player.PlayerData.items[k].amount)
+                    price = price + (math.random(2000, 4000) * Player.PlayerData.items[k].amount)
                     Player.Functions.RemoveItem(Player.PlayerData.items[k].name, Player.PlayerData.items[k].amount, k)
                 end
             end

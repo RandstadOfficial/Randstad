@@ -630,13 +630,13 @@ RSDiving.Locations = {
 RSDiving.CoralTypes = {
     [1] = {
         item = "dendrogyra_coral",
-        maxAmount = math.random(2, 6),
-        price = math.random(300, 400),
+        maxAmount = math.random(2, 5),
+        price = math.random(250, 350),
     },
     [2] = {
         item = "antipatharia_coral",
-        maxAmount = math.random(2, 6),
-        price = math.random(200, 350),
+        maxAmount = math.random(2, 5),
+        price = math.random(200, 300),
     }
 }
 
