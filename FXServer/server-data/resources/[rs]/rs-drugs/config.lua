@@ -501,28 +501,28 @@ Config.CornerSellingDrugsList = {
 
 Config.DrugsPrice = {
     ["weed_white-widow"] = {
-        min = 15,
-        max = 24,
+        min = 10,
+        max = 30,
     },
     ["weed_og-kush"] = {
         min = 15,
-        max = 28,
+        max = 35,
     },
     ["weed_skunk"] = {
-        min = 15,
-        max = 31,
+        min = 16,
+        max = 40,
     },
     ["weed_amnesia"] = {
         min = 18,
-        max = 34,
+        max = 45,
     },
     ["weed_purple-haze"] = {
-        min = 18,
-        max = 37,
+        min = 20,
+        max = 50,
     },
     ["weed_ak47"] = {
-        min = 18,
-        max = 40,
+        min = 25,
+        max = 55,
     },
 }
 
