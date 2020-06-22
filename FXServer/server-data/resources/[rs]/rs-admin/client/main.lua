@@ -297,7 +297,7 @@ Citizen.CreateThread(function()
             WarMenu.MenuButton('Admin Options', 'adminOpt')
             WarMenu.MenuButton('Player Management', 'playerMan')
             WarMenu.MenuButton('Server Management', 'serverMan')
-            WarMenu.MenuButton('Recoring Options', 'recording');
+            WarMenu.MenuButton('Recording Options', 'recording');
 
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened('adminOpt') then

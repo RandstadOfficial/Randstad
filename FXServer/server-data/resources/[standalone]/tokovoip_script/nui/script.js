@@ -229,7 +229,7 @@ function updateTokovoipInfo(msg) {
 			break;
 	}
 	if (msg) {
-		document.getElementById('tokovoipInfo').innerHTML = `<font color="#ff5050">[TokoVoip] ${msg}</font>`;
+		document.getElementById('tokovoipInfo').innerHTML = `<font color="#03a2b5">[TokoVoip] ${msg}</font>`;
 	}
 	document.getElementById('pluginStatus').innerHTML = `Plugin status: <font color="${color}">${screenMessage || msg}</font>`;
 }

@@ -834,18 +834,18 @@ RS.Doors = {
 		size = 2
 	},
 	-- HallGate 2
-	{
-		objName = 'v_ilev_ph_cellgate',
-		objYaw = 90.0,
-		objCoords  = vector3(1773.49, 2568.9, 46.07),
-		textCoords = vector3(1773.49, 2568.9, 46.07),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = false,
-		pickable = false,
-		distance = 1.0,
-		size = 2
-	},
+	-- {
+	-- 	objName = 'v_ilev_ph_cellgate',
+	-- 	objYaw = 90.0,
+	-- 	objCoords  = vector3(1773.49, 2568.9, 46.07),
+	-- 	textCoords = vector3(1773.49, 2568.9, 46.07),
+	-- 	authorizedJobs = { 'police' },
+	-- 	locking = false,
+	-- 	locked = false,
+	-- 	pickable = false,
+	-- 	distance = 1.0,
+	-- 	size = 2
+	-- },
 	-- Gate To Work
 	{
 		objName = 'v_ilev_ph_cellgate',
