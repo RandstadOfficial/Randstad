@@ -16,4 +16,6 @@ Config.Vehicles = {
     ["dsimerc"] = "Mercedes (DSI)",
     ["dsivito"] = "Mercedes Vito (DSI)",
     ["dsiq5"] = "Audi Q5 (DSI)",
+    ["pa45"] = "Mercedes A45 Unmarked",
+    ["pbmwm5"] = "BMW M5 Unmarked (DSI)",
 }

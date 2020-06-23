@@ -54,23 +54,23 @@ Citizen.CreateThread(function()
                     end
                 end
             end
-            if GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][1]["x"], Config.BigBanks["pacific"]["coords"][1]["y"], Config.BigBanks["pacific"]["coords"][1]["z"], true) < 10.0 then
-                inRange = true
-                if not Config.BigBanks["pacific"]["isOpened"] then
-                    local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][1]["x"], Config.BigBanks["pacific"]["coords"][1]["y"], Config.BigBanks["pacific"]["coords"][1]["z"], true)
-                    if dist < 1 then
-                        if not requiredItemsShowed then
-                            requiredItemsShowed = true
-                            TriggerEvent('inventory:client:requiredItems', requiredItems, true)
-                        end
-                    else
-                        if requiredItemsShowed then
-                            requiredItemsShowed = false
-                            TriggerEvent('inventory:client:requiredItems', requiredItems, false)
-                        end
-                    end
-                end
-            end
+            -- if GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][1]["x"], Config.BigBanks["pacific"]["coords"][1]["y"], Config.BigBanks["pacific"]["coords"][1]["z"], true) < 10.0 then
+            --     inRange = true
+            --     if not Config.BigBanks["pacific"]["isOpened"] then
+            --         local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][1]["x"], Config.BigBanks["pacific"]["coords"][1]["y"], Config.BigBanks["pacific"]["coords"][1]["z"], true)
+            --         if dist < 1 then
+            --             if not requiredItemsShowed then
+            --                 requiredItemsShowed = true
+            --                 TriggerEvent('inventory:client:requiredItems', requiredItems, true)
+            --             end
+            --         else
+            --             if requiredItemsShowed then
+            --                 requiredItemsShowed = false
+            --                 TriggerEvent('inventory:client:requiredItems', requiredItems, false)
+            --             end
+            --         end
+            --     end
+            -- end
             if GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["thermite"][1]["x"], Config.BigBanks["pacific"]["thermite"][1]["y"], Config.BigBanks["pacific"]["thermite"][1]["z"], true) < 10.0 then
                 inRange = true
                 if not Config.BigBanks["pacific"]["thermite"][1]["isOpened"] then
@@ -102,7 +102,7 @@ Citizen.CreateThread(function()
                                 if lockerDist < 0.5 then
                                     DrawText3Ds(Config.BigBanks["pacific"]["lockers"][k].x, Config.BigBanks["pacific"]["lockers"][k].y, Config.BigBanks["pacific"]["lockers"][k].z + 0.3, '[E] Kluis openbreken')
                                     if IsControlJustPressed(0, Keys["E"]) then
-                                        if CurrentCops >= 6 then
+                                        if CurrentCops >= Config.MinimumPacificPolice then
                                             openLocker("pacific", k)
                                         else
                                             RSCore.Functions.Notify("Niet genoeg politie.. (6 nodig)", "error")
@@ -166,7 +166,7 @@ AddEventHandler('electronickit:UseElectronickit', function()
             if not isBusy then
                 local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][2]["x"], Config.BigBanks["pacific"]["coords"][2]["y"], Config.BigBanks["pacific"]["coords"][2]["z"])
                 if dist < 1.5 then
-                    if CurrentCops >= 6 then
+                    if CurrentCops >= Config.MinimumPacificPolice then
                         if not Config.BigBanks["pacific"]["isOpened"] then 
                             RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
                                 if result then 
@@ -230,7 +230,7 @@ AddEventHandler('rs-bankrobbery:UseBankcardB', function()
     if dist < 1.5 then
         RSCore.Functions.TriggerCallback('rs-bankrobbery:server:isRobberyActive', function(isBusy)
             if not isBusy then
-                if CurrentCops >= 0 then
+                if CurrentCops >= Config.MinimumPacificPolice then
                     if not Config.BigBanks["pacific"]["isOpened"] then 
                         TriggerEvent('inventory:client:requiredItems', requiredItems2, false)
                         RSCore.Functions.Progressbar("security_pass", "Pas aan het valideren..", math.random(5000, 10000), false, true, {
