@@ -670,21 +670,39 @@ Config.Outfits = {
         },
         ["female"] = {
             [1] = {
-                outfitLabel = "Test",
+                outfitLabel = "Noodhulp Lang",
                 outfitData = {
-                    ["pants"]       = { item = 0, texture = 0},  -- Broek
-                    ["arms"]        = { item = 0, texture = 0},  -- Armen
-                    ["t-shirt"]     = { item = 0, texture = 0},  -- T Shirt
+                    ["pants"]       = { item = 100, texture = 0},  -- Broek
+                    ["arms"]        = { item = 3, texture = 0},  -- Armen
+                    ["t-shirt"]     = { item = 14, texture = 0},  -- T Shirt
                     ["vest"]        = { item = 0, texture = 0},  -- Body Vest
-                    ["torso2"]      = { item = 0, texture = 0},  -- Jas / Vesten
-                    ["shoes"]       = { item = 0, texture = 0},  -- Schoenen
-                    ["decals"]      = { item = 0, texture = 0},  -- Decals
-                    ["accessory"]   = { item = 0, texture = 0},  -- Nek / Das
-                    ["bag"]         = { item = 0, texture = 0},  -- Tas
-                    ["hat"]         = { item = 0, texture = 0},  -- Pet
+                    ["torso2"]      = { item = 3, texture = 0},  -- Jas / Vesten
+                    ["shoes"]       = { item = 24, texture = 0},  -- Schoenen
+                    ["decals"]      = { item = 1, texture = 0},  -- Decals
+                    ["accessory"]   = { item = 8, texture = 0},  -- Nek / Das
+            --      ["bag"]         = { item = 0, texture = 0},  -- Tas
+                    ["hat"]         = { item = -1, texture = -1},  -- Pet
             --      ["glass"]       = { item = 0, texture = 0},  -- Bril
             --      ["ear"]         = { item = 0, texture = 0},  -- Oor accessoires
-                    ["mask"]        = { item = 0, texture = 0},  -- Masker
+                    ["mask"]         = { item = 0, texture = 0},  -- Masker
+                },
+            },
+            [2] = {
+                outfitLabel = "Noodhulp Kort",
+                outfitData = {
+                    ["pants"]       = { item = 100, texture = 0},  -- Broek
+                    ["arms"]        = { item = 14, texture = 0},  -- Armen
+                    ["t-shirt"]     = { item = 14, texture = 0},  -- T Shirt
+                    ["vest"]        = { item = 6, texture = 0},  -- Body Vest
+                    ["torso2"]      = { item = 85, texture = 0},  -- Jas / Vesten
+                    ["shoes"]       = { item = 24, texture = 0},  -- Schoenen
+                    ["decals"]      = { item = 1, texture = 0},  -- Decals
+                    ["accessory"]   = { item = 8, texture = 0},  -- Nek / Das
+            --      ["bag"]         = { item = 0, texture = 0},  -- Tas
+                    ["hat"]         = { item = -1, texture = -1},  -- Pet
+            --      ["glass"]       = { item = 0, texture = 0},  -- Bril
+            --      ["ear"]         = { item = 0, texture = 0},  -- Oor accessoires
+                    ["mask"]         = { item = 0, texture = 0},  -- Masker
                 },
             },
         }
