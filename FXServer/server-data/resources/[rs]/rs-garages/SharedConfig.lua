@@ -48,11 +48,11 @@ Garages = {
         spawnPoint = {x = -1181.0, y = -1505.98, z = 4.37, h = 214.5},
         putVehicle = {x = -1176.81, y = -1498.63, z = 4.37},
     },
-    ["larrysparking"] = {
-        label = "Larry's Parking",
-        takeVehicle = {x = 1215.96, y = 2697.83, z = 37.19},
-        spawnPoint = {x = 1215.94, y = 2697.83, z = 37.19, h = 270.5},
-        putVehicle = {x = 1249.65, y = 2698.98, z = 38.0},
+    ["themotorhotel"] = {
+        label = "The Motor Hotel Parking",
+        takeVehicle = {x = 1137.77, y = 2663.54, z = 37.9},            
+        spawnPoint = {x = 1137.69, y = 2673.61, z = 37.9, h = 359.5},      
+        putVehicle = {x = 1137.75, y = 2652.95, z = 37.9},
     },
     ["liqourparking"] = {
         label = "Liqour Parking",
