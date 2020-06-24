@@ -1006,18 +1006,18 @@ RS.Doors = {
 		size = 2
 	},
 	-- Paleto Door 1
-	{
-		objName = 'v_ilev_cbankvaulgate01',
-		objCoords  = vector3(-105.77, 6472.59, 31.81),
-		textCoords = vector3(-105.77, 6472.59, 31.81),
-		objYaw = 45.0,
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = true,
-		pickable = false,
-		distance = 1.5,
-		size = 2
-	},
+	-- {
+	-- 	objName = 'v_ilev_cbankvaulgate01',
+	-- 	objCoords  = vector3(-105.77, 6472.59, 31.81),
+	-- 	textCoords = vector3(-105.77, 6472.59, 31.81),
+	-- 	objYaw = 45.0,
+	-- 	authorizedJobs = { 'police' },
+	-- 	locking = false,
+	-- 	locked = true,
+	-- 	pickable = false,
+	-- 	distance = 1.5,
+	-- 	size = 2
+	-- },
 	-- Paleto Door 2
 	{
 		objName = 'v_ilev_cbankvaulgate02',

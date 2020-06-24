@@ -440,7 +440,7 @@ Citizen.CreateThread( function()
 					else
 						TriggerServerEvent("police:server:GunshotAlert", streetLabel, automatic, false, coords)
 					end
-					Citizen.Wait(15000)
+					Citizen.Wait(5000)
 				end
 
 				if timeCheck == 0 then
@@ -452,7 +452,7 @@ Citizen.CreateThread( function()
 				Citizen.Wait(5000)
 			end
 		else
-			Citizen.Wait(2500)
+			Citizen.Wait(2000)
         end
     end
 end)
@@ -467,7 +467,7 @@ function IsPedNearby()
     local player = GetPlayerPed(-1)
     local coords = GetEntityCoords(player)
 	local closestPed, closestDistance = RSCore.Functions.GetClosestPed(coords, PlayerPeds)
-	if not IsEntityDead(closestPed) and closestDistance < 100.0 then
+	if not IsEntityDead(closestPed) and closestDistance < 150.0 then
 		retval = true
 	end
 	return retval

@@ -88,7 +88,7 @@ Config.LockerRewards = {
         [1] = {item = "goldchain", maxAmount = 20},
     },
     ["tier2"] = {
-        [1] = {item = "rolex", maxAmount = 12},
+        [1] = {item = "rolex", maxAmount = 15},
     },
     ["tier3"] = {
         [1] = {item = "goldbar", maxAmount = 5},

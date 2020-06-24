@@ -159,26 +159,26 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:server:GetConfig', function(sour
     cb(Config)
 end)
 
--- RegisterServerEvent('rs-bankrobbery:server:setTimeout')
--- AddEventHandler('rs-bankrobbery:server:setTimeout', function()
---     if not timeOut then
---         timeOut = true
---         Citizen.CreateThread(function()
---             Citizen.Wait(30 * 60 * 1000)
+RegisterServerEvent('rs-bankrobbery:server:setTimeout')
+AddEventHandler('rs-bankrobbery:server:setTimeout', function()
+    if not timeOut then
+        timeOut = true
+        Citizen.CreateThread(function()
+            Citizen.Wait(30 * 60 * 1000)
 
---             for k,_ in pairs(Config.SmallBanks) do
---                 Config.SmallBanks[k]["isOpened"] = false
---                 for _, v in pairs(Config.SmallBanks[k]["lockers"]) do
---                     v["isOpened"] = false
---                 end
---             end
---             timeOut = false
---             robberyBusy = false
---             TriggerEvent('rs-scoreboard:server:SetActivityBusy', "bankrobbery", false)
---             TriggerEvent('rs-scoreboard:server:SetActivityBusy', "pacific", false)
---         end)
---     end
--- end)
+            for k,_ in pairs(Config.SmallBanks) do
+                Config.SmallBanks[k]["isOpened"] = false
+                for _, v in pairs(Config.SmallBanks[k]["lockers"]) do
+                    v["isOpened"] = false
+                end
+            end
+            timeOut = false
+            robberyBusy = false
+            TriggerEvent('rs-scoreboard:server:SetActivityBusy', "bankrobbery", false)
+            TriggerEvent('rs-scoreboard:server:SetActivityBusy', "pacific", false)
+        end)
+    end
+end)
 
 RegisterServerEvent('rs-bankrobbery:server:callCops')
 AddEventHandler('rs-bankrobbery:server:callCops', function(type, bank, streetLabel, coords)
