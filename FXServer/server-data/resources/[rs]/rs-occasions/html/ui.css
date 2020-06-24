@@ -12,6 +12,7 @@ body {
     margin: 0 auto;
     left: 0;
     right: 0;
+    user-select: none;
 }
 
 #buy-contract {
@@ -20,6 +21,7 @@ body {
     margin: 0 auto;
     left: 0;
     right: 0;
+    user-select: none;
 }
 
 .vehicle-description {
@@ -45,6 +47,9 @@ body {
     bottom: 48vh;
     font-family: 'Lato';
     font-size: 13px;
+    width: 45vh;
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 .vehicle-description:hover {

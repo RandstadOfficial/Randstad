@@ -119,17 +119,20 @@ Citizen.CreateThread(function()
 
                 local sellDist = GetDistanceBetweenCoords(pos, Config.SellVehicle["x"], Config.SellVehicle["y"], Config.SellVehicle["z"])
 
-                if sellDist <= 1.5 and IsPedInAnyVehicle(ped) then
-                    DrawText3Ds(Config.SellVehicle["x"], Config.SellVehicle["y"], Config.SellVehicle["z"], '~g~E~w~ - Voertuig te koop zetten')
-                    if IsControlJustPressed(0, Keys["E"]) then
-                        local VehiclePlate = GetVehicleNumberPlateText(GetVehiclePedIsIn(ped))
-                        RSCore.Functions.TriggerCallback('rs-garage:server:checkVehicleOwner', function(owned)
-                            if owned then
-                                openSellContract(true)
-                            else
-                                RSCore.Functions.Notify('Dit is niet jou voertuig?', 'error', 3500)
-                            end
-                        end, VehiclePlate)
+                if sellDist <= 13.0 and IsPedInAnyVehicle(ped) then 
+                    DrawMarker(2, Config.SellVehicle["x"], Config.SellVehicle["y"], Config.SellVehicle["z"] + 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.7, 0.6, 255, 0, 0, 155, false, false, false, true, false, false, false)
+                    if sellDist <= 3.5 and IsPedInAnyVehicle(ped) then
+                        DrawText3Ds(Config.SellVehicle["x"], Config.SellVehicle["y"], Config.SellVehicle["z"], '~g~E~w~ - Voertuig te koop zetten')
+                        if IsControlJustPressed(0, Keys["E"]) then
+                            local VehiclePlate = GetVehicleNumberPlateText(GetVehiclePedIsIn(ped))
+                            RSCore.Functions.TriggerCallback('rs-garage:server:checkVehicleOwner', function(owned)
+                                if owned then
+                                    openSellContract(true)
+                                else
+                                    RSCore.Functions.Notify('Dit is niet jou voertuig?', 'error', 3500)
+                                end
+                            end, VehiclePlate)
+                        end
                     end
                 end
             end
@@ -159,8 +162,7 @@ function spawnOccasionsVehicles(vehicles)
             end
 
             oSlot[i]["occasionId"] = CreateVehicle(model, oSlot[i]["x"], oSlot[i]["y"], oSlot[i]["z"], false, false)
-            RSCore.Functions.SetVehicleProperties(oSlot[i]["occasionId"], json.decode(vehicles[i].mods))
-
+           
             oSlot[i]["price"] = vehicles[i].price
             oSlot[i]["owner"] = vehicles[i].seller
             oSlot[i]["model"] = vehicles[i].model
@@ -168,6 +170,8 @@ function spawnOccasionsVehicles(vehicles)
             oSlot[i]["oid"]   = vehicles[i].occasionId
             oSlot[i]["desc"]  = vehicles[i].description
             oSlot[i]["mods"]  = vehicles[i].mods
+
+            RSCore.Functions.SetVehicleProperties(oSlot[i]["occasionId"], json.decode(vehicles[i].mods))
 
             SetModelAsNoLongerNeeded(model)
             SetVehicleOnGroundProperly(oSlot[i]["occasionId"])
@@ -182,8 +186,9 @@ function spawnOccasionsVehicles(vehicles)
 end
 
 function despawnOccasionsVehicles()
-    for _, slot in pairs(Config.OccasionSlots) do
-        local oldVehicle = GetClosestVehicle(slot["x"], slot["y"], slot["z"], 1.3, 0, 70)
+    local oSlot = Config.OccasionSlots
+    for i = 1, #Config.OccasionSlots, 1 do
+        local oldVehicle = GetClosestVehicle(Config.OccasionSlots[i]["x"], Config.OccasionSlots[i]["y"], Config.OccasionSlots[i]["z"], 1.3, 0, 70)
         if oldVehicle ~= 0 then
             RSCore.Functions.DeleteVehicle(oldVehicle)
         end
