@@ -4,9 +4,10 @@ ui_page "html/index.html"
 
 client_scripts {
     'client/fleeca.lua',
-    'client/paleto.lua',
     'client/pacific.lua',
     'client/powerstation.lua',
+    'client/doors.lua',
+    'client/paleto.lua',
     'config.lua',
 }
 

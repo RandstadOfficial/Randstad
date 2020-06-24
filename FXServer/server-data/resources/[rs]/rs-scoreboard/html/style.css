@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
 
 .container {
     height: 100vh;
@@ -29,7 +30,7 @@
     font-weight: bold;
     color: white;
     padding: 1.8vh;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Source Sans Pro';
     font-size: 1.8vh;
 }
 
@@ -49,7 +50,7 @@
 
 #info-tab-label {
     position: absolute;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Source Sans Pro';
     left: 1vh;
     font-weight: bold;
 }
@@ -66,14 +67,14 @@
 
 #status-tab-label {
     position: absolute;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Source Sans Pro';
     right: 3vh;
     font-weight: bold;
 }
 
 .info-beam-status {
     position: absolute;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Source Sans Pro';
     right: 3vh;
     line-height: 4.8vh;
     float: left;
