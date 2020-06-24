@@ -52,6 +52,14 @@ AddEventHandler("RSCore:Client:OnPlayerLoaded", function()
     ResetBankDoors()
 end)
 
+Citizen.CreateThread(function()
+    Wait(500)
+    if RSCore.Functions.GetPlayerData() ~= nil then
+        PlayerJob = RSCore.Functions.GetPlayerData().job
+        onDuty = true
+    end
+end)
+
 RegisterNetEvent('RSCore:Client:SetDuty')
 AddEventHandler('RSCore:Client:SetDuty', function(duty)
     onDuty = duty
@@ -120,10 +128,10 @@ Citizen.CreateThread(function()
                                     if lockerDist < 0.5 then
                                         DrawText3Ds(Config.SmallBanks[closestBank]["lockers"][k].x, Config.SmallBanks[closestBank]["lockers"][k].y, Config.SmallBanks[closestBank]["lockers"][k].z + 0.3, '[E] Kluis openbreken')
                                         if IsControlJustPressed(0, Keys["E"]) then
-                                            if CurrentCops >= 4 then
+                                            if CurrentCops >= Config.MinimumFleecaPolice then
                                                 openLocker(closestBank, k)
                                             else
-                                                RSCore.Functions.Notify("Niet genoeg politie.. (4 nodig)", "error")
+                                                RSCore.Functions.Notify("Niet genoeg politie.. (5 nodig)", "error")
                                             end
                                         end
                                     end
@@ -169,7 +177,7 @@ AddEventHandler('electronickit:UseElectronickit', function()
                 if closestBank ~= nil then
                     local dist = GetDistanceBetweenCoords(pos, Config.SmallBanks[closestBank]["coords"]["x"], Config.SmallBanks[closestBank]["coords"]["y"], Config.SmallBanks[closestBank]["coords"]["z"])
                     if dist < 1.5 then
-                        if CurrentCops >= 4 then
+                        if CurrentCops >= Config.MinimumFleecaPolice then
                             if not Config.SmallBanks[closestBank]["isOpened"] then 
                                 RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
                                     if result then 
@@ -212,7 +220,7 @@ AddEventHandler('electronickit:UseElectronickit', function()
                                 RSCore.Functions.Notify("Het lijkt erop dat de bank al open is..", "error")
                             end
                         else
-                            RSCore.Functions.Notify("Niet genoeg politie.. (4 nodig)", "error")
+                            RSCore.Functions.Notify("Niet genoeg politie.. (5 nodig)", "error")
                         end
                     end
                 end
@@ -229,7 +237,7 @@ AddEventHandler('rs-bankrobbery:client:setBankState', function(bankId, state)
         Config.BigBanks["paleto"]["isOpened"] = state
         TriggerServerEvent('rs-bankrobbery:server:setTimeout')
         if state then
-            OpenPaletoDoor(bankId)
+            OpenPaletoDoor()
         end
     elseif bankId == "pacific" then
         Config.BigBanks["pacific"]["isOpened"] = state
@@ -305,28 +313,28 @@ end
 
 function ResetBankDoors()
     for k, v in pairs(Config.SmallBanks) do
+        local object = GetClosestObjectOfType(Config.SmallBanks[k]["coords"]["x"], Config.SmallBanks[k]["coords"]["y"], Config.SmallBanks[k]["coords"]["z"], 5.0, Config.SmallBanks[k]["object"], false, false, false)
         if not Config.SmallBanks[k]["isOpened"] then
-            local object = GetClosestObjectOfType(Config.SmallBanks[k]["coords"]["x"], Config.SmallBanks[k]["coords"]["y"], Config.SmallBanks[k]["coords"]["z"], 5.0, Config.SmallBanks[k]["object"], false, false, false)
             SetEntityHeading(object, Config.SmallBanks[k]["heading"].closed)
+        else
+            SetEntityHeading(object, Config.SmallBanks[k]["heading"].open)
         end
     end
     if not Config.BigBanks["paleto"]["isOpened"] then
         local paletoObject = GetClosestObjectOfType(Config.BigBanks["paleto"]["coords"]["x"], Config.BigBanks["paleto"]["coords"]["y"], Config.BigBanks["paleto"]["coords"]["z"], 5.0, Config.BigBanks["paleto"]["object"], false, false, false)
         SetEntityHeading(paletoObject, Config.BigBanks["paleto"]["heading"].closed)
+    else
+        local paletoObject = GetClosestObjectOfType(Config.BigBanks["paleto"]["coords"]["x"], Config.BigBanks["paleto"]["coords"]["y"], Config.BigBanks["paleto"]["coords"]["z"], 5.0, Config.BigBanks["paleto"]["object"], false, false, false)
+        SetEntityHeading(paletoObject, Config.BigBanks["paleto"]["heading"].open)
     end
 
     if not Config.BigBanks["pacific"]["isOpened"] then
         local pacificObject = GetClosestObjectOfType(Config.BigBanks["pacific"]["coords"][2]["x"], Config.BigBanks["pacific"]["coords"][2]["y"], Config.BigBanks["pacific"]["coords"][2]["z"], 20.0, Config.BigBanks["pacific"]["object"], false, false, false)
         SetEntityHeading(pacificObject, Config.BigBanks["pacific"]["heading"].closed)
+    else
+        local pacificObject = GetClosestObjectOfType(Config.BigBanks["pacific"]["coords"][2]["x"], Config.BigBanks["pacific"]["coords"][2]["y"], Config.BigBanks["pacific"]["coords"][2]["z"], 20.0, Config.BigBanks["pacific"]["object"], false, false, false)
+        SetEntityHeading(pacificObject, Config.BigBanks["pacific"]["heading"].open)
     end
-
-    -- TriggerServerEvent('rs-doorlock:server:updateState', 34, true)
-    -- TriggerServerEvent('rs-doorlock:server:updateState', 35, true)
-    -- TriggerServerEvent('rs-doorlock:server:updateState', 36, true)
-    -- TriggerServerEvent('rs-doorlock:server:updateState', 37, true)
-
-    -- TriggerServerEvent('rs-doorlock:server:updateState', 41, true)
-    -- TriggerServerEvent('rs-doorlock:server:updateState', 42, true)
 end
 
 function openLocker(bankId, lockerId)
@@ -439,6 +447,15 @@ AddEventHandler('rs-bankrobbery:client:setLockerState', function(bankId, lockerI
     end
 end)
 
+RegisterNetEvent('rs-bankrobbery:client:ResetFleecaLockers')
+AddEventHandler('rs-bankrobbery:client:ResetFleecaLockers', function(BankId)
+    Config.SmallBanks[BankId]["isOpened"] = false
+    for k,_ in pairs(Config.SmallBanks[BankId]["lockers"]) do
+        Config.SmallBanks[BankId]["lockers"][k]["isOpened"] = false
+        Config.SmallBanks[BankId]["lockers"][k]["isBusy"] = false
+    end
+end)
+
 RegisterNetEvent('rs-bankrobbery:client:robberyCall')
 AddEventHandler('rs-bankrobbery:client:robberyCall', function(type, key, streetLabel, coords)
     if PlayerJob.name == "police" and onDuty then 
@@ -448,8 +465,31 @@ AddEventHandler('rs-bankrobbery:client:robberyCall', function(type, key, streetL
             cameraId = Config.SmallBanks[key]["camId"]
             bank = "Fleeca"
             PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
-            TriggerEvent("chatMessage", "112-MELDING", "error", "Poging bankoverval bij "..bank.. " " ..streetLabel.." (CAMERA ID: "..cameraId..")")
-        elseif type == "paleto" then
+            TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+                timeOut = 10000,
+                alertTitle = "Poging bankoverval",
+                coords = {
+                    x = coords.x,
+                    y = coords.y,
+                    z = coords.z,
+                },
+                details = {
+                    [1] = {
+                        icon = '<i class="fas fa-university"></i>',
+                        detail = bank,
+                    },
+                    [2] = {
+                        icon = '<i class="fas fa-video"></i>',
+                        detail = cameraId,
+                    },
+                    [3] = {
+                        icon = '<i class="fas fa-globe-europe"></i>',
+                        detail = streetLabel,
+                    },
+                },
+                callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+            })
+            elseif type == "paleto" then
             cameraId = Config.BigBanks["paleto"]["camId"]
             bank = "Blaine County Savings"
             PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
@@ -459,8 +499,27 @@ AddEventHandler('rs-bankrobbery:client:robberyCall', function(type, key, streetL
             PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
             Citizen.Wait(100)
             PlaySoundFrontend( -1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1 )
-            TriggerEvent("chatMessage", "112-MELDING", "error", "Groot alarm! Poging bankoverval bij "..bank.. " Paleto Bay (CAMERA ID: "..cameraId..")")
-        elseif type == "pacific" then
+            TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+                timeOut = 10000,
+                alertTitle = "Poging bankoverval",
+                coords = {
+                    x = coords.x,
+                    y = coords.y,
+                    z = coords.z,
+                },
+                details = {
+                    [1] = {
+                        icon = '<i class="fas fa-university"></i>',
+                        detail = bank,
+                    },
+                    [2] = {
+                        icon = '<i class="fas fa-video"></i>',
+                        detail = cameraId,
+                    },
+                },
+                callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+            })
+            elseif type == "pacific" then
             bank = "Pacific Standard Bank"
             PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
             Citizen.Wait(100)
@@ -469,7 +528,30 @@ AddEventHandler('rs-bankrobbery:client:robberyCall', function(type, key, streetL
             PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
             Citizen.Wait(100)
             PlaySoundFrontend( -1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1 )
-            TriggerEvent("chatMessage", "112-MELDING", "error", "Groot alarm! Poging bankoverval bij "..bank.. " Alta St (CAMERA ID: 1/2/3)")
+            TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+                timeOut = 10000,
+                alertTitle = "Poging bankoverval",
+                coords = {
+                    x = coords.x,
+                    y = coords.y,
+                    z = coords.z,
+                },
+                details = {
+                    [1] = {
+                        icon = '<i class="fas fa-university"></i>',
+                        detail = bank,
+                    },
+                    [2] = {
+                        icon = '<i class="fas fa-video"></i>',
+                        detail = "1 | 2 | 3",
+                    },
+                    [3] = {
+                        icon = '<i class="fas fa-globe-europe"></i>',
+                        detail = "Alta St",
+                    },
+                },
+                callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+            })
         end
         local transG = 250
         local blip = AddBlipForCoord(coords.x, coords.y, coords.z)

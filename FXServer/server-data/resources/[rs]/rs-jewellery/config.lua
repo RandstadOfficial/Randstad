@@ -13,7 +13,7 @@ Config = Config or {}
 
 Config.Timeout = 30 * (60 * 1000)
 
-Config.RequiredCops = 3
+Config.RequiredCops = 5
 
 Config.JewelleryLocation = {
     ["coords"] = {
@@ -25,22 +25,25 @@ Config.JewelleryLocation = {
 
 Config.WhitelistedWeapons = {
     [GetHashKey("weapon_assaultrifle")] = {
-        ["timeOut"] = 3500
+        ["timeOut"] = 25000
     },
     [GetHashKey("weapon_carbinerifle")] = {
-        ["timeOut"] = 3500
+        ["timeOut"] = 26000
     },
     [GetHashKey("weapon_pumpshotgun")] = {
-        ["timeOut"] = 4250
+        ["timeOut"] = 27000
     },
     [GetHashKey("weapon_sawnoffshotgun")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 28000
     },
     [GetHashKey("weapon_compactrifle")] = {
-        ["timeOut"] = 5000
+        ["timeOut"] = 29000
+    },
+    [GetHashKey("weapon_microsmg")] = {
+        ["timeOut"] = 30000
     },
     [GetHashKey("weapon_autoshotgun")] = {
-        ["timeOut"] = 5500
+        ["timeOut"] = 31000
     },
 }
 

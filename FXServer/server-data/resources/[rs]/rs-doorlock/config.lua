@@ -881,6 +881,7 @@ RS.Doors = {
 		objCoords  = vector3(257.41, 220.25, 106.4),
 		textCoords = vector3(257.41, 220.25, 106.4),
 		authorizedJobs = { 'police' },
+		objYaw = -20.0,
 		locking = false,
 		locked = true,
 		pickable = true,
@@ -893,6 +894,7 @@ RS.Doors = {
 		objCoords  = vector3(261.83, 221.39, 106.41),
 		textCoords = vector3(261.83, 221.39, 106.41),
 		authorizedJobs = { 'police' },
+		objYaw = -110.0,
 		locking = false,
 		locked = true,
 		pickable = false,
@@ -905,6 +907,7 @@ RS.Doors = {
 		objCoords  = vector3(265.19, 217.84, 110.28),
 		textCoords = vector3(265.19, 217.84, 110.28),
 		authorizedJobs = { 'police' },
+		objYaw = -20.0,
 		locking = false,
 		locked = true,
 		pickable = true,
@@ -918,6 +921,7 @@ RS.Doors = {
 		objCoords  = vector3(252.98, 220.65, 101.8),
 		textCoords = vector3(252.98, 220.65, 101.8),
 		authorizedJobs = { 'police' },
+		objYaw = 160.0,
 		locking = false,
 		locked = true,
 		pickable = false,
@@ -930,6 +934,7 @@ RS.Doors = {
 		objCoords  = vector3(261.68, 215.62, 101.81),
 		textCoords = vector3(261.68, 215.62, 101.81),
 		authorizedJobs = { 'police' },
+		objYaw = -110.0,
 		locking = false,
 		locked = true,
 		pickable = false,
@@ -1001,22 +1006,24 @@ RS.Doors = {
 		size = 2
 	},
 	-- Paleto Door 1
-	{
-		objName = 'v_ilev_cbankvaulgate01',
-		objCoords  = vector3(-105.77, 6472.59, 31.81),
-		textCoords = vector3(-105.77, 6472.59, 31.81),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = true,
-		pickable = false,
-		distance = 1.5,
-		size = 2
-	},
+	-- {
+	-- 	objName = 'v_ilev_cbankvaulgate01',
+	-- 	objCoords  = vector3(-105.77, 6472.59, 31.81),
+	-- 	textCoords = vector3(-105.77, 6472.59, 31.81),
+	-- 	objYaw = 45.0,
+	-- 	authorizedJobs = { 'police' },
+	-- 	locking = false,
+	-- 	locked = true,
+	-- 	pickable = false,
+	-- 	distance = 1.5,
+	-- 	size = 2
+	-- },
 	-- Paleto Door 2
 	{
 		objName = 'v_ilev_cbankvaulgate02',
 		objCoords  = vector3(-106.26, 6476.01, 31.98),
 		textCoords = vector3(-105.5, 6475.08, 31.99),
+		objYaw = -45.0,
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
@@ -1172,7 +1179,65 @@ RS.Doors = {
 		pickable = false,
 		distance = 7.5,
 		size = 2
-	},			
+	},
+	----------------
+	-- Reporter building
+	----------------
+	-- Voordeuren
+	{
+		textCoords = vector3(-1082.297, -259.71, 38.1867),
+		authorizedJobs = { 'reporter' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'v_ilev_fb_door01',
+				objYaw = 28.0,
+				objCoords = vector3(-1083.62, -260.416, 38.18)
+			},
+			{
+				objName = 'v_ilev_fb_door02',
+				objYaw = 28.0,
+				objCoords = vector3(-1080.974, -259.020, 38.18)
+			}
+		}
+	},
+	-- -- Achtedeuren
+	{
+		textCoords = vector3(-1045.818, -230.68, 39.43794),
+		authorizedJobs = { 'reporter' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'v_ilev_fb_doorshortl',
+				objYaw = -243.0,
+				objCoords = vector3(-1045.12, -232.004, 39.43794)
+			},
+			{
+				objName = 'v_ilev_fb_doorshortr',
+				objYaw = -243.0,
+				objCoords = vector3(-1046.516, -229.3581, 39.43794)
+			}
+		}
+	},
+	-- zijdeur
+	{
+		objName = 'v_ilev_gtdoor02',
+		objCoords  = vector3(-1042.518, -240.6915, 38.11796),		
+		textCoords = vector3(-1041.804, -240.6915, 38.11796),
+		authorizedJobs = { 'reporter' },
+		objYaw = 28.0,
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 7.5,
+		size = 2
+	},
 	-----
 	-- Import Garage
 	-----
