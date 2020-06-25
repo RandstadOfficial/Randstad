@@ -66,13 +66,14 @@ AddEventHandler('inventory:server:OpenInventory', function(name, id, other)
 			secondInv.inventory = {}
 			secondInv.slots = slots
 			if Stashes[id] ~= nil and Stashes[id].isOpen then
+				print("I am trying to open a nil or open stash")
+				print(Stashes[id])
+				print(Stashes[id].isOpen)
 				secondInv.name = "none-inv"
 				secondInv.label = "Stash-None"
 				secondInv.maxweight = 1000000
 				secondInv.inventory = {}
 				secondInv.slots = 0
-				Stashes[id].label = secondInv.label
-				Stashes[id].isOpen = true
 			else
 				local stashItems = GetStashItems(id)
 				if next(stashItems) ~= nil then
