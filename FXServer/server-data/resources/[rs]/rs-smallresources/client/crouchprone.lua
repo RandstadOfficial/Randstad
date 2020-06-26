@@ -86,34 +86,26 @@ end)
 
 --Not in table because lazy
 function isPedDoingAnimations()
-    print("Checking for anim")
     local ped = GetPlayerPed(-1)
 
     if IsPedUsingAnyScenario(ped) then
-        print("am doing scenario")
         return true
     end
     if IsEntityPlayingAnim(ped, "mp_car_bomb", "car_bomb_mechanic", 3) then
-        print("am doing mechanic anim")
         return true
     end
     if IsEntityPlayingAnim(ped, "anim@heists@box_carry@", "idle", 3) then
-        print("am doing idle anim")
         return true
     end
     if IsEntityPlayingAnim(ped, 'anim@heists@fleeca_bank@drilling', 'drill_straight_idle', 3) then
-        print("am doing drilling anim")
         return true
     end
     if IsEntityPlayingAnim(ped, "mini@safe_cracking", "dial_turn_anti_fast_1", 3) then
-        print("am doing safe cracking anim")
         return true
     end
     if IsEntityPlayingAnim(ped, "anim@gangops@facility@servers@", "hotwire", 3) then
-        print("am doing hotwire anim")
         return true
     end
-    print("Was not doing anim")
     return false;
 end
 

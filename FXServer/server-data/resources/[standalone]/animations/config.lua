@@ -11,7 +11,7 @@ Config = {
 	FavKeybindEnabled = true,
 	FavKeybind = 170, -- Get the button number here https://docs.fivem.net/game-references/controls/
 -- You can disable the Ragdoll keybinding here.
-	RagdollEnabled = false,
+	RagdollEnabled = true,
 	RagdollKeybind = 303, -- Get the button number here https://docs.fivem.net/game-references/controls/
 -- You can change the header image for the f3 menu here
 -- Use a 512 x 128 image!
