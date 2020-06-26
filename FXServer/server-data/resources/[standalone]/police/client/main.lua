@@ -263,43 +263,6 @@ AddEventHandler('police:client:SendPoliceEmergencyAlert', function(callsign, str
     }, true)
 end)
 
-RegisterNetEvent('police:client:SendPoliceLocation')
-AddEventHandler('police:client:SendPoliceLocation', function(callsign, streetLabel, coords)
-    local pos = GetEntityCoords(GetPlayerPed(-1))
-    local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
-    local street1 = GetStreetNameFromHashKey(s1)
-    local street2 = GetStreetNameFromHashKey(s2)
-    local streetLabel = street1
-    if street2 ~= nil then 
-        streetLabel = streetLabel .. " " .. street2
-    end
-    local alertTitle = "Assistentie collega"
-
-    local MyId = GetPlayerServerId(PlayerId())
-
-    TriggerServerEvent("police:server:SendPoliceLocation", streetLabel, pos, RSCore.Functions.GetPlayerData().metadata["callsign"])
-    TriggerServerEvent('rs-policealerts:server:AddPoliceAlert', {
-        timeOut = 10000,
-        alertTitle = alertTitle,
-        coords = {
-            x = pos.x,
-            y = pos.y,
-            z = pos.z,
-        },
-        details = {
-            [1] = {
-                icon = '<i class="fas fa-passport"></i>',
-                detail = MyId .. ' | ' .. RSCore.Functions.GetPlayerData().charinfo.firstname .. ' ' .. RSCore.Functions.GetPlayerData().charinfo.lastname,
-            },
-            [2] = {
-                icon = '<i class="fas fa-globe-europe"></i>',
-                detail = streetLabel,
-            },
-        },
-        callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
-    }, true)
-end)
-
 RegisterNetEvent('police:PlaySound')
 AddEventHandler('police:PlaySound', function()
     PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
@@ -324,35 +287,6 @@ AddEventHandler('police:client:PoliceEmergencyAlert', function(callsign, streetL
         SetBlipAlpha(blip, transG)
         SetBlipScale(blip, 1.2)
         SetBlipFlashes(blip, true)
-        SetBlipRoute(123, 123, 123)
-        BeginTextCommandSetBlipName('STRING')
-        AddTextComponentString("Assistentie Collega")
-        EndTextCommandSetBlipName(blip)
-        while transG ~= 0 do
-            Wait(180 * 4)
-            transG = transG - 1
-            SetBlipAlpha(blip, transG)
-            if transG == 0 then
-                SetBlipSprite(blip, 2)
-                RemoveBlip(blip)
-                return
-            end
-        end
-    end
-end)
-
-RegisterNetEvent('police:client:PoliceLocation')
-AddEventHandler('police:client:PoliceLocation', function(callsign, streetLabel, coords)
-    if (PlayerJob.name == 'police' and onDuty then
-        local transG = 250
-        local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
-        SetBlipSprite(blip, 487)
-        SetBlipColour(blip, 4)
-        SetBlipDisplay(blip, 4)
-        SetBlipAlpha(blip, transG)
-        SetBlipScale(blip, 1.2)
-        SetBlipFlashes(blip, true)
-        SetBlipRoute(123, 123, 123)
         BeginTextCommandSetBlipName('STRING')
         AddTextComponentString("Assistentie Collega")
         EndTextCommandSetBlipName(blip)
