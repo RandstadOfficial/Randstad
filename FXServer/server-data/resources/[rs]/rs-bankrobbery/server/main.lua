@@ -97,7 +97,7 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
                 ply.Functions.AddItem(item.item, itemAmount)
                 TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[item.item], "add")
             elseif Config.RewardTypes[itemType].type == "money" then
-                local moneyAmount = math.random(Config.RewardTypes[itemType].maxAmount)
+                local moneyAmount = math.random(500, 3000)
                 ply.Functions.AddMoney('cash', moneyAmount, "small-bankrobbery")
             end
         else
