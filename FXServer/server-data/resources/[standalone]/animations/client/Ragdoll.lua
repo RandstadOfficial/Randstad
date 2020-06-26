@@ -23,3 +23,37 @@ Citizen.CreateThread(function()
   end
 end)
 
+--
+local maxJumps = 3
+local counter = 0
+local msPassed = 0
+local timestampFirstJump = 0
+local timestampMaxJump
+local thresholdMsPerJump = 1400
+--Takes roughly 2400 ms to do 3 jumps.
+
+Citizen.CreateThread(function()
+  while true do
+    local ped = GetPlayerPed(-1)
+    Citizen.Wait(600)
+    msPassed = msPassed + 600
+
+    if IsPedJumping(ped) and not IsPedSwimming(ped) then
+      counter = counter + 1
+    end
+    if counter == 1 then
+      timestampFirstJump = msPassed
+    end
+    if counter == maxJumps then
+      timestampMaxJump = msPassed
+    end
+    if counter == maxJumps and (timestampMaxJump - timestampFirstJump) < (maxJumps * thresholdMsPerJump) then
+      ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', 0.08) -- change this float to increase/decrease camera shake
+      SetPedToRagdoll(GetPlayerPed(-1), 1000, 1000, 0, 0, 0, 0)
+      print("tried to jump abuse")    
+    elseif counter >= maxJumps then
+      counter = 0
+      msPassed = 0
+    end
+  end
+end)
