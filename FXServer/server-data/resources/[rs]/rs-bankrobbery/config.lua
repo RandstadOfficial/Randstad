@@ -15,7 +15,7 @@ Config.ItemTiers = 1
 
 Config.MinimumPaletoPolice = 0
 Config.MinimumPacificPolice = 6
-Config.MinimumFleecaPolice = 5
+Config.MinimumFleecaPolice = 0
 Config.MinimumThermitePolice = 2
 
 Config.RewardTypes = {
@@ -85,13 +85,25 @@ Config.PowerStations = {
 
 Config.LockerRewards = {
     ["tier1"] = {
-        [1] = {item = "goldchain", maxAmount = 20, minAmount = 5},
+        [1] = {item = "goldchain", minAmount = 5, maxAmount = 15},
     },
     ["tier2"] = {
-        [1] = {item = "rolex", maxAmount = 15, minAmount = 5},
+        [1] = {item = "rolex", minAmount = 5, maxAmount = 10},
     },
     ["tier3"] = {
-        [1] = {item = "goldbar", maxAmount = 5, minAmount = 2},
+        [1] = {item = "goldbar", minAmount = 2, maxAmount = 4},
+    },
+}
+
+Config.LockerRewardsPaleto = {
+    ["tier1"] = {
+        [1] = {item = "goldchain", minAmount = 5, maxAmount = 20},
+    },
+    ["tier2"] = {
+        [1] = {item = "rolex", minAmount = 5, maxAmount = 15},
+    },
+    ["tier3"] = {
+        [1] = {item = "goldbar", minAmount = 2, maxAmount = 5},
     },
 }
 

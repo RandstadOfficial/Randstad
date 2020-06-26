@@ -69,11 +69,11 @@ AddEventHandler('rs-houserobbery:server:searchCabin', function(cabin, house)
                 TriggerClientEvent('inventory:client:ItemBox', src, itemInfo, "add")
             else
                 if not itemInfo["unqiue"] then
-                    local itemAmount = math.random(1, 3) -- 1 to 3 diamond rings, rolex, tosti, sandwich
+                    local itemAmount = math.random(2, 4) -- 1 to 3 diamond rings, rolex, tosti, sandwich
                     if randomItem == "plastic" then
                         itemAmount = math.random(15, 20) -- 15 to 20 pieces of plastic
                     elseif randomItem == "goldchain" then
-                        itemAmount = math.random(2, 5) -- 2 to 5 pieces of goldchain
+                        itemAmount = math.random(3, 6) -- 3 to 6 pieces of goldchain
                     end
                     Player.Functions.AddItem(randomItem, itemAmount)
                     --TriggerClientEvent('RSCore:Notify', src, '+'..itemAmount..' '..itemInfo["label"], 'success', 3500)
