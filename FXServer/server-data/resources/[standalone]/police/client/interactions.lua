@@ -281,10 +281,12 @@ AddEventHandler('police:client:CuffPlayerSoft', function()
     if not IsPedRagdoll(GetPlayerPed(-1)) then
         local player, distance = GetClosestPlayer()
         if player ~= -1 and distance < 1.5 then
+            local cuffer = GetPlayerName(source) .. " " .. "("..GetPlayerServerId(source)..")"
             local playerId = GetPlayerServerId(player)
             if not IsPedInAnyVehicle(GetPlayerPed(player)) and not IsPedInAnyVehicle(GetPlayerPed(GetPlayerPed(-1))) then
                 TriggerServerEvent("police:server:CuffPlayer", playerId, true)
                 HandCuffAnimation()
+                TriggerServerEvent("rs-log:server:CreateLog", "cuffing", GetPlayerName(player) .. " ("..GetPlayerServerId(player)..") is geboeid", "red", "**".. cuffer .. "** heeft ".. GetPlayerName(player) .." geboeid")
             else
                 RSCore.Functions.Notify("Je kunt niet boeien in een voertuig", "error")
             end
