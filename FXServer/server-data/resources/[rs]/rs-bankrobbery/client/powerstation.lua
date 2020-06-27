@@ -119,7 +119,7 @@ AddEventHandler('thermite:UseThermite', function()
                 RSCore.Functions.Notify("Niet genoeg politie.. (2 nodig)", "error")
             end
         end
-    elseif currentThermiteGate ~= 0 then
+    elseif currentThermiteGate ~= 0 then 
         if math.random(1, 100) <= 85 and not IsWearingHandshoes() then
             TriggerServerEvent("evidence:server:CreateFingerDrop", pos)
         end
