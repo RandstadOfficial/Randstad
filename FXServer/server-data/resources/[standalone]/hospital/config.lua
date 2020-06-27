@@ -93,6 +93,14 @@ Config.Items = {
             type = "item",
             slot = 5,
         },
+        [6] = {
+            name = "walkstick",
+            price = 0,
+            amount = 50,
+            info = {},
+            type = "item"
+            slot = 6,
+        }
     }
 }
 
