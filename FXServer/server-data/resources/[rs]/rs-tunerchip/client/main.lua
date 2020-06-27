@@ -11,6 +11,8 @@ Keys = {
 
 RSCore = nil
 
+infiniteStamina = false
+
 Citizen.CreateThread(function() 
     while true do
         Citizen.Wait(10)
@@ -21,6 +23,25 @@ Citizen.CreateThread(function()
     end
 end)
 
+RegisterNetEvent('infiniteStamina')
+AddEventHandler('infiniteStamina', function()
+    if infiniteStamina then
+        infiniteStamina = false
+        RSCore.Functions.Notify('Infinite Stamina is uit', 'success', 2500)
+    else
+        infiniteStamina = true
+        RSCore.Functions.Notify('Infinite Stamina is aan', 'success', 2500)
+
+    end
+end)
+
+
+Citizen.CreateThread( function()
+    while infiniteStamina do
+      Citizen.Wait(5)
+      RestorePlayerStamina(PlayerId(), 1.0)
+    end
+  end)
 -- Code
 
 local inTuner = false
