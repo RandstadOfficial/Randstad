@@ -16,7 +16,7 @@ Config.ItemTiers = 1
 Config.MinimumPaletoPolice = 5
 Config.MinimumPacificPolice = 6
 Config.MinimumFleecaPolice = 5
-Config.MinimumThermitePolice = 2
+Config.MinimumThermitePolice = 2 
 
 Config.RewardTypes = {
     [1] = {
@@ -97,10 +97,10 @@ Config.LockerRewards = {
 
 Config.LockerRewardsPaleto = {
     ["tier1"] = {
-        [1] = {item = "goldchain", minAmount = 5, maxAmount = 20},
+        [1] = {item = "goldchain", minAmount = 10, maxAmount = 25},
     },
     ["tier2"] = {
-        [1] = {item = "rolex", minAmount = 5, maxAmount = 15},
+        [1] = {item = "rolex", minAmount = 7, maxAmount = 15},
     },
     ["tier3"] = {
         [1] = {item = "goldbar", minAmount = 2, maxAmount = 5},
@@ -500,7 +500,7 @@ Config.BigBanks = {
                 ["y"] = 6475.36,
                 ["z"] = 31.62,
                 ["isOpened"] = false,
-                ["doorId"] = 75,
+                ["doorId"] = 76,
             },
         },
         ["camId"] = 26,
