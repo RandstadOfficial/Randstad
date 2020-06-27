@@ -441,12 +441,12 @@ Config.Houses = {
             },
         }
     },
-    ["westeclipseblvd"] = { -- Links over het hek naar beneden https://gyazo.com/7ac71722168a8a765fa0b32b24520ad2
+    ["westeclipseblvd"] = { -- Voordeur https://gyazo.com/7ac71722168a8a765fa0b32b24520ad2
         ["coords"] = {
-            ["x"] = -807.16, 
-            ["y"] = 253.35, 
-            ["z"] = 82.88, 
-            ["h"] = 95.87
+            ["x"] = -819.36, 
+            ["y"] = 267.95, 
+            ["z"] = 86.39, 
+            ["h"] = 261.26
         },
         ["opened"] = false,
         ["tier"] = 1,
