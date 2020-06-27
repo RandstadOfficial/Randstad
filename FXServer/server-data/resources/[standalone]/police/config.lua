@@ -133,30 +133,78 @@ Config.SecurityCameras = {
 }
 
 Config.Vehicles = {
-    ["ptouran"] = "Volkswagen Touran",
-    ["ptouran11"] = "Volkswagen Touran 2011",
-    ["pbklasse"] = "Mercedes B-Klasse",
-    ["paudi"] = "Audi A6",
-    ["pamarok"] = "Volkswagen Amarok",
-    ["pt5"] = "Volkswagen T5",
-    ["pyamahamotor"] = "Yamaha Motor",
-    ["pbmwmotor2"] = "BMW Motor",
-    ["pschafter"] = "Unmarked Schafter",
-    ["poracle"] = "Unmarked Oracle",
-    --["dsimerc"] = "Mercedes (DSI)",
-    --["dsivito"] = "Mercedes Vito (DSI)",
-    --["dsiq5"] = "Audi Q5 (DSI)",
-    --["pt6"] = "Volkswagen T6",
-    --["pfosprinter"] = "Mercedes-Benz Sprinter (FO)",
+    [1] = { -- Aspirant
+        ["ptouran"] = "Volkswagen Touran",
+        ["ptouran11"] = "Volkswagen Touran 2011",
+        ["pbklasse"] = "Mercedes B-Klasse",
+    },
+    [2] = { -- Surveillant
+        ["ptouran"] = "Volkswagen Touran",
+        ["ptouran11"] = "Volkswagen Touran 2011",
+        ["pbklasse"] = "Mercedes B-Klasse",
+    },
+    [3] = { -- Agent
+        ["ptouran"] = "Volkswagen Touran",
+        ["ptouran11"] = "Volkswagen Touran 2011",
+        ["pbklasse"] = "Mercedes B-Klasse",
+    },
+    [4] = { -- Hoofdagent
+        ["ptouran"] = "Volkswagen Touran",
+        ["ptouran11"] = "Volkswagen Touran 2011",
+        ["pbklasse"] = "Mercedes B-Klasse",
+    },
+    [5] = { -- Brigadier
+        ["ptouran"] = "Volkswagen Touran",
+        ["ptouran11"] = "Volkswagen Touran 2011",
+        ["pbklasse"] = "Mercedes B-Klasse",
+    },
+    [6] = { -- Inspecteur
+        ["ptouran"] = "Volkswagen Touran",
+        ["ptouran11"] = "Volkswagen Touran 2011",
+        ["pbklasse"] = "Mercedes B-Klasse",
+    },
+    [7] = { -- Hoofdinspecteur
+        ["ptouran"] = "Volkswagen Touran",
+        ["ptouran11"] = "Volkswagen Touran 2011",
+        ["pbklasse"] = "Mercedes B-Klasse",
+    },
+    [8] = { -- Commissaris
+        ["ptouran"] = "Volkswagen Touran",
+        ["ptouran11"] = "Volkswagen Touran 2011",
+        ["pbklasse"] = "Mercedes B-Klasse",
+    },
+    [9] = { -- Hoofdcommissaris
+        ["ptouran"] = "Volkswagen Touran",
+        ["ptouran11"] = "Volkswagen Touran 2011",
+        ["pbklasse"] = "Mercedes B-Klasse",
+    },
 }
 
-Config.WhitelistedVehicles = {
-    ["pa45"] = "Mercedes A45 Unmarked",
-    ["pbmwm5"] = "BMW M5 Unmarked (DSI)",
-    --["paudia4"] = "Audi A4 Unmarked",
-    --["pbmw330"] = "BMW 330D Unmarked",
-    --["pfpace"] = "Jaguar F-Pace Unmarked",
-}
+-- Config.Vehicles = {
+--     ["ptouran"] = "Volkswagen Touran",
+--     ["ptouran11"] = "Volkswagen Touran 2011",
+--     ["pbklasse"] = "Mercedes B-Klasse",
+--     ["paudi"] = "Audi A6",
+--     ["pamarok"] = "Volkswagen Amarok",
+--     ["pt5"] = "Volkswagen T5",
+--     ["pyamahamotor"] = "Yamaha Motor",
+--     ["pbmwmotor2"] = "BMW Motor",
+--     ["pschafter"] = "Unmarked Schafter",
+--     ["poracle"] = "Unmarked Oracle",
+--     --["dsimerc"] = "Mercedes (DSI)",
+--     --["dsivito"] = "Mercedes Vito (DSI)",
+--     --["dsiq5"] = "Audi Q5 (DSI)",
+--     --["pt6"] = "Volkswagen T6",
+--     --["pfosprinter"] = "Mercedes-Benz Sprinter (FO)",
+-- }
+
+-- Config.WhitelistedVehicles = {
+--     ["pa45"] = "Mercedes A45 Unmarked",
+--     ["pbmwm5"] = "BMW M5 Unmarked (DSI)",
+--     --["paudia4"] = "Audi A4 Unmarked",
+--     --["pbmw330"] = "BMW 330D Unmarked",
+--     --["pfpace"] = "Jaguar F-Pace Unmarked",
+-- }
 
 Config.AmmoLabels = {
     ["AMMO_PISTOL"] = "9x19mm Parabellum kogel",
