@@ -65,13 +65,13 @@ AddEventHandler('rs-houserobbery:server:searchCabin', function(cabin, house)
             if math.random(1, 100) == 69 then -- 1% chance to get painkillers as item per itemcount
                 randomItem = pickSpecialReward()
                 itemInfo = RSCore.Shared.Items[randomItem]
-                Player.Functions.AddItem(randomItem, 1)
+                Player.Functions.AddItem(randomItem, 1)   
                 TriggerClientEvent('inventory:client:ItemBox', src, itemInfo, "add")
             else
                 if not itemInfo["unqiue"] then
-                    local itemAmount = math.random(2, 4) -- 1 to 3 diamond rings, rolex, tosti, sandwich
+                    local itemAmount = math.random(3, 6) -- 3 to 6 diamond rings, rolex, tosti, sandwich
                     if randomItem == "plastic" then
-                        itemAmount = math.random(15, 20) -- 15 to 20 pieces of plastic
+                        itemAmount = math.random(10, 20) -- 15 to 20 pieces of plastic
                     elseif randomItem == "goldchain" then
                         itemAmount = math.random(3, 6) -- 3 to 6 pieces of goldchain
                     end
