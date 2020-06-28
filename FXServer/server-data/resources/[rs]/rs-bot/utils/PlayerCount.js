@@ -1,10 +1,12 @@
-module.exports = {
-    updatePlayerCount: (client, seconds) => {
-        const interval = setInterval(function setStatus() {
-            status = `${GetNumPlayerIndices()}/64 PLAYERS`
 
+module.exports = {
+    updatePlayerCount: (client, maxPlayers, seconds) => {
+        const interval = setInterval(function setPlayerCount() {
+            status = `${GetNumPlayerIndices()}/${maxPlayers} SPELERS`
+            // status = `10000000/64 SPELERS`
             client.user.setActivity(status, {type: 'WATCHING'})
-            return updatePlayerCount;
+
+            return setPlayerCount;
         }(), seconds * 1000)
     }
 }

@@ -9,6 +9,8 @@
   "author": "MaBo",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.2.0"
+    "discord-rpc": "^3.1.1",
+    "discord.js": "^12.2.0",
+    "rpc": "^1.0.8"
   }
 }
