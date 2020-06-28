@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <CHandlingDataMgr>
-
-<!-------------- Realisting Driving. Dyc3 Settings--------------->
-
   <HandlingData>
 	  <Item type="CHandlingData">
  	<handlingName>911r</handlingName>
        <fMass value="1900.000000" />
-      <fInitialDragCoeff value="9.200000" />
+      <fInitialDragCoeff value="8.000000" />
       <fPercentSubmerged value="85.000000" />
       <vecCentreOfMassOffset x="0.000000" y="-0.070000" z="0.000000" />
       <vecInertiaMultiplier x="1.400000" y="1.500000" z="1.700000" />
@@ -18,7 +15,7 @@
       <fDriveInertia value="1.000000" />
       <fClutchChangeRateScaleUpShift value="3.200000" />
       <fClutchChangeRateScaleDownShift value="3.200000" />
-      <fInitialDriveMaxFlatVel value="160.000000" />
+      <fInitialDriveMaxFlatVel value="280.000000" />
       <fBrakeForce value="1.000000" />
       <fBrakeBiasFront value="0.889000" />
       <fHandBrakeForce value="1.500000" />

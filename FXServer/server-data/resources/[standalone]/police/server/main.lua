@@ -261,14 +261,14 @@ AddEventHandler('police:server:VehicleCall', function(coords, msg)
 end)
 
 RegisterServerEvent('police:server:HouseRobberyCall')
-AddEventHandler('police:server:HouseRobberyCall', function(coords, message)
+AddEventHandler('police:server:HouseRobberyCall', function(coords, message, gender, streetLabel)
     local src = source
     local alertData = {
         title = "Huisinbraak",
         coords = {x = coords.x, y = coords.y, z = coords.z},
         description = message,
     }
-    TriggerClientEvent("police:client:HouseRobberyCall", -1, coords, message)
+    TriggerClientEvent("police:client:HouseRobberyCall", -1, coords, message, gender, streetLabel)
     TriggerClientEvent("rs-phone:client:addPoliceAlert", -1, alertData)
 end)
 
@@ -592,6 +592,17 @@ AddEventHandler('police:server:SendPoliceEmergencyAlert', function(streetLabel, 
         description = "Noodknop ingedrukt door ".. callsign .. " bij "..streetLabel,
     }
     TriggerClientEvent("police:client:PoliceEmergencyAlert", -1, callsign, streetLabel, coords)
+    TriggerClientEvent("rs-phone:client:addPoliceAlert", -1, alertData)
+end)
+
+RegisterServerEvent('police:server:SendPoliceLocationAlert')
+AddEventHandler('police:server:SendPoliceLocationAlert', function(streetLabel, coords, callsign)
+    local alertData = {
+        title = "Locatie collega",
+        coords = {x = coords.x, y = coords.y, z = coords.z},
+        description = "Locatie gestuurd door ".. callsign .. " bij "..streetLabel,
+    }
+    TriggerClientEvent("police:client:PoliceLocationAlert", -1, callsign, streetLabel, coords)
     TriggerClientEvent("rs-phone:client:addPoliceAlert", -1, alertData)
 end)
 
@@ -1147,10 +1158,17 @@ RSCore.Commands.Add("enkelbandlocatie", "Haal locatie van persoon met enkelband"
     end
 end)
 
-RSCore.Commands.Add("noodknop", "Stuur een bericht terug naar een melding", {}, false, function(source, args)
+RSCore.Commands.Add("noodknop", "Stuur een noodknop naar de polite en ambulance", {}, false, function(source, args)
     local Player = RSCore.Functions.GetPlayer(source)
     if ((Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance") and Player.PlayerData.job.onduty) then
         TriggerClientEvent("police:client:SendPoliceEmergencyAlert", source)
+    end
+end)
+
+RSCore.Commands.Add("locatie", "Stuur een locatie naar alle eenheden", {}, false, function(source, args)
+    local Player = RSCore.Functions.GetPlayer(source)
+    if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
+        TriggerClientEvent("police:client:SendPoliceLocation", source)
     end
 end)
 

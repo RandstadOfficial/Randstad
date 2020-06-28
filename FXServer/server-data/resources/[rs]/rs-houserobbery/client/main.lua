@@ -291,7 +291,7 @@ function PoliceCall()
                 gender = "Vrouw"
             end
             local msg = "Poging inbraak in een huis door een " .. gender .." bij " .. streetLabel
-            TriggerServerEvent("police:server:HouseRobberyCall", pos, msg)
+            TriggerServerEvent("police:server:HouseRobberyCall", pos, msg, gender, streetLabel)
         end
     end
 end

@@ -3032,9 +3032,33 @@ RSShared.Vehicles = {
 		["trunkslots"] = 40,
 		["shop"] = "pdm",
 	},		
+	["rmodgt63"] = {
+		["name"] = "Mercedes-AMG",
+		["brand"] = "GT63 S Coupe",
+		["model"] = "rmodgt63",
+		["price"] = 410000,
+		["category"] = "coupes",
+		["hash"] = GetHashKey("rmodgt63"),
+		["image"] = "https://vignette.wikia.nocookie.net/gtawiki/images/0/07/FaggioMod-GTAO-front.png",
+		["trunkspace"] = 60000,
+		["trunkslots"] = 60,
+		["shop"] = "custom",
+	},
 }
 
 RSShared.VehicleModels = {
+	[GetHashKey("rmodgt63")] = {
+		["name"] = "Mercedes-AMG",
+		["brand"] = "GT63 S Coupe",
+		["model"] = "rmodgt63",
+		["price"] = 410000,
+		["category"] = "coupes",
+		["hash"] = GetHashKey("rmodgt63"),
+		["image"] = "https://vignette.wikia.nocookie.net/gtawiki/images/0/07/FaggioMod-GTAO-front.png",
+		["trunkspace"] = 60000,
+		["trunkslots"] = 60,
+		["shop"] = "custom",
+	},	
 	[GetHashKey("sentinel3")] = {
 		["name"] = "Sentinel Classic",
 		["price"] = 40000,
@@ -5870,7 +5894,7 @@ RSShared.Jobs = {
 		grades = {
 			[1] = {
 				label = "",
-				payment = 50,
+				payment = 200,
 			},
 		}
 	},
