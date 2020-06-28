@@ -1158,14 +1158,14 @@ RSCore.Commands.Add("enkelbandlocatie", "Haal locatie van persoon met enkelband"
     end
 end)
 
-RSCore.Commands.Add("noodknop", "Stuur een bericht terug naar een melding", {}, false, function(source, args)
+RSCore.Commands.Add("noodknop", "Stuur een noodknop naar de polite en ambulance", {}, false, function(source, args)
     local Player = RSCore.Functions.GetPlayer(source)
     if ((Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance") and Player.PlayerData.job.onduty) then
         TriggerClientEvent("police:client:SendPoliceEmergencyAlert", source)
     end
 end)
 
-RSCore.Commands.Add("locatie", "Stuur een bericht terug naar een melding", {}, false, function(source, args)
+RSCore.Commands.Add("locatie", "Stuur een locatie naar alle eenheden", {}, false, function(source, args)
     local Player = RSCore.Functions.GetPlayer(source)
     if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
         TriggerClientEvent("police:client:SendPoliceLocation", source)

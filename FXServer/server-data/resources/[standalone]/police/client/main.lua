@@ -233,9 +233,9 @@ AddEventHandler('police:client:SendPoliceEmergencyAlert', function(callsign, str
     if street2 ~= nil then 
         streetLabel = streetLabel .. " " .. street2
     end
-    local alertTitle = "Assistentie collega"
+    local alertTitle = "Urgent Noodmelding!"
     if PlayerJob.name == "ambulance" or PlayerJob.name == "doctor" then
-        alertTitle = "Assistentie " .. PlayerJob.label
+        alertTitle = "Noodmelding " .. PlayerJob.label
     end
 
     local MyId = GetPlayerServerId(PlayerId())
@@ -273,7 +273,7 @@ AddEventHandler('police:client:SendPoliceLocation', function(callsign, streetLab
     if street2 ~= nil then 
         streetLabel = streetLabel .. " " .. street2
     end
-    local alertTitle = "Locatie collega"
+    local alertTitle = "Locatie Collega"
 
     local MyId = GetPlayerServerId(PlayerId())
 
@@ -315,21 +315,22 @@ AddEventHandler('police:client:PoliceEmergencyAlert', function(callsign, streetL
         PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
         Citizen.Wait(100)
         PlaySoundFrontend( -1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1 )
-        TriggerEvent("chatMessage", "MELDING", "error", "Assistentie collega, noodknop ingedrukt door ".. callsign .. " bij "..streetLabel)
+        --TriggerEvent("chatMessage", "MELDING", "error", "Assistentie collega, noodknop ingedrukt door ".. callsign .. " bij "..streetLabel)
         local transG = 250
         local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
         SetBlipSprite(blip, 487)
-        SetBlipColour(blip, 4)
+        SetBlipColour(blip, 1)
         SetBlipDisplay(blip, 4)
         SetBlipAlpha(blip, transG)
         SetBlipScale(blip, 1.2)
         SetBlipFlashes(blip, true)
         SetBlipRoute(blip, true)
+        SetBlipRouteColour(blip, 1)
         BeginTextCommandSetBlipName('STRING')
-        AddTextComponentString("Assistentie Collega")
+        AddTextComponentString("Noodknop Collega")
         EndTextCommandSetBlipName(blip)
         while transG ~= 0 do
-            Wait(180 * 4)
+            Wait(180 * 2)
             transG = transG - 1
             SetBlipAlpha(blip, transG)
             if transG == 0 then
@@ -351,18 +352,15 @@ AddEventHandler('police:client:PoliceLocationAlert', function(callsign, streetLa
         -- PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
         -- Citizen.Wait(100)
         -- PlaySoundFrontend( -1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1 )
-        TriggerEvent("chatMessage", "MELDING", "error", "Assistentie collega, Locatie gestuurd door ".. callsign .. " bij "..streetLabel)
+        -- TriggerEvent("chatMessage", "MELDING", "error", "Assistentie collega, Locatie gestuurd door ".. callsign .. " bij "..streetLabel)
         local transG = 250
         local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
         SetBlipSprite(blip, 468)
-        SetBlipColour(blip, 4)
+        SetBlipColour(blip, 3)
         SetBlipDisplay(blip, 4)
         SetBlipAlpha(blip, transG)
         SetBlipScale(blip, 1.2)
         SetBlipFlashes(blip, true)
-        if IsControlPressed(0, 344) then
-            SetBlipRoute(blip, true)
-        end
         BeginTextCommandSetBlipName('STRING')
         AddTextComponentString("Locatie Collega")
         EndTextCommandSetBlipName(blip)
