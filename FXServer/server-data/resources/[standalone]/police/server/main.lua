@@ -261,14 +261,14 @@ AddEventHandler('police:server:VehicleCall', function(coords, msg)
 end)
 
 RegisterServerEvent('police:server:HouseRobberyCall')
-AddEventHandler('police:server:HouseRobberyCall', function(coords, message)
+AddEventHandler('police:server:HouseRobberyCall', function(coords, message, gender, streetLabel)
     local src = source
     local alertData = {
         title = "Huisinbraak",
         coords = {x = coords.x, y = coords.y, z = coords.z},
         description = message,
     }
-    TriggerClientEvent("police:client:HouseRobberyCall", -1, coords, message)
+    TriggerClientEvent("police:client:HouseRobberyCall", -1, coords, message, gender, streetLabel)
     TriggerClientEvent("rs-phone:client:addPoliceAlert", -1, alertData)
 end)
 
