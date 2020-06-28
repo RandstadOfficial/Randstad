@@ -471,14 +471,9 @@ function VehicleList(isDown)
     MenuTitle = "Voertuigen:"
     local grade = RSCore.Functions.GetPlayerData().job.grade
     ClearMenu()
-    for k, v in pairs(Config.Vehicles) do
-        Menu.addButton(Config.Vehicles[grade], "TakeOutVehicle", k, "Garage", " Motor: 100%", " Body: 100%", " Fuel: 100%")
+    for k, v in pairs(Config.Vehicles[grade]) do
+        Menu.addButton(v, "TakeOutVehicle", k, "Garage", " Motor: 100%", " Body: 100%", " Fuel: 100%")
     end
-    -- if IsArmoryWhitelist() then
-    --     for veh, label in pairs(Config.WhitelistedVehicles) do
-    --         Menu.addButton(label, "TakeOutVehicle", veh, "Garage", " Motor: 100%", " Body: 100%", " Fuel: 100%")
-    --     end
-    -- end
         
     Menu.addButton("Terug", "MenuGarage",nil)
 end
