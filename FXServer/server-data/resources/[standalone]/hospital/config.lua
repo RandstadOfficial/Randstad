@@ -98,7 +98,7 @@ Config.Items = {
             price = 0,
             amount = 50,
             info = {},
-            type = "item"
+            type = "item",
             slot = 6,
         }
     }
