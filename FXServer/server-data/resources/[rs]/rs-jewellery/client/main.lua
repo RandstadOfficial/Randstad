@@ -129,6 +129,8 @@ function validWeapon()
     return false
 end
 
+local smashing = false
+
 function smashVitrine(k)
     local animDict = "missheist_jewel"
     local animName = "smash_case"
@@ -142,6 +144,8 @@ function smashVitrine(k)
         TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
         RSCore.Functions.Notify("Je hebt je gescheurd aan het glas..", "error")
     end
+
+    smashing = true
 
     RSCore.Functions.Progressbar("smash_vitrine", "Vitrine aan het inslaan..", Config.WhitelistedWeapons[pedWeapon]["timeOut"], false, true, {
         disableMovement = true,
@@ -163,18 +167,25 @@ function smashVitrine(k)
         
         TriggerServerEvent('rs-jewellery:server:setTimeout')
         TriggerServerEvent('rs-jewellery:server:PoliceAlertMessage', "Er is een overval gaande bij Vangelico Juwelier", plyCoords, false)
+        smashing = false
         TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
     end, function() -- Cancel
         TriggerServerEvent('rs-jewellery:server:setVitrineState', "isBusy", false, k)
         TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
     end)
     TriggerServerEvent('rs-jewellery:server:setVitrineState', "isBusy", true, k)
-    loadAnimDict(animDict)
-    TaskPlayAnim(ped, animDict, animName, 3.0, 3.0, -1, 2, 0, 0, 0, 0 )
-    Citizen.Wait(500)
-    TriggerServerEvent("InteractSound_SV:PlayOnSource", "breaking_vitrine_glass", 0.25)
-    loadParticle()
-    StartParticleFxLoopedAtCoord("scr_jewel_cab_smash", plyCoords.x, plyCoords.y, plyCoords.z, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
+
+    Citizen.CreateThread(function()
+        while smashing do
+            loadAnimDict(animDict)
+            TaskPlayAnim(ped, animDict, animName, 3.0, 3.0, -1, 2, 0, 0, 0, 0 )
+            Citizen.Wait(500)
+            TriggerServerEvent("InteractSound_SV:PlayOnSource", "breaking_vitrine_glass", 0.25)
+            loadParticle()
+            StartParticleFxLoopedAtCoord("scr_jewel_cab_smash", plyCoords.x, plyCoords.y, plyCoords.z, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
+            Citizen.Wait(2500)
+        end
+    end)
 end
 
 RegisterNetEvent('rs-jewellery:client:setVitrineState')
@@ -195,8 +206,31 @@ end)
 RegisterNetEvent('rs-jewellery:client:PoliceAlertMessage')
 AddEventHandler('rs-jewellery:client:PoliceAlertMessage', function(msg, coords, blip)
     if blip then
+        TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+            timeOut = 5000,
+            alertTitle = "Verdachte situatie Juwelier",
+            details = {
+                [1] = {
+                    icon = '<i class="fas fa-gem"></i>',
+                    detail = "Vangelico Juwelier",
+                },
+                [2] = {
+                    icon = '<i class="fas fa-video"></i>',
+                    detail = "31 | 32 | 33 | 34",
+                },
+                [3] = {
+                    icon = '<i class="fas fa-globe-europe"></i>',
+                    detail = "Rockford Dr",
+                },
+            },
+            callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+        })
         PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
-        TriggerEvent("chatMessage", "112-MELDING", "error", msg)
+        Citizen.Wait(100)
+        PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
+        Citizen.Wait(100)
+        PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
+        --TriggerEvent("chatMessage", "112-MELDING", "error", msg)
         local transG = 100
         local blip = AddBlipForRadius(coords.x, coords.y, coords.z, 100.0)
         SetBlipSprite(blip, 9)
@@ -219,7 +253,26 @@ AddEventHandler('rs-jewellery:client:PoliceAlertMessage', function(msg, coords, 
     else
         if not robberyAlert then
             PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
-            TriggerEvent("chatMessage", "112-MELDING", "error", msg)
+            --TriggerEvent("chatMessage", "112-MELDING", "error", msg)
+            TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+                timeOut = 5000,
+                alertTitle = "Juwelier overval!",
+                details = {
+                    [1] = {
+                        icon = '<i class="fas fa-gem"></i>',
+                        detail = "Vangelico Juwelier",
+                    },
+                    [2] = {
+                        icon = '<i class="fas fa-video"></i>',
+                        detail = "31 | 32 | 33 | 34",
+                    },
+                    [3] = {
+                        icon = '<i class="fas fa-globe-europe"></i>',
+                        detail = "Rockford Dr",
+                    },
+                },
+                callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+            })
             robberyAlert = true
         end
     end

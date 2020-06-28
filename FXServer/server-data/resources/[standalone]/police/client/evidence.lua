@@ -410,7 +410,7 @@ Citizen.CreateThread( function()
     while true do
         Citizen.Wait(50)
         if not isArmed then
-            if IsPedArmed(GetPlayerPed(-1), 7) and not IsPedArmed(GetPlayerPed(-1), 1) then
+            if IsPedArmed(GetPlayerPed(-1), 7) and not IsPedArmed(GetPlayerPed(-1), 1) then -- 7 = returns true when weapon equiped and 1 = returns true when melee is equiped
                 currentWeapon = GetSelectedPedWeapon(GetPlayerPed(-1))
                 isArmed = true
                 timeCheck = 7
@@ -418,29 +418,31 @@ Citizen.CreateThread( function()
         end
 		if isArmed then
 			if PlayerJob.name ~= "police" then
-				if IsPedShooting(GetPlayerPed(-1)) and not IsSilentWeapon(currentWeapon) and IsPedNearby() then
-					local coords = GetEntityCoords(GetPlayerPed(-1))
-					local automatic = false
-					if RSCore.Shared.Weapons[currentWeapon]["ammotype"] ~= "AMMO_PISTOL" then
-						automatic = true
+				if IsPedShooting(GetPlayerPed(-1)) and not IsSilentWeapon(currentWeapon) then
+					if IsPedNearby() then
+						local coords = GetEntityCoords(GetPlayerPed(-1))
+						local automatic = false
+						if RSCore.Shared.Weapons[currentWeapon]["ammotype"] ~= "AMMO_PISTOL" then
+							automatic = true
+						end
+						local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, coords.x, coords.y, coords.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
+						local streetLabel = GetStreetNameFromHashKey(s1)
+						local street2 = GetStreetNameFromHashKey(s2)
+						if street2 ~= nil and street2 ~= "" then 
+							streetLabel = streetLabel .. " " .. street2
+						end
+						if IsPedInAnyVehicle(GetPlayerPed(-1), true) then
+							local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+							local vehicleInfo = {
+								plate = GetVehicleNumberPlateText(vehicle),
+								name = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))
+							}
+							TriggerServerEvent("police:server:GunshotAlert", streetLabel, automatic, true, coords, vehicleInfo)
+						else
+							TriggerServerEvent("police:server:GunshotAlert", streetLabel, automatic, false, coords)
+						end
 					end
-					local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, coords.x, coords.y, coords.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
-					local streetLabel = GetStreetNameFromHashKey(s1)
-					local street2 = GetStreetNameFromHashKey(s2)
-					if street2 ~= nil and street2 ~= "" then 
-						streetLabel = streetLabel .. " " .. street2
-					end
-					if IsPedInAnyVehicle(GetPlayerPed(-1), true) then
-						local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
-						local vehicleInfo = {
-							plate = GetVehicleNumberPlateText(vehicle),
-							name = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))
-						}
-						TriggerServerEvent("police:server:GunshotAlert", streetLabel, automatic, true, coords, vehicleInfo)
-					else
-						TriggerServerEvent("police:server:GunshotAlert", streetLabel, automatic, false, coords)
-					end
-					Citizen.Wait(5000)
+					Citizen.Wait(7000)
 				end
 
 				if timeCheck == 0 then
@@ -449,7 +451,7 @@ Citizen.CreateThread( function()
 					timeCheck = timeCheck - 1
 				end
 			else
-				Citizen.Wait(5000)
+				Citizen.Wait(50)
 			end
 		else
 			Citizen.Wait(2000)
