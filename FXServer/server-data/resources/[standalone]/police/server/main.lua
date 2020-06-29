@@ -233,16 +233,16 @@ AddEventHandler('police:server:PoliceAlertMessage', function(msg, coords)
 end)
 
 RegisterServerEvent('police:server:GunshotAlert')
-AddEventHandler('police:server:GunshotAlert', function(streetLabel, isAutomatic, fromVehicle, coords, vehicleInfo)
+AddEventHandler('police:server:GunshotAlert', function(streetLabel, fromVehicle, coords, vehicleInfo)
     local src = source
 
     for k, v in pairs(RSCore.Functions.GetPlayers()) do
         local Player = RSCore.Functions.GetPlayer(v)
         if Player ~= nil then 
             if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
-                TriggerClientEvent("police:client:GunShotAlert", k, streetLabel, isAutomatic, fromVehicle, coords, vehicleInfo)
+                TriggerClientEvent("police:client:GunShotAlert", k, streetLabel, fromVehicle, coords, vehicleInfo)
             elseif Player.Functions.GetItemByName("radioscanner") ~= nil and math.random(1, 100) <= 50 then
-                TriggerClientEvent("police:client:GunShotAlert", k, streetLabel, isAutomatic, fromVehicle, coords, vehicleInfo)
+                TriggerClientEvent("police:client:GunShotAlert", k, streetLabel, fromVehicle, coords, vehicleInfo)
             end
         end
     end

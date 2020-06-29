@@ -370,7 +370,7 @@ AddEventHandler('police:client:PoliceLocationAlert', function(callsign, streetLa
 end)
 
 RegisterNetEvent('police:client:GunShotAlert')
-AddEventHandler('police:client:GunShotAlert', function(streetLabel, isAutomatic, fromVehicle, coords, vehicleInfo)
+AddEventHandler('police:client:GunShotAlert', function(streetLabel, fromVehicle, coords, vehicleInfo)
     if PlayerJob.name == 'police' and onDuty then        
         local msg = ""
         local blipSprite = 313
