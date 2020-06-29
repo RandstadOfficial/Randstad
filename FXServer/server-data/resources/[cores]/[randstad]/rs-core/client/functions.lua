@@ -647,3 +647,9 @@ RSCore.Functions.SetVehicleProperties = function(vehicle, props)
 		SetVehicleMod(vehicle, 23, props.modCustomTyres, true)
 	end
 end
+
+
+RSCore.Functions.Round = function(number, decimal)
+	local power = 10^decimal
+	return math.floor(number * power) / power
+end
