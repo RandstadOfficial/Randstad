@@ -5894,7 +5894,7 @@ RSShared.Jobs = {
 		grades = {
 			[1] = {
 				label = "",
-				payment = 50,
+				payment = 200,
 			},
 		}
 	},
