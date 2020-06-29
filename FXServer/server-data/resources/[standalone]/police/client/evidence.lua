@@ -420,6 +420,7 @@ Citizen.CreateThread( function()
 			if PlayerJob.name ~= "police" then
 				if IsPedShooting(GetPlayerPed(-1)) and not IsSilentWeapon(currentWeapon) then
 					if IsPedNearby() then
+						print('shooting alert')
 						local coords = GetEntityCoords(GetPlayerPed(-1))
 						local automatic = false
 						if RSCore.Shared.Weapons[currentWeapon]["ammotype"] ~= "AMMO_PISTOL" then
@@ -469,7 +470,7 @@ function IsPedNearby()
     local player = GetPlayerPed(-1)
     local coords = GetEntityCoords(player)
 	local closestPed, closestDistance = RSCore.Functions.GetClosestPed(coords, PlayerPeds)
-	if not IsEntityDead(closestPed) and closestDistance < 150.0 then
+	if not IsEntityDead(closestPed) and closestDistance < 100.0 then
 		retval = true
 	end
 	return retval
