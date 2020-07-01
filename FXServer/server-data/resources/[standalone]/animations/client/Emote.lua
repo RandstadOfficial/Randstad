@@ -203,6 +203,7 @@ AddPropToPlayer = function(prop1, bone, off1, off2, off3, rot1, rot2, rot3)
   AttachEntityToEntity(prop, Player, GetPedBoneIndex(Player, bone), off1, off2, off3, rot1, rot2, rot3, true, true, false, true, 1, true)
   table.insert(PlayerProps, prop)
   PlayerHasProp = true
+  SetModelAsNoLongerNeeded(prop1)
 end
 
 -----------------------------------------------------------------------------------------------------
@@ -229,6 +230,12 @@ end
 -----------------------------------------------------------------------------------------------------
 
 function OnEmotePlay(EmoteName)
+  
+  InVehicle = IsPedInAnyVehicle(PlayerPedId(), true)
+  if not Config.AllowedInCars and InVehicle == 1 then
+    return
+  end
+
   if not DoesEntityExist(GetPlayerPed(-1)) then
     return false
   end
@@ -253,7 +260,7 @@ function OnEmotePlay(EmoteName)
 
   if ChosenDict == "MaleScenario" or "Scenario" then
     CheckGender()
-    if ChosenDict == "MaleScenario" then
+    if ChosenDict == "MaleScenario" then if InVehicle then return end
       if PlayerGender == "male" then
         ClearPedTasks(GetPlayerPed(-1))
         TaskStartScenarioInPlace(GetPlayerPed(-1), ChosenAnimation, 0, true)
@@ -262,14 +269,14 @@ function OnEmotePlay(EmoteName)
       else
         --EmoteChatMessage("This emote is male only, sorry!")
       end return
-    elseif ChosenDict == "ScenarioObject" then
+    elseif ChosenDict == "ScenarioObject" then if InVehicle then return end
       BehindPlayer = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 0 - 0.5, -0.5);
       ClearPedTasks(GetPlayerPed(-1))
       TaskStartScenarioAtPosition(GetPlayerPed(-1), ChosenAnimation, BehindPlayer['x'], BehindPlayer['y'], BehindPlayer['z'], GetEntityHeading(PlayerPedId()), 0, 1, false)
       DebugPrint("Playing scenario = ("..ChosenAnimation..")")
       IsInAnimation = true
       return
-    elseif ChosenDict == "Scenario" then
+    elseif ChosenDict == "Scenario" then if InVehicle then return end
       ClearPedTasks(GetPlayerPed(-1))
       TaskStartScenarioInPlace(GetPlayerPed(-1), ChosenAnimation, 0, true)
       DebugPrint("Playing scenario = ("..ChosenAnimation..")")
@@ -284,13 +291,23 @@ function OnEmotePlay(EmoteName)
         MovementType = 1
       if EmoteName.AnimationOptions.EmoteMoving then
         MovementType = 51
-      end
-  elseif EmoteName.AnimationOptions.EmoteMoving then
-    MovementType = 51
-  end
-  else
-    MovementType = 0
-  end
+    end
+  
+    elseif EmoteName.AnimationOptions.EmoteMoving then
+      MovementType = 51
+    elseif EmoteName.AnimationOptions.EmoteMoving == false then
+      MovementType = 0
+    elseif EmoteName.AnimationOptions.EmoteStuck then
+      MovementType = 50
+    end
+  
+    else
+      MovementType = 0
+    end
+  
+    if InVehicle == 1 then
+      MovementType = 51
+    end
 
   if EmoteName.AnimationOptions then
     if EmoteName.AnimationOptions.EmoteDuration == nil then 

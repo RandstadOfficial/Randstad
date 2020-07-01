@@ -124,12 +124,12 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
         if tier ~= 4 then
             if Config.RewardTypes[itemType].type == "item" then
                 local item = Config.LockerRewardsPaleto["tier"..tier][math.random(#Config.LockerRewardsPaleto["tier"..tier])]
-                local itemAmount = math.random(item.minAmount, item.maxAmount) + 1
+                local itemAmount = math.random(item.minAmount, item.maxAmount)
 
                 ply.Functions.AddItem(item.item, itemAmount)
                 TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[item.item], "add")
             elseif Config.RewardTypes[itemType].type == "money" then
-                local moneyAmount = math.random(1000, 5000)
+                local moneyAmount = math.random(1500, 5000)
                 ply.Functions.AddMoney('cash', moneyAmount, "paleto-bankrobbery")
             end
         else
@@ -140,24 +140,25 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
         local itemType = math.random(#Config.RewardTypes)
         local tierChance = math.random(1, 100)
         local tier = 1
-        if tierChance < 10 then tier = 1 elseif tierChance >= 25 and tierChance < 50 then tier = 2 elseif tierChance >= 50 and tierChance < 95 then tier = 3 else tier = 4 end
+        if tierChance < 10 then 
+            tier = 1 
+        elseif tierChance >= 25 and tierChance < 50 then 
+            tier = 2 
+        elseif tierChance >= 50 and tierChance < 95 then 
+            tier = 3 
+        else 
+            tier = 4 
+        end
+        
         if tier ~= 4 then
             if Config.RewardTypes[itemType].type == "item" then
-                local item = Config.LockerRewards["tier"..tier][math.random(#Config.LockerRewards["tier"..tier])]
-                local maxAmount = item.maxAmount
-                if tier == 3 then
-                    maxAmount = 7
-                elseif tier == 2 then
-                    maxAmount = 18
-                else
-                    maxAmount = 25
-                end
-                local itemAmount = math.random(maxAmount)
+                local item = Config.LockerRewardsPacific["tier"..tier][math.random(#Config.LockerRewardsPacific["tier"..tier])]
+                local itemAmount = math.random(item.minAmount, item.maxAmount)
 
                 ply.Functions.AddItem(item.item, itemAmount)
                 TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[item.item], "add")
             elseif Config.RewardTypes[itemType].type == "money" then
-                local moneyAmount = math.random(1200, 7000)
+                local moneyAmount = math.random(2000, 7000)
                 ply.Functions.AddMoney('cash', moneyAmount, "pacific-bankrobbery")
             end
         else
