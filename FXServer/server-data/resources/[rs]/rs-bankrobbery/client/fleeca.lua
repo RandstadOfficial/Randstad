@@ -235,19 +235,19 @@ RegisterNetEvent('rs-bankrobbery:client:setBankState')
 AddEventHandler('rs-bankrobbery:client:setBankState', function(bankId, state)
     if bankId == "paleto" then
         Config.BigBanks["paleto"]["isOpened"] = state
-        TriggerServerEvent('rs-bankrobbery:server:setTimeout')
+        --TriggerServerEvent('rs-bankrobbery:server:setTimeout')
         if state then
             OpenPaletoDoor()
         end
     elseif bankId == "pacific" then
         Config.BigBanks["pacific"]["isOpened"] = state
-        TriggerServerEvent('rs-bankrobbery:server:setTimeout')
+        --TriggerServerEvent('rs-bankrobbery:server:setTimeout')
         if state then
             OpenPacificDoor()
         end
     else
         Config.SmallBanks[bankId]["isOpened"] = state
-        TriggerServerEvent('rs-bankrobbery:server:setTimeout')
+        --TriggerServerEvent('rs-bankrobbery:server:setTimeout')
         if state then
             OpenBankDoor(bankId)
         end

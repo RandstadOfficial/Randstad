@@ -32,18 +32,21 @@ AddEventHandler('rs-bankrobbery:server:setBankState', function(bankId, state)
         TriggerClientEvent('rs-bankrobbery:client:setBankState', -1, bankId, state)
         if not robberyBusy then
             TriggerEvent('rs-scoreboard:server:SetActivityBusy', "bankrobbery", true)
+            TriggerEvent('rs-bankrobbery:server:setTimeout')
         end
     elseif bankId == "pacific" then
         Config.BigBanks["pacific"]["isOpened"] = state
         TriggerClientEvent('rs-bankrobbery:client:setBankState', -1, bankId, state)
         if not robberyBusy then
             TriggerEvent('rs-scoreboard:server:SetActivityBusy', "pacific", true)
+            TriggerEvent('rs-bankrobbery:server:setTimeout')
         end
     else
         Config.SmallBanks[bankId]["isOpened"] = state
         TriggerClientEvent('rs-bankrobbery:client:setBankState', -1, bankId, state)
         if not robberyBusy then
             TriggerEvent('rs-scoreboard:server:SetActivityBusy', "bankrobbery", true)
+            TriggerEvent('rs-bankrobbery:server:setTimeout')
         end
     end
     
@@ -180,7 +183,7 @@ AddEventHandler('rs-bankrobbery:server:setTimeout', function()
     if not timeOut then
         timeOut = true
         Citizen.CreateThread(function()
-            Citizen.Wait(30 * 60 * 1000)
+            Citizen.Wait(60 * 1000 * 60)
 
             for k,_ in pairs(Config.SmallBanks) do
                 Config.SmallBanks[k]["isOpened"] = false
@@ -188,6 +191,7 @@ AddEventHandler('rs-bankrobbery:server:setTimeout', function()
                     v["isOpened"] = false
                 end
             end
+            TriggerClientEvent('rs-bankrobbery:client:ClearTimeoutDoors', -1)
             timeOut = false
             robberyBusy = false
             TriggerEvent('rs-scoreboard:server:SetActivityBusy', "bankrobbery", false)
