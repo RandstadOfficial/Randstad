@@ -49,8 +49,7 @@ Citizen.CreateThread(function()
     end
     if counter == maxJumps and (timestampMaxJump - timestampFirstJump) < (maxJumps * thresholdMsPerJump) then
       ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', 0.08) -- change this float to increase/decrease camera shake
-      SetPedToRagdoll(GetPlayerPed(-1), 1000, 1000, 0, 0, 0, 0)
-      print("tried to jump abuse")    
+      SetPedToRagdoll(GetPlayerPed(-1), 1000, 1000, 0, 0, 0, 0) 
     elseif counter >= maxJumps then
       counter = 0
       msPassed = 0
