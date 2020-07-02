@@ -12,18 +12,65 @@ Config.Keys = {
 }
 
 Config.Locations = {
-    ["courthouse"] = {
-        enter = {
-            x = 234.83, 
-            y = -390.8, 
-            z = -84.94, 
-            h = 178.5,
+    ["advocaat1"] = {
+        label = "Advocaten Randstad",
+        ["ingangvoor"] = {
+            label = "Ga advocatenbureau binnen",
+            coords = {
+                x = 68.65488, 
+                y = -958.782, 
+                z = 29.80383, 
+                h = 159.40426,
+            }
         },
-        exit = {
-            x = 233.01, 
-            y = -411.27, 
-            z = 48.11, 
-            h = 342.5,
+        ["uitgangvoor"] = {
+            label = "Ga naar vooringang",
+            coords = {
+                x = -77.69307, 
+                y = -833.7542, 
+                z = 243.3859, 
+                h = 54.14149,
+            }
         },
+        ["ingangachter"] = {
+            label = "Ga advocatenbureau binnen",
+            coords = {
+                x = 56.00237, 
+                y = -913.7177, 
+                z = 30.19467, 
+                h = 68.25354,
+            }
+        },
+        ["uitgangachter"] = {
+            label = "Ga naar parkeerplaats",
+            coords = {
+                x = -80.47454, 
+                y = -832.7958, 
+                z = 243.3858, 
+                h = 251.3368,
+            }
+        },
+        ["voertuigopslag"] = {
+            label = "Voertuig opslag",
+            coords = {
+                x = 50.21746, 
+                y = -912.959, 
+                z = 29.8252, 
+                h = 162.07067,
+            }
+        },
+        ["kledingkast"] = {
+            label = "Kledingkast",
+            coords = {
+                x = -78.67842, 
+                y = -812.2921, 
+                z = 243.386, 
+                h = 66.7358,
+            }
+        }
     }
+}
+
+Config.Vehicles = {
+    ["advocaat"] = "Audi Q5",
 }
