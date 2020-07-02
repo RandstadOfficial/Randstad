@@ -10,7 +10,7 @@ Keys = {
 	["NENTER"] = 201, ["N4"] = 108, ["N5"] = 60, ["N6"] = 107, ["N+"] = 96, ["N-"] = 97, ["N7"] = 117, ["N8"] = 61, ["N9"] = 118
 }
 
-isLoggedIn = true
+isLoggedIn = false
 
 isHandcuffed = false
 cuffType = 1
@@ -370,7 +370,7 @@ AddEventHandler('police:client:PoliceLocationAlert', function(callsign, streetLa
 end)
 
 RegisterNetEvent('police:client:GunShotAlert')
-AddEventHandler('police:client:GunShotAlert', function(streetLabel, isAutomatic, fromVehicle, coords, vehicleInfo)
+AddEventHandler('police:client:GunShotAlert', function(streetLabel, fromVehicle, coords, vehicleInfo)
     if PlayerJob.name == 'police' and onDuty then        
         local msg = ""
         local blipSprite = 313

@@ -4,7 +4,7 @@ TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 local DrivingSchools = {
     "YND19022", -- Maestro (Mahmut)
     "FTL45116", -- Maestro (Admin)
-    "GJU69592", -- Maestro (Mr Epic)
+    "YMK83288", -- Souvereign King
     "",
 }
 

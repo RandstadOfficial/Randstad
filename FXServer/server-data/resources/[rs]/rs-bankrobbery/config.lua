@@ -88,7 +88,7 @@ Config.LockerRewards = {
         [1] = {item = "goldchain", minAmount = 5, maxAmount = 15},
     },
     ["tier2"] = {
-        [1] = {item = "rolex", minAmount = 5, maxAmount = 10},
+        [1] = {item = "rolex", minAmount = 5, maxAmount = 15},
     },
     ["tier3"] = {
         [1] = {item = "goldbar", minAmount = 2, maxAmount = 4},
@@ -97,13 +97,25 @@ Config.LockerRewards = {
 
 Config.LockerRewardsPaleto = {
     ["tier1"] = {
-        [1] = {item = "goldchain", minAmount = 10, maxAmount = 25},
+        [1] = {item = "goldchain", minAmount = 10, maxAmount = 20},
     },
     ["tier2"] = {
-        [1] = {item = "rolex", minAmount = 7, maxAmount = 15},
+        [1] = {item = "rolex", minAmount = 10, maxAmount = 20},
     },
     ["tier3"] = {
-        [1] = {item = "goldbar", minAmount = 2, maxAmount = 5},
+        [1] = {item = "goldbar", minAmount = 3, maxAmount = 6},
+    },
+}
+
+Config.LockerRewardsPacific = {
+    ["tier1"] = {
+        [1] = {item = "goldchain", minAmount = 15, maxAmount = 25},
+    },
+    ["tier2"] = {
+        [1] = {item = "rolex", minAmount = 15, maxAmount = 25},
+    },
+    ["tier3"] = {
+        [1] = {item = "goldbar", minAmount = 4, maxAmount = 8},
     },
 }
 

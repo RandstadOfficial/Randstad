@@ -160,6 +160,7 @@ Config.Vehicles = {
         ["paudi"] = "Audi A6",
         ["pyamahamotor"] = "Yamaha Motor",
         ["pbmwmotor2"] = "BMW Motor",
+        ["pbmwm5"] = "BMW M5 Unmarked (ALLEEN DSI)",
     },
     [4] = { -- Hoofdagent
         ["ptouran"] = "Volkswagen Touran",
@@ -172,6 +173,7 @@ Config.Vehicles = {
         ["pbmwmotor2"] = "BMW Motor",
         ["pschafter"] = "Unmarked Schafter",
         ["poracle"] = "Unmarked Oracle",
+        ["pbmwm5"] = "BMW M5 Unmarked (ALLEEN DSI)",
     },
     [5] = { -- Brigadier
         ["ptouran"] = "Volkswagen Touran",
@@ -185,7 +187,7 @@ Config.Vehicles = {
         ["pschafter"] = "Unmarked Schafter",
         ["poracle"] = "Unmarked Oracle",
         ["pa45"] = "Mercedes A45 Unmarked",
-        ["pbmwm5"] = "BMW M5 Unmarked (DSI)",
+        ["pbmwm5"] = "BMW M5 Unmarked (ALLEEN DSI)",
     },
     [6] = { -- Inspecteur
         ["ptouran"] = "Volkswagen Touran",

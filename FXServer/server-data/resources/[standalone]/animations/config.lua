@@ -5,6 +5,8 @@ Config = {
 	EnableXtoCancel = true,
 -- Set this to true if you want to disarm the player when they play an emote.
 	DisarmPlayer= false,
+-- Set this if you really wanna disable emotes in cars, as of 1.7.2 they only play the upper body part if in vehicle
+    AllowedInCars = true,
 -- You can disable the (F3) menu here / change the keybind
 	MenuKeybindEnabled = false,
 -- You can disable the Favorite emote keybinding here.

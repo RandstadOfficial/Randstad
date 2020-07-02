@@ -43,6 +43,23 @@ RSCore.Commands.Add("removelawyer", "Verwijder iemand in als advocaat", {{name="
     end
 end)
 
+RSCore.Commands.Add("advocatenpas", "Krijg een advocaten pas (je oude vervalt)", {}, false, function(source, args)
+    local Player = RSCore.Functions.GetPlayer(source)
+    if Player.PlayerData.job.name == "lawyer" or Player.PlayerData.job.name == "judge" then
+        local lawyerInfo = {
+            id = math.random(100000, 999999),
+            firstname = Player.PlayerData.charinfo.firstname,
+            lastname = Player.PlayerData.charinfo.lastname,
+            citizenid = Player.PlayerData.citizenid,
+        }
+        Player.Functions.AddItem("lawyerpass", 1, false, lawyerInfo)
+        TriggerClientEvent('inventory:client:ItemBox', source, RSCore.Shared.Items["lawyerpass"], "add")
+        TriggerClientEvent("RSCore:Notify", source, "Je hebt een advocaten pas ontvangen")
+    else
+        TriggerClientEvent("RSCore:Notify", source, "Je hebt hier geen rechten voor..", "error")
+    end
+end)
+
 RSCore.Functions.CreateUseableItem("lawyerpass", function(source, item)
     local Player = RSCore.Functions.GetPlayer(source)
 	if Player.Functions.GetItemBySlot(item.slot) ~= nil then
