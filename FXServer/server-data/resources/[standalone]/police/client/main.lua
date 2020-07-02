@@ -165,7 +165,7 @@ AddEventHandler('RSCore:Client:OnPlayerUnload', function()
     ClearPedTasks(GetPlayerPed(-1))
     DetachEntity(GetPlayerPed(-1), true, false)
     if DutyBlips ~= nil then 
-        for k, v in ipairs(DutyBlips) do
+        for k, v in pairs(DutyBlips) do
             RemoveBlip(v)
         end
         DutyBlips = {}

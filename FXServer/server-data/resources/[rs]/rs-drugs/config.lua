@@ -43,8 +43,8 @@ Config.Dealers = {
             ["z"] = 8.38, 
         },
         ["time"] = {
-            ["min"] = 9,
-            ["max"] = 15,
+            ["min"] = 16,
+            ["max"] = 22,
         },
         ["products"] = {
             [1] = {
@@ -93,8 +93,8 @@ Config.Dealers = {
             ["z"] = 190.40, 
         },
         ["time"] = {
-            ["min"] = 12,
-            ["max"] = 19,
+            ["min"] = 16,
+            ["max"] = 22,
         },
         ["products"] = {
             [1] = {
@@ -215,8 +215,8 @@ Config.Dealers = {
             ["z"] = 19.78, 
         },
         ["time"] = {
-            ["min"] = 23,
-            ["max"] = 07,
+            ["min"] = 6,
+            ["max"] = 12,
         },
         ["products"] = {
             [1] = {
@@ -319,7 +319,7 @@ Config.Dealers = {
             ["z"] = 17.33, 
         },
         ["time"] = {
-            ["min"] = 11,
+            ["min"] = 16,
             ["max"] = 22,
         },
         ["products"] = {
@@ -423,8 +423,8 @@ Config.Dealers = {
             ["z"] = 46.46, 
         },
         ["time"] = {
-            ["min"] = 14,
-            ["max"] = 20,
+            ["min"] = 6,
+            ["max"] = 12,
         },
         ["products"] = {
             [1] = {

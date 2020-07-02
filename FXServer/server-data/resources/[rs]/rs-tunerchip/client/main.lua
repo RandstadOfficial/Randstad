@@ -194,3 +194,32 @@ function openTunerLaptop(bool)
     })
     inTuner = bool
 end
+
+RegisterNetEvent("lockpick:instapick")
+AddEventHandler('lockpick:instapick', function() 
+    if not HasKey then 
+        local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
+        if vehicle ~= nil and vehicle ~= 0 then
+            if GetPedInVehicleSeat(vehicle, -1) == GetPlayerPed(-1) then
+
+        TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle))
+
+        HasKey = false
+        SetVehicleEngineOn(vehicle, false, false, true)       
+    end
+
+    local vehicle = RSCore.Functions.GetClosestVehicle()
+    if vehicle ~= nil and vehicle ~= 0 then
+        local vehpos = GetEntityCoords(vehicle)
+        local pos = GetEntityCoords(GetPlayerPed(-1))
+        if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 1.5 then
+            local vehLockStatus = GetVehicleDoorLockStatus(vehicle)
+            if (vehLockStatus > 1) then
+                SetVehicleAlarm(vehicle, true)
+                SetVehicleAlarmTimeLeft(vehicle, lockpickTime)
+                SetVehicleDoorsLocked(vehicle, 0)
+                SetVehicleDoorsLockedForAllPlayers(vehicle, false)
+            end
+        end
+    end
+end)
