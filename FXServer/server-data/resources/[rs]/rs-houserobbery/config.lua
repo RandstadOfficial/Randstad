@@ -20,22 +20,54 @@ Config.MinimumTime = 22
 Config.MaximumTime = 5
 
 Config.Rewards = {
-    ["cabin"] = {
-        "plastic",
-        "diamond_ring",
-        "goldchain",
+    [1] = {
+        ["cabin"] = {
+            "plastic",
+            "diamond_ring",
+            "goldchain",
+        },
+        ["kitchen"] = {
+            "tosti",
+            "sandwich",
+            "goldchain",
+        },
+        ["chest"] = {
+            "plastic",
+            "rolex",
+            "diamond_ring",
+            "goldchain",
+        },
     },
-    ["kitchen"] = {
-        "tosti",
-        "sandwich",
-        "goldchain",
-    },
-    ["chest"] = {
-        "plastic",
-        "rolex",
-        "diamond_ring",
-        "goldchain",
-    },
+    [3] = {
+        ["cabin"] = {
+            "plastic",
+            "diamond_ring",
+            "goldchain",
+        },
+        ["kitchen"] = {
+            "tosti",
+            "sandwich",
+            "goldchain",
+        },
+        ["chest"] = {
+            "plastic",
+            "rolex",
+            "diamond_ring",
+            "goldchain",
+        },
+        ["safe"] = {
+            "plastic",
+            "rolex",
+            "diamond_ring",
+            "goldchain",
+            "goldbar"
+        },
+        ["nightstand"] = {
+            "rolex",
+            "diamond_ring",
+            "goldchain"
+        },
+    }
 }
 
 Config.Houses = {
