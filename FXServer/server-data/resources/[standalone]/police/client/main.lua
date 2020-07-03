@@ -240,27 +240,41 @@ AddEventHandler('police:client:SendPoliceEmergencyAlert', function()
 
     local MyId = GetPlayerServerId(PlayerId())
 
-    TriggerServerEvent("police:server:SendPoliceEmergencyAlert", streetLabel, pos, RSCore.Functions.GetPlayerData().metadata["callsign"])
-    TriggerServerEvent('rs-policealerts:server:AddPoliceAlert', {
-        timeOut = 10000,
-        alertTitle = alertTitle,
-        coords = {
-            x = pos.x,
-            y = pos.y,
-            z = pos.z,
-        },
-        details = {
-            [1] = {
-                icon = '<i class="fas fa-passport"></i>',
-                detail = MyId .. ' | ' .. RSCore.Functions.GetPlayerData().charinfo.firstname .. ' ' .. RSCore.Functions.GetPlayerData().charinfo.lastname,
-            },
-            [2] = {
-                icon = '<i class="fas fa-globe-europe"></i>',
-                detail = streetLabel,
-            },
-        },
-        callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
-    }, true)
+    RSCore.Functions.TriggerCallback('rs-radio:server:GetItem', function(hasItem)
+        if hasItem then
+            TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "emergency", 0.2)
+            TriggerServerEvent("police:server:SendPoliceEmergencyAlert", streetLabel, pos, RSCore.Functions.GetPlayerData().metadata["callsign"])
+            TriggerServerEvent('rs-policealerts:server:AddPoliceAlert', {
+                timeOut = 10000,
+                alertTitle = alertTitle,
+                coords = {
+                    x = pos.x,
+                    y = pos.y,
+                    z = pos.z,
+                },
+                details = {
+                    [1] = {
+                        icon = '<i class="fas fa-passport"></i>',
+                        detail = MyId .. ' | ' .. RSCore.Functions.GetPlayerData().charinfo.firstname .. ' ' .. RSCore.Functions.GetPlayerData().charinfo.lastname,
+                    },
+                    [2] = {
+                        icon = '<i class="fas fa-globe-europe"></i>',
+                        detail = streetLabel,
+                    },
+                },
+                callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+            }, true)
+            RequestAnimDict("random@arrests");
+            while not HasAnimDictLoaded("random@arrests") do
+                Wait(5);
+            end
+            TaskPlayAnim(PlayerPedId(),"random@arrests","generic_radio_chatter", 8.0, 0.0, -1, 49, 0, 0, 0, 0);
+            Citizen.Wait(2000)
+            StopAnimTask(PlayerPedId(), "random@arrests","generic_radio_chatter", -4.0);
+        else
+            RSCore.Functions.Notify('Je hebt geen portofoon op zak!', 'error')                
+        end
+    end, "radio")
 end)
 
 RegisterNetEvent('police:client:SendPoliceLocation')
