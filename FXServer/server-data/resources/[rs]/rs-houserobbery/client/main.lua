@@ -156,6 +156,10 @@ function enterRobberyHouse(house)
     local coords = { x = Config.Houses[house]["coords"]["x"], y = Config.Houses[house]["coords"]["y"], z= Config.Houses[house]["coords"]["z"] - Config.MinZOffset}
     if Config.Houses[house]["tier"] == 1 then
         data = exports['rs-interior']:CreateTier1HouseFurnished(coords)
+    elseif Config.Houses[house]["tier"] == 2 then
+        data = exports['rs-interior']:CreateHotelFurnished(coords)
+    elseif Config.Houses[house]["tier"] == 3 then
+        data = exports['rs-interior']:CreateTier3HouseFurnished(coords)
     end
     Citizen.Wait(100)
     houseObj = data[1]
