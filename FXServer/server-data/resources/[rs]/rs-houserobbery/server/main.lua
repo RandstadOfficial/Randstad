@@ -17,9 +17,42 @@ AddEventHandler('rs-houserobbery:server:enterHouse', function(house)
         ResetHouseStateTimer(house)
         TriggerClientEvent('rs-houserobbery:client:setHouseState', -1, house, true)
     end
+    ClearPedAnimsInsideHouse(house)
+    Citizen.Wait(100)
     TriggerClientEvent('rs-houserobbery:client:enterHouse', src, house)
     Config.Houses[house]["opened"] = true
 end)
+
+function ClearPedAnimsInsideHouse(house)
+    local coords = { x = Config.Houses[house]["coords"]["x"], y = Config.Houses[house]["coords"]["y"], z= Config.Houses[house]["coords"]["z"] - Config.MinZOffset}
+    local peds = RSCore.Functions.GetPlayersFromCoords(coords, 50)
+
+    for i=1, #peds, 1 do
+        local ped = peds[i]
+        ClearPedTasks(ped)
+        StopAnimTask(ped)
+        StopAnimPlayback(ped)
+        ClearPedTasksImmediately(ped)
+        DestroyAllProps()
+	end
+end
+
+function GetNearbyPeds()
+	local retval = nil
+	local PlayerPeds = {}
+    for _, player in ipairs(GetActivePlayers()) do
+        local ped = GetPlayerPed(player)
+        table.insert(PlayerPeds, ped)
+    end
+    local player = GetPlayerPed(-1)
+    local coords = GetEntityCoords(player)
+	local closestPed, closestDistance = RSCore.Functions.GetClosestPed(coords, PlayerPeds)
+	if not IsEntityDead(closestPed) and closestDistance < 50.0 then
+		retval = closestPed
+	end
+	return retval
+end
+
 
 function ResetHouseStateTimer(house)
     -- Cannot parse math.random "directly" inside the tonumber function
