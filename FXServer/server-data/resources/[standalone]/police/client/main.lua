@@ -242,7 +242,7 @@ AddEventHandler('police:client:SendPoliceEmergencyAlert', function()
 
     RSCore.Functions.TriggerCallback('rs-radio:server:GetItem', function(hasItem)
         if hasItem then
-            TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "emergency", 0.2)
+            TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "emergency", 0.3)
             TriggerServerEvent("police:server:SendPoliceEmergencyAlert", streetLabel, pos, RSCore.Functions.GetPlayerData().metadata["callsign"])
             TriggerServerEvent('rs-policealerts:server:AddPoliceAlert', {
                 timeOut = 10000,
