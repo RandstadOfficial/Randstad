@@ -60,8 +60,14 @@ AddEventHandler('rs-houserobbery:server:searchCabin', function(cabin, house)
         -- So theres 60% chance you only get 1 item, because itemCount is 1 by default.
 
         for i = 1, itemCount, 1 do
-            local randomItem = Config.Rewards[Config.Houses[house]["furniture"][cabin]["type"]][math.random(1, #Config.Rewards[Config.Houses[house]["furniture"][cabin]["type"]])]
+
+            -- Retrieve items from kind of furniture
+            local randomizedItems = Config.Rewards[Config.Houses[house]["tier"]][Config.Houses[house]["furniture"][cabin]["type"]]
+            -- Retrieve random item from furniture
+            local randomItem = randomizedItems[math.random(#randomizedItems)]
+
             local itemInfo = RSCore.Shared.Items[randomItem]
+            -- print(itemInfo)
             if math.random(1, 100) == 69 then -- 1% chance to get painkillers as item per itemcount
                 randomItem = pickSpecialReward()
                 itemInfo = RSCore.Shared.Items[randomItem]
@@ -74,6 +80,8 @@ AddEventHandler('rs-houserobbery:server:searchCabin', function(cabin, house)
                         itemAmount = math.random(10, 20) -- 15 to 20 pieces of plastic
                     elseif randomItem == "goldchain" then
                         itemAmount = math.random(3, 6) -- 3 to 6 pieces of goldchain
+                    elseif randomItem == "goldbar" then
+                        itemAmount = math.random(1, 2) -- 1 to 2 pieces of goldbar
                     end
                     Player.Functions.AddItem(randomItem, itemAmount)
                     --TriggerClientEvent('RSCore:Notify', src, '+'..itemAmount..' '..itemInfo["label"], 'success', 3500)
