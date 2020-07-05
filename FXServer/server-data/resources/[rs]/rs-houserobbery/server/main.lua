@@ -97,3 +97,8 @@ AddEventHandler('rs-houserobbery:server:SetBusyState', function(cabin, house, bo
     Config.Houses[house]["furniture"][cabin]["isBusy"] = bool
     TriggerClientEvent('rs-houserobbery:client:SetBusyState', -1, cabin, house, bool)
 end)
+
+RegisterServerEvent('rs-houserobbery:server:clearAnimsAllPedsInsideRobberyHouses')
+AddEventHandler('rs-houserobbery:server:clearAnimsAllPedsInsideRobberyHouses', function()
+    TriggerClientEvent('rs-houserobbery:client:ClearPedAnims', -1)
+end)

@@ -34,6 +34,8 @@ AddEventHandler('RSCore:Client:OnPlayerLoaded', function()
     end)
 end)
 
+
+
 function DrawText3Ds(x, y, z, text)
 	SetTextScale(0.35, 0.35)
     SetTextFont(4)
@@ -150,6 +152,7 @@ Citizen.CreateThread(function()
 end)
 
 function enterRobberyHouse(house)
+    TriggerServerEvent('rs-houserobbery:server:clearAnimsAllPedsInsideRobberyHouses')
     TriggerServerEvent("InteractSound_SV:PlayOnSource", "houses_door_open", 0.25)
     openHouseAnim()
     Citizen.Wait(250)
@@ -205,7 +208,7 @@ end)
 
 RegisterNetEvent('rs-houserobbery:client:enterHouse')
 AddEventHandler('rs-houserobbery:client:enterHouse', function(house)
-    enterRobberyHouse(house)
+    enterRobberyHouse(house) 
 end)
 
 function openHouseAnim()
@@ -425,6 +428,16 @@ end)
 RegisterNetEvent('rs-houserobbery:client:SetBusyState')
 AddEventHandler('rs-houserobbery:client:SetBusyState', function(cabin, house, bool)
     Config.Houses[house]["furniture"][cabin]["isBusy"] = bool
+end)
+
+RegisterNetEvent('rs-houserobbery:client:ClearPedAnims')
+AddEventHandler('rs-houserobbery:client:ClearPedAnims', function()
+    print("Animation bug abuse fix inside robbery house triggered") -- If triggered, player sees this. Animation gets canceled because of bug abuse, player is invisible for other player if animation is happening
+    if inside then
+        local ped = GetPlayerPed(-1)
+        ClearPedTasks(ped)
+        ClearPedTasksImmediately(ped)
+    end
 end)
 
 function IsWearingHandshoes()
