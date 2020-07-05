@@ -68,7 +68,7 @@ AddEventHandler('rs-houserobbery:server:searchCabin', function(cabin, house)
 
             local itemInfo = RSCore.Shared.Items[randomItem]
             -- print(itemInfo)
-            if math.random(1, 100) == 69 then -- 1% chance to get painkillers as item per itemcount
+            if math.random(1, 100) == 69 then -- 1% chance to get rare item as item per itemcount
                 randomItem = pickSpecialReward()
                 itemInfo = RSCore.Shared.Items[randomItem]
                 Player.Functions.AddItem(randomItem, 1)   
