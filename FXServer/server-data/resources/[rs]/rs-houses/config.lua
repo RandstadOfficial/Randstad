@@ -35,7 +35,34 @@ Config.Furniture = {
 			[25] = { ["object"] = "prop_couch_lg_02", ["price"] = 1000, ["label"] = "bank hout" },
 			[26] = { ["object"] = "apa_mp_h_stn_sofacorn_10", ["price"] = 5000, ["label"] = "hoekbank 4" },
 			[27] = { ["object"] = "apa_mp_h_yacht_sofa_02", ["price"] = 1000, ["label"] = "bruine bank" },
-			[28] = { ["object"] = "apa_mp_h_yacht_sofa_01", ["price"] = 5000, ["label"] = "witte lange bank" }
+			[28] = { ["object"] = "apa_mp_h_yacht_sofa_01", ["price"] = 5000, ["label"] = "witte lange bank" },
+			-- New decor
+			[29] = { ["object"] = "prop_couch_01", ["price"] = 1000, ["label"] = "bank kussens" },
+			[30] = { ["object"] = "prop_couch_03", ["price"] = 1000, ["label"] = "bank geel" },
+			[31] = { ["object"] = "prop_couch_04", ["price"] = 1000, ["label"] = "leren bank kussens" },
+			[32] = { ["object"] = "prop_couch_lg_05", ["price"] = 500, ["label"] = "bank corduroy" },
+			[33] = { ["object"] = "prop_couch_lg_06", ["price"] = 1000, ["label"] = "leren bank bruin 2" },
+			[34] = { ["object"] = "prop_couch_lg_07", ["price"] = 1000, ["label"] = "bank kussens 2" },
+			[35] = { ["object"] = "prop_couch_lg_08", ["price"] = 1000, ["label"] = "leren bank bruin 3" },
+			[36] = { ["object"] = "prop_couch_sm1_07", ["price"] = 500, ["label"] = "leren bank hoek" },
+			[37] = { ["object"] = "prop_couch_sm2_07", ["price"] = 500, ["label"] = "leren bank recht" },
+			[38] = { ["object"] = "prop_couch_sm_06", ["price"] = 500, ["label"] = "leren bank klein" },
+			[39] = { ["object"] = "apa_mp_h_stn_sofa2seat_02", ["price"] = 1000, ["label"] = "loveseat" },
+			[40] = { ["object"] = "apa_mp_h_stn_sofacorn_05", ["price"] = 5000, ["label"] = "hoekbank 5" },
+			[41] = { ["object"] = "apa_mp_h_stn_sofacorn_06", ["price"] = 5000, ["label"] = "hoekbank 6" },
+			[42] = { ["object"] = "apa_mp_h_stn_sofacorn_07", ["price"] = 5000, ["label"] = "hoekbank 7" },
+			[43] = { ["object"] = "apa_mp_h_stn_sofacorn_08", ["price"] = 5000, ["label"] = "hoekbank 8" },
+			[44] = { ["object"] = "apa_mp_h_stn_sofacorn_09", ["price"] = 5000, ["label"] = "hoekbank 9" },
+			[45] = { ["object"] = "ex_mp_h_off_sofa_003", ["price"] = 1000, ["label"] = "bank blauw stof" },
+			[46] = { ["object"] = "ex_mp_h_off_sofa_01", ["price"] = 1000, ["label"] = "bank wit leer" },
+			[47] = { ["object"] = "ex_mp_h_off_sofa_02", ["price"] = 1000, ["label"] = "bank zwart leer" },
+			[48] = { ["object"] = "hei_heist_stn_sofa2seat_03", ["price"] = 1000, ["label"] = "bank modern" },
+			[49] = { ["object"] = "hei_heist_stn_sofa2seat_06", ["price"] = 1000, ["label"] = "bank bruin" },
+			[50] = { ["object"] = "hei_heist_stn_sofa3seat_01", ["price"] = 1000, ["label"] = "chaise longue" },
+			[51] = { ["object"] = "hei_heist_stn_sofa3seat_02", ["price"] = 1000, ["label"] = "bank modern 2" },
+			[52] = { ["object"] = "hei_heist_stn_sofa3seat_06", ["price"] = 1000, ["label"] = "bank modern 3" },
+			[53] = { ["object"] = "imp_prop_impexp_sofabed_01a", ["price"] = 1000, ["label"] = "slaapbank" },
+			[54] = { ["object"] = "prop_t_sofa_02", ["price"] = 1000, ["label"] = "slaapbank2" }
 		},
 	},
 	["chairs"] = {
@@ -88,7 +115,39 @@ Config.Furniture = {
 			[45] = { ["object"] = "apa_mp_h_yacht_stool_01", ["price"] = 300, ["label"] = "witte pouffe" },
 			[46] = { ["object"] = "apa_mp_h_stn_chairarm_12", ["price"] = 500, ["label"] = "zitstoel 3" },
 			[47] = { ["object"] = "apa_mp_h_stn_chairstool_12", ["price"] = 300, ["label"] = "voetensteun" },
-			[48] = { ["object"] = "prop_chair_03", ["price"] = 100, ["label"] = "houten stoel" }
+			-- New decor
+			[48] = { ["object"] = "prop_chair_03", ["price"] = 100, ["label"] = "houten stoel" },
+			[49] = { ["object"] = "prop_couch_sm_05", ["price"] = 500, ["label"] = "corduroy fauteuil" },
+			[50] = { ["object"] = "prop_couch_sm_07", ["price"] = 300, ["label"] = "witte fauteuil 2" },
+			[51] = { ["object"] = "prop_couch_sm_02", ["price"] = 300, ["label"] = "oranje fauteuil" },
+			[52] = { ["object"] = "apa_mp_h_stn_sofa_daybed_01", ["price"] = 500, ["label"] = "loungestoel" },
+			[53] = { ["object"] = "apa_mp_h_stn_sofa_daybed_02", ["price"] = 500, ["label"] = "loungestoel 2" },
+			[54] = { ["object"] = "apa_mp_h_din_chair_04", ["price"] = 500, ["label"] = "moderne stoel" },
+			[55] = { ["object"] = "apa_mp_h_din_chair_08", ["price"] = 500, ["label"] = "moderne stoel 2" },
+			[56] = { ["object"] = "apa_mp_h_din_chair_09", ["price"] = 500, ["label"] = "moderne stoel 3" },
+			[57] = { ["object"] = "apa_mp_h_din_chair_12", ["price"] = 500, ["label"] = "moderne stoel 4" },
+			[58] = { ["object"] = "apa_mp_h_din_stool_04", ["price"] = 500, ["label"] = "moderne stoel 5" },
+			[59] = { ["object"] = "apa_mp_h_stn_chairarm_01", ["price"] = 500, ["label"] = "moderne stoel 6" },
+			[60] = { ["object"] = "apa_mp_h_stn_chairarm_02", ["price"] = 500, ["label"] = "moderne stoel 7" },
+			[61] = { ["object"] = "apa_mp_h_stn_chairarm_03", ["price"] = 500, ["label"] = "moderne stoel 8" },
+			[62] = { ["object"] = "apa_mp_h_stn_chairarm_09", ["price"] = 500, ["label"] = "moderne stoel 9" },
+			[63] = { ["object"] = "apa_mp_h_stn_chairarm_11", ["price"] = 500, ["label"] = "moderne stoel 10" },
+			[64] = { ["object"] = "apa_mp_h_stn_chairarm_13", ["price"] = 500, ["label"] = "moderne stoel 11" },
+			[65] = { ["object"] = "apa_mp_h_stn_chairarm_24", ["price"] = 500, ["label"] = "moderne stoel 12" },
+			[66] = { ["object"] = "apa_mp_h_stn_chairarm_25", ["price"] = 500, ["label"] = "moderne stoel 13" },
+			[67] = { ["object"] = "apa_mp_h_stn_chairarm_26", ["price"] = 500, ["label"] = "moderne stoel 14" },
+			[68] = { ["object"] = "apa_mp_h_stn_chairstrip_04", ["price"] = 500, ["label"] = "moderne stoel 15" },
+			[69] = { ["object"] = "apa_mp_h_stn_chairstrip_05", ["price"] = 500, ["label"] = "moderne stoel 16" },
+			[70] = { ["object"] = "apa_mp_h_stn_chairstrip_08", ["price"] = 500, ["label"] = "moderne stoel 17" },
+			[71] = { ["object"] = "apa_mp_h_stn_foot_stool_01", ["price"] = 500, ["label"] = "pouffe" },
+			[72] = { ["object"] = "apa_mp_h_stn_foot_stool_02", ["price"] = 500, ["label"] = "pouffe 2" },
+			[73] = { ["object"] = "apa_mp_h_yacht_barstool_01", ["price"] = 500, ["label"] = "barkruk 2" },
+			[74] = { ["object"] = "ba_prop_int_glam_stool", ["price"] = 500, ["label"] = "barkruk 3" },
+			[75] = { ["object"] = "ba_prop_int_glam_stool", ["price"] = 500, ["label"] = "barkruk 4" },
+			[76] = { ["object"] = "ba_prop_battle_club_chair_01", ["price"] = 500, ["label"] = "bureaustoel" },
+			[77] = { ["object"] = "ba_prop_battle_club_chair_02", ["price"] = 500, ["label"] = "bureaustoel 2" },
+			[78] = { ["object"] = "ba_prop_battle_club_chair_03", ["price"] = 500, ["label"] = "bureaustoel 3" },
+			[79] = { ["object"] = "ba_prop_battle_control_seat", ["price"] = 500, ["label"] = "gamingstoel" }
 		},
 	},
 	["beds"] = {
@@ -103,7 +162,15 @@ Config.Furniture = {
 			[7] = { ["object"] = "v_res_tre_bed2", ["price"] = 700, ["label"] = "T Bed" },	
 			[8] = { ["object"] = "v_res_tt_bed", ["price"] = 700, ["label"] = "TT Bed" },
 			[9] = { ["object"] = "apa_mp_h_bed_with_table_02", ["price"] = 5000, ["label"] = "fancy bed" },
-			[10] = { ["object"] = "apa_mp_h_bed_wide_05", ["price"] = 5000, ["label"] = "rood bed" }
+			[10] = { ["object"] = "apa_mp_h_bed_wide_05", ["price"] = 5000, ["label"] = "rood bed" },
+			-- decor
+			[11] = { ["object"] = "apa_mp_h_bed_double_08", ["price"] = 3000, ["label"] = "vierkant bed" },	
+			[12] = { ["object"] = "apa_mp_h_bed_double_09", ["price"] = 3000, ["label"] = "modern bed" },	
+			[13] = { ["object"] = "apa_mp_h_yacht_bed_01", ["price"] = 5000, ["label"] = "california king" },
+			[14] = { ["object"] = "apa_mp_h_yacht_bed_02", ["price"] = 5000, ["label"] = "california king 2" },
+			[15] = { ["object"] = "bkr_prop_biker_campbed_01", ["price"] = 100, ["label"] = "veldbed" },
+			[16] = { ["object"] = "ex_prop_exec_bed_01", ["price"] = 700, ["label"] = "klein bed" },
+			[17] = { ["object"] = "gr_prop_bunker_bed_01", ["price"] = 700, ["label"] = "klein bed 2" }
 		},	
 	},
 	["general"] = {
@@ -274,7 +341,11 @@ Config.Furniture = {
 			[50] = { ["object"] = "prop_pooltable_02", ["price"] = 1500, ["label"] = "pooltafel" },
 			[51] = { ["object"] = "prop_pool_rack_02", ["price"] = 100, ["label"] = "poolcues" },
 			[52] = { ["object"] = "v_club_vu_deckcase", ["price"] = 1000, ["label"] = "dj set" },
-			[53] = { ["object"] = "v_corp_servercln", ["price"] = 1000, ["label"] = "serverrack" } 
+			[53] = { ["object"] = "v_corp_servercln", ["price"] = 1000, ["label"] = "serverrack" },
+			-- new decor
+			[54] = { ["object"] = "ba_prop_battle_crate_art_02_bc", ["price"] = 5000, ["label"] = "gestolen kunst" },
+			[55] = { ["object"] = "ba_prop_battle_crate_m_antiques", ["price"] = 5000, ["label"] = "gestolen kunst 2" },
+			[55] = { ["object"] = "ba_prop_battle_crate_m_jewellery", ["price"] = 5000, ["label"] = "gestolen sieraden" } 
 		},
 	},
 	["general4"] = {
@@ -329,7 +400,19 @@ Config.Furniture = {
 			[47] = { ["object"] = "p_watch_03", ["price"] = 100, ["label"] = "Watch 3" },
 			[48] = { ["object"] = "p_watch_04", ["price"] = 100, ["label"] = "Watch 4" },
 			[49] = { ["object"] = "p_watch_05", ["price"] = 100, ["label"] = "Watch 5" },
-			[50] = { ["object"] = "p_watch_06", ["price"] = 100, ["label"] = "Watch 6" }
+			[50] = { ["object"] = "p_watch_06", ["price"] = 100, ["label"] = "Watch 6" },
+			-- new decor
+			[51] = { ["object"] = "apa_mp_h_acc_candles_01", ["price"] = 100, ["label"] = "kaars" },
+			[52] = { ["object"] = "apa_mp_h_acc_candles_02", ["price"] = 100, ["label"] = "kaars 2" },
+			[53] = { ["object"] = "apa_mp_h_acc_candles_04", ["price"] = 100, ["label"] = "kaars 3" },
+			[54] = { ["object"] = "apa_mp_h_acc_candles_06", ["price"] = 100, ["label"] = "kaars 4" },
+			[55] = { ["object"] = "apa_mp_h_acc_fruitbowl_02", ["price"] = 100, ["label"] = "fruitschaal" },
+			[56] = { ["object"] = "apa_mp_h_acc_tray_01", ["price"] = 100, ["label"] = "dingetjes" },
+			[52] = { ["object"] = "apa_mp_h_acc_candles_02", ["price"] = 100, ["label"] = "kaars 2" },
+			[53] = { ["object"] = "apa_mp_h_acc_candles_04", ["price"] = 100, ["label"] = "kaars 3" },
+			[54] = { ["object"] = "apa_mp_h_acc_candles_06", ["price"] = 100, ["label"] = "kaars 4" },
+			[55] = { ["object"] = "apa_mp_h_acc_fruitbowl_02", ["price"] = 100, ["label"] = "fruitschaal" },
+			[56] = { ["object"] = "apa_mp_h_acc_tray_01", ["price"] = 100, ["label"] = "dingetjes" }
 		},
 	},
 	["small"] = {
@@ -374,7 +457,14 @@ Config.Furniture = {
 			[37] = { ["object"] = "apa_mp_h_acc_dec_head_01", ["price"] = 300, ["label"] = "kunstwerk" },
 			[38] = { ["object"] = "apa_mp_h_acc_dec_sculpt_02", ["price"] = 300, ["label"] = "kunstwerk 2" },
 			[39] = { ["object"] = "ex_mp_h_acc_dec_plate_02", ["price"] = 300, ["label"] = "kunstwerk 3" },
-			[40] = { ["object"] = "apa_mp_h_acc_bowl_ceramic_01", ["price"] = 300, ["label"] = "schaal" }
+			[40] = { ["object"] = "apa_mp_h_acc_bowl_ceramic_01", ["price"] = 300, ["label"] = "schaal" },
+			-- new decor
+			[41] = { ["object"] = "apa_mp_h_acc_dec_plate_01", ["price"] = 300, ["label"] = "schaal 2" },
+			[42] = { ["object"] = "apa_mp_h_acc_vase_01", ["price"] = 300, ["label"] = "vaas zwartwit" },
+			[43] = { ["object"] = "apa_mp_h_acc_vase_02", ["price"] = 300, ["label"] = "vaas rood" },
+			[44] = { ["object"] = "apa_mp_h_acc_vase_05", ["price"] = 300, ["label"] = "vaas" },
+			[45] = { ["object"] = "apa_mp_h_acc_vase_06", ["price"] = 300, ["label"] = "vaas zwartwit 2" },
+			[46] = { ["object"] = "apa_mp_h_acc_dec_plate_01", ["price"] = 300, ["label"] = "schaal 2" }
 		},
 	},
 	["storage"] = {
@@ -422,7 +512,27 @@ Config.Furniture = {
 			[40] = { ["object"] = "apa_mp_h_str_sideboardl_06", ["price"] = 750, ["label"] = "kastje modern" },
 			[41] = { ["object"] = "apa_mp_h_str_sideboardl_09", ["price"] = 750, ["label"] = "kastje modern 2" },
 			[42] = { ["object"] = "apa_mp_h_str_shelfwallm_01", ["price"] = 750, ["label"] = "boekenkast 2" },
-			[43] = { ["object"] = "apa_mp_h_str_sideboardl_11", ["price"] = 750, ["label"] = "kastje modern 3" }
+			[43] = { ["object"] = "apa_mp_h_str_sideboardl_11", ["price"] = 750, ["label"] = "kastje modern 3" },
+			-- new decor
+			[44] = { ["object"] = "imp_prop_impexp_parts_rack_03a", ["price"] = 750, ["label"] = "auto onderdelen" },
+			[45] = { ["object"] = "imp_prop_impexp_parts_rack_04a", ["price"] = 750, ["label"] = "auto onderdelen 2" },
+			[46] = { ["object"] = "imp_prop_impexp_parts_rack_05a", ["price"] = 750, ["label"] = "auto onderdelen 3" },
+			[47] = { ["object"] = "apa_mp_h_bed_chestdrawer_02", ["price"] = 750, ["label"] = "ladekast" },
+			[48] = { ["object"] = "hei_heist_bed_chestdrawer_04", ["price"] = 750, ["label"] = "ladekast 2" },
+			[49] = { ["object"] = "prop_rub_cabinet", ["price"] = 50, ["label"] = "geroeste archiefkast" },
+			[50] = { ["object"] = "prop_tv_cabinet_03", ["price"] = 750, ["label"] = "tv kastje" },
+			[51] = { ["object"] = "prop_tv_cabinet_04", ["price"] = 750, ["label"] = "tv kastje 2" },
+			[52] = { ["object"] = "prop_tv_cabinet_05", ["price"] = 750, ["label"] = "tv kastje 3" },
+			[53] = { ["object"] = "imp_prop_impexp_parts_rack_05a", ["price"] = 750, ["label"] = "auto onderdelen 3" },
+			[54] = { ["object"] = "hei_heist_bed_chestdrawer_04", ["price"] = 750, ["label"] = "ladekast 2" },
+			[55] = { ["object"] = "prop_rub_cabinet", ["price"] = 50, ["label"] = "geroeste archiefkast" },
+			[56] = { ["object"] = "prop_tv_cabinet_03", ["price"] = 750, ["label"] = "tv kastje" },
+			[57] = { ["object"] = "prop_tv_cabinet_04", ["price"] = 750, ["label"] = "tv kastje 2" },
+			[58] = { ["object"] = "prop_tv_cabinet_05", ["price"] = 750, ["label"] = "tv kastje 3" },
+			[59] = { ["object"] = "apa_mp_h_str_shelffreel_01", ["price"] = 750, ["label"] = "ikea kast" },
+			[60] = { ["object"] = "apa_mp_h_str_sideboardl_13", ["price"] = 750, ["label"] = "kastje modern 4" },
+			[61] = { ["object"] = "apa_mp_h_str_sideboardl_14", ["price"] = 750, ["label"] = "kastje modern 5" },
+			[62] = { ["object"] = "apa_mp_h_str_sideboardm_02", ["price"] = 750, ["label"] = "kastje modern 6" }
 		},
 	},
 	["electronics"] = {
@@ -462,7 +572,24 @@ Config.Furniture = {
 			[32] = { ["object"] = "apa_mp_h_str_avunits_04", ["price"] = 5500, ["label"] = "flatscreen meubel" },
 			[33] = { ["object"] = "apa_mp_h_str_avunits_01", ["price"] = 5500, ["label"] = "flatscreen meubel 2" },
 			[34] = { ["object"] = "v_club_vu_deckcase", ["price"] = 1000, ["label"] = "dj set" },
-			[35] = { ["object"] = "v_corp_servercln", ["price"] = 1000, ["label"] = "serverrack" }
+			[35] = { ["object"] = "v_corp_servercln", ["price"] = 1000, ["label"] = "serverrack" },
+			-- new decor
+			[36] = { ["object"] = "apa_mp_h_str_avunitl_01_b", ["price"] = 5500, ["label"] = "flatscreen meubel 3" },
+			[37] = { ["object"] = "apa_mp_h_str_avunitl_04", ["price"] = 5500, ["label"] = "flatscreen meubel 4" },
+			[38] = { ["object"] = "apa_mp_h_str_avunitm_01", ["price"] = 5500, ["label"] = "flatscreen meubel 5" },
+			[39] = { ["object"] = "apa_mp_h_str_avunitm_03", ["price"] = 5500, ["label"] = "flatscreen meubel 6" },
+			[40] = { ["object"] = "apa_mp_h_str_avunits_04", ["price"] = 5500, ["label"] = "flatscreen meubel 7" },
+			[41] = { ["object"] = "v_res_printer", ["price"] = 300, ["label"] = "printer" },
+			[42] = { ["object"] = "apa_mp_h_acc_phone_01", ["price"] = 100, ["label"] = "ouderwetse telefoon" },
+			[43] = { ["object"] = "v_res_mousemat", ["price"] = 300, ["label"] = "muismat" },
+			[44] = { ["object"] = "v_res_pcheadset", ["price"] = 300, ["label"] = "headset" },
+			[45] = { ["object"] = "v_res_pcspeaker", ["price"] = 300, ["label"] = "PC speaker" },
+			[46] = { ["object"] = "v_res_pcwoofer", ["price"] = 300, ["label"] = "PC subwoofer" },
+			[47] = { ["object"] = "ba_prop_battle_club_speaker_small", ["price"] = 500, ["label"] = "kleine box" },
+			[48] = { ["object"] = "ba_prop_battle_club_speaker_med", ["price"] = 750, ["label"] = "box" },
+			[49] = { ["object"] = "ba_prop_battle_club_speaker_large", ["price"] = 1000, ["label"] = "grote box" },
+			[50] = { ["object"] = "v_res_pcspeaker", ["price"] = 300, ["label"] = "PC speaker" },
+			[51] = { ["object"] = "v_res_pcwoofer", ["price"] = 300, ["label"] = "PC subwoofer" }
 		},
 	},
 	["lighting"] = {
@@ -503,7 +630,36 @@ Config.Furniture = {
 			[33] = { ["object"] = "ba_prop_battle_lights_wall_l_b", ["price"] = 100, ["label"] = "muurlamp 3" },
 			[34] = { ["object"] = "hei_heist_lit_lightpendant_02", ["price"] = 300, ["label"] = "hanglamp 3" },
 			[35] = { ["object"] = "prop_oldlight_01b", ["price"] = 100, ["label"] = "muurlamp 4" },
-			[36] = { ["object"] = "apa_mp_h_lit_floorlampnight_07", ["price"] = 100, ["label"] = "blauwe lamp" }
+			[36] = { ["object"] = "apa_mp_h_lit_floorlampnight_07", ["price"] = 100, ["label"] = "blauwe lamp" },
+			-- new decor
+			[37] = { ["object"] = "apa_mp_h_ceiling_light_01", ["price"] = 100, ["label"] = "spotje" },
+			[38] = { ["object"] = "apa_mp_h_ceiling_light_01_day", ["price"] = 100, ["label"] = "spotje 2" },
+			[39] = { ["object"] = "apa_mp_h_ceiling_light_02", ["price"] = 100, ["label"] = "plafondlamp" },
+			[40] = { ["object"] = "apa_mp_h_ceiling_light_02_day", ["price"] = 100, ["label"] = "plafondlamp 2" },
+			[41] = { ["object"] = "ba_prop_battle_lights_ceiling_l_d", ["price"] = 100, ["label"] = "spotje 3" },
+			[42] = { ["object"] = "ba_prop_battle_lights_ceiling_l_f", ["price"] = 100, ["label"] = "plafondlamp 3" },
+			[43] = { ["object"] = "ba_prop_battle_lights_ceiling_l_e", ["price"] = 100, ["label"] = "plafondlamp 4" },
+			[44] = { ["object"] = "apa_mp_h_floorlamp_a", ["price"] = 100, ["label"] = "vloerlamp" },
+			[45] = { ["object"] = "apa_mp_h_floorlamp_b", ["price"] = 100, ["label"] = "vloerlamp 2" },
+			[46] = { ["object"] = "apa_mp_h_floorlamp_c", ["price"] = 100, ["label"] = "vloerlamp 3" },
+			[47] = { ["object"] = "apa_mp_h_floor_lamp_int_08", ["price"] = 100, ["label"] = "vloerlamp 4" },
+			[48] = { ["object"] = "apa_mp_h_lampbulb_multiple_a", ["price"] = 100, ["label"] = "plafondlamp 5" },
+			[49] = { ["object"] = "apa_mp_h_lit_floorlamp_02", ["price"] = 100, ["label"] = "vloerlamp 5" },
+			[50] = { ["object"] = "apa_mp_h_lit_floorlampnight_14", ["price"] = 100, ["label"] = "vloerlamp 6" },
+			[51] = { ["object"] = "apa_mp_h_lit_floorlamp_03", ["price"] = 100, ["label"] = "vloerlamp 7" },
+			[52] = { ["object"] = "apa_mp_h_lit_floorlamp_06", ["price"] = 100, ["label"] = "vloerlamp 8" },
+			[53] = { ["object"] = "apa_mp_h_lit_floorlamp_10", ["price"] = 100, ["label"] = "vloerlamp 9" },
+			[54] = { ["object"] = "apa_mp_h_lit_floorlamp_13", ["price"] = 100, ["label"] = "vloerlamp 10" },
+			[55] = { ["object"] = "apa_mp_h_lit_floorlamp_17", ["price"] = 100, ["label"] = "vloerlamp 11" },
+			[56] = { ["object"] = "apa_mp_h_lit_lamptablenight_16", ["price"] = 100, ["label"] = "nachtlampje" },
+			[57] = { ["object"] = "apa_mp_h_lit_lamptablenight_24", ["price"] = 100, ["label"] = "nachtlampje 2" },
+			[58] = { ["object"] = "apa_mp_h_lit_lamptable_005", ["price"] = 100, ["label"] = "nachtlampje 3" },
+			[59] = { ["object"] = "apa_mp_h_lit_lamptable_04", ["price"] = 100, ["label"] = "nachtlampje 4" },
+			[60] = { ["object"] = "apa_mp_h_lit_lamptable_09", ["price"] = 100, ["label"] = "nachtlampje 5" },
+			[61] = { ["object"] = "apa_mp_h_lit_lamptable_14", ["price"] = 100, ["label"] = "nachtlampje 6" },
+			[62] = { ["object"] = "apa_mp_h_lit_lamptable_17", ["price"] = 100, ["label"] = "nachtlampje 7" },
+			[63] = { ["object"] = "apa_mp_h_yacht_table_lamp_01", ["price"] = 100, ["label"] = "nachtlampje 8" }
+
 		},
 	},
 	["tables"] = {
@@ -548,7 +704,18 @@ Config.Furniture = {
 			[37] = { ["object"] = "ba_prop_int_trad_table", ["price"] = 300, ["label"] = "statafel" },
 			[38] = { ["object"] = "apa_mp_h_str_sideboards_02", ["price"] = 750, ["label"] = "bijzettafel glas" },
 			[39] = { ["object"] = "apa_mp_h_yacht_coffee_table_01", ["price"] = 750, ["label"] = "koffietafel modern" },
-			[40] = { ["object"] = "apa_mp_h_din_table_04", ["price"] = 1000, ["label"] = "eettafel glas" }
+			[40] = { ["object"] = "apa_mp_h_din_table_04", ["price"] = 1000, ["label"] = "eettafel glas" },
+			-- new decor
+			[41] = { ["object"] = "xm_prop_base_staff_desk_01", ["price"] = 5000, ["label"] = "bureau + setup" },
+			[42] = { ["object"] = "apa_mp_h_tab_coffee_07", ["price"] = 1000, ["label"] = "driehoekige bijzettafel" },
+			[43] = { ["object"] = "apa_mp_h_tab_coffee_08", ["price"] = 1000, ["label"] = "witte bijzettafel" },
+			[44] = { ["object"] = "apa_mp_h_tab_sidelrg_01", ["price"] = 1000, ["label"] = "glazen bijzettafel" },
+			[45] = { ["object"] = "apa_mp_h_tab_sidelrg_02", ["price"] = 1000, ["label"] = "glazen bijzettafel 2" },
+			[46] = { ["object"] = "apa_mp_h_tab_sidesml_01", ["price"] = 1000, ["label"] = "klaptafel" },
+			[47] = { ["object"] = "apa_mp_h_tab_sidesml_01", ["price"] = 1000, ["label"] = "kubus bijzettafel" },
+			[42] = { ["object"] = "ba_prop_int_edgy_table_01", ["price"] = 500, ["label"] = "tafel marmer" },
+			[43] = { ["object"] = "ba_prop_int_edgy_table_02", ["price"] = 500, ["label"] = "tafel marmer hoog" },
+			[44] = { ["object"] = "apa_mp_h_tab_sidelrg_01", ["price"] = 1000, ["label"] = "glazen bijzettafel" },
 		},
 	},
 	["plants"] = {
@@ -574,7 +741,34 @@ Config.Furniture = {
 			[18] = { ["object"] = "v_res_exoticvase", ["price"] = 300, ["label"] = "bloemenvaas 2" },
 			[19] = { ["object"] = "v_res_rosevase", ["price"] = 300, ["label"] = "rozenvaas" },
 			[20] = { ["object"] = "prop_pot_plant_6a", ["price"] = 300, ["label"] = "hangende plant" },
-			[21] = { ["object"] = "prop_pot_plant_02a", ["price"] = 300, ["label"] = "plantenpot" }	
+			[21] = { ["object"] = "prop_pot_plant_02a", ["price"] = 300, ["label"] = "plantenpot" },
+			-- New decor
+			[22] = { ["object"] = "apa_mp_h_acc_plant_palm_01", ["price"] = 300, ["label"] = "palm plant" },
+			[23] = { ["object"] = "prop_plant_interior_05a", ["price"] = 300, ["label"] = "bloemenbak" },
+			[24] = { ["object"] = "prop_plant_int_01a", ["price"] = 300, ["label"] = "plant" },
+			[25] = { ["object"] = "prop_plant_int_01b", ["price"] = 300, ["label"] = "plant 2" },
+			[26] = { ["object"] = "prop_plant_int_02a", ["price"] = 300, ["label"] = "plant 3" },
+			[27] = { ["object"] = "prop_plant_int_02b", ["price"] = 300, ["label"] = "plant 4" },
+			[28] = { ["object"] = "prop_plant_int_03a", ["price"] = 300, ["label"] = "plant 5" },
+			[29] = { ["object"] = "prop_plant_int_03b", ["price"] = 300, ["label"] = "plant 6" },
+			[30] = { ["object"] = "prop_plant_int_03c", ["price"] = 300, ["label"] = "plant 7" },
+			[31] = { ["object"] = "prop_plant_int_04a", ["price"] = 300, ["label"] = "plant 8" },
+			[32] = { ["object"] = "prop_plant_int_04c", ["price"] = 300, ["label"] = "plant 9" },
+			[33] = { ["object"] = "prop_plant_int_05b", ["price"] = 300, ["label"] = "bloemenbak 2" },
+			[34] = { ["object"] = "prop_pot_plant_01a", ["price"] = 300, ["label"] = "plantenpot 2" },
+			[35] = { ["object"] = "prop_pot_plant_01b", ["price"] = 300, ["label"] = "plantenpot 3" },
+			[36] = { ["object"] = "prop_pot_plant_01c", ["price"] = 300, ["label"] = "plantenpot 4" },
+			[37] = { ["object"] = "prop_pot_plant_01d", ["price"] = 300, ["label"] = "plantenpot 5" },
+			[38] = { ["object"] = "prop_pot_plant_01e", ["price"] = 300, ["label"] = "plantenpot 6" },
+			[39] = { ["object"] = "prop_pot_plant_03b", ["price"] = 300, ["label"] = "plantenpot 7" },
+			[40] = { ["object"] = "prop_pot_plant_05a", ["price"] = 300, ["label"] = "plantenpot 8" },
+			[41] = { ["object"] = "prop_pot_plant_05b", ["price"] = 300, ["label"] = "plantenpot 9" },
+			[42] = { ["object"] = "p_int_jewel_plant_01", ["price"] = 300, ["label"] = "plantenpot 10" },
+			[43] = { ["object"] = "p_int_jewel_plant_02", ["price"] = 300, ["label"] = "plantenpot 11" },
+			[44] = { ["object"] = "apa_mp_h_acc_vase_flowers_01", ["price"] = 300, ["label"] = "plantenpot 12" },
+			[45] = { ["object"] = "apa_mp_h_acc_vase_flowers_02", ["price"] = 300, ["label"] = "plantenpot 13" },
+			[46] = { ["object"] = "apa_mp_h_acc_vase_flowers_03", ["price"] = 300, ["label"] = "plantenpot 14" },
+			[47] = { ["object"] = "apa_mp_h_acc_vase_flowers_04", ["price"] = 300, ["label"] = "plantenpot 15" }	
 		},
 	},
 	["kitchen"] = {
@@ -612,7 +806,10 @@ Config.Furniture = {
 			[30] = { ["object"] = "v_res_mchopboard", ["price"] = 100, ["label"] = "snijplank" },
 			[31] = { ["object"] = "prop_cs_kitchen_cab_l", ["price"] = 750, ["label"] = "keukenkast breed" },
 			[32] = { ["object"] = "prop_cs_kitchen_cab_r", ["price"] = 500, ["label"] = "keukenkast smal" },
-			[33] = { ["object"] = "prop_cs_kitchen_cab_r", ["price"] = 500, ["label"] = "keukenkast smal" }
+			[33] = { ["object"] = "prop_cs_kitchen_cab_r", ["price"] = 500, ["label"] = "keukenkast smal" },
+			-- new decor
+			[34] = { ["object"] = "v_res_tre_fridge", ["price"] = 500, ["label"] = "koelkast" },
+			[35] = { ["object"] = "apa_mp_h_acc_coffeemachine_01", ["price"] = 500, ["label"] = "koffiezetapparaat" }
 		},
 	},
 	["bathroom"] = {
@@ -707,7 +904,9 @@ Config.Furniture = {
 			[13] = { ["object"] = "apa_mp_h_acc_artwalll_02", ["price"] = 750, ["label"] = "abstract schilderij 7" },
 			[14] = { ["object"] = "apa_mp_h_acc_artwallm_04", ["price"] = 750, ["label"] = "abstract schilderij 8" },
 			[15] = { ["object"] = "prop_dart_bd_cab_01", ["price"] = 250, ["label"] = "dartbord" },
-			[16] = { ["object"] = "prop_dart_bd_01", ["price"] = 250, ["label"] = "dartbord 2" }
+			[16] = { ["object"] = "prop_dart_bd_01", ["price"] = 250, ["label"] = "dartbord 2" },
+			--new decor
+			[17] = { ["object"] = "vw_prop_vw_key_cabinet_01a", ["price"] = 250, ["label"] = "sleutelkastje" }
 		},
 	},
 }
