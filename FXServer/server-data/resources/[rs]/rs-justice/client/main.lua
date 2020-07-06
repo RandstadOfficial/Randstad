@@ -118,7 +118,7 @@ Citizen.CreateThread(function()
                     end
                 -- Van binnen naar achteringang
                 elseif (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["advocaat1"]["uitgangachter"].coords.x, Config.Locations["advocaat1"]["uitgangachter"].coords.y, Config.Locations["advocaat1"]["uitgangachter"].coords.z, true) < 1.5) then
-                    DrawText3D(Config.Locations["advocaat1"]["uitgangachter"].coords.x, Config.Locations["advocaat1"]["uitgangachter"].coords.y, Config.Locations["advocaat1"]["uitgangachter"].coords.z, "~g~E~w~ - Om naar binnen te gaan")
+                    DrawText3D(Config.Locations["advocaat1"]["uitgangachter"].coords.x, Config.Locations["advocaat1"]["uitgangachter"].coords.y, Config.Locations["advocaat1"]["uitgangachter"].coords.z, "~g~E~w~ - Om naar buiten te gaan")
                     if IsControlJustReleased(0, Config.Keys["E"]) then
                         DoScreenFadeOut(500)
                         while not IsScreenFadedOut() do

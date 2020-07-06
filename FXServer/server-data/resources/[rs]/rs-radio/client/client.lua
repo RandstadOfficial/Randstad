@@ -40,15 +40,17 @@ Citizen.CreateThread(function()
   while true do
     if RSCore ~= nil then
       if isLoggedIn then
-        RSCore.Functions.TriggerCallback('rs-radio:server:GetItem', function(hasItem)
-          if not hasItem then
-            local playerName = GetPlayerName(PlayerId())
-            local getPlayerRadioChannel = exports.tokovoip_script:getPlayerData(playerName, "radio:channel")
+         RSCore.Functions.TriggerCallback('rs-radio:server:GetItem', function(hasItem)
+           if not hasItem then
+              if exports.tokovoip_script ~= nil and next(exports.tokovoip_script) ~= nil then
+              local playerName = GetPlayerName(PlayerId())
+              local getPlayerRadioChannel = exports.tokovoip_script:getPlayerData(playerName, "radio:channel")
 
-            if getPlayerRadioChannel ~= "nil" then
-              exports.tokovoip_script:removePlayerFromRadio(getPlayerRadioChannel)
-              exports.tokovoip_script:setPlayerData(playerName, "radio:channel", "nil", true)
-              RSCore.Functions.Notify('Je bent verwijderd van je huidige frequentie!', 'error')
+              if getPlayerRadioChannel ~= "nil" then
+                exports.tokovoip_script:removePlayerFromRadio(getPlayerRadioChannel)
+                exports.tokovoip_script:setPlayerData(playerName, "radio:channel", "nil", true)
+                RSCore.Functions.Notify('Je bent verwijderd van je huidige frequentie!', 'error')
+              end
             end
           end
         end, "radio")

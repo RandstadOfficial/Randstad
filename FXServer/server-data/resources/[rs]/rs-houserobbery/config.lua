@@ -20,31 +20,63 @@ Config.MinimumTime = 22
 Config.MaximumTime = 5
 
 Config.Rewards = {
-    ["cabin"] = {
-        "plastic",
-        "diamond_ring",
-        "goldchain",
+    [1] = {
+        ["cabin"] = {
+            "plastic",
+            "diamond_ring",
+            "goldchain",
+        },
+        ["kitchen"] = {
+            "tosti",
+            "sandwich",
+            "goldchain",
+        },
+        ["chest"] = {
+            "plastic",
+            "rolex",
+            "diamond_ring",
+            "goldchain",
+        },
     },
-    ["kitchen"] = {
-        "tosti",
-        "sandwich",
-        "goldchain",
-    },
-    ["chest"] = {
-        "plastic",
-        "rolex",
-        "diamond_ring",
-        "goldchain",
-    },
+    [3] = {
+        ["cabin"] = {
+            "plastic",
+            "diamond_ring",
+            "goldchain",
+        },
+        ["kitchen"] = {
+            "tosti",
+            "sandwich",
+            "goldchain",
+        },
+        ["chest"] = {
+            "plastic",
+            "rolex",
+            "diamond_ring",
+            "goldchain",
+        },
+        ["safe"] = {
+            "plastic",
+            "rolex",
+            "diamond_ring",
+            "goldchain",
+            "goldbar"
+        },
+        ["nightstand"] = {
+            "rolex",
+            "diamond_ring",
+            "goldchain"
+        },
+    }
 }
 
 Config.Houses = {
-    ["grovestreet"] = { -- https://gyazo.com/0b963d14270d5f9cc45db732796f10fc
+    ["smallhouse1"] = { 
         ["coords"] = {
-            ["x"] = 126.67,
-            ["y"] = -1929.66,
-            ["z"] = 21.38,
-            ["h"] = 207.80,
+            ["x"] = -1678.29,
+            ["y"] = -401.25,
+            ["z"] = 47.52,
+            ["h"] = 226.5,
         },
         ["opened"] = false,
         ["tier"] = 1,
@@ -106,12 +138,12 @@ Config.Houses = {
             },
         }
     },
-    ["forumdr"] = { --nr 18 appartement https://gyazo.com/f902f9f61a9c7b51d956745687fbef3f
+    ["smallhouse2"] = {
         ["coords"] = {
-            ["x"] = -140.24,
-            ["y"] = -1587.45,
-            ["z"] = 37.41,
-            ["h"] = 49.31,
+            ["x"] = 67.42,
+            ["y"] = -103.67,
+            ["z"] = 58.65,
+            ["h"] = 71.5,
         },
         ["opened"] = false,
         ["tier"] = 1,
@@ -173,12 +205,12 @@ Config.Houses = {
             },
         }
     },
-    ["amarilovista"] = { -- achterkant single deur https://gyazo.com/1a6060bfffcad9512a1c25e263e8277c
+    ["smallhouse3"] = {
         ["coords"] = {
-            ["x"] = 1283.75,
-            ["y"] = -1699.894,
-            ["z"] = 55.47,
-            ["h"] = 196.31,
+            ["x"] = 952.83,
+            ["y"] = -252.47,
+            ["z"] = 67.96,
+            ["h"] = 237.6,
         },
         ["opened"] = false,
         ["tier"] = 1,
@@ -240,12 +272,12 @@ Config.Houses = {
             },
         }
     },
-    ["nikolapl"] = { -- https://gyazo.com/6177b1867aaf7f972d8afb8f05cb8d43
+    ["smallhouse4"] = {
         ["coords"] = {
-            ["x"] = 1341.38,
-            ["y"] = -597.27,
-            ["z"] = 74.70,
-            ["h"] = 59.48,
+            ["x"] = 1250.95,
+            ["y"] = -620.27,
+            ["z"] = 69.57,
+            ["h"] = 28.2,
         },
         ["opened"] = false,
         ["tier"] = 1,
@@ -307,79 +339,12 @@ Config.Houses = {
             },
         }
     },
-    -- ["westmirrordrive"] = { -- https://gyazo.com/d3a18d894511a1e9d3d1993c286e6e0c
-    --     ["coords"] = {
-    --         ["x"] = 844.16, 
-    --         ["y"] = -562.66, 
-    --         ["z"] = 57.99, 
-    --         ["h"] = 11.39
-    --     },
-    --     ["opened"] = false,
-    --     ["tier"] = 1,
-    --     ["furniture"] = {
-    --         [1] = {
-    --             ["type"] = "cabin",
-    --             ["coords"] = {
-    --                 ["x"] = 3.1,
-    --                 ["y"] = -4.3,
-    --                 ["z"] = 2.5,
-    --             },
-    --             ["searched"] = false,
-    --             ["isBusy"] = false,
-    --             ["text"] = "Kastje doorzoeken"
-    --         },
-    --         [2] = {
-    --             ["type"] = "cabin",
-    --             ["coords"] = {
-    --                 ["x"] = -3.5,
-    --                 ["y"] = -6.3,
-    --                 ["z"] = 2.5,
-    --             },
-    --             ["searched"] = false,
-    --             ["isBusy"] = false,
-    --             ["text"] = "Kastje doorzoeken"
-    --         },
-    --         [3] = {
-    --             ["type"] = "kitchen",
-    --             ["coords"] = {
-    --                 ["x"] = 0.9,
-    --                 ["y"] = -6.3,
-    --                 ["z"] = 2.5,
-    --             },
-    --             ["searched"] = false,
-    --             ["isBusy"] = false,
-    --             ["text"] = "Keuken kastjes doorzoeken"
-    --         },
-    --         [4] = {
-    --             ["type"] = "chest",
-    --             ["coords"] = {
-    --                 ["x"] = 9.3,
-    --                 ["y"] = -1.3,
-    --                 ["z"] = 2.0,
-    --             },
-    --             ["searched"] = false,
-    --             ["isBusy"] = false,
-    --             ["text"] = "Kist doorzoeken"
-    --         },
-    --         [5] = {
-    --             ["type"] = "cabin",
-    --             ["coords"] = {
-    --                 ["x"] = 5.85,
-    --                 ["y"] = 2.6,
-    --                 ["z"] = 2.0,
-    --             },
-    --             ["searched"] = false,
-    --             ["isBusy"] = false,
-    --             ["text"] = "Nachtkastje doorzoeken"
-    --         },
-    --     }
-    -- },
-    ["altapl"] = { -- https://gyazo.com/2a811b1c4790a8aa0f0ed666c33de57b
+    ["smallhouse5"] = {
         ["coords"] = {
-            ["x"] = 206.44, 
-            ["y"] = -85.96, 
-            ["z"] = 69.38, 
-            ["h"] = 160.15
+            ["x"] = 148.78, 
+            ["y"] = -1904.50, 
+            ["z"] = 23.53, 
+            ["h"] = 157.6
         },
         ["opened"] = false,
         ["tier"] = 1,
@@ -441,12 +406,12 @@ Config.Houses = {
             },
         }
     },
-    ["westeclipseblvd"] = { -- Voordeur https://gyazo.com/7ac71722168a8a765fa0b32b24520ad2
+    ["smallhouse6"] = {
         ["coords"] = {
-            ["x"] = -819.36, 
-            ["y"] = 267.95, 
-            ["z"] = 86.39, 
-            ["h"] = 261.26
+            ["x"] = -50.32, 
+            ["y"] = -1783.31, 
+            ["z"] = 28.30, 
+            ["h"] = 315.5
         },
         ["opened"] = false,
         ["tier"] = 1,
@@ -508,12 +473,12 @@ Config.Houses = {
             },
         }
     },
-    ["cockingenddr"] = { -- https://gyazo.com/bb315de8897dfc55f29375940b534783
+    ["smallhouse7"] = {
         ["coords"] = {
-            ["x"] = -1052.05, 
-            ["y"] = 432.56, 
-            ["z"] = 77.25, 
-            ["h"] = 12.91
+            ["x"] = 454.90, 
+            ["y"] = -1580.25, 
+            ["z"] = 32.82, 
+            ["h"] = 138.8
         },
         ["opened"] = false,
         ["tier"] = 1,
@@ -575,12 +540,12 @@ Config.Houses = {
             },
         }
     },
-    ["acejonesdr"] = { -- https://gyazo.com/baa8aaa6f97fee3a52be23939789db50
+    ["smallhouse8"] = { 
         ["coords"] = {
-            ["x"] = -1540.05, 
-            ["y"] = 420.5, 
-            ["z"] = 110.01, 
-            ["h"] = 187.23
+            ["x"] = 1010.41, 
+            ["y"] = -423.39, 
+            ["z"] = 65.34, 
+            ["h"] = 133.5
         },
         ["opened"] = false,
         ["tier"] = 1,
@@ -642,12 +607,12 @@ Config.Houses = {
             },
         }
     },
-    ["northrockforddr"] = { -- https://gyazo.com/68ca0aeaa067ed7863b90061e8552f50
+    ["smallhouse9"] = { 
         ["coords"] = {
-            ["x"] = -1896.26, 
-            ["y"] = 642.52, 
-            ["z"] = 130.21, 
-            ["h"] = 318.36
+            ["x"] = 1358.40, 
+            ["y"] = -1752.18, 
+            ["z"] = 64.45, 
+            ["h"] = 281.1
         },
         ["opened"] = false,
         ["tier"] = 1,
@@ -709,12 +674,12 @@ Config.Houses = {
             },
         }
     },
-    ["northsheldonave"] = { -- https://gyazo.com/1f644e40abe45b962bafaf35a00a5f52
+    ["smallhouse10"] = {
         ["coords"] = {
-            ["x"] = -972.17, 
-            ["y"] = 752.36, 
-            ["z"] = 176.38, 
-            ["h"] = 222.87
+            ["x"] = 514.37, 
+            ["y"] = -1780.92, 
+            ["z"] = 28.91, 
+            ["h"] = 269.7
         },
         ["opened"] = false,
         ["tier"] = 1,
@@ -776,22 +741,22 @@ Config.Houses = {
             },
         }
     },
-    ["kimblehilldr"] = { -- https://gyazo.com/56ebeb0dd5cd3b542d19856fa2431270
+    ["mansion1"] = {
         ["coords"] = {
-            ["x"] = -232.63, 
-            ["y"] = 588.20, 
-            ["z"] = 190.53, 
-            ["h"] = 173.81
+            ["x"] = -1899.16, 
+            ["y"] = 132.44, 
+            ["z"] = 81.98, 
+            ["h"] = 126.8
         },
         ["opened"] = false,
-        ["tier"] = 1,
+        ["tier"] = 3,
         ["furniture"] = {
             [1] = {
                 ["type"] = "cabin",
                 ["coords"] = {
-                    ["x"] = 3.1,
-                    ["y"] = -4.3,
-                    ["z"] = 2.5,
+                    ["x"] = -5.18,
+                    ["y"] = -2.24,
+                    ["z"] = 5.9,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -800,9 +765,9 @@ Config.Houses = {
             [2] = {
                 ["type"] = "cabin",
                 ["coords"] = {
-                    ["x"] = -3.5,
-                    ["y"] = -6.3,
-                    ["z"] = 2.5,
+                    ["x"] = -4.78,
+                    ["y"] = 4.29,
+                    ["z"] = 5.9,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -811,9 +776,9 @@ Config.Houses = {
             [3] = {
                 ["type"] = "kitchen",
                 ["coords"] = {
-                    ["x"] = 0.9,
-                    ["y"] = -6.3,
-                    ["z"] = 2.5,
+                    ["x"] = 9.74,
+                    ["y"] = 5.09,
+                    ["z"] = 1.5,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -822,43 +787,87 @@ Config.Houses = {
             [4] = {
                 ["type"] = "chest",
                 ["coords"] = {
-                    ["x"] = 9.3,
-                    ["y"] = -1.3,
-                    ["z"] = 2.0,
+                    ["x"] = -4.22,
+                    ["y"] = -7.55,
+                    ["z"] = 5.2,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
                 ["text"] = "Kist doorzoeken"
             },
             [5] = {
-                ["type"] = "cabin",
+                ["type"] = "nightstand",
                 ["coords"] = {
-                    ["x"] = 5.85,
-                    ["y"] = 2.6,
-                    ["z"] = 2.0,
+                    ["x"] = -9.41,
+                    ["y"] = 5.3,
+                    ["z"] = 5.2,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
                 ["text"] = "Nachtkastje doorzoeken"
+            },
+            [6] = {
+                ["type"] = "safe",
+                ["coords"] = {
+                    ["x"] = -7.2,
+                    ["y"] = -0.93,
+                    ["z"] = 5.2,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kluis doorzoeken"
+            },
+            [7] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = 1.42,
+                    ["y"] = -11.11,
+                    ["z"] = 5.9,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
+            [8] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = -0.19,
+                    ["y"] = -1.79,
+                    ["z"] = 1.5,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
+            [9] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = -7.82,
+                    ["y"] = 0.95,
+                    ["z"] = 1.0,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
             },
         }
     },
-    ["baycityave"] = { -- https://gyazo.com/336dc0d4d438321894e3304b5b8c13c8
+    ["mansion2"] = {
         ["coords"] = {
-            ["x"] = -1706.79, 
-            ["y"] = -453.40, 
-            ["z"] = 42.65, 
-            ["h"] = 327.72
+            ["x"] = -340.31, 
+            ["y"] = 668.76, 
+            ["z"] = 172.78, 
+            ["h"] = 74.5,
         },
         ["opened"] = false,
-        ["tier"] = 1,
+        ["tier"] = 3,
         ["furniture"] = {
             [1] = {
                 ["type"] = "cabin",
                 ["coords"] = {
-                    ["x"] = 3.1,
-                    ["y"] = -4.3,
-                    ["z"] = 2.5,
+                    ["x"] = -5.18,
+                    ["y"] = -2.24,
+                    ["z"] = 5.9,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -867,9 +876,9 @@ Config.Houses = {
             [2] = {
                 ["type"] = "cabin",
                 ["coords"] = {
-                    ["x"] = -3.5,
-                    ["y"] = -6.3,
-                    ["z"] = 2.5,
+                    ["x"] = -4.78,
+                    ["y"] = 4.29,
+                    ["z"] = 5.9,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -878,9 +887,9 @@ Config.Houses = {
             [3] = {
                 ["type"] = "kitchen",
                 ["coords"] = {
-                    ["x"] = 0.9,
-                    ["y"] = -6.3,
-                    ["z"] = 2.5,
+                    ["x"] = 9.74,
+                    ["y"] = 5.09,
+                    ["z"] = 1.5,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -889,43 +898,87 @@ Config.Houses = {
             [4] = {
                 ["type"] = "chest",
                 ["coords"] = {
-                    ["x"] = 9.3,
-                    ["y"] = -1.3,
-                    ["z"] = 2.0,
+                    ["x"] = -4.22,
+                    ["y"] = -7.55,
+                    ["z"] = 5.2,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
                 ["text"] = "Kist doorzoeken"
             },
             [5] = {
-                ["type"] = "cabin",
+                ["type"] = "nightstand",
                 ["coords"] = {
-                    ["x"] = 5.85,
-                    ["y"] = 2.6,
-                    ["z"] = 2.0,
+                    ["x"] = -9.41,
+                    ["y"] = 5.3,
+                    ["z"] = 5.2,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
                 ["text"] = "Nachtkastje doorzoeken"
+            },
+            [6] = {
+                ["type"] = "safe",
+                ["coords"] = {
+                    ["x"] = -7.2,
+                    ["y"] = -0.93,
+                    ["z"] = 5.2,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kluis doorzoeken"
+            },
+            [7] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = 1.42,
+                    ["y"] = -11.11,
+                    ["z"] = 5.9,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
+            [8] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = -0.19,
+                    ["y"] = -1.79,
+                    ["z"] = 1.5,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
+            [9] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = -7.82,
+                    ["y"] = 0.95,
+                    ["z"] = 1.0,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
             },
         }
     },
-    ["inventionct"] = { -- https://gyazo.com/7762758b3704df46aa2284b672b84c64
+    ["mansion3"] = {
         ["coords"] = {
-            ["x"] = -952.43, 
-            ["y"] = -1077.54, 
-            ["z"] = 2.67, 
-            ["h"] = 35.75
+            ["x"] = -824.74, 
+            ["y"] = 421.99, 
+            ["z"] = 92.13, 
+            ["h"] = 185.1,
         },
         ["opened"] = false,
-        ["tier"] = 1,
+        ["tier"] = 3,
         ["furniture"] = {
             [1] = {
                 ["type"] = "cabin",
                 ["coords"] = {
-                    ["x"] = 3.1,
-                    ["y"] = -4.3,
-                    ["z"] = 2.5,
+                    ["x"] = -5.18,
+                    ["y"] = -2.24,
+                    ["z"] = 5.9,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -934,9 +987,9 @@ Config.Houses = {
             [2] = {
                 ["type"] = "cabin",
                 ["coords"] = {
-                    ["x"] = -3.5,
-                    ["y"] = -6.3,
-                    ["z"] = 2.5,
+                    ["x"] = -4.78,
+                    ["y"] = 4.29,
+                    ["z"] = 5.9,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -945,9 +998,9 @@ Config.Houses = {
             [3] = {
                 ["type"] = "kitchen",
                 ["coords"] = {
-                    ["x"] = 0.9,
-                    ["y"] = -6.3,
-                    ["z"] = 2.5,
+                    ["x"] = 9.74,
+                    ["y"] = 5.09,
+                    ["z"] = 1.5,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -956,43 +1009,87 @@ Config.Houses = {
             [4] = {
                 ["type"] = "chest",
                 ["coords"] = {
-                    ["x"] = 9.3,
-                    ["y"] = -1.3,
-                    ["z"] = 2.0,
+                    ["x"] = -4.22,
+                    ["y"] = -7.55,
+                    ["z"] = 5.2,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
                 ["text"] = "Kist doorzoeken"
             },
             [5] = {
-                ["type"] = "cabin",
+                ["type"] = "nightstand",
                 ["coords"] = {
-                    ["x"] = 5.85,
-                    ["y"] = 2.6,
-                    ["z"] = 2.0,
+                    ["x"] = -9.41,
+                    ["y"] = 5.3,
+                    ["z"] = 5.2,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
                 ["text"] = "Nachtkastje doorzoeken"
+            },
+            [6] = {
+                ["type"] = "safe",
+                ["coords"] = {
+                    ["x"] = -7.2,
+                    ["y"] = -0.93,
+                    ["z"] = 5.2,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kluis doorzoeken"
+            },
+            [7] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = 1.42,
+                    ["y"] = -11.11,
+                    ["z"] = 5.9,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
+            [8] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = -0.19,
+                    ["y"] = -1.79,
+                    ["z"] = 1.5,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
+            [9] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = -7.82,
+                    ["y"] = 0.95,
+                    ["z"] = 1.0,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
             },
         }
     },
-    ["melanomast"] = { -- https://gyazo.com/00d594a235cbcac9dc40b8ee3e39ec29
+    ["mansion4"] = {
         ["coords"] = {
-            ["x"] = -1112.40, 
-            ["y"] = -1578.54, 
-            ["z"] = 8.67, 
-            ["h"] = 217.73
+            ["x"] = -1031.26, 
+            ["y"] = -902.99, 
+            ["z"] = 3.69, 
+            ["h"] = 213.5,
         },
         ["opened"] = false,
-        ["tier"] = 1,
+        ["tier"] = 3,
         ["furniture"] = {
             [1] = {
                 ["type"] = "cabin",
                 ["coords"] = {
-                    ["x"] = 3.1,
-                    ["y"] = -4.3,
-                    ["z"] = 2.5,
+                    ["x"] = -5.18,
+                    ["y"] = -2.24,
+                    ["z"] = 5.9,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -1001,9 +1098,9 @@ Config.Houses = {
             [2] = {
                 ["type"] = "cabin",
                 ["coords"] = {
-                    ["x"] = -3.5,
-                    ["y"] = -6.3,
-                    ["z"] = 2.5,
+                    ["x"] = -4.78,
+                    ["y"] = 4.29,
+                    ["z"] = 5.9,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -1012,9 +1109,9 @@ Config.Houses = {
             [3] = {
                 ["type"] = "kitchen",
                 ["coords"] = {
-                    ["x"] = 0.9,
-                    ["y"] = -6.3,
-                    ["z"] = 2.5,
+                    ["x"] = 9.74,
+                    ["y"] = 5.09,
+                    ["z"] = 1.5,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -1023,43 +1120,87 @@ Config.Houses = {
             [4] = {
                 ["type"] = "chest",
                 ["coords"] = {
-                    ["x"] = 9.3,
-                    ["y"] = -1.3,
-                    ["z"] = 2.0,
+                    ["x"] = -4.22,
+                    ["y"] = -7.55,
+                    ["z"] = 5.2,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
                 ["text"] = "Kist doorzoeken"
             },
             [5] = {
-                ["type"] = "cabin",
+                ["type"] = "nightstand",
                 ["coords"] = {
-                    ["x"] = 5.85,
-                    ["y"] = 2.6,
-                    ["z"] = 2.0,
+                    ["x"] = -9.41,
+                    ["y"] = 5.3,
+                    ["z"] = 5.2,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
                 ["text"] = "Nachtkastje doorzoeken"
+            },
+            [6] = {
+                ["type"] = "safe",
+                ["coords"] = {
+                    ["x"] = -7.2,
+                    ["y"] = -0.93,
+                    ["z"] = 5.2,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kluis doorzoeken"
+            },
+            [7] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = 1.42,
+                    ["y"] = -11.11,
+                    ["z"] = 5.9,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
+            [8] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = -0.19,
+                    ["y"] = -1.79,
+                    ["z"] = 1.5,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
+            [9] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = -7.82,
+                    ["y"] = 0.95,
+                    ["z"] = 1.0,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
             },
         }
     },
-    ["inesenoroad"] = { -- https://gyazo.com/456aca207e56b9f601692fa2cbbc424d
+    ["mansion5"] = {
         ["coords"] = {
-            ["x"] = -3044.75, 
-            ["y"] = 564.40, 
-            ["z"] = 7.81, 
-            ["h"] = 12.75
+            ["x"] = -902.18, 
+            ["y"] = 191.56, 
+            ["z"] = 69.45, 
+            ["h"] = 271.1,
         },
         ["opened"] = false,
-        ["tier"] = 1,
+        ["tier"] = 3,
         ["furniture"] = {
             [1] = {
                 ["type"] = "cabin",
                 ["coords"] = {
-                    ["x"] = 3.1,
-                    ["y"] = -4.3,
-                    ["z"] = 2.5,
+                    ["x"] = -5.18,
+                    ["y"] = -2.24,
+                    ["z"] = 5.9,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -1068,9 +1209,9 @@ Config.Houses = {
             [2] = {
                 ["type"] = "cabin",
                 ["coords"] = {
-                    ["x"] = -3.5,
-                    ["y"] = -6.3,
-                    ["z"] = 2.5,
+                    ["x"] = -4.78,
+                    ["y"] = 4.29,
+                    ["z"] = 5.9,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -1079,9 +1220,9 @@ Config.Houses = {
             [3] = {
                 ["type"] = "kitchen",
                 ["coords"] = {
-                    ["x"] = 0.9,
-                    ["y"] = -6.3,
-                    ["z"] = 2.5,
+                    ["x"] = 9.74,
+                    ["y"] = 5.09,
+                    ["z"] = 1.5,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -1090,43 +1231,87 @@ Config.Houses = {
             [4] = {
                 ["type"] = "chest",
                 ["coords"] = {
-                    ["x"] = 9.3,
-                    ["y"] = -1.3,
-                    ["z"] = 2.0,
+                    ["x"] = -4.22,
+                    ["y"] = -7.55,
+                    ["z"] = 5.2,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
                 ["text"] = "Kist doorzoeken"
             },
             [5] = {
-                ["type"] = "cabin",
+                ["type"] = "nightstand",
                 ["coords"] = {
-                    ["x"] = 5.85,
-                    ["y"] = 2.6,
-                    ["z"] = 2.0,
+                    ["x"] = -9.41,
+                    ["y"] = 5.3,
+                    ["z"] = 5.2,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
                 ["text"] = "Nachtkastje doorzoeken"
+            },
+            [6] = {
+                ["type"] = "safe",
+                ["coords"] = {
+                    ["x"] = -7.2,
+                    ["y"] = -0.93,
+                    ["z"] = 5.2,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kluis doorzoeken"
+            },
+            [7] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = 1.42,
+                    ["y"] = -11.11,
+                    ["z"] = 5.9,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
+            [8] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = -0.19,
+                    ["y"] = -1.79,
+                    ["z"] = 1.5,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
+            [9] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = -7.82,
+                    ["y"] = 0.95,
+                    ["z"] = 1.0,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
             },
         }
     },
-    ["barbarenoroad"] = { --
+    ["mansion6"] = {
         ["coords"] = {
-            ["x"] = -3200.47, 
-            ["y"] = 1165.28, 
-            ["z"] = 9.65, 
-            ["h"] = 67.85
+            ["x"] = -418.10, 
+            ["y"] = 568.71, 
+            ["z"] = 125.48, 
+            ["h"] = 329.8,
         },
         ["opened"] = false,
-        ["tier"] = 1,
+        ["tier"] = 3,
         ["furniture"] = {
             [1] = {
                 ["type"] = "cabin",
                 ["coords"] = {
-                    ["x"] = 3.1,
-                    ["y"] = -4.3,
-                    ["z"] = 2.5,
+                    ["x"] = -5.18,
+                    ["y"] = -2.24,
+                    ["z"] = 5.9,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -1135,9 +1320,9 @@ Config.Houses = {
             [2] = {
                 ["type"] = "cabin",
                 ["coords"] = {
-                    ["x"] = -3.5,
-                    ["y"] = -6.3,
-                    ["z"] = 2.5,
+                    ["x"] = -4.78,
+                    ["y"] = 4.29,
+                    ["z"] = 5.9,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -1146,9 +1331,9 @@ Config.Houses = {
             [3] = {
                 ["type"] = "kitchen",
                 ["coords"] = {
-                    ["x"] = 0.9,
-                    ["y"] = -6.3,
-                    ["z"] = 2.5,
+                    ["x"] = 9.74,
+                    ["y"] = 5.09,
+                    ["z"] = 1.5,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
@@ -1157,27 +1342,71 @@ Config.Houses = {
             [4] = {
                 ["type"] = "chest",
                 ["coords"] = {
-                    ["x"] = 9.3,
-                    ["y"] = -1.3,
-                    ["z"] = 2.0,
+                    ["x"] = -4.22,
+                    ["y"] = -7.55,
+                    ["z"] = 5.2,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
                 ["text"] = "Kist doorzoeken"
             },
             [5] = {
-                ["type"] = "cabin",
+                ["type"] = "nightstand",
                 ["coords"] = {
-                    ["x"] = 5.85,
-                    ["y"] = 2.6,
-                    ["z"] = 2.0,
+                    ["x"] = -9.41,
+                    ["y"] = 5.3,
+                    ["z"] = 5.2,
                 },
                 ["searched"] = false,
                 ["isBusy"] = false,
                 ["text"] = "Nachtkastje doorzoeken"
             },
+            [6] = {
+                ["type"] = "safe",
+                ["coords"] = {
+                    ["x"] = -7.2,
+                    ["y"] = -0.93,
+                    ["z"] = 5.2,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kluis doorzoeken"
+            },
+            [7] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = 1.42,
+                    ["y"] = -11.11,
+                    ["z"] = 5.9,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
+            [8] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = -0.19,
+                    ["y"] = -1.79,
+                    ["z"] = 1.5,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
+            [9] = {
+                ["type"] = "cabin",
+                ["coords"] = {
+                    ["x"] = -7.82,
+                    ["y"] = 0.95,
+                    ["z"] = 1.0,
+                },
+                ["searched"] = false,
+                ["isBusy"] = false,
+                ["text"] = "Kastje doorzoeken"
+            },
         }
-    },       
+    }       
 }
 
 Config.MaleNoHandshoes = {
