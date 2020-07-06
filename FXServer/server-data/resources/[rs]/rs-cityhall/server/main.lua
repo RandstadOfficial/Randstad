@@ -5,7 +5,7 @@ local DrivingSchools = {
     "YND19022", -- Maestro (Mahmut)
     "FTL45116", -- Maestro (Admin)
     "YMK83288", -- Souvereign King
-    "",
+    "SWX15921", -- MaBo
 }
 
 RegisterServerEvent('rs-cityhall:server:requestId')
