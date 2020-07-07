@@ -19,7 +19,7 @@ channelLabel = nil
 local targetPed;
 local useLocalPed = true;
 local isRunning = false;
-local scriptVersion = "1.3.5";
+local scriptVersion = "1.5.0";
 local animStates = {}
 local displayingPluginScreen = false;
 local HeadBone = 0x796e;
@@ -56,7 +56,7 @@ RegisterNUICallback("updatePluginData", function(data)
 	setPlayerData(voip.serverId, "voip:" .. payload.key, voip[payload.key], true);
 	voip:updateConfig();
 	voip:updateTokoVoipInfo(true);
-end)
+end);
 
 -- Receives data from the TS plugin on microphone toggle
 RegisterNUICallback("setPlayerTalking", function(data)
@@ -126,34 +126,69 @@ local function clientProcessing()
 			--
 
 			-- Process proximity
+			tbl.forceUnmuted = 0
 			if (dist >= voip.distance[mode]) then
 				tbl.muted = 1;
 			else
 				tbl.volume = volume;
 				tbl.muted = 0;
+				tbl.forceUnmuted = 1
 			end
-			--
-			-- Process channels
-			local remotePlayerUsingRadio = getPlayerData(playerServerId, "radio:talking");
-			local remotePlayerChannel = getPlayerData(playerServerId, "radio:channel");
 
-			for _, channel in pairs(voip.myChannels) do
-				if (channel.subscribers[voip.serverId] and channel.subscribers[playerServerId] and voip.myChannels[remotePlayerChannel] and remotePlayerUsingRadio) then
-					if (remotePlayerChannel <= voip.config.radioClickMaxChannel) then
-						tbl.radioEffect = true;
-					end
-					tbl.volume = 0;
-					tbl.muted = 0;
-					tbl.posX = 0;
-					tbl.posY = 0;
-					tbl.posZ = voip.plugin_data.enableStereoAudio and localPos.z or 0;
-				end
-			end
-			--
 			usersdata[#usersdata + 1] = tbl
 			setPlayerTalkingState(player, playerServerId);
 		end
 	end
+
+	-- Process channels
+	for _, channel in pairs(voip.myChannels) do
+		for _, subscriber in pairs(channel.subscribers) do
+			if (subscriber ~= voip.serverId) then
+				local remotePlayerUsingRadio = getPlayerData(subscriber, "radio:talking");
+				local remotePlayerChannel = getPlayerData(subscriber, "radio:channel");
+					local remotePlayerUuid = getPlayerData(subscriber, "voip:pluginUUID");
+
+					local founduserData = nil
+					for k, v in pairs(usersdata) do
+						if(v.uuid == remotePlayerUuid) then
+							founduserData = v
+						end
+					end
+
+					if not founduserData then
+						founduserData = {
+							uuid = getPlayerData(subscriber, "voip:pluginUUID"),
+							radioEffect = false,
+							resave = true,
+							volume = 0,
+							muted = 1
+						}
+					end
+
+
+					if (type(remotePlayerChannel) == "number" and remotePlayerChannel <= voip.config.radioClickMaxChannel) then
+						founduserData.radioEffect = true;
+					end
+
+					if(not remotePlayerUsingRadio or remotePlayerChannel ~= channel.id) then
+						founduserData.radioEffect = false;
+						if not founduserData.forceUnmuted then
+							founduserData.muted = true;
+						end
+					else
+						founduserData.muted = false
+						founduserData.volume = 0;
+						founduserData.posX = 0;
+						founduserData.posY = 0;
+						founduserData.posZ = voip.plugin_data.enableStereoAudio and localPos.z or 0;
+				 	end
+					if(founduserData.resave) then
+						usersdata[#usersdata + 1] = founduserData
+					end
+				end
+		end
+	end
+
 	voip.plugin_data.Users = usersdata; -- Update TokoVoip's data
 	voip.plugin_data.posX = 0;
 	voip.plugin_data.posY = 0;
@@ -162,6 +197,7 @@ end
 
 RegisterNetEvent("initializeVoip");
 AddEventHandler("initializeVoip", function()
+	Citizen.Wait(1000);
 	if (isRunning) then return Citizen.Trace("TokoVOIP is already running\n"); end
 	isRunning = true;
 

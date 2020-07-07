@@ -43,6 +43,7 @@ function TokoVoip.loop(self)
 end
 
 function TokoVoip.sendDataToTS3(self) -- Send usersdata to the Javascript Websocket
+	if (self.pluginStatus == -1) then return end;
 	self:updatePlugin("updateTokoVoip", self.plugin_data);
 end
 
@@ -89,7 +90,7 @@ end
 
 function TokoVoip.initialize(self)
 	self:updateConfig();
-	self:updatePlugin("initializeSocket", nil);
+	self:updatePlugin("initializeSocket", self.wsServer);
 	TriggerEvent('rs-hud:client:UpdateVoiceProximity', self.mode)
 	Citizen.CreateThread(function()
 		while (true) do
