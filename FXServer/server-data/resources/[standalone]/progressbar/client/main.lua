@@ -66,19 +66,19 @@ local propTwo_net = nil
 local runProgThread = false
 
 function Progress(action, finish)
-	Process(action, nil, nil, finish)
+    Process(action, nil, nil, finish)
 end
 
 function ProgressWithStartEvent(action, start, finish)
-	Process(action, start, nil, finish)
+    Process(action, start, nil, finish)
 end
 
 function ProgressWithTickEvent(action, tick, finish)
-	Process(action, nil, tick, finish)
+    Process(action, nil, tick, finish)
 end
 
 function ProgressWithStartAndTick(action, start, tick, finish)
-	Process(action, start, tick, finish)
+    Process(action, start, tick, finish)
 end
 
 function Process(action, start, tick, finish)
@@ -309,22 +309,22 @@ end
 
 RegisterNetEvent("progressbar:client:progress")
 AddEventHandler("progressbar:client:progress", function(action, finish)
-	Process(action, nil, nil, finish)
+    Process(action, nil, nil, finish)
 end)
 
 RegisterNetEvent("progressbar:client:ProgressWithStartEvent")
 AddEventHandler("progressbar:client:ProgressWithStartEvent", function(action, start, finish)
-	Process(action, start, nil, finish)
+    Process(action, start, nil, finish)
 end)
 
 RegisterNetEvent("progressbar:client:ProgressWithTickEvent")
 AddEventHandler("progressbar:client:ProgressWithTickEvent", function(action, tick, finish)
-	Process(action, nil, tick, finish)
+    Process(action, nil, tick, finish)
 end)
 
 RegisterNetEvent("progressbar:client:ProgressWithStartAndTick")
 AddEventHandler("progressbar:client:ProgressWithStartAndTick", function(action, start, tick, finish)
-	Process(action, start, tick, finish)
+    Process(action, start, tick, finish)
 end)
 
 RegisterNetEvent("progressbar:client:cancel")

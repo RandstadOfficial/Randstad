@@ -2,7 +2,7 @@ TokoVoipConfig = {
 	refreshRate = 100, -- Rate at which the data is sent to the TSPlugin
 	networkRefreshRate = 2000, -- Rate at which the network data is updated/reset on the local ped
 	playerListRefreshRate = 5000, -- Rate at which the playerList is updated
-	minVersion = "1.2.4", -- Version of the TS plugin required to play on the server
+	minVersion = "1.5.0", -- Version of the TS plugin required to play on the server
 
 	distance = {
 		15, -- Normal speech distance in gta distance units
@@ -17,23 +17,25 @@ TokoVoipConfig = {
 	radioClickMaxChannel = 500, -- Set the max amount of radio channels that will have local radio clicks enabled
 	radioAnim = true, -- Enable or disable the radio animation
 	radioEnabled = true, -- Enable or disable using the radio
+	wsServer = "54.36.126.156:3000", -- Address of the websocket server
 	
 	plugin_data = {
 		-- TeamSpeak channel name used by the voip
 		-- If the TSChannelWait is enabled, players who are currently in TSChannelWait will be automatically moved
 		-- to the TSChannel once everything is running
-		TSChannel = "Lobby",
-		TSPassword = "124po13p5riEWJF0SE", -- TeamSpeak channel password (can be empty)
+		TSChannel = "[Tokovoip] Lobby",
+		TSPassword = "scpB6MCeumbYQ^U", -- TeamSpeak channel password (can be empty)
 
 		-- Optional: TeamSpeak waiting channel name, players wait in this channel and will be moved to the TSChannel automatically
 		-- If the TSChannel is public and people can join directly, you can leave this empty and not use the auto-move
-		TSChannelWait = "Wachtkamer",
+		TSChannelWait = "[Tokovoip] Wachtkamer",
 
 		-- Blocking screen informations
 		TSServer = "voice.randstadroleplay.nl", -- TeamSpeak server address to be displayed on blocking screen
-		TSChannelSupport = "Wachten op hulp", -- TeamSpeak support channel name displayed on blocking screen
+		TSChannelSupport = "[Tokovoip] Support", -- TeamSpeak support channel name displayed on blocking screen
+		TSDownload = "https://github.com/Itokoyamato/TokoVOIP_TS3/releases",
 		TSChannelWhitelist = { -- Black screen will not be displayed when users are in those TS channels
-			"Hulpkanaal",
+			"Support 1",
 		},
 
 		-- The following is purely TS client settings, to match tastes

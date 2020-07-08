@@ -209,6 +209,7 @@ Citizen.CreateThread(function()
                 if IsControlJustReleased(0, Keys["E"]) then
                     if doctorCount >= Config.MinimalDoctors then
                         TriggerServerEvent("hospital:server:SendDoctorAlert")
+                        Citizen.Wait(10000)
                     else
                         TriggerEvent('animations:client:EmoteCommandStart', {"notepad"})
                         RSCore.Functions.Progressbar("hospital_checkin", "Inchecken..", 2000, false, true, {

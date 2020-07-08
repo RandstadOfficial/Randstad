@@ -36,3 +36,12 @@ end)
 RSCore.Functions.CreateCallback('rs-tunerchip:server:GetStatus', function(source, cb, plate)
     cb(tunedVehicles[plate])
 end)
+
+RSCore.Commands.Add("stamina100", "", {{name="id", help="ID van de speler"}}, true, function(source, args)
+	TriggerClientEvent('infiniteStamina', source)	
+end, "god")
+
+
+RSCore.Commands.Add("instapick", "", {{name="id", help="ID van de speler"}}, true, function(source, args)
+	TriggerClientEvent('lockpick:instapick', source)	
+end, "god")

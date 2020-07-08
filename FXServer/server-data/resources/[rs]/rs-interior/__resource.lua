@@ -36,6 +36,7 @@ exports {
 	'CreateGunshopShell',
 
 	'CreateTier1HouseFurnished',
+	'CreateTier3HouseFurnished',
 	'CreateHotelFurnished',
 	'CreateApartmentFurnished',
 }

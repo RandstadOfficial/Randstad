@@ -31,7 +31,8 @@ local vpnWhitelist = {
 	[9]="steam:11000010a3beefd",
 	[10]="steam:1100001036ee1b7",
 	[11]="steam:11000011aeeddd8",
-	[12]="steam:11000013d2b0136"
+	[12]="steam:11000013d2b0136",
+	[13]="steam:11000013be4a271"
 }
 
 -- Player joined

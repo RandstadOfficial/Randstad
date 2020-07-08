@@ -224,7 +224,7 @@ function CreateDutyBlips(playerId, playerLabel, playerJob)
 end
 
 RegisterNetEvent('police:client:SendPoliceEmergencyAlert')
-AddEventHandler('police:client:SendPoliceEmergencyAlert', function(callsign, streetLabel, coords)
+AddEventHandler('police:client:SendPoliceEmergencyAlert', function()
     local pos = GetEntityCoords(GetPlayerPed(-1))
     local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
     local street1 = GetStreetNameFromHashKey(s1)
@@ -233,14 +233,65 @@ AddEventHandler('police:client:SendPoliceEmergencyAlert', function(callsign, str
     if street2 ~= nil then 
         streetLabel = streetLabel .. " " .. street2
     end
-    local alertTitle = "Assistentie collega"
+    local alertTitle = "Urgent Noodmelding!"
     if PlayerJob.name == "ambulance" or PlayerJob.name == "doctor" then
-        alertTitle = "Assistentie " .. PlayerJob.label
+        alertTitle = "Noodmelding " .. PlayerJob.label
     end
 
     local MyId = GetPlayerServerId(PlayerId())
 
-    TriggerServerEvent("police:server:SendPoliceEmergencyAlert", streetLabel, pos, RSCore.Functions.GetPlayerData().metadata["callsign"])
+    RSCore.Functions.TriggerCallback('rs-radio:server:GetItem', function(hasItem)
+        if hasItem then
+            TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "emergency", 0.3)
+            TriggerServerEvent("police:server:SendPoliceEmergencyAlert", streetLabel, pos, RSCore.Functions.GetPlayerData().metadata["callsign"])
+            TriggerServerEvent('rs-policealerts:server:AddPoliceAlert', {
+                timeOut = 10000,
+                alertTitle = alertTitle,
+                coords = {
+                    x = pos.x,
+                    y = pos.y,
+                    z = pos.z,
+                },
+                details = {
+                    [1] = {
+                        icon = '<i class="fas fa-passport"></i>',
+                        detail = MyId .. ' | ' .. RSCore.Functions.GetPlayerData().charinfo.firstname .. ' ' .. RSCore.Functions.GetPlayerData().charinfo.lastname,
+                    },
+                    [2] = {
+                        icon = '<i class="fas fa-globe-europe"></i>',
+                        detail = streetLabel,
+                    },
+                },
+                callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+            }, true)
+            RequestAnimDict("random@arrests");
+            while not HasAnimDictLoaded("random@arrests") do
+                Wait(5);
+            end
+            TaskPlayAnim(PlayerPedId(),"random@arrests","generic_radio_chatter", 8.0, 0.0, -1, 49, 0, 0, 0, 0);
+            Citizen.Wait(2000)
+            StopAnimTask(PlayerPedId(), "random@arrests","generic_radio_chatter", -4.0);
+        else
+            RSCore.Functions.Notify('Je hebt geen portofoon op zak!', 'error')                
+        end
+    end, "radio")
+end)
+
+RegisterNetEvent('police:client:SendPoliceLocation')
+AddEventHandler('police:client:SendPoliceLocation', function()
+    local pos = GetEntityCoords(GetPlayerPed(-1))
+    local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
+    local street1 = GetStreetNameFromHashKey(s1)
+    local street2 = GetStreetNameFromHashKey(s2)
+    local streetLabel = street1
+    if street2 ~= nil then 
+        streetLabel = streetLabel .. " " .. street2
+    end
+    local alertTitle = "Locatie Collega"
+
+    local MyId = GetPlayerServerId(PlayerId())
+
+    TriggerServerEvent("police:server:SendPoliceLocationAlert", streetLabel, pos, RSCore.Functions.GetPlayerData().metadata["callsign"])
     TriggerServerEvent('rs-policealerts:server:AddPoliceAlert', {
         timeOut = 10000,
         alertTitle = alertTitle,
@@ -278,17 +329,46 @@ AddEventHandler('police:client:PoliceEmergencyAlert', function(callsign, streetL
         PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
         Citizen.Wait(100)
         PlaySoundFrontend( -1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1 )
-        TriggerEvent("chatMessage", "MELDING", "error", "Assistentie collega, noodknop ingedrukt door ".. callsign .. " bij "..streetLabel)
+        --TriggerEvent("chatMessage", "MELDING", "error", "Assistentie collega, noodknop ingedrukt door ".. callsign .. " bij "..streetLabel)
         local transG = 250
         local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
         SetBlipSprite(blip, 487)
-        SetBlipColour(blip, 4)
+        SetBlipColour(blip, 1)
+        SetBlipDisplay(blip, 4)
+        SetBlipAlpha(blip, transG)
+        SetBlipScale(blip, 1.2)
+        SetBlipFlashes(blip, true)
+        SetBlipRoute(blip, true)
+        SetBlipRouteColour(blip, 1)
+        BeginTextCommandSetBlipName('STRING')
+        AddTextComponentString("Noodknop Collega")
+        EndTextCommandSetBlipName(blip)
+        while transG ~= 0 do
+            Wait(180 * 2)
+            transG = transG - 1
+            SetBlipAlpha(blip, transG)
+            if transG == 0 then
+                SetBlipSprite(blip, 2)
+                RemoveBlip(blip)
+                return
+            end
+        end
+    end
+end)
+
+RegisterNetEvent('police:client:PoliceLocationAlert')
+AddEventHandler('police:client:PoliceLocationAlert', function(callsign, streetLabel, coords)
+    if PlayerJob.name == 'police' and onDuty then 
+        local transG = 250
+        local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
+        SetBlipSprite(blip, 468)
+        SetBlipColour(blip, 3)
         SetBlipDisplay(blip, 4)
         SetBlipAlpha(blip, transG)
         SetBlipScale(blip, 1.2)
         SetBlipFlashes(blip, true)
         BeginTextCommandSetBlipName('STRING')
-        AddTextComponentString("Assistentie Collega")
+        AddTextComponentString("Locatie Collega")
         EndTextCommandSetBlipName(blip)
         while transG ~= 0 do
             Wait(180 * 4)
@@ -304,29 +384,50 @@ AddEventHandler('police:client:PoliceEmergencyAlert', function(callsign, streetL
 end)
 
 RegisterNetEvent('police:client:GunShotAlert')
-AddEventHandler('police:client:GunShotAlert', function(streetLabel, isAutomatic, fromVehicle, coords, vehicleInfo)
+AddEventHandler('police:client:GunShotAlert', function(streetLabel, fromVehicle, coords, vehicleInfo)
     if PlayerJob.name == 'police' and onDuty then        
         local msg = ""
         local blipSprite = 313
-        local blipText = "Melding: Schoten gelost"
+        local blipText = "Schoten gelost"
+        local MessageDetails = {}
         if fromVehicle then
-            if isAutomatic then
-                blipText = "Melding: Schoten gelost (automatisch)"
-                blipSprite = 313
-                msg = "Schoten gelost (automatisch vuurwapen) uit een voertuig. Model: "..vehicleInfo.name..", kenteken: "..vehicleInfo.plate..", locatie: "..streetLabel
-            else
-                msg = "Schoten gelost uit een voertuig. Model: "..vehicleInfo.name..", kenteken: "..vehicleInfo.plate..", locatie: "..streetLabel
-            end
+            blipText = "Schoten gelost uit voertuig"
+            MessageDetails = {
+                [1] = {
+                    icon = '<i class="fas fa-car"></i>',
+                    detail = vehicleInfo.name,
+                },
+                [2] = {
+                    icon = '<i class="fas fa-closed-captioning"></i>',
+                    detail = vehicleInfo.plate,
+                },
+                [3] = {
+                    icon = '<i class="fas fa-globe-europe"></i>',
+                    detail = streetLabel,
+                },
+            }
         else
-            if isAutomatic then
-                blipText = "Melding: Schoten gelost (automatisch)"
-                blipSprite = 313
-                msg = "Schoten gelost (automatisch vuurwapen). Locatie: "..streetLabel
-            else
-                msg = "Schoten gelost. Locatie: "..streetLabel
-            end
+            blipText = "Schoten gelost"
+            MessageDetails = {
+                [1] = {
+                    icon = '<i class="fas fa-globe-europe"></i>',
+                    detail = streetLabel,
+                },
+            }
         end
-        TriggerEvent("chatMessage", "MELDING", "error", msg)
+
+        TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+            timeOut = 4000,
+            alertTitle = blipText,
+            coords = {
+                x = coords.x,
+                y = coords.y,
+                z = coords.z,
+            },
+            details = MessageDetails,
+            callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+        })
+
         PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
         local transG = 250
         local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
@@ -382,9 +483,29 @@ AddEventHandler('police:client:VehicleCall', function(coords, msg)
 end)
 
 RegisterNetEvent('police:client:HouseRobberyCall')
-AddEventHandler('police:client:HouseRobberyCall', function(coords, msg)
+AddEventHandler('police:client:HouseRobberyCall', function(coords, msg, gender, streetLabel)
     if PlayerJob.name == 'police' and onDuty then
-        TriggerEvent("chatMessage", "MELDING", "error", msg)
+        TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+            timeOut = 5000,
+            alertTitle = "Poging Huisinbraak",
+            coords = {
+                x = coords.x,
+                y = coords.y,
+                z = coords.z,
+            },
+            details = {
+                [1] = {
+                    icon = '<i class="fas fa-venus-mars"></i>',
+                    detail = gender,
+                },
+                [2] = {
+                    icon = '<i class="fas fa-globe-europe"></i>',
+                    detail = streetLabel,
+                },
+            },
+            callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+        })
+
         PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
         local transG = 250
         local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
@@ -452,6 +573,18 @@ end)
 RegisterNetEvent('police:client:PoliceAlertMessage')
 AddEventHandler('police:client:PoliceAlertMessage', function(msg, coords)
     if PlayerJob.name == 'police' and onDuty then
+        TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+            timeOut = 5000,
+            alertTitle = title,
+            details = {
+                [1] = {
+                    icon = '<i class="fas fa-globe-europe"></i>',
+                    detail = streetLabel,
+                },
+            },
+            callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+        })
+
         PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
         TriggerEvent("chatMessage", "112-MELDING", "error", msg)
         local transG = 100

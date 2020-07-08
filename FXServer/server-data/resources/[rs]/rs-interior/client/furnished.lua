@@ -475,3 +475,129 @@ function CreateTier1HouseFurnished(spawn, isBackdoor)
 
     return { objects, POIOffsets }
 end
+
+
+
+function CreateTier3HouseFurnished(spawn)
+	local objects = {}
+
+    local POIOffsets = {}
+	POIOffsets.exit = json.decode('{"z":1.4,"y":2.65636328125,"x":-10.572736328125,"h":265.633972168}')
+	DoScreenFadeOut(500)
+    while not IsScreenFadedOut() do
+        Citizen.Wait(10)
+    end
+	RequestModel(`micheal_shell`)
+	while not HasModelLoaded(`micheal_shell`) do
+	    Citizen.Wait(1000)
+	end
+	local house = CreateObject(`micheal_shell`, spawn.x, spawn.y, spawn.z, false, false, false)
+    FreezeEntityPosition(house, true)
+	table.insert(objects, house)
+
+	-- Ingang
+    -- Planten en bloemen
+    local plant = CreateObject(`v_res_m_bananaplant`,spawn.x-10.071,spawn.y+4.900,spawn.z-0.6203,false,false,false)
+ 
+    -- Banken/Stoelen/Tafels
+    local tafel = CreateObject(`v_res_mconsoletrad`,spawn.x-9.5,spawn.y+0.550,spawn.z+0.05,false,false,false)
+   
+	local bank = CreateObject(`v_res_m_h_sofa`,spawn.x-7.75,spawn.y+5.250,spawn.z+0.05,false,false,false)
+
+	-- Salon
+	local bank2 = CreateObject(`apa_mp_h_stn_sofacorn_01`,spawn.x-2.23024,spawn.y-5.9684600,spawn.z+0.8349,false,false,false)
+    -- Schilderijen
+    local schilderij = CreateObject(`apa_p_h_acc_artwallm_04`,spawn.x-7.86444,spawn.y+5.8983,spawn.z+5.9751,false,false,false)
+    local schilderij2 = CreateObject(`apa_p_h_acc_artwallm_03`,spawn.x-5.859,spawn.y-2.277,spawn.z+6.119,false,false,false)
+    local schilderij3 = CreateObject(`v_ilev_trev_pictureframe`,spawn.x-0.176,spawn.y-1.215,spawn.z+2.163,false,false,false)
+    local schilderij4 = CreateObject(`v_res_picture_frame`,spawn.x-7.595,spawn.y+5.884,spawn.z+1.564,false,false,false)
+ 
+    -- HALLETJE
+    local kast3 = CreateObject(`v_res_m_h_console`,spawn.x-1.85,spawn.y+3.0,spawn.z+0.08,false,false,false)
+ 
+    -- KEUKEN
+    -- ELEKTRONICA
+    local gasfornuis = CreateObject(`v_res_ovenhobmod`,spawn.x+7.1161,spawn.y+5.6062,spawn.z+0.6203,false,false,false)
+    local gasfornuis1 = CreateObject(`v_res_ovenhobmod`,spawn.x+8.0087,spawn.y+5.6062,spawn.z+0.6203,false,false,false)
+   
+    -- KEUKENTAFEL
+    local keukentafel = CreateObject(`v_res_m_dinetble`,spawn.x+8.07676,spawn.y-2.2142,spawn.z+0.8581,false,false,false)
+ 
+    local stoel = CreateObject(`v_ilev_m_dinechair`,spawn.x+8.79056,spawn.y-1.5427,spawn.z+0.8604,false,false,false)
+    local stoel1 = CreateObject(`v_ilev_m_dinechair`,spawn.x+7.37686,spawn.y-1.5945,spawn.z+0.8604,false,false,false)
+    local stoel2 = CreateObject(`v_ilev_m_dinechair`,spawn.x+7.38636,spawn.y-2.9317,spawn.z+0.8604,false,false,false)
+    local stoel3 = CreateObject(`v_ilev_m_dinechair`,spawn.x+8.74406,spawn.y-2.883,spawn.z+0.8604,false,false,false)
+ 
+ 
+    -- BOVENSTE VERDIEPING
+    -- BEDDEN
+    local bed = CreateObject(`v_res_mdbed`,spawn.x+0.78096,spawn.y-8.8889,spawn.z+4.771,false,false,false)
+    local bed1 = CreateObject(`apa_mp_h_bed_wide_05`,spawn.x-7.87674,spawn.y+5.9472,spawn.z+4.7629,false,false,false)
+    local bed2 = CreateObject(`v_res_msonbed`,spawn.x-6.165,spawn.y-10.639,spawn.z+4.763,false,false,false)
+ 
+    -- NACHT KASTEN
+    local nachtkast = CreateObject(`v_res_mbbedtable`,spawn.x-4.813,spawn.y-11.703,spawn.z+4.763,false,false,false)
+    local nachtkast2 = CreateObject(`v_res_mbbedtable`,spawn.x-7.518,spawn.y-11.697,spawn.z+4.753,false,false,false)
+    local bed1kasten = CreateObject(`apa_mp_h_bed_table_wide_12`,spawn.x-7.87674,spawn.y+5.9472,spawn.z+5.150,false,false,false)
+ 
+    local kastd = CreateObject(`v_res_mddresser`,spawn.x+1.42096,spawn.y-11.5,spawn.z+4.771,false,false,false)
+ 
+    local kast = CreateObject(`apa_mp_h_str_sideboardl_11`,spawn.x-0.176,spawn.y-1.24,spawn.z+0.848,false,false,false)
+    local kast2 = CreateObject(`v_res_mconsolemod`,spawn.x-6.0,spawn.y+0.550,spawn.z+0.05,false,false,false)
+ 
+    local kluis = CreateObject(`prop_ld_int_safe_01`,spawn.x-10.7000,spawn.y-0.820,spawn.z+4.525,false,false,false)
+ 
+    local box = CreateObject(`v_res_tre_storagebox`,spawn.x-7.952,spawn.y-5.528,spawn.z+4.763,false,false,false)
+ 
+    FreezeEntityPosition(plant, true)
+    FreezeEntityPosition(tafel, true)
+	FreezeEntityPosition(bank, true)
+	FreezeEntityPosition(bank2,true)
+    FreezeEntityPosition(schilderij, true)
+    FreezeEntityPosition(schilderij2, true)
+    FreezeEntityPosition(schilderij3, true)
+    FreezeEntityPosition(schilderij4, true)
+    FreezeEntityPosition(kast3, true)
+    FreezeEntityPosition(gasfornuis, true)
+    FreezeEntityPosition(gasfornuis1, true)
+    FreezeEntityPosition(keukentafel, true)
+    FreezeEntityPosition(stoel, true)
+    FreezeEntityPosition(stoel1, true)
+    FreezeEntityPosition(stoel2, true)
+    FreezeEntityPosition(stoel3, true)
+    FreezeEntityPosition(bed, true)
+    FreezeEntityPosition(bed1, true)
+    FreezeEntityPosition(bed2, true)
+    FreezeEntityPosition(nachtkast, true)
+    FreezeEntityPosition(nachtkast2, true)
+    FreezeEntityPosition(bed1kasten, true)
+    FreezeEntityPosition(kast, true)
+    FreezeEntityPosition(kast2, true)
+    FreezeEntityPosition(kluis, true)
+    FreezeEntityPosition(box, true)
+    FreezeEntityPosition(kastd, true)
+ 
+	SetEntityHeading(bank,GetEntityHeading(bank))
+	SetEntityHeading(bank2,GetEntityHeading(bank)+90)
+    SetEntityHeading(stoel, GetEntityHeading(stoel)+315)
+    SetEntityHeading(stoel1, GetEntityHeading(stoel1)+45)
+    SetEntityHeading(stoel2, GetEntityHeading(stoel2)+135)
+    SetEntityHeading(stoel3, GetEntityHeading(stoel3)+225)
+ 
+    SetEntityHeading(schilderij2,GetEntityHeading(schilderij2)+90)
+    SetEntityHeading(schilderij3,GetEntityHeading(schilderij3))
+ 
+    SetEntityHeading(bed, GetEntityHeading(bed)+90)
+    SetEntityHeading(bed2, GetEntityHeading(bed2)+180)
+ 
+    SetEntityHeading(box, GetEntityHeading(box)+90)
+
+    SetEntityHeading(kastd, GetEntityHeading(kastd)+180)
+    SetEntityHeading(kast2, GetEntityHeading(kast2)+180)
+	
+	
+
+	TeleportToInterior(spawn.x - 9.52089355468, spawn.y + 2.80144140625, spawn.z + 1.5, POIOffsets.exit.h)
+
+    return { objects, POIOffsets }
+end

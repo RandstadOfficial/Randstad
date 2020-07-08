@@ -2,9 +2,6 @@
 <CVehicleModelInfo__InitDataList>
   <residentTxd>vehshare</residentTxd>
   <residentAnims />
-
-<!-------------- Dyc3--------------->
-
   <InitDatas>
    <Item>
       <modelName>911R</modelName>

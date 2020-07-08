@@ -34,6 +34,8 @@ AddEventHandler('RSCore:Client:OnPlayerLoaded', function()
     end)
 end)
 
+
+
 function DrawText3Ds(x, y, z, text)
 	SetTextScale(0.35, 0.35)
     SetTextFont(4)
@@ -150,12 +152,17 @@ Citizen.CreateThread(function()
 end)
 
 function enterRobberyHouse(house)
+    TriggerServerEvent('rs-houserobbery:server:clearAnimsAllPedsInsideRobberyHouses')
     TriggerServerEvent("InteractSound_SV:PlayOnSource", "houses_door_open", 0.25)
     openHouseAnim()
     Citizen.Wait(250)
     local coords = { x = Config.Houses[house]["coords"]["x"], y = Config.Houses[house]["coords"]["y"], z= Config.Houses[house]["coords"]["z"] - Config.MinZOffset}
     if Config.Houses[house]["tier"] == 1 then
         data = exports['rs-interior']:CreateTier1HouseFurnished(coords)
+    elseif Config.Houses[house]["tier"] == 2 then
+        data = exports['rs-interior']:CreateHotelFurnished(coords)
+    elseif Config.Houses[house]["tier"] == 3 then
+        data = exports['rs-interior']:CreateTier3HouseFurnished(coords)
     end
     Citizen.Wait(100)
     houseObj = data[1]
@@ -205,7 +212,7 @@ end)
 
 RegisterNetEvent('rs-houserobbery:client:enterHouse')
 AddEventHandler('rs-houserobbery:client:enterHouse', function(house)
-    enterRobberyHouse(house)
+    enterRobberyHouse(house) 
 end)
 
 function openHouseAnim()
@@ -291,7 +298,7 @@ function PoliceCall()
                 gender = "Vrouw"
             end
             local msg = "Poging inbraak in een huis door een " .. gender .." bij " .. streetLabel
-            TriggerServerEvent("police:server:HouseRobberyCall", pos, msg)
+            TriggerServerEvent("police:server:HouseRobberyCall", pos, msg, gender, streetLabel)
         end
     end
 end
@@ -425,6 +432,16 @@ end)
 RegisterNetEvent('rs-houserobbery:client:SetBusyState')
 AddEventHandler('rs-houserobbery:client:SetBusyState', function(cabin, house, bool)
     Config.Houses[house]["furniture"][cabin]["isBusy"] = bool
+end)
+
+RegisterNetEvent('rs-houserobbery:client:ClearPedAnims')
+AddEventHandler('rs-houserobbery:client:ClearPedAnims', function()
+    print("Animation bug abuse fix inside robbery house triggered") -- If triggered, player sees this. Animation gets canceled because of bug abuse, player is invisible for other player if animation is happening
+    if inside then
+        local ped = GetPlayerPed(-1)
+        ClearPedTasks(ped)
+        ClearPedTasksImmediately(ped)
+    end
 end)
 
 function IsWearingHandshoes()

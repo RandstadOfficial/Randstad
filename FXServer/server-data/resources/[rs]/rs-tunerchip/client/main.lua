@@ -11,6 +11,8 @@ Keys = {
 
 RSCore = nil
 
+infiniteStamina = false
+
 Citizen.CreateThread(function() 
     while true do
         Citizen.Wait(10)
@@ -21,6 +23,25 @@ Citizen.CreateThread(function()
     end
 end)
 
+RegisterNetEvent('infiniteStamina')
+AddEventHandler('infiniteStamina', function()
+    if infiniteStamina then
+        infiniteStamina = false
+        RSCore.Functions.Notify('Infinite Stamina is uit', 'success', 2500)
+    else
+        infiniteStamina = true
+        RSCore.Functions.Notify('Infinite Stamina is aan', 'success', 2500)
+
+    end
+end)
+
+
+Citizen.CreateThread( function()
+    while infiniteStamina do
+      Citizen.Wait(5)
+      RestorePlayerStamina(PlayerId(), 1.0)
+    end
+  end)
 -- Code
 
 local inTuner = false
@@ -173,3 +194,32 @@ function openTunerLaptop(bool)
     })
     inTuner = bool
 end
+
+RegisterNetEvent("lockpick:instapick")
+AddEventHandler('lockpick:instapick', function() 
+    if not HasKey then 
+        local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
+        if vehicle ~= nil and vehicle ~= 0 then
+            if GetPedInVehicleSeat(vehicle, -1) == GetPlayerPed(-1) then
+
+        TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle))
+
+        HasKey = false
+        SetVehicleEngineOn(vehicle, false, false, true)       
+    end
+
+    local vehicle = RSCore.Functions.GetClosestVehicle()
+    if vehicle ~= nil and vehicle ~= 0 then
+        local vehpos = GetEntityCoords(vehicle)
+        local pos = GetEntityCoords(GetPlayerPed(-1))
+        if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 1.5 then
+            local vehLockStatus = GetVehicleDoorLockStatus(vehicle)
+            if (vehLockStatus > 1) then
+                SetVehicleAlarm(vehicle, true)
+                SetVehicleAlarmTimeLeft(vehicle, lockpickTime)
+                SetVehicleDoorsLocked(vehicle, 0)
+                SetVehicleDoorsLockedForAllPlayers(vehicle, false)
+            end
+        end
+    end
+end)

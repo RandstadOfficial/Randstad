@@ -71,8 +71,6 @@ AddEventHandler('inventory:server:OpenInventory', function(name, id, other)
 				secondInv.maxweight = 1000000
 				secondInv.inventory = {}
 				secondInv.slots = 0
-				Stashes[id].label = secondInv.label
-				Stashes[id].isOpen = true
 			else
 				local stashItems = GetStashItems(id)
 				if next(stashItems) ~= nil then
