@@ -1,0 +1,36 @@
+Version 165 32
+{
+	Shaders
+	{
+		default.sps
+		{
+			DiffuseSampler prop_ind_light_01
+			HardAlphaBlend 1.0000000
+			UseTessellation 0.0000000
+		}
+		default.sps
+		{
+			DiffuseSampler texture
+			HardAlphaBlend 1.0000000
+			UseTessellation 0.0000000
+		}
+	}
+	Skeleton null
+	LodGroup
+	{
+		High 9998.0
+		{
+			taxi_sign_pole\taxi_sign_pole.mesh 0
+		}
+		Med 9998.0
+		Low 9998.0
+		Vlow 9998.0
+		AABBMin -0.2351650 -0.0484913 -0.0073803
+		AABBMax 0.1740950 0.0448932 2.5780168
+		Radius 1.30963
+		Center -0.0305350 -0.0017991 1.2853183
+	}
+	Light null
+	Bound taxi_sign_pole\taxi_sign_pole.bound
+	Joints null
+}
