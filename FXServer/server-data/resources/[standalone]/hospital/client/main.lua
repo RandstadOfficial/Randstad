@@ -209,6 +209,7 @@ Citizen.CreateThread(function()
                 if IsControlJustReleased(0, Keys["E"]) then
                     if doctorCount >= Config.MinimalDoctors then
                         TriggerServerEvent("hospital:server:SendDoctorAlert")
+                        RSCore.Functions.Notify('Even geduld, er komt zo iemand langs', 'success')
                         Citizen.Wait(10000)
                     else
                         TriggerEvent('animations:client:EmoteCommandStart', {"notepad"})

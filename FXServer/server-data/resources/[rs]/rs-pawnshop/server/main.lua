@@ -3,8 +3,8 @@ TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 
 local ItemList = {
     ["goldchain"] = math.random(100, 200),
-    ["diamond_ring"] = math.random(200, 300),
-    ["rolex"] = math.random(300, 400),
+    ["diamond_ring"] = math.random(150, 250),
+    ["rolex"] = math.random(200, 300),
 }
 
 local ItemListHardware = {
@@ -90,7 +90,7 @@ AddEventHandler("rs-pawnshop:server:sellGold", function()
         for k, v in pairs(Player.PlayerData.items) do 
             if Player.PlayerData.items[k] ~= nil then 
                 if Player.PlayerData.items[k].name == "goldbar" then 
-                    price = price + (math.random(3000, 4500) * Player.PlayerData.items[k].amount)
+                    price = price + (math.random(2500, 4000) * Player.PlayerData.items[k].amount)
                     Player.Functions.RemoveItem(Player.PlayerData.items[k].name, Player.PlayerData.items[k].amount, k)
                 end
             end
