@@ -68,7 +68,7 @@ Citizen.CreateThread(function()
 
             if inRange then
                 for i = 1, #Config.OccasionSlots, 1 do
-                    local vehPos = GetEntityCoords(Config.OccasionSlots[i]["occasionId"])
+                    local vehPos = GetEntityCoords(Config.OccasionSlots[i]["occasionid"])
                     local dstCheck = GetDistanceBetweenCoords(pos, vehPos)
 
                     if dstCheck <= 2 then
@@ -161,26 +161,26 @@ function spawnOccasionsVehicles(vehicles)
                 Citizen.Wait(0)
             end
 
-            oSlot[i]["occasionId"] = CreateVehicle(model, oSlot[i]["x"], oSlot[i]["y"], oSlot[i]["z"], false, false)
-           
+            oSlot[i]["occasionid"] = CreateVehicle(model, oSlot[i]["x"], oSlot[i]["y"], oSlot[i]["z"], false, false)
+
             oSlot[i]["price"] = vehicles[i].price
             oSlot[i]["owner"] = vehicles[i].seller
             oSlot[i]["model"] = vehicles[i].model
             oSlot[i]["plate"] = vehicles[i].plate
-            oSlot[i]["oid"]   = vehicles[i].occasionId
+            oSlot[i]["oid"]   = vehicles[i].occasionid
             oSlot[i]["desc"]  = vehicles[i].description
             oSlot[i]["mods"]  = vehicles[i].mods
 
-            RSCore.Functions.SetVehicleProperties(oSlot[i]["occasionId"], json.decode(vehicles[i].mods))
+            RSCore.Functions.SetVehicleProperties(oSlot[i]["occasionid"], json.decode(oSlot[i]["mods"]))
 
             SetModelAsNoLongerNeeded(model)
-            SetVehicleOnGroundProperly(oSlot[i]["occasionId"])
-            SetEntityInvincible(oSlot[i]["occasionId"],true)
-            SetEntityHeading(oSlot[i]["occasionId"], oSlot[i]["h"])
-            SetVehicleDoorsLocked(oSlot[i]["occasionId"], 3)
+            SetVehicleOnGroundProperly(oSlot[i]["occasionid"])
+            SetEntityInvincible(oSlot[i]["occasionid"],true)
+            SetEntityHeading(oSlot[i]["occasionid"], oSlot[i]["h"])
+            SetVehicleDoorsLocked(oSlot[i]["occasionid"], 3)
 
-            SetVehicleNumberPlateText(oSlot[i]["occasionId"], vehicles[i].occasionId)
-            FreezeEntityPosition(oSlot[i]["occasionId"],true)
+            SetVehicleNumberPlateText(oSlot[i]["occasionid"], vehicles[i].occasionid)
+            FreezeEntityPosition(oSlot[i]["occasionid"],true)
         end
     end
 end
@@ -250,29 +250,18 @@ AddEventHandler('rs-occasions:client:BuyFinished', function(model, plate, mods)
     currentVehicle = nil
 end)
 
-RegisterNetEvent('rs-occasions:client:DeleteVehicle')
-AddEventHandler('rs-occasions:client:DeleteVehicle', function()
-	if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-		RSCore.Functions.DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1), false))
-	else
-		local vehicle = RSCore.Functions.GetClosestVehicle()
-		RSCore.Functions.DeleteVehicle(vehicle)
-	end
-end)
-
 RegisterNetEvent('rs-occasions:client:ReturnOwnedVehicle')
-AddEventHandler('rs-occasions:client:ReturnOwnedVehicle', function(mods)
-    local vehData = Config.OccasionSlots[currentVehicle]
-    local vehmods = json.decode(mods)
+AddEventHandler('rs-occasions:client:ReturnOwnedVehicle', function(vehdata)
+    local vehmods = json.decode(vehdata.mods)
     DoScreenFadeOut(250)
     Citizen.Wait(500)
-    RSCore.Functions.SpawnVehicle(vehData["model"], function(veh)
-        SetVehicleNumberPlateText(veh, vehData["plate"])
+    RSCore.Functions.SpawnVehicle(vehdata.model, function(veh)
+        SetVehicleNumberPlateText(veh, vehdata.plate)
         SetEntityHeading(veh, Config.BuyVehicle.h)
         TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
         exports['LegacyFuel']:SetFuel(veh, 100)
         RSCore.Functions.Notify("Jouw voertuig is terug in ontvangst..")
-        TriggerEvent("vehiclekeys:client:SetOwner", vehData["plate"])
+        TriggerEvent("vehiclekeys:client:SetOwner", vehdata.plate)
         SetVehicleEngineOn(veh, true, true)
         Citizen.Wait(500)
         RSCore.Functions.SetVehicleProperties(veh, vehmods)
@@ -326,6 +315,6 @@ Citizen.CreateThread(function()
     SetBlipColour(OccasionBlip, 3)
 
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName("Mosley's Occasions")
+    AddTextComponentSubstringPlayerName("Larry's RV Sales")
     EndTextCommandSetBlipName(OccasionBlip)
 end)
