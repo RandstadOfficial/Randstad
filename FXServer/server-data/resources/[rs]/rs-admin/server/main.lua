@@ -65,7 +65,7 @@ AddEventHandler('rs-admin:server:banPlayer', function(playerId, time, reason)
         end
         local timeTable = os.date("*t", banTime)
         TriggerClientEvent('chatMessage', -1, "BANHAMMER", "error", GetPlayerName(playerId).." is verbannen voor: "..reason.." "..suffix[math.random(1, #suffix)])
-        RSCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`) VALUES ('"..GetPlayerName(playerId).."', '"..GetPlayerIdentifiers(playerId)[1].."', '"..GetPlayerIdentifiers(playerId)[2].."', '"..GetPlayerIdentifiers(playerId)[3].."', '"..GetPlayerIdentifiers(playerId)[4].."', '"..reason.."', "..banTime..")")
+        RSCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`, `bannedby`) VALUES ('"..GetPlayerName(playerId).."', '"..GetPlayerIdentifiers(playerId)[1].."', '"..GetPlayerIdentifiers(playerId)[2].."', '"..GetPlayerIdentifiers(playerId)[3].."', '"..GetPlayerIdentifiers(playerId)[4].."', '"..reason.."', "..banTime..", '"..GetPlayerName(src).."')")
         DropPlayer(playerId, "Je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
     end
 end)
@@ -84,6 +84,7 @@ end, "admin")
 
 RSCore.Commands.Add("admin", "Open admin menu", {}, false, function(source, args)
     local group = RSCore.Functions.GetPermission(source)
+    -- local dealers = exports['rs-drugs']:GetDealers()
     TriggerClientEvent('rs-admin:client:openMenu', source, group)
 end, "admin")
 
@@ -93,6 +94,7 @@ RSCore.Commands.Add("report", "Stuur een report naar admins (alleen wanneer nodi
     local Player = RSCore.Functions.GetPlayer(source)
     TriggerClientEvent('rs-admin:client:SendReport', -1, GetPlayerName(source), source, msg)
     TriggerClientEvent('chatMessage', source, "REPORT VERSTUURD", "normal", msg)
+    TriggerEvent("rs-log:server:CreateLog", "report", "Report", "green", "**"..GetPlayerName(source).."** (CitizenID: "..Player.PlayerData.citizenid.." | ID: "..source..") **Report:** " ..msg, false)
     TriggerEvent("rs-log:server:sendLog", Player.PlayerData.citizenid, "reportreply", {message=msg})
 end)
 
@@ -100,6 +102,14 @@ RSCore.Commands.Add("staffchat", "Bericht naar alle staff sturen", {{name="beric
     local msg = table.concat(args, " ")
 
     TriggerClientEvent('rs-admin:client:SendStaffChat', -1, GetPlayerName(source), msg)
+end, "admin")
+
+RSCore.Commands.Add("givenuifocus", "Geef nui focus", {{name="id", help="Speler id"}, {name="focus", help="Zet focus aan/uit"}, {name="mouse", help="Zet muis aan/uit"}}, true, function(source, args)
+    local playerid = tonumber(args[1])
+    local focus = args[2]
+    local mouse = args[3]
+
+    TriggerClientEvent('rs-admin:client:GiveNuiFocus', playerid, focus, mouse)
 end, "admin")
 
 RSCore.Commands.Add("s", "Bericht naar alle staff sturen", {{name="bericht", help="Bericht die je wilt sturen"}}, true, function(source, args)
@@ -131,7 +141,6 @@ RSCore.Commands.Add("checkwarns", "Geef een persoon een waarschuwing", {{name="I
     if args[2] == nil then
         local targetPlayer = RSCore.Functions.GetPlayer(tonumber(args[1]))
         RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_warns` WHERE `targetIdentifier` = '"..targetPlayer.PlayerData.steam.."'", function(result)
-            print(json.encode(result))
             TriggerClientEvent('chatMessage', source, "SYSTEM", "warning", targetPlayer.PlayerData.name.." heeft "..tablelength(result).." waarschuwingen!")
         end)
     else
@@ -186,6 +195,7 @@ RSCore.Commands.Add("reportr", "Reply op een report", {}, false, function(source
             if RSCore.Functions.HasPermission(v, "admin") then
                 if RSCore.Functions.IsOptin(v) then
                     TriggerClientEvent('chatMessage', v, "ReportReply("..source..") - "..GetPlayerName(source), "warning", msg)
+                    TriggerEvent("rs-log:server:CreateLog", "report", "Report Reply", "red", "**"..GetPlayerName(source).."** reageerde op: **"..OtherPlayer.PlayerData.name.. " **(ID: "..OtherPlayer.PlayerData.source..") **Bericht:** " ..msg, false)
                 end
             end
         end
@@ -193,6 +203,56 @@ RSCore.Commands.Add("reportr", "Reply op een report", {}, false, function(source
         TriggerClientEvent('RSCore:Notify', source, "Persoon is niet online", "error")
     end
 end, "admin")
+
+RSCore.Commands.Add("setmodel", "Verander in een model naar keuze..", {{name="model", help="Naam van de model"}, {name="id", help="Id van speler (laat leeg voor jezelf)"}}, false, function(source, args)
+    local model = args[1]
+    local target = tonumber(args[2])
+
+    if model ~= nil or model ~= "" then
+        if target == nil then
+            TriggerClientEvent('rs-admin:client:SetModel', source, tostring(model))
+        else
+            local Trgt = RSCore.Functions.GetPlayer(target)
+            if Trgt ~= nil then
+                TriggerClientEvent('rs-admin:client:SetModel', target, tostring(model))
+            else
+                TriggerClientEvent('RSCore:Notify', source, "Dit persoon is niet in de stad yeet..", "error")
+            end
+        end
+    else
+        TriggerClientEvent('RSCore:Notify', source, "Je hebt geen Model opgegeven..", "error")
+    end
+end, "god")
+
+RSCore.Commands.Add("setspeed", "Verander ren snelheid", {}, false, function(source, args)
+    local speed = args[1]
+
+    if speed ~= nil then
+        TriggerClientEvent('rs-admin:client:SetSpeed', source, tostring(speed))
+    else
+        TriggerClientEvent('RSCore:Notify', source, "Je hebt geen Snelheid opgegeven.. (`fast` voor super-run, `normal` voor normaal)", "error")
+    end
+end, "god")
+
+
+RSCore.Commands.Add("admincar", "Plaats voertuig in je garage", {}, false, function(source, args)
+    local ply = RSCore.Functions.GetPlayer(source)
+    TriggerClientEvent('rs-admin:client:SaveCar', source)
+end, "god")
+
+RegisterServerEvent('rs-admin:server:SaveCar')
+AddEventHandler('rs-admin:server:SaveCar', function(mods, vehicle, hash, plate)
+    local src = source
+    local Player = RSCore.Functions.GetPlayer(src)
+    RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_vehicles` WHERE `plate` = '"..plate.."'", function(result)
+        if result[1] == nil then
+            RSCore.Functions.ExecuteSql(false, "INSERT INTO `player_vehicles` (`steam`, `citizenid`, `vehicle`, `hash`, `mods`, `plate`, `state`) VALUES ('"..Player.PlayerData.steam.."', '"..Player.PlayerData.citizenid.."', '"..vehicle.model.."', '"..vehicle.hash.."', '"..json.encode(mods).."', '"..plate.."', 0)")
+            TriggerClientEvent('RSCore:Notify', src, 'Het voertuig staat nu op je naam!', 'success', 5000)
+        else
+            TriggerClientEvent('RSCore:Notify', src, 'Dit voertuig staat al in je garage..', 'error', 3000)
+        end
+    end)
+end)
 
 RSCore.Commands.Add("reporttoggle", "Toggle inkomende reports uit of aan", {}, false, function(source, args)
     RSCore.Functions.ToggleOptin(source)

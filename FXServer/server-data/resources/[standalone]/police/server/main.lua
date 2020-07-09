@@ -831,6 +831,7 @@ RSCore.Commands.Add("pmelding", "Politie melding maken", {{name="bericht", help=
         if args[1] ~= nil then
             local msg = table.concat(args, " ")
             TriggerClientEvent("chatMessage", -1, "POLITIE MELDING", "error", msg)
+            TriggerEvent("rs-log:server:CreateLog", "pmelding", "Politie Melding", "blue", "**"..GetPlayerName(source).."** (CitizenID: "..Player.PlayerData.citizenid.." | ID: "..source..") **Bericht:** " ..msg, false)
             TriggerClientEvent('police:PlaySound', -1)
         else
             TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Je moet bericht invullen!")
@@ -1088,6 +1089,7 @@ RSCore.Commands.Add("112", "Stuur een melding naar hulpdiensten", {{name="berich
 
     if Player.Functions.GetItemByName("phone") ~= nil then
         TriggerClientEvent("police:client:SendEmergencyMessage", source, message)
+        TriggerEvent("rs-log:server:CreateLog", "112", "112 Melding", "blue", "**"..GetPlayerName(source).."** (CitizenID: "..Player.PlayerData.citizenid.." | ID: "..source..") **Melding:** " ..message, false)
     else
         TriggerClientEvent('RSCore:Notify', source, 'Je hebt geen telefoon', 'error')
     end

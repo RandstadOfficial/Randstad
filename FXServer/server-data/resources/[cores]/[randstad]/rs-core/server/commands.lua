@@ -139,11 +139,13 @@ RSCore.Commands.Add("ooc", "Out Of Character chat bericht (alleen gebruiken wann
 	local message = table.concat(args, " ")
 	TriggerClientEvent("RSCore:Client:LocalOutOfCharacter", -1, source, GetPlayerName(source), message)
 	local Players = RSCore.Functions.GetPlayers()
+	local Player = RSCore.Functions.GetPlayer(source)
 
 	for k, v in pairs(RSCore.Functions.GetPlayers()) do
 		if RSCore.Functions.HasPermission(v, "admin") then
 			if RSCore.Functions.IsOptin(v) then
 				TriggerClientEvent('chatMessage', v, "OOC | " .. GetPlayerName(source), "normal", message)
+				TriggerEvent("rs-log:server:CreateLog", "ooc", "OOC", "white", "**"..GetPlayerName(source).."** (CitizenID: "..Player.PlayerData.citizenid.." | ID: "..source..") **Bericht:** " ..message, false)
 			end
 		end
 	end
