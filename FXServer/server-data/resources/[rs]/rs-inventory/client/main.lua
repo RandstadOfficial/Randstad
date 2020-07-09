@@ -28,6 +28,24 @@ Citizen.CreateThread(function()
     end
 end)
 
+RegisterNetEvent('inventory:client:CheckOpenState')
+AddEventHandler('inventory:client:CheckOpenState', function(type, id, label)
+    local name = RSCore.Shared.SplitStr(label, "-")[2]
+    if type == "stash" then
+        if name ~= CurrentStash or CurrentStash == nil then
+            TriggerServerEvent('inventory:server:SetIsOpenState', false, type, id)
+        end
+    elseif type == "trunk" then
+        if name ~= CurrentVehicle or CurrentVehicle == nil then
+            TriggerServerEvent('inventory:server:SetIsOpenState', false, type, id)
+        end
+    elseif type == "glovebox" then
+        if name ~= CurrentGlovebox or CurrentGlovebox == nil then
+            TriggerServerEvent('inventory:server:SetIsOpenState', false, type, id)
+        end
+    end
+end)
+
 function GetClosestVending()
     local ped = GetPlayerPed(-1)
     local pos = GetEntityCoords(ped)

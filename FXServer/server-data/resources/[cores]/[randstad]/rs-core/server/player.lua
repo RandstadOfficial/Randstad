@@ -453,6 +453,10 @@ RSCore.Player.SaveInventory = function(source)
 			end
 	
 			RSCore.Functions.ExecuteSql(true, "UPDATE `players` SET `inventory` = '"..RSCore.EscapeSqli(json.encode(ItemsJson)).."' WHERE `citizenid` = '"..PlayerData.citizenid.."'")
+			print('Inventory Opgeslagen met items')
+		else
+			RSCore.Functions.ExecuteSql(true, "UPDATE `players` SET `inventory` = '"..RSCore.EscapeSqli(json.encode(ItemsJson)).."' WHERE `citizenid` = '"..PlayerData.citizenid.."'")
+			print('Inventory opgeslagen zonder items')
 		end
 	end
 end

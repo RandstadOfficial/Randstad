@@ -389,6 +389,7 @@ RegisterServerEvent('rs-houses:server:LogoutLocation')
 AddEventHandler('rs-houses:server:LogoutLocation', function()
 	local src = source
 	local Player = RSCore.Functions.GetPlayer(src)
+	RSCore.Player.SaveInventory(src)
 	Player.Functions.Save()
 	RSCore.Player.Logout(src)
 	Citizen.Wait(100)
