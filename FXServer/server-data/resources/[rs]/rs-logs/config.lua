@@ -21,6 +21,16 @@ Config.Webhooks = {
     ["death"] = "https://discordapp.com/api/webhooks/716440902100320316/_D91g4lXySpGzmXuX2AfY_d6i5tt30VePFWm_10IZ6DbKc1gC78TwPeP5jUW9d07zsyg",
     ["joinleave"] = "https://discordapp.com/api/webhooks/716423788824363110/52jmqfVEwU7rYhxg7vfjSpc-jQo9mRUrDrwbHLoRnbc87fygLSVP7meVm62hJd1zbxHZ",
     ["bans"] = "https://discordapp.com/api/webhooks/721132528856989816/MRMH2YijFk-Gr1uRCBFMQSSHEVdrNvEaK7pQ5GxuG4B4qMSeHRxLbofHPOHzE7SyBF0P",
+    -- New
+    ["report"] = "https://discordapp.com/api/webhooks/730837928296710164/lydkXrpTl01XvEt0eFVTOAdzQxasafzdS4nuDE5O1VoG1V-O3lPMpiRr0TSrrLuCGlCZ",
+    ["me"] = "https://discordapp.com/api/webhooks/730837517166837820/_EpQeLmC7ygc_09HTW2yZQUOACRJeAz4nksIS_ab-YLxJzOM2xV0Kbg5xgmphl9LgZOt",
+    ["pmelding"] = "https://discordapp.com/api/webhooks/730837993291513937/khANY9HSzlIGcya46e_O3YRZZ0P9e4A6OxHUYk1EPu8HhaBu-vo49Mg4IyND2zChByrf",
+    ["112"] = "https://discordapp.com/api/webhooks/730837402301759518/-hXELojCgaDVN0OAOo9PZ2f7ze9aFh98Kj30AYXhyAsmtQZ6-t4_nILaUO6niOAaGs4i",
+    ["ooc"] = "https://discordapp.com/api/webhooks/730837250614624297/dKrFM6ZgOiz_i9iDCicNOkZToSJZcEyQ3_Nn-WBTJE1HvCwriAA6Mzt3V0m3XirHCwVr",
+    -- ["anticheat"] = "https://discordapp.com/api/webhooks/675134231579590677/yxuq71hhZazDpoJj6iyXcXcERnvrFWgKBr7x9napwyI2Ob-9xrUPQ6ZbP3ULlkoOtf04",
+    -- ["weather"] = "https://discordapp.com/api/webhooks/694176597489745999/JXQF4UbtsX79W-mVKABVoJr28WcikKyheEnLkvLf_tJQg7D3grMxR1HL8aFi91SbX4XE",
+    -- ["moneysafes"] = "https://discordapp.com/api/webhooks/699387466171285545/TbZPo5bvgACD7dM74yHHAsRdQX42Hd3X9xWsY3BIKF0hhAlNyU6bbBOWxP3zwr8cv9CI",
+    -- ["bennys"] = "https://discordapp.com/api/webhooks/699677283371188224/oY32QOszf3XvlU7qu62U1ndZmusx9eVohIGjBNdpZZkHbPVnjTj6W3yHc_Ysv6T4rj0X",
 }
 
 Config.Colors = {
