@@ -163,14 +163,15 @@ Config.Furniture = {
 			[8] = { ["object"] = "v_res_tt_bed", ["price"] = 700, ["label"] = "TT Bed" },
 			[9] = { ["object"] = "apa_mp_h_bed_with_table_02", ["price"] = 5000, ["label"] = "fancy bed" },
 			[10] = { ["object"] = "apa_mp_h_bed_wide_05", ["price"] = 5000, ["label"] = "rood bed" },
-			-- decor
 			[11] = { ["object"] = "apa_mp_h_bed_double_08", ["price"] = 3000, ["label"] = "vierkant bed" },	
 			[12] = { ["object"] = "apa_mp_h_bed_double_09", ["price"] = 3000, ["label"] = "modern bed" },	
 			[13] = { ["object"] = "apa_mp_h_yacht_bed_01", ["price"] = 5000, ["label"] = "california king" },
 			[14] = { ["object"] = "apa_mp_h_yacht_bed_02", ["price"] = 5000, ["label"] = "california king 2" },
 			[15] = { ["object"] = "bkr_prop_biker_campbed_01", ["price"] = 100, ["label"] = "veldbed" },
 			[16] = { ["object"] = "ex_prop_exec_bed_01", ["price"] = 700, ["label"] = "klein bed" },
-			[17] = { ["object"] = "gr_prop_bunker_bed_01", ["price"] = 700, ["label"] = "klein bed 2" }
+			[17] = { ["object"] = "gr_prop_bunker_bed_01", ["price"] = 700, ["label"] = "klein bed 2" },
+			-- Nieuw
+			[18] = { ["object"] = "p_mbbed_s", ["price"] = 700, ["label"] = "Bed 5" }
 		},	
 	},
 	["general"] = {
@@ -283,7 +284,64 @@ Config.Furniture = {
 			[61] = { ["object"] = "ba_prop_battle_trophy_no1", ["price"] = 100, ["label"] = "ster trofee" },
 			[62] = { ["object"] = "prop_golf_bag_01c", ["price"] = 100, ["label"] = "golftas" },
 			[63] = { ["object"] = "hei_heist_kit_bin_01", ["price"] = 100, ["label"] = "prullenbak" },
-			[64] = { ["object"] = "prop_wooden_barrel", ["price"] = 100, ["label"] = "houten vat" }
+			[64] = { ["object"] = "prop_wooden_barrel", ["price"] = 100, ["label"] = "houten vat" },
+			-- Nieuw
+			[65] = { ["object"] = "bkr_prop_bkr_cash_scatter_01", ["price"] = 100, ["label"] = "Scatter" },
+			[66] = { ["object"] = "bkr_prop_bkr_cashpile_01", ["price"] = 100, ["label"] = "Cash" },
+			[67] = { ["object"] = "bkr_prop_bkr_cash_roll_01", ["price"] = 100, ["label"] = "Cash rollen" },
+			[68] = { ["object"] = "bkr_prop_bkr_cashpile_04", ["price"] = 100, ["label"] = "bergje cash" },
+			[69] = { ["object"] = "bkr_prop_weed_bigbag_open_01a", ["price"] = 100, ["label"] = "Wiet open tas" },
+			[70] = { ["object"] = "bkr_prop_weed_bigbag_02a", ["price"] = 100, ["label"] = "Wiet tas 2" },
+			[71] = { ["object"] = "bkr_prop_weed_bigbag_03a", ["price"] = 100, ["label"] = "Wiet tas 3" },
+			[72] = { ["object"] = "bkr_prop_weed_scales_01a", ["price"] = 100, ["label"] = "Scales" },
+			[73] = { ["object"] = "bkr_prop_weed_smallbag_01a", ["price"] = 100, ["label"] = "Kleine tas" },
+			[74] = { ["object"] = "prop_gold_bar", ["price"] = 100, ["label"] = "Gold Bar" },
+			[75] = { ["object"] = "beerrow_world", ["price"] = 100, ["label"] = "Bier flessen" },
+			[76] = { ["object"] = "beerrow_local", ["price"] = 100, ["label"] = "Bier flessen 2" },
+			[77] = { ["object"] = "p_cs_bbbat_01", ["price"] = 100, ["label"] = "Bat" },
+			[78] = { ["object"] = "p_cs_cuffs_02_s", ["price"] = 100, ["label"] = "Handboeien" },
+			[79] = { ["object"] = "p_cs_joint_02", ["price"] = 100, ["label"] = "Joint" },
+			[80] = { ["object"] = "p_ing_coffeecup_01", ["price"] = 100, ["label"] = "Koffie kop" },
+			[81] = { ["object"] = "p_tumbler_cs2_s", ["price"] = 100, ["label"] = "Tumbler" },
+			[82] = { ["object"] = "prop_turkey_leg_01", ["price"] = 100, ["label"] = "Kip poot" },
+			[83] = { ["object"] = "prop_amb_donut", ["price"] = 100, ["label"] = "Donut" },
+			[84] = { ["object"] = "prop_donut_02", ["price"] = 100, ["label"] = "Donut 2" },
+			[85] = { ["object"] = "prop_bar_shots", ["price"] = 100, ["label"] = "Bar shots" },
+			[86] = { ["object"] = "prop_bar_stirrers", ["price"] = 100, ["label"] = "Bar stirrers" },
+			[87] = { ["object"] = "prop_beer_amopen", ["price"] = 100, ["label"] = "Beer open" },
+			[88] = { ["object"] = "prop_beer_blr", ["price"] = 100, ["label"] = "Bier 1" },
+			[89] = { ["object"] = "prop_beer_logger", ["price"] = 100, ["label"] = "Bier 2" },
+			[90] = { ["object"] = "prop_beer_stzopen", ["price"] = 100, ["label"] = "Bier 3" },
+			[91] = { ["object"] = "prop_bikerset", ["price"] = 100, ["label"] = "Biker Set" },
+			[92] = { ["object"] = "prop_bottle_brandy", ["price"] = 100, ["label"] = "Bottle brandy" },
+			[93] = { ["object"] = "prop_tequila_bottle", ["price"] = 100, ["label"] = "Tequila fles" },
+			[94] = { ["object"] = "prop_tequila", ["price"] = 100, ["label"] = "Tequila" },
+			[95] = { ["object"] = "prop_bottle_cognac", ["price"] = 100, ["label"] = "Fles Cognac" },
+			[96] = { ["object"] = "prop_bottle_macbeth", ["price"] = 100, ["label"] = "Fles Macbeth" },
+			[97] = { ["object"] = "prop_brandy_glass", ["price"] = 100, ["label"] = "Brandy Glas" },
+			[98] = { ["object"] = "prop_mug_01", ["price"] = 100, ["label"] = "Mug 1" },
+			[99] = { ["object"] = "prop_mug_02", ["price"] = 100, ["label"] = "Mug 2" },
+			[100] = { ["object"] = "prop_mug_03", ["price"] = 100, ["label"] = "Mug 3" },
+			[101] = { ["object"] = "prop_optic_vodka", ["price"] = 100, ["label"] = "Vodka" },
+			[102] = { ["object"] = "prop_optic_jd", ["price"] = 100, ["label"] = "JD" },
+			[103] = { ["object"] = "prop_pint_glass_01", ["price"] = 100, ["label"] = "Pint Glas" },
+			[104] = { ["object"] = "prop_pizza_box_03", ["price"] = 100, ["label"] = "Pizza box" },
+			[105] = { ["object"] = "prop_sandwich_01", ["price"] = 100, ["label"] = "Sandwich" },
+			[106] = { ["object"] = "prop_cava", ["price"] = 100, ["label"] = "Cava" },
+			[107] = { ["object"] = "prop_drink_redwine", ["price"] = 100, ["label"] = "Rode wijn" },
+			[108] = { ["object"] = "vodkarow", ["price"] = 100, ["label"] = "Vodka Row" },
+			[109] = { ["object"] = "prop_cherenkov_02", ["price"] = 100, ["label"] = "Cherenkov" },
+			[110] = { ["object"] = "prop_cherenkov_03", ["price"] = 100, ["label"] = "Cherenkov 2" },
+			[111] = { ["object"] = "prop_cocktail_glass", ["price"] = 100, ["label"] = "Cocktail glass" },
+			[112] = { ["object"] = "prop_cs_bottle_opener", ["price"] = 100, ["label"] = "Fles opener" },
+			[113] = { ["object"] = "prop_food_bs_chips", ["price"] = 100, ["label"] = "Chips" },
+			[114] = { ["object"] = "prop_cs_burger_01", ["price"] = 100, ["label"] = "Burger" },
+			[115] = { ["object"] = "prop_cs_hand_radio", ["price"] = 100, ["label"] = "Hand radio" },
+			[116] = { ["object"] = "prop_cs_hotdog_01", ["price"] = 100, ["label"] = "Hotdog" },
+			[117] = { ["object"] = "prop_cs_milk_01", ["price"] = 100, ["label"] = "Melk" },
+			[118] = { ["object"] = "prop_cs_panties", ["price"] = 100, ["label"] = "Panties" },
+			[119] = { ["object"] = "prop_cs_steak", ["price"] = 100, ["label"] = "Vlees" }
+
 		},
 	},
 	["general3"] = {
@@ -342,10 +400,33 @@ Config.Furniture = {
 			[51] = { ["object"] = "prop_pool_rack_02", ["price"] = 100, ["label"] = "poolcues" },
 			[52] = { ["object"] = "v_club_vu_deckcase", ["price"] = 1000, ["label"] = "dj set" },
 			[53] = { ["object"] = "v_corp_servercln", ["price"] = 1000, ["label"] = "serverrack" },
-			-- new decor
 			[54] = { ["object"] = "ba_prop_battle_crate_art_02_bc", ["price"] = 5000, ["label"] = "gestolen kunst" },
 			[55] = { ["object"] = "ba_prop_battle_crate_m_antiques", ["price"] = 5000, ["label"] = "gestolen kunst 2" },
-			[55] = { ["object"] = "ba_prop_battle_crate_m_jewellery", ["price"] = 5000, ["label"] = "gestolen sieraden" } 
+			[56] = { ["object"] = "ba_prop_battle_crate_m_jewellery", ["price"] = 5000, ["label"] = "gestolen sieraden" }, 
+			-- new decor
+			[57] = { ["object"] = "bkr_prop_clubhouse_jukebox_01a", ["price"] = 1000, ["label"] = "Jukebox 1" },
+			[58] = { ["object"] = "bkr_prop_clubhouse_jukebox_02a", ["price"] = 1000, ["label"] = "Jukebox 2" },
+			[59] = { ["object"] = "prop_armour_pickup", ["price"] = 1000, ["label"] = "Armor" },
+			[60] = { ["object"] = "prop_airhockey_01", ["price"] = 1000, ["label"] = "Luchthockey" },
+			[61] = { ["object"] = "prop_barbell_02", ["price"] = 1000, ["label"] = "Barbell" },
+			[62] = { ["object"] = "prop_pool_cue", ["price"] = 1000, ["label"] = "Pool stick" },
+			[63] = { ["object"] = "prop_pooltable_3b", ["price"] = 1000, ["label"] = "Pool tafel" },
+			[64] = { ["object"] = "prop_pool_tri", ["price"] = 1000, ["label"] = "Pool Tri" },
+			[65] = { ["object"] = "prop_pool_rack_01", ["price"] = 1000, ["label"] = "Pool rack" },
+			[66] = { ["object"] = "prop_poolball_1", ["price"] = 10, ["label"] = "Pool ball 1" },
+			[67] = { ["object"] = "prop_poolball_2", ["price"] = 10, ["label"] = "Pool ball 2" },
+			[68] = { ["object"] = "prop_poolball_3", ["price"] = 10, ["label"] = "Pool ball 3" },
+			[69] = { ["object"] = "prop_poolball_4", ["price"] = 10, ["label"] = "Pool ball 4" },
+			[70] = { ["object"] = "prop_poolball_5", ["price"] = 10, ["label"] = "Pool ball 5" },
+			[71] = { ["object"] = "prop_poolball_6", ["price"] = 10, ["label"] = "Pool ball 6" },
+			[72] = { ["object"] = "prop_poolball_7", ["price"] = 10, ["label"] = "Pool ball 7" },
+			[73] = { ["object"] = "prop_exer_bike_01", ["price"] = 1000, ["label"] = "Exer Bike" },
+			[74] = { ["object"] = "prop_weight_rack_01", ["price"] = 1000, ["label"] = "Gewicht rek" },
+			[75] = { ["object"] = "prop_table_tennis", ["price"] = 1000, ["label"] = "Tafel tennis" },
+			[76] = { ["object"] = "prop_table_ten_bat", ["price"] = 1000, ["label"] = "Tennis rack" },
+			[77] = { ["object"] = "prop_vend_fridge01", ["price"] = 1000, ["label"] = "Koelkast" },
+			[78] = { ["object"] = "prop_vend_snak_01_tu", ["price"] = 1000, ["label"] = "Snak" },
+			[79] = { ["object"] = "prop_gumball_03", ["price"] = 1000, ["label"] = "Gumball" }
 		},
 	},
 	["general4"] = {
@@ -412,7 +493,11 @@ Config.Furniture = {
 			[53] = { ["object"] = "apa_mp_h_acc_candles_04", ["price"] = 100, ["label"] = "kaars 3" },
 			[54] = { ["object"] = "apa_mp_h_acc_candles_06", ["price"] = 100, ["label"] = "kaars 4" },
 			[55] = { ["object"] = "apa_mp_h_acc_fruitbowl_02", ["price"] = 100, ["label"] = "fruitschaal" },
-			[56] = { ["object"] = "apa_mp_h_acc_tray_01", ["price"] = 100, ["label"] = "dingetjes" }
+			[56] = { ["object"] = "prop_bskball_01", ["price"] = 100, ["label"] = "Basketball" },
+			-- Nieuw
+			[57] = { ["object"] = "prop_cs_wrench", ["price"] = 100, ["label"] = "Wrench" },
+			[58] = { ["object"] = "prop_cs_bowie_knife", ["price"] = 100, ["label"] = "Bowie Knife" },
+			[59] = { ["object"] = "prop_w_me_hatchet", ["price"] = 100, ["label"] = "Hatchet" }
 		},
 	},
 	["small"] = {
@@ -513,7 +598,6 @@ Config.Furniture = {
 			[41] = { ["object"] = "apa_mp_h_str_sideboardl_09", ["price"] = 750, ["label"] = "kastje modern 2" },
 			[42] = { ["object"] = "apa_mp_h_str_shelfwallm_01", ["price"] = 750, ["label"] = "boekenkast 2" },
 			[43] = { ["object"] = "apa_mp_h_str_sideboardl_11", ["price"] = 750, ["label"] = "kastje modern 3" },
-			-- new decor
 			[44] = { ["object"] = "imp_prop_impexp_parts_rack_03a", ["price"] = 750, ["label"] = "auto onderdelen" },
 			[45] = { ["object"] = "imp_prop_impexp_parts_rack_04a", ["price"] = 750, ["label"] = "auto onderdelen 2" },
 			[46] = { ["object"] = "imp_prop_impexp_parts_rack_05a", ["price"] = 750, ["label"] = "auto onderdelen 3" },
@@ -532,7 +616,10 @@ Config.Furniture = {
 			[59] = { ["object"] = "apa_mp_h_str_shelffreel_01", ["price"] = 750, ["label"] = "ikea kast" },
 			[60] = { ["object"] = "apa_mp_h_str_sideboardl_13", ["price"] = 750, ["label"] = "kastje modern 4" },
 			[61] = { ["object"] = "apa_mp_h_str_sideboardl_14", ["price"] = 750, ["label"] = "kastje modern 5" },
-			[62] = { ["object"] = "apa_mp_h_str_sideboardm_02", ["price"] = 750, ["label"] = "kastje modern 6" }
+			[62] = { ["object"] = "apa_mp_h_str_sideboardm_02", ["price"] = 750, ["label"] = "kastje modern 6" },
+			-- New Decor
+			[63] = { ["object"] = "bkr_prop_biker_garage_locker_01", ["price"] = 750, ["label"] = "Biker Locker" },
+			[64] = { ["object"] = "gr_prop_gr_bench_04b", ["price"] = 750, ["label"] = "Biker Bench" }
 		},
 	},
 	["electronics"] = {
@@ -573,7 +660,6 @@ Config.Furniture = {
 			[33] = { ["object"] = "apa_mp_h_str_avunits_01", ["price"] = 5500, ["label"] = "flatscreen meubel 2" },
 			[34] = { ["object"] = "v_club_vu_deckcase", ["price"] = 1000, ["label"] = "dj set" },
 			[35] = { ["object"] = "v_corp_servercln", ["price"] = 1000, ["label"] = "serverrack" },
-			-- new decor
 			[36] = { ["object"] = "apa_mp_h_str_avunitl_01_b", ["price"] = 5500, ["label"] = "flatscreen meubel 3" },
 			[37] = { ["object"] = "apa_mp_h_str_avunitl_04", ["price"] = 5500, ["label"] = "flatscreen meubel 4" },
 			[38] = { ["object"] = "apa_mp_h_str_avunitm_01", ["price"] = 5500, ["label"] = "flatscreen meubel 5" },
@@ -584,12 +670,17 @@ Config.Furniture = {
 			[43] = { ["object"] = "v_res_mousemat", ["price"] = 300, ["label"] = "muismat" },
 			[44] = { ["object"] = "v_res_pcheadset", ["price"] = 300, ["label"] = "headset" },
 			[45] = { ["object"] = "v_res_pcspeaker", ["price"] = 300, ["label"] = "PC speaker" },
-			[46] = { ["object"] = "v_res_pcwoofer", ["price"] = 300, ["label"] = "PC subwoofer" },
-			[47] = { ["object"] = "ba_prop_battle_club_speaker_small", ["price"] = 500, ["label"] = "kleine box" },
-			[48] = { ["object"] = "ba_prop_battle_club_speaker_med", ["price"] = 750, ["label"] = "box" },
-			[49] = { ["object"] = "ba_prop_battle_club_speaker_large", ["price"] = 1000, ["label"] = "grote box" },
-			[50] = { ["object"] = "v_res_pcspeaker", ["price"] = 300, ["label"] = "PC speaker" },
-			[51] = { ["object"] = "v_res_pcwoofer", ["price"] = 300, ["label"] = "PC subwoofer" }
+			[46] = { ["object"] = "ba_prop_battle_club_speaker_small", ["price"] = 500, ["label"] = "kleine box" },
+			[47] = { ["object"] = "ba_prop_battle_club_speaker_med", ["price"] = 750, ["label"] = "box" },
+			[48] = { ["object"] = "ba_prop_battle_club_speaker_large", ["price"] = 1000, ["label"] = "grote box" },
+			[49] = { ["object"] = "v_res_pcspeaker", ["price"] = 300, ["label"] = "PC speaker" },
+			[50] = { ["object"] = "v_res_pcwoofer", ["price"] = 300, ["label"] = "PC subwoofer" },
+			-- new decor
+			[51] = { ["object"] = "prop_controller_01", ["price"] = 300, ["label"] = "Controller" },
+			[52] = { ["object"] = "prop_cs_remote_01", ["price"] = 300, ["label"] = "Afstandbediening" },
+			[53] = { ["object"] = "prop_portable_hifi_01", ["price"] = 300, ["label"] = "Radio" },
+			[54] = { ["object"] = "prop_dj_deck_02", ["price"] = 300, ["label"] = "Dj Tafel" },
+			[55] = { ["object"] = "prop_speaker_01", ["price"] = 300, ["label"] = "Speaker" }
 		},
 	},
 	["lighting"] = {
@@ -705,17 +796,17 @@ Config.Furniture = {
 			[38] = { ["object"] = "apa_mp_h_str_sideboards_02", ["price"] = 750, ["label"] = "bijzettafel glas" },
 			[39] = { ["object"] = "apa_mp_h_yacht_coffee_table_01", ["price"] = 750, ["label"] = "koffietafel modern" },
 			[40] = { ["object"] = "apa_mp_h_din_table_04", ["price"] = 1000, ["label"] = "eettafel glas" },
-			-- new decor
 			[41] = { ["object"] = "xm_prop_base_staff_desk_01", ["price"] = 5000, ["label"] = "bureau + setup" },
 			[42] = { ["object"] = "apa_mp_h_tab_coffee_07", ["price"] = 1000, ["label"] = "driehoekige bijzettafel" },
 			[43] = { ["object"] = "apa_mp_h_tab_coffee_08", ["price"] = 1000, ["label"] = "witte bijzettafel" },
 			[44] = { ["object"] = "apa_mp_h_tab_sidelrg_01", ["price"] = 1000, ["label"] = "glazen bijzettafel" },
 			[45] = { ["object"] = "apa_mp_h_tab_sidelrg_02", ["price"] = 1000, ["label"] = "glazen bijzettafel 2" },
 			[46] = { ["object"] = "apa_mp_h_tab_sidesml_01", ["price"] = 1000, ["label"] = "klaptafel" },
-			[47] = { ["object"] = "apa_mp_h_tab_sidesml_01", ["price"] = 1000, ["label"] = "kubus bijzettafel" },
-			[42] = { ["object"] = "ba_prop_int_edgy_table_01", ["price"] = 500, ["label"] = "tafel marmer" },
-			[43] = { ["object"] = "ba_prop_int_edgy_table_02", ["price"] = 500, ["label"] = "tafel marmer hoog" },
-			[44] = { ["object"] = "apa_mp_h_tab_sidelrg_01", ["price"] = 1000, ["label"] = "glazen bijzettafel" },
+			[47] = { ["object"] = "ba_prop_int_edgy_table_01", ["price"] = 500, ["label"] = "tafel marmer" },
+			[48] = { ["object"] = "ba_prop_int_edgy_table_02", ["price"] = 500, ["label"] = "tafel marmer hoog" },
+			[49] = { ["object"] = "apa_mp_h_tab_sidelrg_01", ["price"] = 1000, ["label"] = "glazen bijzettafel" },
+			-- new decor
+			[50] = { ["object"] = "xm_prop_lab_desk_01", ["price"] = 1000, ["label"] = "Lab tafel" }
 		},
 	},
 	["plants"] = {
@@ -807,9 +898,31 @@ Config.Furniture = {
 			[31] = { ["object"] = "prop_cs_kitchen_cab_l", ["price"] = 750, ["label"] = "keukenkast breed" },
 			[32] = { ["object"] = "prop_cs_kitchen_cab_r", ["price"] = 500, ["label"] = "keukenkast smal" },
 			[33] = { ["object"] = "prop_cs_kitchen_cab_r", ["price"] = 500, ["label"] = "keukenkast smal" },
-			-- new decor
 			[34] = { ["object"] = "v_res_tre_fridge", ["price"] = 500, ["label"] = "koelkast" },
-			[35] = { ["object"] = "apa_mp_h_acc_coffeemachine_01", ["price"] = 500, ["label"] = "koffiezetapparaat" }
+			[35] = { ["object"] = "apa_mp_h_acc_coffeemachine_01", ["price"] = 500, ["label"] = "koffiezetapparaat" },
+			-- new decor
+			[36] = { ["object"] = "p_new_j_counter_02", ["price"] = 500, ["label"] = "Counter" },
+			[37] = { ["object"] = "prop_bar_pump_09", ["price"] = 500, ["label"] = "Pomp 1" },
+			[38] = { ["object"] = "prop_bar_pump_01", ["price"] = 500, ["label"] = "Pomp 2" },
+			[39] = { ["object"] = "prop_chip_fryer", ["price"] = 500, ["label"] = "Chips fryer" },
+			[40] = { ["object"] = "prop_cleaver", ["price"] = 500, ["label"] = "Mes" },
+			[41] = { ["object"] = "prop_coffee_mac_02", ["price"] = 500, ["label"] = "koffiezetapparaat" },
+			[42] = { ["object"] = "prop_coffee_mac_01", ["price"] = 500, ["label"] = "koffiezetapparaat 2" },
+			[43] = { ["object"] = "prop_cs_fork", ["price"] = 500, ["label"] = "Fork" },
+			[44] = { ["object"] = "prop_cs_sink_filler", ["price"] = 500, ["label"] = "Sink filler" },
+			[45] = { ["object"] = "prop_toaster_01", ["price"] = 500, ["label"] = "Tostiapparaat" },
+			[46] = { ["object"] = "prop_cs_plate_01", ["price"] = 500, ["label"] = "Plaat" },
+			[47] = { ["object"] = "prop_foodprocess_01", ["price"] = 500, ["label"] = "Food Process" },
+			[48] = { ["object"] = "prop_food_sugarjar", ["price"] = 500, ["label"] = "Suiker pot" },
+			[49] = { ["object"] = "prop_juice_dispenser", ["price"] = 500, ["label"] = "Dispencer" },
+			[50] = { ["object"] = "prop_knife_stand", ["price"] = 500, ["label"] = "Mes houder" },
+			[51] = { ["object"] = "prop_knife", ["price"] = 500, ["label"] = "Mes 2" },
+			[52] = { ["object"] = "prop_micro_04", ["price"] = 500, ["label"] = "Microwave 4" },
+			[53] = { ["object"] = "v_ret_fh_plate3", ["price"] = 500, ["label"] = "Bord 5" },
+			[54] = { ["object"] = "v_ilev_tt_plate01", ["price"] = 500, ["label"] = "Bord 6" },
+			[55] = { ["object"] = "v_res_fa_grater", ["price"] = 500, ["label"] = "Grater" },
+			[56] = { ["object"] = "v_res_tt_pizzaplate", ["price"] = 500, ["label"] = "Pizza bord" },
+			[57] = { ["object"] = "v_ret_247_ketchup2", ["price"] = 500, ["label"] = "Ketchup" }
 		},
 	},
 	["bathroom"] = {
@@ -837,7 +950,13 @@ Config.Furniture = {
 			[20] = { ["object"] = "v_res_tre_washbasket", ["price"] = 250, ["label"] = "wasmand" },
 			[21] = { ["object"] = "prop_toilet_soap_02", ["price"] = 100, ["label"] = "bakje zeep" },
 			[22] = { ["object"] = "prop_bar_sink_01", ["price"] = 100, ["label"] = "gootsteen" },
-			[23] = { ["object"] = "apa_mp_h_bathtub_01", ["price"] = 1000, ["label"] = "badkuip" }
+			[23] = { ["object"] = "apa_mp_h_bathtub_01", ["price"] = 1000, ["label"] = "badkuip" },
+			-- New
+			[24] = { ["object"] = "prop_toilet_brush_01", ["price"] = 1000, ["label"] = "Borstel" },
+			[25] = { ["object"] = "prop_toilet_roll_01", ["price"] = 1000, ["label"] = "Toilet rol" },
+			[26] = { ["object"] = "prop_toilet_roll_02", ["price"] = 1000, ["label"] = "Toilet rol 2" },
+			[27] = { ["object"] = "prop_toilet_shamp_01", ["price"] = 1000, ["label"] = "Shampoo" },
+			[28] = { ["object"] = "prop_toilet_shamp_02", ["price"] = 1000, ["label"] = "Shampoo 2" }
 		}
 	},
 	["medical"] = {
@@ -905,8 +1024,13 @@ Config.Furniture = {
 			[14] = { ["object"] = "apa_mp_h_acc_artwallm_04", ["price"] = 750, ["label"] = "abstract schilderij 8" },
 			[15] = { ["object"] = "prop_dart_bd_cab_01", ["price"] = 250, ["label"] = "dartbord" },
 			[16] = { ["object"] = "prop_dart_bd_01", ["price"] = 250, ["label"] = "dartbord 2" },
-			--new decor
-			[17] = { ["object"] = "vw_prop_vw_key_cabinet_01a", ["price"] = 250, ["label"] = "sleutelkastje" }
+			--Nieuw
+			[17] = { ["object"] = "hei_heist_acc_artwalll_01", ["price"] = 250, ["label"] = "Muur deco 1" },
+			[18] = { ["object"] = "hei_heist_acc_artgolddisc_01", ["price"] = 250, ["label"] = "Muur deco 2" },
+			[19] = { ["object"] = "hei_heist_acc_artgolddisc_02", ["price"] = 250, ["label"] = "Muur deco 3" },
+			[20] = { ["object"] = "hei_heist_acc_artgolddisc_03", ["price"] = 250, ["label"] = "Muur deco 4" },
+			[21] = { ["object"] = "hei_heist_acc_artgolddisc_04", ["price"] = 250, ["label"] = "Muur deco 5" },
+			[22] = { ["object"] = "v_ilev_ra_doorsafe", ["price"] = 250, ["label"] = "Luxe deco" }
 		},
 	},
 }
