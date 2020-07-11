@@ -1,8 +1,6 @@
 local ClosestCustomVehicle = 1
 local CustomModelLoaded = true
 
-local testritveh = 0
-
 Citizen.CreateThread(function()
     for k, v in pairs(RS.VehicleShops) do
         Dealer = AddBlipForCoord(-795.91, -220.21, 37.07)
@@ -20,32 +18,28 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-    Citizen.Wait(1000)
     while true do
         local ped = GetPlayerPed(-1)
         local bringcoords = {x = -768.15, y = -233.1, z = 37.07, h = 203.5, r = 1.0}
         local pos = GetEntityCoords(ped, false)
         local dist = GetDistanceBetweenCoords(pos, bringcoords.x, bringcoords.y, bringcoords.z)
 
-        if IsPedInAnyVehicle(ped, false) then
-            if dist < 15 then
-                local veh = GetVehiclePedIsIn(ped)
-                DrawMarker(2, bringcoords.x, bringcoords.y, bringcoords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.1, 255, 255, 255, 155, false, false, false, false, false, false, false)
+        if isLoggedIn then
+            if (PlayerJob ~= nil) and PlayerJob.name == "cardealer" then
+                if IsPedInAnyVehicle(ped, false) then
+                    if dist < 15 then
+                        local veh = GetVehiclePedIsIn(ped)
+                        DrawMarker(2, bringcoords.x, bringcoords.y, bringcoords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.4, 0.3, 0.1, 255, 0, 0, 155, false, false, false, false, false, false, false)
 
-                if dist < 2 then
-                    if veh == testritveh then
-                        DrawText3Ds(bringcoords.x, bringcoords.y, bringcoords.z, '~g~E~w~ - Voertuig inleveren')
-                        if IsControlJustPressed(0, Keys["E"]) then
-                            testritveh = 0
-                            RSCore.Functions.DeleteVehicle(veh)
+                        if dist < 2 then
+                                DrawText3Ds(bringcoords.x, bringcoords.y, bringcoords.z, '~g~E~w~ - Voertuig inleveren')
+                                if IsControlJustPressed(0, Keys["E"]) then
+                                    RSCore.Functions.DeleteVehicle(veh)
+                                end
+                            end
                         end
                     end
                 end
-            end
-        end
-
-        if testritveh == 0 then
-            Citizen.Wait(2000)
         end
 
         Citizen.Wait(3)
@@ -286,17 +280,23 @@ Citizen.CreateThread(function()
                         DisableControlAction(0, Keys["7"], true)
                         DisableControlAction(0, Keys["8"], true)
                     else
-                        if RSCustom.ShowroomPositions[ClosestCustomVehicle].buying then
-                            DrawText3Ds(RSCustom.ShowroomPositions[ClosestCustomVehicle].coords.x, RSCustom.ShowroomPositions[ClosestCustomVehicle].coords.y, RSCustom.ShowroomPositions[ClosestCustomVehicle].coords.z + 1.6, '~g~7~w~ - Kopen / ~r~8~w~ - Annuleren - ~g~(€'..RSCore.Shared.Vehicles[RSCustom.ShowroomPositions[ClosestCustomVehicle].vehicle].price..',-)')
-                            
-                            if IsDisabledControlJustPressed(0, Keys["7"]) then
-                                TriggerServerEvent('rs-vehicleshop:server:ConfirmVehicle', RSCustom.ShowroomPositions[ClosestCustomVehicle])
-                                RSCustom.ShowroomPositions[ClosestCustomVehicle].buying = false
-                            end
+                        if ClosestCustomVehicle ~= nil then
+                            if RSCustom.ShowroomPositions[ClosestCustomVehicle] ~= nil then
+                                if RSCustom.ShowroomPositions[ClosestCustomVehicle].buying then
+                                    if RSCore.Shared.Vehicles[RSCustom.ShowroomPositions[ClosestCustomVehicle].vehicle] ~= nil then
+                                        DrawText3Ds(RSCustom.ShowroomPositions[ClosestCustomVehicle].coords.x, RSCustom.ShowroomPositions[ClosestCustomVehicle].coords.y, RSCustom.ShowroomPositions[ClosestCustomVehicle].coords.z + 1.6, '~g~7~w~ - Kopen / ~r~8~w~ - Annuleren - ~g~(€'..RSCore.Shared.Vehicles[RSCustom.ShowroomPositions[ClosestCustomVehicle].vehicle].price..',-)')
+                                        
+                                        if IsDisabledControlJustPressed(0, Keys["7"]) then
+                                            TriggerServerEvent('rs-vehicleshop:server:ConfirmVehicle', RSCustom.ShowroomPositions[ClosestCustomVehicle])
+                                            RSCustom.ShowroomPositions[ClosestCustomVehicle].buying = false
+                                        end
 
-                            if IsDisabledControlJustPressed(0, Keys["8"]) then
-                                RSCore.Functions.Notify('Je hebt de auto NIET gekocht!')
-                                RSCustom.ShowroomPositions[ClosestCustomVehicle].buying = false
+                                        if IsDisabledControlJustPressed(0, Keys["8"]) then
+                                            RSCore.Functions.Notify('Je hebt de auto NIET gekocht!')
+                                            RSCustom.ShowroomPositions[ClosestCustomVehicle].buying = false
+                                        end
+                                    end
+                                end
                             end
                         end
                     end

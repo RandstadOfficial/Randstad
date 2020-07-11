@@ -14,6 +14,8 @@ RS.GarageLabel = {
 RS.SpawnPoint = {x = -59.18, y = -1109.71, z = 25.45, h = 68.5}
 RS.DefaultGarage = "centralgarage"
 
+RS.QuickSell = {x = -46.92, y = -1081.66, z = 26.74, h = 252.5, r = 1.0}
+
 RS.ShowroomVehicles = {
     [1] = {
         coords = {x = -45.65, y = -1093.66, z = 25.44, h = 69.5},

@@ -143,14 +143,10 @@ function tablelength(T)
 end
 
 function ButtonSelected(button)
-    print(button)
 	local ped = GetPlayerPed(-1)
 	local this = vehshop.currentmenu
     local btn = button.name
 
-    print(this)
-    print(btn)
-    
 	if this == "main" then
 		if btn == "Voertuigen" then
 			OpenMenu('vehicles')
@@ -339,6 +335,67 @@ Citizen.CreateThread(function()
     end
 end)
 
+local SellStarted = false
+
+
+
+Citizen.CreateThread(function()
+    Wait(1000)
+    while true do
+        local ped = GetPlayerPed(-1)
+        local pos = GetEntityCoords(ped)
+        local inRange = false
+        local SellDistance = GetDistanceBetweenCoords(pos, RS.QuickSell.x, RS.QuickSell.y, RS.QuickSell.z, true)
+
+        if SellDistance < 20 then
+            if IsPedInAnyVehicle(ped) then
+                local VehicleData = RSCore.Shared.VehicleModels[GetEntityModel(GetVehiclePedIsIn(ped))]
+                if VehicleData["shop"] == "pdm" then
+                    DrawMarker(2, RS.QuickSell.x, RS.QuickSell.y, RS.QuickSell.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 0, 255, 0, 255, 0, 0, 0, 1, 0, 0, 0)
+                    inRange = true
+                    if SellDistance < 1 then
+                        if not SellStarted then
+                            DrawText3Ds(RS.QuickSell.x, RS.QuickSell.y, RS.QuickSell.z, '~b~E~w~ - Verkoop voertuig voor ~g~€'..math.ceil(VehicleData["price"] / 100 * 60))
+                            if IsControlJustPressed(0, Keys["E"]) then
+                                SellStarted = true
+                            end
+                        else
+                            DrawText3Ds(RS.QuickSell.x, RS.QuickSell.y, RS.QuickSell.z, '~b~7~w~ - Bevestig / ~b~8~w~ - Annuleer')
+                            if IsControlJustPressed(0, Keys["7"]) or IsDisabledControlJustPressed(0, Keys["7"]) then
+                                SellStarted = false
+                                RSCore.Functions.TriggerCallback('rs-vehicleshop:server:SellVehicle', function(SoldVehicle)
+                                    if SoldVehicle then
+                                        RSCore.Functions.Notify("Er is €"..math.ceil(VehicleData["price"] / 100 * 60).." bijgeschreven", 'success', 5000)
+                                        --TriggerEvent("rs-phone-new:client:BankNotify", "Er is €"..math.ceil(VehicleData["price"] / 100 * 60).." bijgeschreven")
+                                        local veh = GetVehiclePedIsIn(ped)
+                                        RSCore.Functions.DeleteVehicle(veh)
+                                    else
+                                        RSCore.Functions.Notify('Dit is niet jouw voertuig..', 'error')
+                                    end
+                                end, GetEntityModel(GetVehiclePedIsIn(ped)), GetVehicleNumberPlateText(GetVehiclePedIsIn(ped)))
+                            end
+
+                            if IsControlJustPressed(0, Keys["8"]) or IsDisabledControlJustPressed(0, Keys["8"]) then
+                                SellStarted = false
+                            end
+                        end
+                    else
+                        if SellStarted then
+                            SellStarted = false
+                        end
+                    end
+                end
+            end
+        end
+
+        if not inRange then
+            Citizen.Wait(1000)
+        end
+
+        Citizen.Wait(3)
+    end
+end)
+
 Citizen.CreateThread(function()
     Citizen.Wait(1000)
     while true do
@@ -413,13 +470,11 @@ Citizen.CreateThread(function()
                                         if IsControlJustPressed(1, 18) then
                                             if modelLoaded then
                                                 TriggerServerEvent('rs-vehicleshop:server:setShowroomVehicle', button.model, ClosestVehicle)
-                                                print('nee')
                                             end
                                         end
                                     end
                                 end
                                 if selected and ( IsControlJustPressed(1,38) or IsControlJustPressed(1, 18) ) then
-                                    print('weeuw')
                                     ButtonSelected(button)
                                 end
                             end
