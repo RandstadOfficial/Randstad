@@ -72,22 +72,23 @@ RegisterServerEvent('rs-storerobbery:server:setSafeStatus')
 AddEventHandler('rs-storerobbery:server:setSafeStatus', function(safe)
     TriggerClientEvent('rs-storerobbery:client:setSafeStatus', -1, safe, true)
     Config.Safes[safe].robbed = true
+
+    SetTimeout(math.random(40, 80) * (60 * 1000), function()
+        TriggerClientEvent('rs-storerobbery:client:setSafeStatus', -1, safe, false)
+        Config.Safes[safe].robbed = false
+    end)
 end)
 
-RegisterServerEvent('rs-storerobbery:server:SafeReward')
-AddEventHandler('rs-storerobbery:server:SafeReward', function()
-    RSCore.Functions.BanInjection(source)
-end)
-
-RSCore.Functions.CreateCallback('rs-storerobbery:SafeReward', function(source, cb, amount)
+RSCore.Functions.CreateCallback('rs-storerobbery:SafeReward', function(source, cb)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
-    Player.Functions.AddMoney('cash', math.random(1500, 5000), "robbery-safe-reward")
+    Player.Functions.AddMoney('cash', math.random(1000, 3000), "robbery-safe-reward")
     local luck = math.random(1, 100)
+    local odd = math.random(1, 100)
     if luck <= 10 then
-        Player.Functions.AddItem("rolex", math.random(5, 10))
+        Player.Functions.AddItem("rolex", math.random(3, 7))
         TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items["rolex"], "add")
-        if luck == 1 then
+        if luck == odd then
             Citizen.Wait(500)
             Player.Functions.AddItem("goldbar", math.random(1, 2))
             TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items["goldbar"], "add")

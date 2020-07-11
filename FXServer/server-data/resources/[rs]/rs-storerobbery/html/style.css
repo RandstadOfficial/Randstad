@@ -573,7 +573,7 @@ animation: pivot1 0.5s 0.4s linear forwards, pivot1 0.5s 1.2s linear reverse for
 animation: pivot2-1 0.25s 0.4s cubic-bezier(0.6, 0.3, 0.45, 1) forwards, pivot2-2 0.25s 0.65s cubic-bezier(0.2, 0, 0.63, 0.5) forwards, pivot2-2 0.25s 1.3s cubic-bezier(0.2, 0, 0.63, 0.5) reverse forwards, pivot2-1 0.25s 1.45s cubic-bezier(0.6, 0.3, 0.45, 1) reverse forwards;
 }
 
-@keyFrames moveUp {
+@keyframes moveUp {
 from {
 	transform: translateY(0);
 }

@@ -22,7 +22,7 @@ end)
 
 --- CODE
 
-local uiOpen            = false
+local uiOpen = false
 local currentRegister   = 0
 local currentSafe = 0
 local copsCalled = false
@@ -30,6 +30,13 @@ local CurrentCops = 0
 local PlayerJob = {}
 local onDuty = false
 local usingAdvanced = false
+
+Citizen.CreateThread(function()
+    Wait(1000)
+    if RSCore.Functions.GetPlayerData().job ~= nil and next(RSCore.Functions.GetPlayerData().job) then
+        PlayerJob = RSCore.Functions.GetPlayerData().job
+    end
+end)
 
 Citizen.CreateThread(function()
     while true do
@@ -92,6 +99,19 @@ Citizen.CreateThread(function()
                                             TriggerEvent("SafeCracker:StartMinigame", combination)
                                         end, safe)
                                     end
+
+                                    if not copsCalled then
+                                        local pos = GetEntityCoords(GetPlayerPed(-1))
+                                        local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
+                                        local street1 = GetStreetNameFromHashKey(s1)
+                                        local street2 = GetStreetNameFromHashKey(s2)
+                                        local streetLabel = street1
+                                        if street2 ~= nil then 
+                                            streetLabel = streetLabel .. " " .. street2
+                                        end
+                                        TriggerServerEvent("rs-storerobbery:server:callCops", "safe", currentSafe, streetLabel, pos)
+                                        copsCalled = true
+                                    end
                                 else
                                     RSCore.Functions.Notify("Niet genoeg politie.. (3 nodig)", "error")
                                 end
@@ -130,22 +150,6 @@ end)
 RegisterNetEvent('police:SetCopCount')
 AddEventHandler('police:SetCopCount', function(amount)
     CurrentCops = amount
-end)
-
-RegisterNetEvent('police:SetCopAlert')
-AddEventHandler('police:SetCopAlert', function()
-    if not copsCalled then
-        local pos = GetEntityCoords(GetPlayerPed(-1))
-        local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
-        local street1 = GetStreetNameFromHashKey(s1)
-        local street2 = GetStreetNameFromHashKey(s2)
-        local streetLabel = street1
-        if street2 ~= nil then 
-            streetLabel = streetLabel .. " " .. street2
-        end
-        TriggerServerEvent("rs-storerobbery:server:callCops", "safe", currentSafe, streetLabel, pos)
-        copsCalled = true
-    end
 end)
 
 RegisterNetEvent('lockpicks:UseLockpick')
@@ -340,7 +344,7 @@ end
 RegisterNetEvent('rs-storerobbery:client:executeEvents')
 AddEventHandler('rs-storerobbery:client:executeEvents', function()
     TriggerServerEvent('rs-storerobbery:server:takeMoney', currentRegister, true)
-    TriggerServerEvent("rs-storerobbery:server:SafeReward", currentSafe)
+    TriggerServerEvent("rs-storerobbery:server:SafeReward")
 end)
 
 RegisterNUICallback('callcops', function()
@@ -367,6 +371,7 @@ AddEventHandler('SafeCracker:EndMinigame', function(won)
             end
         end
     end
+    copsCalled = false
 end)
 
 RegisterNUICallback('PadLockSuccess', function()
@@ -385,6 +390,7 @@ end)
 
 RegisterNUICallback('PadLockClose', function()
     SetNuiFocus(false, false)
+    copsCalled = false
 end)
 
 RegisterNUICallback("CombinationFail", function(data, cb)
@@ -417,25 +423,27 @@ end)
 
 RegisterNUICallback('TryCombination', function(data, cb)
     RSCore.Functions.TriggerCallback('rs-storerobbery:server:isCombinationRight', function(combination)
-        if tonumber(data.combination) == combination then
-            RSCore.Functions.TriggerCallback('rs-storerobbery:SafeReward', function()
-            end, currentSafe)
-            TriggerServerEvent("rs-storerobbery:server:setSafeStatus", currentSafe)
-            SetNuiFocus(false, false)
-            SendNUIMessage({
-                action = "closeKeypad",
-                error = false,
-            })
-            currentSafe = 0
-            takeAnim()
-        else
-            TriggerEvent("police:SetCopAlert")
-            SetNuiFocus(false, false)
-            SendNUIMessage({
-                action = "closeKeypad",
-                error = true,
-            })
-            currentSafe = 0
+        if tonumber(data.combination) ~= nil then
+            if tonumber(data.combination) == combination then
+                RSCore.Functions.TriggerCallback('rs-storerobbery:SafeReward', function()
+                end, currentSafe)
+                TriggerServerEvent("rs-storerobbery:server:setSafeStatus", currentSafe)
+                SetNuiFocus(false, false)
+                SendNUIMessage({
+                    action = "closeKeypad",
+                    error = false,
+                })
+                currentSafe = 0
+                takeAnim()
+            else
+                TriggerEvent("police:SetCopAlert")
+                SetNuiFocus(false, false)
+                SendNUIMessage({
+                    action = "closeKeypad",
+                    error = true,
+                })
+                currentSafe = 0
+            end
         end
     end, currentSafe)
 end)
@@ -460,7 +468,27 @@ AddEventHandler('rs-storerobbery:client:robberyCall', function(type, key, street
             cameraId = Config.Registers[key].camId
         end
         PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
-        TriggerEvent("chatMessage", "112-MELDING", "error", "Iemand probeert een winkel te overvallen bij "..streetLabel.." (CAMERA ID: "..cameraId..")")
+        TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+            timeOut = 5000,
+            alertTitle = "Winkel overval",
+            coords = {
+                x = coords.x,
+                y = coords.y,
+                z = coords.z,
+            },
+            details = {
+                [1] = {
+                    icon = '<i class="fas fa-video"></i>',
+                    detail = cameraId,
+                },
+                [2] = {
+                    icon = '<i class="fas fa-globe-europe"></i>',
+                    detail = streetLabel,
+                },
+            },
+            callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+        })
+
         local transG = 250
         local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
         SetBlipSprite(blip, 458)
