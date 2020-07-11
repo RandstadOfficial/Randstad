@@ -605,14 +605,14 @@ function enterOwnedHouse(house)
 
     if Config.Houses[house].tier == 1 then
         data = exports['rs-interior']:CreateTier1House(coords)
-    elseif Config.Houses[house].tier == 2 then
-        data = exports['rs-interior']:CreateTrevorsShell(coords)
+    -- elseif Config.Houses[house].tier == 2 then
+    --     data = exports['rs-interior']:CreateTrevorsShell(coords)
     elseif Config.Houses[house].tier == 3 then
         data = exports['rs-interior']:CreateMichaelShell(coords)
     elseif Config.Houses[house].tier == 4 then
-    --     data = exports['rs-interior']:CreateApartmentShell(coords)
-    -- elseif Config.Houses[house].tier == 5 then
-    --     data = exports['rs-interior']:CreateCaravanShell(coords)
+        data = exports['rs-interior']:CreateApartmentShell(coords)
+    elseif Config.Houses[house].tier == 5 then
+        data = exports['rs-interior']:CreateCaravanShell(coords)
     -- elseif Config.Houses[house].tier == 6 then
     --     data = exports['rs-interior']:CreateFranklinShell(coords)
     -- elseif Config.Houses[house].tier == 7 then

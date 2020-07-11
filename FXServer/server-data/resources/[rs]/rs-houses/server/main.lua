@@ -97,9 +97,10 @@ AddEventHandler('rs-houses:server:buyHouse', function(house)
 	local src     	= source
 	local pData 	= RSCore.Functions.GetPlayer(src)
 	local price   	= Config.Houses[house].price
+	local HousePrice = math.ceil(price * 1.21)
 	local bankBalance = pData.PlayerData.money["bank"]
 
-	if (bankBalance >= price) then
+	if (bankBalance >= HousePrice) then
 		RSCore.Functions.ExecuteSql(false, "INSERT INTO `player_houses` (`house`, `identifier`, `citizenid`, `keyholders`) VALUES ('"..house.."', '"..pData.PlayerData.steam.."', '"..pData.PlayerData.citizenid.."', '"..json.encode(keyyeet).."')")
 		houseowneridentifier[house] = pData.PlayerData.steam
 		houseownercid[house] = pData.PlayerData.citizenid
@@ -108,7 +109,7 @@ AddEventHandler('rs-houses:server:buyHouse', function(house)
 		}
 		RSCore.Functions.ExecuteSql(true, "UPDATE `houselocations` SET `owned` = 1 WHERE `name` = '"..house.."'")
 		TriggerClientEvent('rs-houses:client:SetClosestHouse', src)
-		pData.Functions.RemoveMoney('bank', (price * 1.21), "bought-house") -- 21% Extra house costs
+		pData.Functions.RemoveMoney('bank', HousePrice, "bought-house") -- 21% Extra house costs
 	else
 		TriggerClientEvent('RSCore:Notify', source, "Je hebt niet genoeg geld..", "error")
 	end
@@ -200,7 +201,6 @@ function getOfflinePlayerData(citizenid)
 		Citizen.Wait(100)
 		if result[1] ~= nil then 
 			local charinfo = json.decode(result[1].charinfo)
-			print("??????????????")
 			return charinfo
 		else
 			return nil
@@ -291,7 +291,9 @@ RSCore.Functions.CreateCallback('rs-houses:server:getHouseDecorations', function
 	local retval = nil
 	RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_houses` WHERE `house` = '"..house.."'", function(result)
 		if result[1] ~= nil then
-			retval = json.decode(result[1].decorations)
+			if result[1].decorations ~= nil then
+				retval = json.decode(result[1].decorations)
+			end
 		end
 		cb(retval)
 	end)
@@ -364,14 +366,6 @@ RSCore.Commands.Add("decorate", "Decoreer je huisie :)", {}, false, function(sou
 	TriggerClientEvent("rs-houses:client:decorate", source)
 end)
 
-RSCore.Commands.Add("enter", "Ga naar binnen", {}, false, function(source, args)
-    TriggerClientEvent('rs-houses:client:EnterHouse', source)
-end)
-
-RSCore.Commands.Add("ring", "Huis aanbellen", {}, false, function(source, args)
-    TriggerClientEvent('rs-houses:client:RequestRing', source)
-end)
-
 function GetHouseStreetCount(street)
 	local count = 1
 	RSCore.Functions.ExecuteSql(true, "SELECT * FROM `houselocations` WHERE `name` LIKE '%"..street.."%'", function(result)
@@ -389,9 +383,9 @@ RegisterServerEvent('rs-houses:server:LogoutLocation')
 AddEventHandler('rs-houses:server:LogoutLocation', function()
 	local src = source
 	local Player = RSCore.Functions.GetPlayer(src)
-	Player.Functions.Save()
+	local MyItems = Player.PlayerData.items
+	RSCore.Functions.ExecuteSql(true, "UPDATE `players` SET `inventory` = '"..RSCore.EscapeSqli(json.encode(MyItems)).."' WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'")
 	RSCore.Player.Logout(src)
-	Citizen.Wait(100)
     TriggerClientEvent('rs-multicharacter:client:chooseChar', src)
 end)
 
@@ -483,4 +477,18 @@ AddEventHandler('rs-houses:server:SetInsideMeta', function(insideId, bool)
 
         Player.Functions.SetMetaData("inside", insideMeta)
     end
+end)
+
+RSCore.Commands.Add("enter", "Betreed huis", {}, false, function(source, args)
+    local src = source
+    local Player = RSCore.Functions.GetPlayer(src)
+ 
+    TriggerClientEvent('rs-houses:client:EnterHouse', src)
+end)
+
+RSCore.Commands.Add("ring", "Aanbellen bij huis", {}, false, function(source, args)
+    local src = source
+    local Player = RSCore.Functions.GetPlayer(src)
+ 
+    TriggerClientEvent('rs-houses:client:RequestRing', src)
 end)
