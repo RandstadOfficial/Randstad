@@ -168,3 +168,19 @@ AddEventHandler('rs-vehicleshop:server:ConfirmVehicle', function(ShowroomVehicle
         end
     end
 end)
+
+RSCore.Functions.CreateCallback('rs-vehicleshop:server:SellVehicle', function(source, cb, vehicle, plate)
+    local VehicleData = RSCore.Shared.VehicleModels[vehicle]
+    local src = source
+    local Player = RSCore.Functions.GetPlayer(src)
+
+    RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_vehicles` WHERE `citizenid` = '"..Player.PlayerData.citizenid.."' AND `plate` = '"..plate.."'", function(result)
+        if result[1] ~= nil then
+            Player.Functions.AddMoney('bank', math.ceil(VehicleData["price"] / 100 * 60))
+            RSCore.Functions.ExecuteSql(false, "DELETE FROM `player_vehicles` WHERE `citizenid` = '"..Player.PlayerData.citizenid.."' AND `plate` = '"..plate.."'")
+            cb(true)
+        else
+            cb(false)
+        end
+    end)
+end)

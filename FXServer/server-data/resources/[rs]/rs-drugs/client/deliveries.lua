@@ -38,8 +38,9 @@ Citizen.CreateThread(function()
                     if not interacting then
                         if not dealerIsHome then
                             DrawText3D(dealer["coords"]["x"], dealer["coords"]["y"], dealer["coords"]["z"], '[E] Om te kloppen')
-
                             if IsControlJustPressed(0, Keys["E"]) then
+                                TriggerEvent('rs-weathersync:client:EnableSync')
+                                Citizen.Wait(1000)
                                 currentDealer = id
                                 knockDealerDoor()
                             end
@@ -130,14 +131,27 @@ end
 
 knockDealerDoor = function()
     local hours = GetClockHours()
+    print(hours)
     local min = Config.Dealers[currentDealer]["time"]["min"]
     local max = Config.Dealers[currentDealer]["time"]["max"]
+    print(min)
+    print(max)
 
-    if hours >= min and hours <= max then
+    if min > max then 
+        if hours > min or hours < max then
+            knockDoorAnim(true)
+            return
+        else
+            knockDoorAnim(false)
+            return
+        end
+    elseif hours >= min and hours <= max then
         knockDoorAnim(true)
+        return
     else
         knockDoorAnim(false)
-    end
+        return
+    end         
 end
 
 function buyDealerStuff()

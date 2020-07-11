@@ -10,7 +10,7 @@ Keys = {
 }
 
 RSCore = nil
-isLoggedIn = true
+isLoggedIn = false
 
 Citizen.CreateThread(function() 
     while true do
@@ -186,4 +186,18 @@ Citizen.CreateThread(function()
         AddTextComponentSubstringPlayerName("Premium Deluxe Motorsports")
         EndTextCommandSetBlipName(Dealer)
     end
+end)
+
+Citizen.CreateThread(function()
+    QuickSell = AddBlipForCoord(RS.QuickSell.x, RS.QuickSell.y, RS.QuickSell.z)
+
+    SetBlipSprite (QuickSell, 108)
+    SetBlipDisplay(QuickSell, 4)
+    SetBlipScale  (QuickSell, 0.55)
+    SetBlipAsShortRange(QuickSell, true)
+    SetBlipColour(QuickSell, 3)
+
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentSubstringPlayerName("PDM Quick Sell")
+    EndTextCommandSetBlipName(QuickSell)
 end)
