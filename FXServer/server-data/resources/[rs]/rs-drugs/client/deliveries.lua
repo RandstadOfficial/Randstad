@@ -131,11 +131,8 @@ end
 
 knockDealerDoor = function()
     local hours = GetClockHours()
-    print(hours)
     local min = Config.Dealers[currentDealer]["time"]["min"]
     local max = Config.Dealers[currentDealer]["time"]["max"]
-    print(min)
-    print(max)
 
     if min > max then 
         if hours > min or hours < max then
