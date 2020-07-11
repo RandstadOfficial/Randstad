@@ -39,3 +39,6 @@ Config.IllegalActions = {
 
 -- Current Cops Online
 Config.CurrentCops = 0
+
+-- Current Ambulance / Doctors Online
+Config.CurrentAmbulance = 0

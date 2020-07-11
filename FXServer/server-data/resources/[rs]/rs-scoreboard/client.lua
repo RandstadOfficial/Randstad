@@ -23,6 +23,8 @@ end)
 
 local scoreboardOpen = false
 
+local PlayerOptin = {}
+
 DrawText3D = function(x, y, z, text)
 	SetTextScale(0.35, 0.35)
     SetTextFont(4)
@@ -97,17 +99,21 @@ Citizen.CreateThread(function()
     while true do
         if IsControlJustPressed(0, Config.OpenKey) then
             if not scoreboardOpen then
-                RSCore.Functions.TriggerCallback('rs-scoreboard:server:GetActiveCops', function(cops)
-                    Config.CurrentCops = cops
+                RSCore.Functions.TriggerCallback('rs-scoreboard:server:GetPlayersArrays', function(playerList)
+                    RSCore.Functions.TriggerCallback('rs-scoreboard:server:GetActivity', function(cops, ambulance)
+                        PlayerOptin = playerList
+                        Config.CurrentCops = cops
 
-                    SendNUIMessage({
-                        action = "open",
-                        players = GetCurrentPlayers(),
-                        maxPlayers = Config.MaxPlayers,
-                        requiredCops = Config.IllegalActions,
-                        currentCops = Config.CurrentCops,
-                    })
-                    scoreboardOpen = true
+                        SendNUIMessage({
+                            action = "open",
+                            players = GetCurrentPlayers(),
+                            maxPlayers = Config.MaxPlayers,
+                            requiredCops = Config.IllegalActions,
+                            currentCops = Config.CurrentCops,
+                            currentAmbulance = ambulance
+                        })
+                        scoreboardOpen = true
+                    end)
                 end)
             end
         end
@@ -128,7 +134,9 @@ Citizen.CreateThread(function()
                 local PlayerName = GetPlayerName(player)
                 local PlayerCoords = GetEntityCoords(PlayerPed)
 
-                DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
+                if not PlayerOptin[PlayerId].permission then
+                    DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
+                end
             end
         end
 
