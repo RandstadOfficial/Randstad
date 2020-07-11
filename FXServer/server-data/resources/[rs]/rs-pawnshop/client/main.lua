@@ -10,6 +10,7 @@ Keys = {
 }
 
 RSCore = nil
+isLoggedIn = false
 
 Citizen.CreateThread(function()
 	while RSCore == nil do
@@ -73,15 +74,15 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-	local blip = AddBlipForCoord(Config.PawnHardwareLocation.x, Config.PawnHardwareLocation.y, Config.PawnHardwareLocation.z)
-	SetBlipSprite(blip, 431)
-	SetBlipDisplay(blip, 4)
-	SetBlipScale(blip, 0.7)
-	SetBlipAsShortRange(blip, true)
-	SetBlipColour(blip, 5)
-	BeginTextCommandSetBlipName("STRING")
-	AddTextComponentSubstringPlayerName("Hardware Pawnshop")
-	EndTextCommandSetBlipName(blip)
+	-- local blip = AddBlipForCoord(Config.PawnHardwareLocation.x, Config.PawnHardwareLocation.y, Config.PawnHardwareLocation.z)
+	-- SetBlipSprite(blip, 431)
+	-- SetBlipDisplay(blip, 4)
+	-- SetBlipScale(blip, 0.7)
+	-- SetBlipAsShortRange(blip, true)
+	-- SetBlipColour(blip, 5)
+	-- BeginTextCommandSetBlipName("STRING")
+	-- AddTextComponentSubstringPlayerName("Hardware Pawnshop")
+	-- EndTextCommandSetBlipName(blip)
 	while true do 
 		Citizen.Wait(1)
 		local inRange = false
