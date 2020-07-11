@@ -87,6 +87,10 @@ function Queue:GetPlayerCount()
     return _Queue.PlayerCount
 end
 
+exports('rsQueueSize', function()
+    return Queue:GetSize()
+end)
+
 function Queue:GetSize()
     return #_Queue.QueueList
 end
