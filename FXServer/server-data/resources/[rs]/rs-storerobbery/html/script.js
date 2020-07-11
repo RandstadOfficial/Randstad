@@ -69,7 +69,8 @@ Keypad.Open = function(data) {
 
 Keypad.Close = function(data) {
     $("#keypad").css("display", "none");
-    if (data.error) {
+    $.post('http://rs-storerobbery/PadLockClose');
+    if (data.error != null) {
         $.post('http://rs-storerobbery/CombinationFail');
     }
 }
@@ -85,8 +86,12 @@ function clearForm(e){
 	//document.getElementById('PINbox').value = "";
 	$( "#PINbox" ).val( "" );
 }
+
+var CanConfirm = true;
+
 function submitForm(e) {
-	$.post("http://rs-storerobbery/TryCombination", JSON.stringify({
+    $("#keypad").css("display", "none");
+    $.post("http://rs-storerobbery/TryCombination", JSON.stringify({
         combination: e.value,
     }));
 };
