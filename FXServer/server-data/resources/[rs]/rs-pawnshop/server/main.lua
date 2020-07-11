@@ -3,8 +3,8 @@ TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 
 local ItemList = {
     ["goldchain"] = math.random(100, 200),
-    ["diamond_ring"] = math.random(150, 250),
-    ["rolex"] = math.random(200, 300),
+    ["diamond_ring"] = math.random(200, 300),
+    ["rolex"] = math.random(300, 400),
 }
 
 local ItemListHardware = {
@@ -74,7 +74,10 @@ RSCore.Functions.CreateCallback('rs-pawnshop:getGoldBars', function(source, cb)
         if Player.Functions.AddItem("goldbar", GoldBarsAmount) then
             GoldBarsAmount = 0
             TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items["goldbar"], "add")
-            TriggerClientEvent("rs-pawnshop:client:pickedUp", -1)
+            Config.IsMelting = false
+            Config.CanTake = false
+            Config.MeltTime = 300
+            TriggerClientEvent("rs-pawnshop:client:SetTakeState", -1, false)
         else
             TriggerClientEvent('RSCore:Notify', src, "Je hebt geen ruimte in je inventory", "error")
         end
@@ -90,7 +93,7 @@ AddEventHandler("rs-pawnshop:server:sellGold", function()
         for k, v in pairs(Player.PlayerData.items) do 
             if Player.PlayerData.items[k] ~= nil then 
                 if Player.PlayerData.items[k].name == "goldbar" then 
-                    price = price + (math.random(2500, 4000) * Player.PlayerData.items[k].amount)
+                    price = price + (math.random(3000, 5000) * Player.PlayerData.items[k].amount)
                     Player.Functions.RemoveItem(Player.PlayerData.items[k].name, Player.PlayerData.items[k].amount, k)
                 end
             end
@@ -126,6 +129,20 @@ AddEventHandler("rs-pawnshop:server:meltItems", function()
         if goldbars > 0 then
             GoldBarsAmount = goldbars
             TriggerClientEvent('rs-pawnshop:client:startMelting', -1)
+            Config.IsMelting = true
+            Config.MeltTime = 300
+            Citizen.CreateThread(function()
+                while Config.IsMelting do
+                    Config.MeltTime = Config.MeltTime - 1
+                    if Config.MeltTime <= 0 then
+                        Config.IsMelting = false
+                        Config.CanTake = true
+                        Config.MeltTime = 300
+                        TriggerClientEvent('rs-pawnshop:client:SetTakeState', -1, true)
+                    end
+                    Citizen.Wait(1000)
+                end
+            end)
         end
     end
 end)
@@ -145,6 +162,10 @@ RSCore.Functions.CreateCallback('rs-pawnshop:server:getSellPrice', function(sour
     cb(retval)
 end)
 
+RSCore.Functions.CreateCallback('rs-pawnshop:melting:server:GetConfig', function(source, cb)
+    cb(Config.IsMelting, Config.MeltTime, Config.CanTake)
+end)
+
 RSCore.Functions.CreateCallback('rs-pawnshop:server:getSellHardwarePrice', function(source, cb)
     local retval = 0
     local amount = 0
@@ -160,9 +181,6 @@ RSCore.Functions.CreateCallback('rs-pawnshop:server:getSellHardwarePrice', funct
         end
         local certificates = Player.Functions.GetItemByName("certificate")
         if certificates ~= nil then
-            print("Certificates: " .. certificates.amount)
-            print("Price: " .. retval)
-            print("Item amount: " .. amount)
             if certificates.amount < amount then 
                 retval = 0
             end
@@ -170,7 +188,6 @@ RSCore.Functions.CreateCallback('rs-pawnshop:server:getSellHardwarePrice', funct
             retval = 0
         end
     end
-    print("final: " .. retval)
     cb(retval)
 end)
 

@@ -1,5 +1,40 @@
-local enablePickup = false
 local openingDoor = false
+
+RegisterNetEvent("RSCore:Client:OnPlayerLoaded")
+AddEventHandler("RSCore:Client:OnPlayerLoaded", function()
+    RSCore.Functions.TriggerCallback('rs-pawnshop:melting:server:GetConfig', function(IsMelting, MeltTime, CanTake)
+        Config.IsMelting = IsMelting
+        Config.MeltTime = MeltTime
+        Config.CanTake = CanTake
+        isLoggedIn = true
+
+        if Config.IsMelting then
+            Citizen.CreateThread(function()
+                while Config.IsMelting do
+                    if isLoggedIn then
+                        Config.MeltTime = Config.MeltTime - 1
+                        if Config.MeltTime <= 0 then
+                            Config.CanTake = true
+                            Config.IsMelting = false
+                        end
+                    else
+                        break
+                    end
+                    Citizen.Wait(1000)
+                end
+            end)
+        end
+    end)
+end)
+
+RegisterNetEvent("RSCore:Client:OnPlayerUnload")
+AddEventHandler("RSCore:Client:OnPlayerUnload", function()
+    Config.IsMelting = false
+    Config.MeltTime = 300
+    Config.CanTake = false
+    isLoggedIn = false
+end)
+
 Citizen.CreateThread(function()
 	while true do 
 		Citizen.Wait(1)
@@ -9,7 +44,7 @@ Citizen.CreateThread(function()
 			inRange = true
 			if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, true) < 1.5 then
                 if not Config.IsMelting then
-                    if enablePickup then
+                    if Config.CanTake then
                         DrawText3D(Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, "~g~E~w~ - Pak goudstaven")
                         if IsControlJustReleased(0, Keys["E"]) then
                             RSCore.Functions.TriggerCallback('rs-pawnshop:getGoldBars', function()
@@ -17,22 +52,24 @@ Citizen.CreateThread(function()
                         end
                     else
                         DrawText3D(Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, "~g~E~w~ - Gouden items smelten")
-                        if IsControlJustReleased(0, Keys["E"]) then 
-                            local waitTime = math.random(10000, 15000)
-                            ScrapAnim(waitTime)
-                            RSCore.Functions.Progressbar("drop_golden_stuff", "Items pakken..", waitTime, false, true, {
-                                disableMovement = true,
-                                disableCarMovement = true,
-                                disableMouse = false,
-                                disableCombat = true,
+                            if IsControlJustReleased(0, Keys["E"]) then 
+                                local waitTime = math.random(10000, 15000)
+                                ScrapAnim(1000)
+                                RSCore.Functions.Progressbar("drop_golden_stuff", "Items plaatsen..", 1000, false, true, {
+                                    disableMovement = true,
+                                    disableCarMovement = true,
+                                    disableMouse = false,
+                                    disableCombat = true,
                             }, {}, {}, {}, function() -- Done
-                                StopAnimTask(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic", 1.0)
-                                TriggerServerEvent("rs-pawnshop:server:meltItems")
+                                if not Config.IsMelting then
+                                    StopAnimTask(GetPlayerPed(-1), "mp_car_bomb", "car_bomb_mechanic", 1.0)
+                                    TriggerServerEvent("rs-pawnshop:server:meltItems")
+                                end
                             end)
                         end
                     end
                 elseif Config.IsMelting and Config.MeltTime > 0 then
-                    DrawText3D(Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, "Bezig met smelten: " .. Config.MeltTime)
+                    DrawText3D(Config.MeltLocation.x, Config.MeltLocation.y, Config.MeltLocation.z, "Bezig met smelten: " .. Config.MeltTime..'s')
                 end
 			end
 		end
@@ -134,24 +171,57 @@ function loadAnimDict(dict)
     end
 end
 
-RegisterNetEvent('rs-pawnshop:client:pickedUp')
-AddEventHandler('rs-pawnshop:client:pickedUp', function()
-    enablePickup = false
-end)
-
-
 RegisterNetEvent('rs-pawnshop:client:startMelting')
 AddEventHandler('rs-pawnshop:client:startMelting', function()
-    Config.IsMelting = true
-    Config.MeltTime = 300
-    Citizen.CreateThread(function()
-        while Config.IsMelting do
-            Config.MeltTime = Config.MeltTime - 1
-            if Config.MeltTime <= 0 then
-                enablePickup = true
-                Config.IsMelting = false
+    if not Config.IsMelting then
+        Config.IsMelting = true
+        Config.MeltTime = 300
+        Citizen.CreateThread(function()
+            while Config.IsMelting do
+                if isLoggedIn then
+                    Config.MeltTime = Config.MeltTime - 1
+                    if Config.MeltTime <= 0 then
+                        Config.CanTake = true
+                        Config.IsMelting = false
+                    end
+                else
+                    break
+                end
+                Citizen.Wait(1000)
             end
-            Citizen.Wait(1000)
+        end)
+    end
+end)
+
+RegisterNetEvent('rs-pawnshop:client:SetTakeState')
+AddEventHandler('rs-pawnshop:client:SetTakeState', function(state)
+    Config.CanTake = state
+    Config.IsMelting = state
+    if not state then
+        Config.MeltTime = 300
+    end
+
+    RSCore.Functions.TriggerCallback('rs-pawnshop:melting:server:GetConfig', function(IsMelting, MeltTime, CanTake)
+        Config.IsMelting = IsMelting
+        Config.MeltTime = MeltTime
+        Config.CanTake = CanTake
+        isLoggedIn = true
+
+        if Config.IsMelting then
+            Citizen.CreateThread(function()
+                while Config.IsMelting do
+                    if isLoggedIn then
+                        Config.MeltTime = Config.MeltTime - 1
+                        if Config.MeltTime <= 0 then
+                            Config.CanTake = true
+                            Config.IsMelting = false
+                        end
+                    else
+                        break
+                    end
+                    Citizen.Wait(1000)
+                end
+            end)
         end
     end)
 end)
