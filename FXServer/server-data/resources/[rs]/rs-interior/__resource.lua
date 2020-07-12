@@ -58,6 +58,7 @@ exports {
 	'CreateFranklinAuntShell',
 
 	'CreateTier1HouseFurnished',
+	'CreateTier3HouseFurnished',
 	'CreateHotelFurnished',
 	'CreateApartmentFurnished',
 }
