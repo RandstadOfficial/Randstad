@@ -126,6 +126,7 @@ end)
 
 RegisterNetEvent('police:client:removeObject')
 AddEventHandler('police:client:removeObject', function(objectId)
+    NetworkRequestControlOfEntity(ObjectList[objectId].object)
     DeleteObject(ObjectList[objectId].object)
     ObjectList[objectId] = nil
 end)
@@ -169,3 +170,136 @@ function GetClosestPoliceObject()
     end
     return current, dist
 end
+
+local SpikeConfig = {
+    MaxSpikes = 5
+}
+local SpawnedSpikes = {}
+local spikemodel = "P_ld_stinger_s"
+local nearSpikes = false
+local spikesSpawned = false
+local ClosestSpike = nil
+
+Citizen.CreateThread(function()
+    while true do
+
+        if isLoggedIn then
+            GetClosestSpike()
+        end
+
+        Citizen.Wait(500)
+    end
+end)
+
+function GetClosestSpike()
+    local pos = GetEntityCoords(GetPlayerPed(-1), true)
+    local current = nil
+
+    for id, data in pairs(SpawnedSpikes) do
+        if current ~= nil then
+            if(GetDistanceBetweenCoords(pos, SpawnedSpikes[id].coords.x, SpawnedSpikes[id].coords.y, SpawnedSpikes[id].coords.z, true) < dist)then
+                current = id
+            end
+        else
+            dist = GetDistanceBetweenCoords(pos, SpawnedSpikes[id].coords.x, SpawnedSpikes[id].coords.y, SpawnedSpikes[id].coords.z, true)
+            current = id
+        end
+    end
+    ClosestSpike = current
+end
+
+RegisterNetEvent('police:client:SpawnSpikeStrip')
+AddEventHandler('police:client:SpawnSpikeStrip', function()
+    if #SpawnedSpikes + 1 < SpikeConfig.MaxSpikes then
+        if PlayerJob.name == "police" and PlayerJob.onduty then
+            local spawnCoords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 2.0, 0.0)
+            local spike = CreateObject(GetHashKey(spikemodel), spawnCoords.x, spawnCoords.y, spawnCoords.z, 1, 1, 1)
+            local netid = NetworkGetNetworkIdFromEntity(spike)
+            SetNetworkIdExistsOnAllMachines(netid, true)
+            SetNetworkIdCanMigrate(netid, false)
+            SetEntityHeading(spike, GetEntityHeading(GetPlayerPed(-1)))
+            PlaceObjectOnGroundProperly(spike)
+            table.insert(SpawnedSpikes, {
+                coords = {
+                    x = spawnCoords.x,
+                    y = spawnCoords.y,
+                    z = spawnCoords.z,
+                },
+                netid = netid,
+                object = spike,
+            })
+            spikesSpawned = true
+            TriggerServerEvent('police:server:SyncSpikes', SpawnedSpikes)
+        end
+    else
+        RSCore.Functions.Notify('Er zijn geen Spikestrips meer over..', 'error')
+    end
+end)
+
+RegisterNetEvent('police:client:SyncSpikes')
+AddEventHandler('police:client:SyncSpikes', function(table)
+    SpawnedSpikes = table
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        if isLoggedIn then
+            if ClosestSpike ~= nil then
+                local tires = {
+                    {bone = "wheel_lf", index = 0},
+                    {bone = "wheel_rf", index = 1},
+                    {bone = "wheel_lm", index = 2},
+                    {bone = "wheel_rm", index = 3},
+                    {bone = "wheel_lr", index = 4},
+                    {bone = "wheel_rr", index = 5}
+                }
+
+                for a = 1, #tires do
+                    local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+                    local tirePos = GetWorldPositionOfEntityBone(vehicle, GetEntityBoneIndexByName(vehicle, tires[a].bone))
+                    local spike = GetClosestObjectOfType(tirePos.x, tirePos.y, tirePos.z, 15.0, GetHashKey(spikemodel), 1, 1, 1)
+                    local spikePos = GetEntityCoords(spike, false)
+                    local distance = Vdist(tirePos.x, tirePos.y, tirePos.z, spikePos.x, spikePos.y, spikePos.z)
+
+                    if distance < 1.8 then
+                        if not IsVehicleTyreBurst(vehicle, tires[a].index, true) or IsVehicleTyreBurst(vehicle, tires[a].index, false) then
+                            SetVehicleTyreBurst(vehicle, tires[a].index, false, 1000.0)
+                        end
+                    end
+                end
+            end
+        end
+
+        Citizen.Wait(3)
+    end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        if isLoggedIn then
+            if ClosestSpike ~= nil then
+                local ped = GetPlayerPed(-1)
+                local pos = GetEntityCoords(ped)
+                local dist = GetDistanceBetweenCoords(pos, SpawnedSpikes[ClosestSpike].coords.x, SpawnedSpikes[ClosestSpike].coords.y, SpawnedSpikes[ClosestSpike].coords.z, true)
+
+                if dist < 4 then
+                    if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+                        if PlayerJob.name == "police" and PlayerJob.onduty then
+                            DrawText3D(pos.x, pos.y, pos.z, '[E] Spike verwijderen')
+                            if IsControlJustPressed(0, Keys["E"]) then
+                                NetworkRegisterEntityAsNetworked(SpawnedSpikes[ClosestSpike].object)
+                                NetworkRequestControlOfEntity(SpawnedSpikes[ClosestSpike].object)            
+                                SetEntityAsMissionEntity(SpawnedSpikes[ClosestSpike].object)        
+                                DeleteEntity(SpawnedSpikes[ClosestSpike].object)
+                                table.remove(SpawnedSpikes, ClosestSpike)
+                                ClosestSpike = nil
+                                TriggerServerEvent('police:server:SyncSpikes', SpawnedSpikes)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+        Citizen.Wait(3)
+    end
+end)

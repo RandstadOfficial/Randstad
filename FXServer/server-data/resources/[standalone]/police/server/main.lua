@@ -43,30 +43,6 @@ AddEventHandler('police:server:CuffPlayer', function(playerId, isSoftcuff)
     if CuffedPlayer ~= nil then
         if Player.Functions.GetItemByName("handcuffs") ~= nil or Player.PlayerData.job.name == "police" then
             TriggerClientEvent("police:client:GetCuffed", CuffedPlayer.PlayerData.source, Player.PlayerData.source, isSoftcuff)
-            --[[
-            if not CuffedPlayer.PlayerData.metadata["ishandcuffed"] then
-                
-                table.insert(cuffedPlayers, {
-                    target = CuffedPlayer.PlayerData.citizenid,
-                    cuffer = Player.PlayerData.citizenid
-                })
-            else
-                TriggerClientEvent("police:client:GetCuffed", CuffedPlayer.PlayerData.source, Player.PlayerData.source, isSoftcuff)
-
-                for k, v in pairs(cuffedPlayers) do
-                    if cuffedPlayers[k].target == CuffedPlayer.PlayerData.citizenid and cuffedPlayers[k].cuffer == Player.PlayerData.citizenid then
-                        TriggerClientEvent("police:client:GetCuffed", CuffedPlayer.PlayerData.source, Player.PlayerData.source, isSoftcuff)
-                        cuffedPlayers[k] = nil
-                    elseif Player.PlayerData.job.name == "police" then
-                        TriggerClientEvent("police:client:GetCuffed", CuffedPlayer.PlayerData.source, Player.PlayerData.source, isSoftcuff)
-                        cuffedPlayers[k] = nil
-                    else
-                        TriggerClientEvent('RSCore:Notify', src, 'Je hebt geen sleutels van de handboeien..', 'error', 3500)
-                    end
-                end
-            end
-            ]]
-            
         end
     end
 end)
@@ -769,6 +745,15 @@ RSCore.Commands.Add("setpolice", "Geef de politie baan aan iemand ", {{name="id"
 	end
 end)
 
+RSCore.Commands.Add("spikestrip", "Leg een spikestrip neer", {}, false, function(source, args)
+    local Player = RSCore.Functions.GetPlayer(source)
+    if Player ~= nil then 
+        if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
+            TriggerClientEvent('police:client:SpawnSpikeStrip', source)
+        end
+    end
+end)
+
 RSCore.Commands.Add("firepolice", "Ontsla een politieagent!", {{name="id", help="Speler ID"}}, true, function(source, args)
     local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))
     local Myself = RSCore.Functions.GetPlayer(source)
@@ -1226,9 +1211,30 @@ function GetCurrentCops()
     return amount
 end
 
+RSCore.Functions.CreateCallback('police:server:IsPoliceForcePresent', function(source, cb)
+    local retval = false
+    for k, v in pairs(RSCore.Functions.GetPlayers()) do
+        local Player = RSCore.Functions.GetPlayer(v)
+        if Player ~= nil then 
+            for _, citizenid in pairs(Config.ArmoryWhitelist) do
+                if citizenid == Player.PlayerData.citizenid then
+                    retval = true
+                    break
+                end
+            end
+        end
+    end
+    cb(retval)
+end)
+
 function DnaHash(s)
     local h = string.gsub(s, ".", function(c)
 		return string.format("%02x", string.byte(c))
 	end)
     return h
 end
+
+RegisterServerEvent('police:server:SyncSpikes')
+AddEventHandler('police:server:SyncSpikes', function(table)
+    TriggerClientEvent('police:client:SyncSpikes', -1, table)
+end)
