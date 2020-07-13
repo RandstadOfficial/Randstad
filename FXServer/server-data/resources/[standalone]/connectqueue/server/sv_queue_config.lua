@@ -21,19 +21,19 @@ Config.DisableHardCap = true
 -- i have yet to find an easy way to determine whether they are still connecting and downloading content or are hanging in the loadscreen.
 -- This may cause session provider errors if it is too low because the removed player may still be connecting, and will let the next person through...
 -- even if the server is full. 10 minutes should be enough
-Config.ConnectTimeOut = 600
+Config.ConnectTimeOut = 180
 
 -- will remove players from queue if the server doesn't recieve a message from them within: __ seconds
-Config.QueueTimeOut = 120
+Config.QueueTimeOut = 90
 
 -- will give players temporary priority when they disconnect and when they start loading in
 Config.EnableGrace = true
 
 -- how much priority power grace time will give
-Config.GracePower = 5
+Config.GracePower = 70
 
 -- how long grace time lasts in seconds
-Config.GraceTime = 120
+Config.GraceTime = 300
 
 -- on resource start, players can join the queue but will not let them join for __ milliseconds
 -- this will let the queue settle and lets other resources finish initializing
@@ -56,6 +56,10 @@ Config.Language = {
 }
 
 Citizen.CreateThread(function()
+	loadDatabaseQueue()
+end)
+
+function loadDatabaseQueue()
 	RSCore.Functions.ExecuteSql(false, "SELECT * FROM `queue`", function(result)
 		if result[1] ~= nil then
 			for k, v in pairs(result) do
@@ -63,7 +67,12 @@ Citizen.CreateThread(function()
 			end
 		end
 	end)
-end)
+end
+
+RSCore.Commands.Add("reloadqueuepriority", "Geef queue prioriteit", {{name="id", help="ID van de speler"}, {name="priority", help="Priority level"}}, true, function(source, args)
+	loadDatabaseQueue()
+	TriggerClientEvent('chatMessage', source, "SYSTEM", "normal", "REFRESH")	
+end, "god")
 
 RSCore.Commands.Add("addpriority", "Geef queue prioriteit", {{name="id", help="ID van de speler"}, {name="priority", help="Priority level"}}, true, function(source, args)
     local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))

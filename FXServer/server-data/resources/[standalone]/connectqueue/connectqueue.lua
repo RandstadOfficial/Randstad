@@ -4,7 +4,9 @@ Queue.Exports = nil
 Queue.ReadyCbs = {}
 Queue.CurResource = GetCurrentResourceName()
 
-if Queue.CurResource == "connectqueue" then return end
+if Queue.CurResource == "connectqueue" then 
+    return 
+end
 
 function Queue.OnReady(cb)
     if not cb then return end
