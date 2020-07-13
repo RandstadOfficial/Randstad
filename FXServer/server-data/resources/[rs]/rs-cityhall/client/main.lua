@@ -230,9 +230,32 @@ RegisterNUICallback('requestLicenses', function(data, cb)
     cb(availableLicenses)
 end)
 
+local AvailableJobs = {
+    "trucker",
+    "taxi",
+    "tow",
+    -- "reporter",
+    -- "garbage",
+}
+
+function IsAvailableJob(job)
+    local retval = false
+    for k, v in pairs(AvailableJobs) do
+        if v == job then
+            retval = true
+        end
+    end
+    return retval
+end
+
 RegisterNUICallback('applyJob', function(data)
     if inRange then
-        TriggerServerEvent('rs-cityhall:server:ApplyJob', data.job)
+        if IsAvailableJob(data.job) then
+            TriggerServerEvent('rs-cityhall:server:ApplyJob', data.job)
+        else
+            TriggerServerEvent('rs-cityhall:server:banPlayer')
+            TriggerServerEvent("rs-log:server:CreateLog", "bans", "POST Request (Abuse)", "red", "** @everyone " ..GetPlayerName(player).. "** is verbannen voor het misbruiken van localhost:13172, het versturen van POST request\'s")         
+        end
     else
         RSCore.Functions.Notify('Helaas gaat niet werken maat...', 'error')
     end

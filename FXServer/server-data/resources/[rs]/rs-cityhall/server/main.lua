@@ -99,3 +99,11 @@ function IsWhitelistedSchool(citizenid)
     end
     return retval
 end
+
+RegisterServerEvent('rs-cityhall:server:banPlayer')
+AddEventHandler('rs-cityhall:server:banPlayer', function()
+    local src = source
+    TriggerClientEvent('chatMessage', -1, "RS Anti-Cheat", "error", GetPlayerName(src).." is verbannen voor het versturen van POST Request's ")
+    RSCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`, `bannedby`) VALUES ('"..GetPlayerName(src).."', '"..GetPlayerIdentifiers(src)[1].."', '"..GetPlayerIdentifiers(src)[2].."', '"..GetPlayerIdentifiers(src)[3].."', '"..GetPlayerIdentifiers(src)[4].."', 'Abuse localhost:13172 voor POST requests', 2145913200, '"..GetPlayerName(src).."')")
+    DropPlayer(src, "Jij wel tijger..")
+end)
