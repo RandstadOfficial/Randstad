@@ -5,6 +5,7 @@ ui_page "html/index.html"
 client_scripts {
     "client/main.lua",
     "client/trunk.lua",
+    "client/brancard.lua",
 	"config.lua",
 }
 
@@ -12,6 +13,7 @@ server_scripts {
 	"server/main.lua",
     "config.lua",
     "server/trunk.lua",
+    "server/brancard.lua",
 }
 
 files {
