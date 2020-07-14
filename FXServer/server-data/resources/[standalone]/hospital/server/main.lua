@@ -19,7 +19,10 @@ AddEventHandler('hospital:server:RespawnAtHospital', function()
 	for k, v in pairs(Config.Locations["beds"]) do
 		TriggerClientEvent('hospital:client:SendToBed', src, k, v, true)
 		TriggerClientEvent('hospital:client:SetBed', -1, k, true)
+		Player.Functions.ClearInventory()
+		RSCore.Functions.ExecuteSql(true, "UPDATE `players` SET `inventory` = '"..RSCore.EscapeSqli(json.encode({})).."' WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'")
 		Player.Functions.RemoveMoney("bank", Config.BillCost, "respawned-at-hospital")
+		TriggerClientEvent('RSCore:Notify', src, 'Al je bezittingen zijn ingenomen..', 'error')
 		TriggerClientEvent('hospital:client:SendBillEmail', src, Config.BillCost)
 		return
 	end
@@ -140,8 +143,38 @@ AddEventHandler('hospital:server:MakeDeadCall', function(blipSettings, gender, s
 
 	if street2 ~= nil then
 		TriggerClientEvent("112:client:SendAlert", -1, "Een ".. genderstr .." gewond bij " ..street1 .. " "..street2, blipSettings)
+		TriggerClientEvent('rs-policealerts:client:AddPoliceAlert', -1, {
+            timeOut = 5000,
+            alertTitle = "Persoon gewond",
+            details = {
+                [1] = {
+                    icon = '<i class="fas fa-venus-mars"></i>',
+                    detail = genderstr,
+                },
+                [2] = {
+                    icon = '<i class="fas fa-globe-europe"></i>',
+                    detail = street1.. ' '..street2,
+                },
+            },
+            callSign = nil,
+        }, true)
 	else
 		TriggerClientEvent("112:client:SendAlert", -1, "Een ".. genderstr .." gewond bij "..street1, blipSettings)
+		TriggerClientEvent('rs-policealerts:client:AddPoliceAlert', -1, {
+            timeOut = 5000,
+            alertTitle = "Persoon gewond",
+            details = {
+                [1] = {
+                    icon = '<i class="fas fa-venus-mars"></i>',
+                    detail = genderstr,
+                },
+                [2] = {
+                    icon = '<i class="fas fa-globe-europe"></i>',
+                    detail = street1,
+                },
+            },
+            callSign = nil,
+        }, true)
 	end
 end)
 
@@ -158,12 +191,6 @@ RSCore.Functions.CreateCallback('hospital:GetDoctors', function(source, cb)
 	cb(amount)
 end)
 
-RSCore.Functions.CreateCallback('hospital:whipeInv', function(source, cb)
-	local Player = RSCore.Functions.GetPlayer(source)
-	if Player ~= nil then
-		Player.Functions.ClearInventory()  
-	end
-end)
 
 function GetCharsInjuries(source)
     return PlayerInjuries[source]
@@ -333,3 +360,13 @@ function IsHighCommand(citizenid)
     end
     return retval
 end
+
+RegisterServerEvent('hospital:server:CanHelp')
+AddEventHandler('hospital:server:CanHelp', function(helperId, canHelp)
+	local src = source
+	if canHelp then
+		TriggerClientEvent('hospital:client:HelpPerson', helperId, src)
+	else
+		TriggerClientEvent('RSCore:Notify', helperId, "Je kunt dit persoon nog niet ophelpen..", "error")
+	end
+end)

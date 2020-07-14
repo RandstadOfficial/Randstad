@@ -73,6 +73,7 @@ AddEventHandler('police:client:PutInVehicle', function()
 			for i = GetVehicleMaxNumberOfPassengers(vehicle), 1, -1 do
                 if IsVehicleSeatFree(vehicle, i) then
                     isEscorted = false
+                    TriggerEvent('hospital:client:isEscorted', isEscorted)
                     ClearPedTasks(GetPlayerPed(-1))
                     DetachEntity(GetPlayerPed(-1), true, false)
 
@@ -336,7 +337,7 @@ end)
 RegisterNetEvent('police:client:GetEscorted')
 AddEventHandler('police:client:GetEscorted', function(playerId)
     RSCore.Functions.GetPlayerData(function(PlayerData)
-        if PlayerData.metadata["isdead"] or isHandcuffed then
+        if PlayerData.metadata["isdead"] or isHandcuffed or PlayerData.metadata["inlaststand"] then
             if not isEscorted then
                 isEscorted = true
                 draggerId = playerId
@@ -348,6 +349,7 @@ AddEventHandler('police:client:GetEscorted', function(playerId)
                 isEscorted = false
                 DetachEntity(GetPlayerPed(-1), true, false)
             end
+            TriggerEvent('hospital:client:isEscorted', isEscorted)
         end
     end)
 end)
@@ -355,13 +357,14 @@ end)
 RegisterNetEvent('police:client:DeEscort')
 AddEventHandler('police:client:DeEscort', function()
     isEscorted = false
+    TriggerEvent('hospital:client:isEscorted', isEscorted)
     DetachEntity(GetPlayerPed(-1), true, false)
 end)
 
 RegisterNetEvent('police:client:GetKidnappedTarget')
 AddEventHandler('police:client:GetKidnappedTarget', function(playerId)
     RSCore.Functions.GetPlayerData(function(PlayerData)
-        -- if PlayerData.metadata["isdead"] or isHandcuffed then
+        if PlayerData.metadata["isdead"] or PlayerData.metadata["inlaststand"] or isHandcuffed then
             if not isEscorted then
                 isEscorted = true
                 draggerId = playerId
@@ -380,7 +383,8 @@ AddEventHandler('police:client:GetKidnappedTarget', function(playerId)
                 DetachEntity(GetPlayerPed(-1), true, false)
                 ClearPedTasksImmediately(GetPlayerPed(-1))
             end
-        -- end
+            TriggerEvent('hospital:client:isEscorted', isEscorted)
+        end
     end)
 end)
 
@@ -405,7 +409,7 @@ AddEventHandler('police:client:GetKidnappedDragger', function(playerId)
             ClearPedTasksImmediately(dragger)
             isEscorting = false
         end
-
+        TriggerEvent('hospital:client:SetEscortingState', isEscorting)
         TriggerEvent('rs-kidnapping:client:SetKidnapping', isEscorting)
     end)
 end)
@@ -428,6 +432,7 @@ AddEventHandler('police:client:GetCuffed', function(playerId, isSoftcuff)
     else
         isHandcuffed = false
         isEscorted = false
+        TriggerEvent('hospital:client:isEscorted', isEscorted)
         DetachEntity(GetPlayerPed(-1), true, false)
         TriggerServerEvent("police:server:SetHandcuffStatus", false)
         ClearPedTasksImmediately(GetPlayerPed(-1))

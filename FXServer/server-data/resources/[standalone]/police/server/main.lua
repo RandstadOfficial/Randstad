@@ -53,7 +53,7 @@ AddEventHandler('police:server:EscortPlayer', function(playerId)
     local Player = RSCore.Functions.GetPlayer(source)
     local EscortPlayer = RSCore.Functions.GetPlayer(playerId)
     if EscortPlayer ~= nil then
-        if (Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance") or (EscortPlayer.PlayerData.metadata["ishandcuffed"] or EscortPlayer.PlayerData.metadata["isdead"]) then
+        if (Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance") or (EscortPlayer.PlayerData.metadata["ishandcuffed"] or EscortPlayer.PlayerData.metadata["isdead"] or EscortPlayer.PlayerData.metadata["inlaststand"]) then
             TriggerClientEvent("police:client:GetEscorted", EscortPlayer.PlayerData.source, Player.PlayerData.source)
         else
             TriggerClientEvent('chatMessage', src, "SYSTEM", "error", "Persoon is niet dood of geboeid!")
@@ -67,7 +67,7 @@ AddEventHandler('police:server:KidnapPlayer', function(playerId)
     local Player = RSCore.Functions.GetPlayer(source)
     local EscortPlayer = RSCore.Functions.GetPlayer(playerId)
     if EscortPlayer ~= nil then
-        if EscortPlayer.PlayerData.metadata["ishandcuffed"] or EscortPlayer.PlayerData.metadata["isdead"] then
+        if EscortPlayer.PlayerData.metadata["ishandcuffed"] or EscortPlayer.PlayerData.metadata["isdead"] or EscortPlayer.PlayerData.metadata["inlaststand"] then
             TriggerClientEvent("police:client:GetKidnappedTarget", EscortPlayer.PlayerData.source, Player.PlayerData.source)
             TriggerClientEvent("police:client:GetKidnappedDragger", Player.PlayerData.source, EscortPlayer.PlayerData.source)
         else
