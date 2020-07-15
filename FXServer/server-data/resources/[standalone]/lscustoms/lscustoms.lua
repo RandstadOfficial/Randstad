@@ -26,6 +26,7 @@ local currentpos = nil
 local currentgarage = 0
 local editCount = 0
 local CurrentFuel = 0
+local DamageStatus = {}
 
 local garages = { 
 	[1] = { isBusy = false, locked = false, camera = {x = -330.945, y = -135.471, z = 39.01, heading = 102.213}, driveout = {x = -350.376,y = -136.76, z = 38.294, heading = 70.226}, drivein = {x = -350.655,y = -136.55, z = 38.295, heading = 249.532}, outside = { x = -362.7962, y = -132.4005, z = 38.25239, heading = 71.187133}, inside = {x = -337.3863,y = -136.9247,z = 38.5737, heading = 269.455}},
@@ -137,37 +138,108 @@ LSCMenu.config.pcontrol = false
 local function AddMod(mod,parent,header,name,info,stock)
 	local veh = myveh.vehicle
 	SetVehicleModKit(veh,0)	
-	if (GetNumVehicleMods(veh, mod) ~= nil and GetNumVehicleMods(veh,mod) > 0) or mod == 18 or mod == 22 then
-		local m = parent:addSubMenu(header, name, info,true)
-		if stock then
-			local btn = m:addPurchase("Stock")
-			btn.modtype = mod
-			btn.mod = -1
-		end
-		if LSC_Config.prices.mods[mod].startprice then
-			local price = LSC_Config.prices.mods[mod].startprice
-			for i = 0,   tonumber(GetNumVehicleMods(veh,mod)) -1 do
-				local lbl = GetModTextLabel(veh,mod,i)
-				if lbl ~= nil then
-					local mname = tostring(GetLabelText(lbl))
-					if mname ~= "NULL" then
-						local btn = m:addPurchase(mname,price)
-						btn.modtype = mod
-						btn.mod = i
-						price = price + LSC_Config.prices.mods[mod].increaseby
-					else
-						mname = name.." #"..(i + 1)
-						local btn = m:addPurchase(mname,price)
-						btn.modtype = mod
-						btn.mod = i
-						price = price + LSC_Config.prices.mods[mod].increaseby
+
+	if mod == 48 then
+		if GetVehicleLiveryCount(veh) > 0 then
+			local m = parent:addSubMenu(header, name, info, true)
+			if stock then
+				local btn = m:addPurchase("Stock")
+				btn.modtype = mod
+				btn.mod = -1
+			end
+			if LSC_Config.prices.mods[mod].startprice then
+				local price = LSC_Config.prices.mods[mod].startprice
+				for i = 0, tonumber(GetVehicleLiveryCount(veh)), 1 do
+					local lolname = GetLiveryName(veh, i)
+					local lbl = GetLabelText(lolname)
+					if lbl ~= nil then
+						local mname = tostring(GetLabelText(lbl))
+						if mname ~= "NULL" then
+							local btn = m:addPurchase(mname,price)
+							btn.modtype = mod
+							btn.mod = i
+							btn.LiveryType = "livery"
+							price = price + LSC_Config.prices.mods[mod].increaseby
+						else
+							mname = name.." #"..(i)
+							local btn = m:addPurchase(mname,price)
+							btn.modtype = mod
+							btn.mod = i
+							btn.LiveryType = "livery"
+							price = price + LSC_Config.prices.mods[mod].increaseby
+						end
 					end
 				end
-			end		
-		else
-			for n, v in pairs(LSC_Config.prices.mods[mod]) do
-				btn = m:addPurchase(v.name,v.price)btn.modtype = mod
-				btn.mod = v.mod
+			end
+		elseif GetNumVehicleMods(veh, 48) > 0 then
+			local m = parent:addSubMenu(header, name, info, true)
+			if stock then
+				local btn = m:addPurchase("Geen Livery")
+				btn.modtype = mod
+				btn.mod = -1
+			end
+			if LSC_Config.prices.mods[mod].startprice then
+				local price = LSC_Config.prices.mods[mod].startprice
+				for i = 0, tonumber(GetNumVehicleMods(veh, 48)), 1 do
+					if i + 1 <= GetNumVehicleMods(veh, 48) then
+						local lolname = GetLiveryName(veh, i)
+						local lbl = GetLabelText(lolname)
+						if lbl ~= nil then
+							local mname = tostring(GetLabelText(lbl))
+							if mname ~= "NULL" then
+								local btn = m:addPurchase(mname,price)
+								btn.modtype = mod
+								btn.mod = i
+								btn.LiveryType = "mod"
+								price = price + LSC_Config.prices.mods[mod].increaseby
+							else
+								mname = name.." #"..(i + 1)
+								local btn = m:addPurchase(mname,price)
+								btn.modtype = mod
+								btn.mod = i
+								btn.LiveryType = "mod"
+								price = price + LSC_Config.prices.mods[mod].increaseby
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+
+	if mod ~= 48 then
+		if (GetNumVehicleMods(veh, mod) ~= nil and GetNumVehicleMods(veh,mod) > 0) or mod == 18 or mod == 22 then
+			local m = parent:addSubMenu(header, name, info,true)
+			if stock then
+				local btn = m:addPurchase("Stock")
+				btn.modtype = mod
+				btn.mod = -1
+			end
+			if LSC_Config.prices.mods[mod].startprice then
+				local price = LSC_Config.prices.mods[mod].startprice
+				for i = 0, tonumber(GetNumVehicleMods(veh,mod)) -1 do
+					local lbl = GetModTextLabel(veh,mod,i)
+					if lbl ~= nil then
+						local mname = tostring(GetLabelText(lbl))
+						if mname ~= "NULL" then
+							local btn = m:addPurchase(mname,price)
+							btn.modtype = mod
+							btn.mod = i
+							price = price + LSC_Config.prices.mods[mod].increaseby
+						else
+							mname = name.." #"..(i + 1)
+							local btn = m:addPurchase(mname,price)
+							btn.modtype = mod
+							btn.mod = i
+							price = price + LSC_Config.prices.mods[mod].increaseby
+						end
+					end
+				end		
+			else
+				for n, v in pairs(LSC_Config.prices.mods[mod]) do
+					btn = m:addPurchase(v.name,v.price)btn.modtype = mod
+					btn.mod = v.mod
+				end
 			end
 		end
 	end
@@ -205,6 +277,14 @@ local function DriveInGarage()
 	CurrentFuel = exports['LegacyFuel']:GetFuel(veh)
 	LSCMenu.buttons = {}
 
+	RSCore.Functions.TriggerCallback('rs-vehicletuning:server:GetStatus', function(dmg)
+		if dmg ~= nil then
+			DamageStatus = dmg
+		else
+			DamageStatus = {}
+		end
+	end, GetVehicleNumberPlateText(veh))
+
 	DisplayRadar(false)
 	if DoesEntityExist(veh) then
 		--Set menu title
@@ -215,7 +295,7 @@ local function DriveInGarage()
 			LSCMenu:setTitle("Benny's Motorworks")
 			LSCMenu.title_sprite = "shopui_title_supermod"
 		else
-			LSCMenu:setTitle("Randstrad Customs")
+			LSCMenu:setTitle("Randstad Customs")
 			LSCMenu.title_sprite = "shopui_title_carmod"
 		end
 
@@ -645,6 +725,7 @@ local function DriveOutOfGarage(pos)
 			NetworkLeaveTransition()
 			exports['LegacyFuel']:SetFuel(veh, CurrentFuel)
 			
+
 			NetworkFadeInEntity(veh, 1)	
 			NetworkRegisterEntityAsNetworked(veh)
 			ClearPedTasks(ped)
@@ -654,9 +735,6 @@ local function DriveOutOfGarage(pos)
 			SetPlayerControl(PlayerId(),true)
 	
 			TriggerServerEvent("lscustoms:server:SaveVehicleProps", RSCore.Functions.GetVehicleProperties(veh))
-
-			TriggerServerEvent('lscustoms:server:setGarageBusy', currentgarage, false)
-			--TriggerServerEvent('lockGarage',false,lsc.currentgarage)
 		end)
 	end)
 end
@@ -711,15 +789,17 @@ end
 
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(0)
-		if inside == false then
+		local inRange = false
+		if not inside then
 			local ped = GetPlayerPed(-1)
 			if IsPedSittingInAnyVehicle(ped) then
 				local veh = GetVehiclePedIsUsing(ped)
 				if DoesEntityExist(veh) and GetPedInVehicleSeat(veh, -1) == ped then
 					for i,pos in ipairs(garages) do
 						coords = pos.inside		
-						if GetDistanceBetweenCoords(coords.x,coords.y,coords.z,GetEntityCoords(ped)) <= 5 then
+						local dist = GetDistanceBetweenCoords(coords.x,coords.y,coords.z, GetEntityCoords(ped))
+						if dist <= 20 then
+							inRange = true
 							if not garages[i].isBusy then
 								if not tableContains(LSC_Config.ModelBlacklist,GetDisplayNameFromVehicleModel(GetEntityModel(veh)):lower()) then
 									if IsControlJustPressed(1, Keys["ENTER"]) then
@@ -750,6 +830,12 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
+
+		if not inRange then
+			Citizen.Wait(2000)
+		end
+
+		Citizen.Wait(0)
 	end
 end)
 
@@ -790,14 +876,24 @@ function LSCMenu:onSelectedIndexChanged(name, button)
 	elseif m == "wheel color" then
 		SetVehicleExtraColours(veh,myveh.color[3], button.colorindex)
 	elseif button.modtype and button.mod then
-		if button.modtype ~= 18 and button.modtype ~= 22 then
-			if button.wtype then
-				SetVehicleWheelType(veh,button.wtype)
+		if button.modtype ~= 48 then
+			if button.modtype ~= 18 and button.modtype ~= 22 then
+				if button.wtype then
+					SetVehicleWheelType(veh,button.wtype)
+				end
+				SetVehicleMod(veh,button.modtype, button.mod)	
+			elseif button.modtype == 22 then
+				ToggleVehicleMod(veh,button.modtype, button.mod)
+			elseif button.modtype == 18 then
 			end
-			SetVehicleMod(veh,button.modtype, button.mod)	
-		elseif button.modtype == 22 then
-			ToggleVehicleMod(veh,button.modtype, button.mod)
-		elseif button.modtype == 18 then
+		else
+			if button.LiveryType == "livery" then
+				SetVehicleLivery(veh, button.mod)
+				SetVehicleMod(veh,button.modtype, button.mod)
+			elseif button.LiveryType == "mod" then
+				SetVehicleLivery(veh, button.mod)
+				SetVehicleMod(veh,button.modtype, button.mod)
+			end
 		end
 	elseif m == "license" then
 		SetVehicleNumberPlateTextIndex(veh,button.plateindex)
@@ -874,7 +970,17 @@ AddEventHandler("LSC:buttonSelected", function(name, button, canpurchase)
 	elseif mname == "liveries" or mname == "hydraulics" or mname == "horn" or mname == "tank" or mname == "ornaments" or  mname == "arch cover" or mname == "aerials" or mname == "roof scoops" or mname == "doors" or mname == "roll cage" or mname == "engine block" or mname == "cam cover" or mname == "strut brace" or mname == "trim design" or mname == "ormnametns" or mname == "dashboard" or mname == "dials" or mname == "seats" or mname == "steering wheels" or mname == "plate holder" or mname == "vanity plates" or mname == "shifter leavers" or mname == "plaques" or mname == "speakers" or mname == "trunk" or mname == "armor" or mname == "suspension" or mname == "transmission" or mname == "brakes" or mname == "engine tunes" or mname == "roof" or mname == "hood" or mname == "grille" or mname == "roll cage" or mname == "exhausts" or mname == "skirts" or mname == "rear bumpers" or mname == "front bumpers" or mname == "spoiler" then
 		if button.name == "Stock" or button.purchased or CanPurchase(price, canpurchase)then
 			myveh.mods[button.modtype].mod = button.mod
-			SetVehicleMod(veh,button.modtype,button.mod)
+			if button.modtype ~= 48 then
+				SetVehicleMod(veh, button.modtype, button.mod)
+			else
+				if button.LiveryType == "livery" then
+					SetVehicleLivery(veh, button.mod)
+					SetVehicleMod(veh,button.modtype, button.mod)
+				elseif button.LiveryType == "mod" then
+					SetVehicleLivery(veh, button.mod)
+					SetVehicleMod(veh,button.modtype, button.mod)
+				end
+			end
 		end
 	elseif mname == "fenders" then
 		if button.name == "Stock" or button.purchased or CanPurchase(price, canpurchase)then
@@ -1330,6 +1436,14 @@ function UnfakeVeh()
 			ToggleVehicleMod(veh,i,m.mod)
 		elseif i == 23 or i == 24 then
 			SetVehicleMod(veh,i,m.mod,m.variation)
+		elseif i == 48 then
+			if m.mod ~= -1 then
+				SetVehicleMod(veh, i, m.mod)
+				SetVehicleLivery(veh, m.mod)
+			else
+				SetVehicleMod(veh, i, -1)
+				SetVehicleLivery(veh, -1)
+			end
 		else
 			SetVehicleMod(veh,i,m.mod)
 		end
@@ -1452,4 +1566,10 @@ Citizen.CreateThread(function()
 	end
 end)
 
-
+RegisterNetEvent('lscustoms:SetLivery')
+AddEventHandler('lscustoms:SetLivery', function(arg)
+	local veh = GetVehiclePedIsIn(GetPlayerPed(-1))
+	arg = tonumber(arg)
+	SetVehicleLivery(veh, arg)
+	SetVehicleMod(veh, 48, arg, false)
+end)

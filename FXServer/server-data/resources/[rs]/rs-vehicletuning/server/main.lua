@@ -2,6 +2,11 @@ RSCore = nil
 TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 
 local VehicleStatus = {}
+local VehicleDrivingDistance = {}
+
+RSCore.Functions.CreateCallback('rs-vehicletuning:server:GetDrivingDistances', function(source, cb)
+    cb(VehicleDrivingDistance)
+end)
 
 RegisterServerEvent("vehiclemod:server:setupVehicleStatus")
 AddEventHandler("vehiclemod:server:setupVehicleStatus", function(plate, engineHealth, bodyHealth)
@@ -40,6 +45,35 @@ AddEventHandler("vehiclemod:server:setupVehicleStatus", function(plate, engineHe
     else
         TriggerClientEvent("vehiclemod:client:setVehicleStatus", -1, plate, VehicleStatus[plate])
     end
+end)
+
+RegisterServerEvent('rs-vehicletuning:server:UpdateDrivingDistance')
+AddEventHandler('rs-vehicletuning:server:UpdateDrivingDistance', function(amount, plate)
+    VehicleDrivingDistance[plate] = amount
+
+    TriggerClientEvent('rs-vehicletuning:client:UpdateDrivingDistance', -1, VehicleDrivingDistance[plate], plate)
+
+    RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_vehicles` WHERE `plate` = '"..plate.."'", function(result)
+        if result[1] ~= nil then
+            RSCore.Functions.ExecuteSql(false, "UPDATE `player_vehicles` SET `drivingdistance` = '"..amount.."' WHERE `plate` = '"..plate.."'")
+        end
+    end)
+end)
+
+RSCore.Functions.CreateCallback('rs-vehicletuning:server:IsVehicleOwned', function(source, cb, plate)
+    local retval = false
+    RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_vehicles` WHERE `plate` = '"..plate.."'", function(result)
+        if result[1] ~= nil then
+            retval = true
+        end
+        cb(retval)
+    end)
+end)
+
+RegisterServerEvent('rs-vehicletuning:server:LoadStatus')
+AddEventHandler('rs-vehicletuning:server:LoadStatus', function(veh, plate)
+    VehicleStatus[plate] = veh
+    TriggerClientEvent("vehiclemod:client:setVehicleStatus", -1, plate, veh)
 end)
 
 RegisterServerEvent("vehiclemod:server:updatePart")
@@ -153,4 +187,12 @@ RegisterServerEvent('rs-vehicletuning:server:SetAttachedVehicle')
 AddEventHandler('rs-vehicletuning:server:SetAttachedVehicle', function(veh)
     Config.AttachedVehicle = veh
     TriggerClientEvent('rs-vehicletuning:client:SetAttachedVehicle', -1, veh)
+end)
+
+RSCore.Functions.CreateCallback('rs-vehicletuning:server:GetStatus', function(source, cb, plate)
+    if VehicleStatus[plate] ~= nil and next(VehicleStatus[plate]) ~= nil then
+        cb(VehicleStatus[plate])
+    else
+        cb(nil)
+    end
 end)

@@ -17,17 +17,6 @@ local hasGarageKey = nil
 local currentGarage = nil
 local OutsideVehicles = {}
 
--- RegisterNetEvent('RSCore:Client:OnPlayerLoaded')
--- AddEventHandler('RSCore:Client:OnPlayerLoaded', function()
---     RSCore.Functions.TriggerCallback('rs-garage:server:GetOutsideVehicles', function(result)
---         if result ~= nil then
---             OutsideVehicles = result
---         else
---             OutsideVehicles = {}
---         end
---     end)
--- end)
-
 RegisterNetEvent('rs-garages:client:setHouseGarage')
 AddEventHandler('rs-garages:client:setHouseGarage', function(house, hasKey)
     currentHouseGarage = house
@@ -53,8 +42,8 @@ RegisterNetEvent('rs-garages:client:takeOutDepot')
 AddEventHandler('rs-garages:client:takeOutDepot', function(vehicle)
     if OutsideVehicles ~= nil and next(OutsideVehicles) ~= nil then
         if OutsideVehicles[vehicle.plate] ~= nil then
-            local Engine = GetVehicleEngineHealth(OutsideVehicles[vehicle.plate])
-            if Engine <= 50.0 then
+            local VehExists = DoesEntityExist(OutsideVehicles[vehicle.plate])
+            if not VehExists then
                 RSCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
                     RSCore.Functions.TriggerCallback('rs-garage:server:GetVehicleProperties', function(properties)
                         RSCore.Functions.SetVehicleProperties(veh, properties)
@@ -68,6 +57,21 @@ AddEventHandler('rs-garages:client:takeOutDepot', function(vehicle)
                             TriggerServerEvent('rs-garages:server:UpdateOutsideVehicles', OutsideVehicles)
                         end
 
+                        if vehicle.status ~= nil and next(vehicle.status) ~= nil then
+                            TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
+                        end
+                        
+                        if vehicle.drivingdistance ~= nil then
+                            local amount = round(vehicle.drivingdistance / 1000, -2)
+                            TriggerEvent('rs-hud:client:UpdateDrivingMeters', true, amount)
+                            TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
+                        end
+
+                        if vehicle.vehicle == "urus" then
+                            SetVehicleExtra(veh, 1, false)
+                            SetVehicleExtra(veh, 2, true)
+                        end
+
                         SetVehicleNumberPlateText(veh, vehicle.plate)
                         SetEntityHeading(veh, Depots[currentGarage].takeVehicle.h)
                         TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
@@ -76,19 +80,56 @@ AddEventHandler('rs-garages:client:takeOutDepot', function(vehicle)
                         doCarDamage(veh, vehicle)
                         TriggerServerEvent('rs-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                         RSCore.Functions.Notify("Voertuig Uit: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "% Fuel: "..currentFuel.. "%", "primary", 4500)
-                        TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
                         closeMenuFull()
                         SetVehicleEngineOn(veh, true, true)
                     end, vehicle.plate)
                     TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate)
                 end, Depots[currentGarage].spawnPoint, true)
-                SetTimeout(250, function()
-                    TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), false)))
-                end)
             else
-                RSCore.Functions.Notify("Je kan dit voertuig niet duplicaten")
+            local Engine = GetVehicleEngineHealth(OutsideVehicles[vehicle.plate])
+            if Engine < 40.0 then
+                RSCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
+                    RSCore.Functions.TriggerCallback('rs-garage:server:GetVehicleProperties', function(properties)
+                        RSCore.Functions.SetVehicleProperties(veh, properties)
+                        enginePercent = round(vehicle.engine / 10, 0)
+                        bodyPercent = round(vehicle.body / 10, 0)
+                        currentFuel = vehicle.fuel
+
+                        if vehicle.plate ~= nil then
+                            DeleteVehicle(OutsideVehicles[vehicle.plate])
+                            OutsideVehicles[vehicle.plate] = veh
+                            TriggerServerEvent('rs-garages:server:UpdateOutsideVehicles', OutsideVehicles)
+                        end
+
+                        if vehicle.status ~= nil and next(vehicle.status) ~= nil then
+                            TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
+                        end
+                        
+                        if vehicle.drivingdistance ~= nil then
+                            local amount = round(vehicle.drivingdistance / 1000, -2)
+                            TriggerEvent('rs-hud:client:UpdateDrivingMeters', true, amount)
+                            TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
+                        end
+
+                        SetVehicleNumberPlateText(veh, vehicle.plate)
+                        SetEntityHeading(veh, Depots[currentGarage].takeVehicle.h)
+                        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+                        exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
+                        SetEntityAsMissionEntity(veh, true, true)
+                        doCarDamage(veh, vehicle)
+                        TriggerServerEvent('rs-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
+                        RSCore.Functions.Notify("Voertuig Uit: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "% Fuel: "..currentFuel.. "%", "primary", 4500)
+                        closeMenuFull()
+                        SetVehicleEngineOn(veh, true, true)
+                    end, vehicle.plate)
+                    TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate)
+                end, Depots[currentGarage].spawnPoint, true)
+            else
+                RSCore.Functions.Notify('Je kan dit voertuig niet duplicaten..', 'error')
+                AddTemporaryBlip(OutsideVehicles[vehicle.plate])
             end
-        else
+        end
+    else
             RSCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
                 RSCore.Functions.TriggerCallback('rs-garage:server:GetVehicleProperties', function(properties)
                     RSCore.Functions.SetVehicleProperties(veh, properties)
@@ -101,6 +142,10 @@ AddEventHandler('rs-garages:client:takeOutDepot', function(vehicle)
                         TriggerServerEvent('rs-garages:server:UpdateOutsideVehicles', OutsideVehicles)
                     end
 
+                    if vehicle.status ~= nil and next(vehicle.status) ~= nil then
+                        TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
+                    end
+
                     SetVehicleNumberPlateText(veh, vehicle.plate)
                     SetEntityHeading(veh, Depots[currentGarage].takeVehicle.h)
                     TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
@@ -109,15 +154,11 @@ AddEventHandler('rs-garages:client:takeOutDepot', function(vehicle)
                     doCarDamage(veh, vehicle)
                     TriggerServerEvent('rs-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                     RSCore.Functions.Notify("Voertuig Uit: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "% Fuel: "..currentFuel.. "%", "primary", 4500)
-                    TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
                     closeMenuFull()
                     SetVehicleEngineOn(veh, true, true)
                 end, vehicle.plate)
                 TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate)
             end, Depots[currentGarage].spawnPoint, true)
-            SetTimeout(250, function()
-                TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), false)))
-            end)
         end
     else
         RSCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
@@ -132,6 +173,16 @@ AddEventHandler('rs-garages:client:takeOutDepot', function(vehicle)
                     TriggerServerEvent('rs-garages:server:UpdateOutsideVehicles', OutsideVehicles)
                 end
 
+                if vehicle.status ~= nil and next(vehicle.status) ~= nil then
+                    TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
+                end
+                
+                if vehicle.drivingdistance ~= nil then
+                    local amount = round(vehicle.drivingdistance / 1000, -2)
+                    TriggerEvent('rs-hud:client:UpdateDrivingMeters', true, amount)
+                    TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
+                end
+
                 SetVehicleNumberPlateText(veh, vehicle.plate)
                 SetEntityHeading(veh, Depots[currentGarage].takeVehicle.h)
                 TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
@@ -140,17 +191,37 @@ AddEventHandler('rs-garages:client:takeOutDepot', function(vehicle)
                 doCarDamage(veh, vehicle)
                 TriggerServerEvent('rs-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                 RSCore.Functions.Notify("Voertuig Uit: Motor: " .. enginePercent .. "% Body: " .. bodyPercent.. "% Fuel: "..currentFuel.. "%", "primary", 4500)
-                TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
                 closeMenuFull()
                 SetVehicleEngineOn(veh, true, true)
             end, vehicle.plate)
             TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate)
         end, Depots[currentGarage].spawnPoint, true)
-        SetTimeout(250, function()
-            TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), false)))
-        end)
     end
+
+    TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), false)))
 end)
+
+function AddTemporaryBlip(vehicle)  
+    local VehicleCoords = GetEntityCoords(vehicle)
+    local TempBlip = AddBlipForCoord(VehicleCoords)
+    local VehicleData = RSCore.Shared.VehicleModels[GetEntityModel(vehicle)]
+
+    SetBlipSprite (TempBlip, 225)
+    SetBlipDisplay(TempBlip, 4)
+    SetBlipScale  (TempBlip, 0.85)
+    SetBlipAsShortRange(TempBlip, true)
+    SetBlipColour(TempBlip, 0)
+
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentSubstringPlayerName("Temp Blip: "..VehicleData["name"])
+    EndTextCommandSetBlipName(TempBlip)
+    RSCore.Functions.Notify("Uw "..VehicleData["name"].." staat tijdelijk (1 minuut) op de kaart aangegeven!", "success", 10000)
+
+    SetTimeout(60 * 1000, function()
+        RSCore.Functions.Notify('Uw voertuig staat NIET meer weergeven op de kaart!', 'error')
+        RemoveBlip(TempBlip)
+    end)
+end
 
 DrawText3Ds = function(x, y, z, text)
 	SetTextScale(0.35, 0.35)
@@ -247,20 +318,17 @@ function HouseGarage(house)
                     v.state = "In Beslag"
                 end
 
-                if v.vehicle ~= "yFiat595ssB" then
-                    Menu.addButton(RSCore.Shared.Vehicles[v.vehicle]["name"], "TakeOutGarageVehicle", v, v.state, " Motor: " .. enginePercent.."%", " Body: " .. bodyPercent.."%", " Fuel: "..currentFuel.."%")
-                else
-                    Menu.addButton("Sydney Mobile", "TakeOutGarageVehicle", v, v.state, " Motor: " .. enginePercent .. "%", " Body: " .. bodyPercent.. "%", " Fuel: "..currentFuel.. "%")
-                end
+                local label = RSCore.Shared.Vehicles[v.vehicle]["name"]
+                if RSCore.Shared.Vehicles[v.vehicle]["brand"] ~= nil then
+                    label = RSCore.Shared.Vehicles[v.vehicle]["brand"].." "..RSCore.Shared.Vehicles[v.vehicle]["name"]
             end
-        end
             
+            Menu.addButton(label, "TakeOutGarageVehicle", v, v.state, " Motor: " .. enginePercent.."%", " Body: " .. bodyPercent.."%", " Fuel: "..currentFuel.."%")
+        end
+    end
+
         Menu.addButton("Terug", "MenuHouseGarage", house)
     end, house)
-end
-
-function yeet(gar)
-    print(gar)
 end
 
 function getPlayerVehicles(garage)
@@ -291,13 +359,13 @@ function DepotLijst()
                     v.state = "Depot"
                 end
 
-                if v.vehicle ~= "yFiat595ssB" then
-                    Menu.addButton(RSCore.Shared.Vehicles[v.vehicle]["name"], "TakeOutDepotVehicle", v, v.state .. " (€"..v.depotprice..",-)", " Motor: " .. enginePercent.."%", " Body: " .. bodyPercent.."%", " Fuel: "..currentFuel.."%")
-                else
-                    Menu.addButton("Sydney Mobile", "TakeOutDepotVehicle", v, v.state, " Motor: " .. enginePercent .. "%", " Body: " .. bodyPercent.. "%", " Fuel: "..currentFuel.. "%")
-                end
+                local label = RSCore.Shared.Vehicles[v.vehicle]["name"]
+                if RSCore.Shared.Vehicles[v.vehicle]["brand"] ~= nil then
+                    label = RSCore.Shared.Vehicles[v.vehicle]["brand"].." "..RSCore.Shared.Vehicles[v.vehicle]["name"]
             end
+            Menu.addButton(label, "TakeOutDepotVehicle", v, v.state .. " (€"..v.depotprice..",-)", " Motor: " .. enginePercent.."%", " Body: " .. bodyPercent.."%", " Fuel: "..currentFuel.."%")
         end
+    end
             
         Menu.addButton("Terug", "MenuDepot",nil)
     end)
@@ -330,12 +398,12 @@ function VoertuigLijst()
                     v.state = "In Beslag"
                 end
 
-                if v.vehicle ~= "yFiat595ssB" then
-                    Menu.addButton(RSCore.Shared.Vehicles[v.vehicle]["name"], "TakeOutVehicle", v, v.state, " Motor: " .. enginePercent .. "%", " Body: " .. bodyPercent.. "%", " Fuel: "..currentFuel.. "%")
-                else
-                    print(GetHashKey(v.vehicle))
-                    Menu.addButton("Sydney Mobile", "TakeOutVehicle", v, v.state, " Motor: " .. enginePercent .. "%", " Body: " .. bodyPercent.. "%", " Fuel: "..currentFuel.. "%")
+                local label = RSCore.Shared.Vehicles[v.vehicle]["name"]
+                if RSCore.Shared.Vehicles[v.vehicle]["brand"] ~= nil then
+                    label = RSCore.Shared.Vehicles[v.vehicle]["brand"].." "..RSCore.Shared.Vehicles[v.vehicle]["name"]
                 end
+
+                Menu.addButton(label, "TakeOutVehicle", v, v.state, " Motor: " .. enginePercent .. "%", " Body: " .. bodyPercent.. "%", " Fuel: "..currentFuel.. "%")
             end
         end
             
@@ -368,10 +436,24 @@ function TakeOutVehicle(vehicle)
                     TriggerServerEvent('rs-garages:server:UpdateOutsideVehicles', OutsideVehicles)
                 end
 
+                if vehicle.status ~= nil and next(vehicle.status) ~= nil then
+                    TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
+                end
+
+                if vehicle.vehicle == "urus" then
+                    SetVehicleExtra(veh, 1, false)
+                    SetVehicleExtra(veh, 2, true)
+                end
+                
+                if vehicle.drivingdistance ~= nil then
+                    local amount = round(vehicle.drivingdistance / 1000, -2)
+                    TriggerEvent('rs-hud:client:UpdateDrivingMeters', true, amount)
+                    TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
+                end
+
                 RSCore.Functions.SetVehicleProperties(veh, properties)
                 SetVehicleNumberPlateText(veh, vehicle.plate)
                 SetEntityHeading(veh, Garages[currentGarage].spawnPoint.h)
-                print(Garages[currentGarage].spawnPoint.h)
                 exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                 doCarDamage(veh, vehicle)
                 SetEntityAsMissionEntity(veh, true, true)
@@ -393,7 +475,6 @@ end
 
 function TakeOutDepotVehicle(vehicle)
     if vehicle.state == "Depot" then
-        print(currentGarage)
         TriggerServerEvent("rs-garage:server:PayDepotPrice", vehicle)
     end
 end
@@ -410,6 +491,22 @@ function TakeOutGarageVehicle(vehicle)
                 if vehicle.plate ~= nil then
                     OutsideVehicles[vehicle.plate] = veh
                     TriggerServerEvent('rs-garages:server:UpdateOutsideVehicles', OutsideVehicles)
+                end
+                
+                
+                if vehicle.drivingdistance ~= nil then
+                    local amount = round(vehicle.drivingdistance / 1000, -2)
+                    TriggerEvent('rs-hud:client:UpdateDrivingMeters', true, amount)
+                    TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
+                end
+
+                if vehicle.vehicle == "urus" then
+                    SetVehicleExtra(veh, 1, false)
+                    SetVehicleExtra(veh, 2, true)
+                end
+
+                if vehicle.status ~= nil and next(vehicle.status) ~= nil then
+                    TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
                 end
 
                 SetVehicleNumberPlateText(veh, vehicle.plate)
@@ -544,21 +641,17 @@ Citizen.CreateThread(function()
                 if putDist <= 1.5 then
                     DrawText3Ds(Garages[k].putVehicle.x, Garages[k].putVehicle.y, Garages[k].putVehicle.z + 0.5, '~g~E~w~ - Parkeer Voertuig')
                     if IsControlJustPressed(0, 38) then
-                        print("control is pressed")
-                        RSCore.Functions.Notify("Pressed in car", "primary", 4500)
                         local curVeh = GetVehiclePedIsIn(ped)
                         local plate = GetVehicleNumberPlateText(curVeh)
-                        print("plate is: "..plate)
                         RSCore.Functions.TriggerCallback('rs-garage:server:checkVehicleOwner', function(owned)
                             if owned then
-                                print("is owned")
                                 local bodyDamage = math.ceil(GetVehicleBodyHealth(curVeh))
                                 local engineDamage = math.ceil(GetVehicleEngineHealth(curVeh))
                                 local totalFuel = exports['LegacyFuel']:GetFuel(curVeh)
         
                                 TriggerServerEvent('rs-garage:server:updateVehicleStatus', totalFuel, engineDamage, bodyDamage, plate, k)
                                 TriggerServerEvent('rs-garage:server:updateVehicleState', 1, plate, k)
-                                --TriggerServerEvent('vehiclemod:server:saveStatus', plate)
+                                TriggerServerEvent('vehiclemod:server:saveStatus', plate)
                                 RSCore.Functions.DeleteVehicle(curVeh)
                                 if plate ~= nil then
                                     OutsideVehicles[plate] = veh
@@ -569,7 +662,6 @@ Citizen.CreateThread(function()
                                 RSCore.Functions.Notify("Niemand is in bezit van dit voertuig...", "error", 3500)
                             end
                         end, plate)
-                        print("screw this im out")
                     end
                 end
             end
@@ -692,4 +784,12 @@ end)
 
 function round(num, numDecimalPlaces)
     return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
+end
+
+function round(num, numDecimalPlaces)
+    if numDecimalPlaces and numDecimalPlaces>0 then
+      local mult = 10^numDecimalPlaces
+      return math.floor(num * mult + 0.5) / mult
+    end
+    return math.floor(num + 0.5)
 end

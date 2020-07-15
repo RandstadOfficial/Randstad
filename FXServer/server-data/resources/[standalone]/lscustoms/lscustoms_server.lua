@@ -48,3 +48,7 @@ function IsVehicleOwned(plate)
     end)
     return retval
 end
+
+RSCore.Commands.Add("livery", "Livery", {{name="livery", help="Nummer van de livery"}}, true, function(source, args)
+	TriggerClientEvent('lscustoms:SetLivery', source, tonumber(args[1]))
+end, "admin")
