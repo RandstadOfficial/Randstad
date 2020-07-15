@@ -146,7 +146,7 @@ Citizen.CreateThread(function()
         DisableControlAction(0, Keys["5"], true)
         if IsDisabledControlJustReleased(0, Keys["TAB"]) and not isCrafting then
             RSCore.Functions.GetPlayerData(function(PlayerData)
-                if not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] then
+                if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     local curVeh = nil
                     if IsPedInAnyVehicle(GetPlayerPed(-1)) then
                         local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
@@ -245,7 +245,7 @@ Citizen.CreateThread(function()
 
         if IsDisabledControlJustReleased(0, Keys["1"]) then
             RSCore.Functions.GetPlayerData(function(PlayerData)
-                if not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] then
+                if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     TriggerServerEvent("inventory:server:UseItemSlot", 1)
                 end
             end)
@@ -253,7 +253,7 @@ Citizen.CreateThread(function()
 
         if IsDisabledControlJustReleased(0, Keys["2"]) then
             RSCore.Functions.GetPlayerData(function(PlayerData)
-                if not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] then
+                if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     TriggerServerEvent("inventory:server:UseItemSlot", 2)
                 end
             end)
@@ -261,7 +261,7 @@ Citizen.CreateThread(function()
 
         if IsDisabledControlJustReleased(0, Keys["3"]) then
             RSCore.Functions.GetPlayerData(function(PlayerData)
-                if not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] then
+                if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     TriggerServerEvent("inventory:server:UseItemSlot", 3)
                 end
             end)
@@ -269,7 +269,7 @@ Citizen.CreateThread(function()
 
         if IsDisabledControlJustReleased(0, Keys["4"]) then
             RSCore.Functions.GetPlayerData(function(PlayerData)
-                if not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] then
+                if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     TriggerServerEvent("inventory:server:UseItemSlot", 4)
                 end
             end)
@@ -277,7 +277,7 @@ Citizen.CreateThread(function()
 
         if IsDisabledControlJustReleased(0, Keys["5"]) then
             RSCore.Functions.GetPlayerData(function(PlayerData)
-                if not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] then
+                if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     TriggerServerEvent("inventory:server:UseItemSlot", 5)
                 end
             end)

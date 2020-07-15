@@ -90,7 +90,7 @@ Citizen.CreateThread(function()
         if isBleeding > 0 and not onPainKillers then
             local player = PlayerPedId()
             if bleedTickTimer >= Config.BleedTickRate and not isInHospitalBed then
-                if not isDead then
+                if not isDead and not InLaststand then
                     if isBleeding > 0 then
                         if fadeOutTimer + 1 == Config.FadeOutTimer then
                             if blackoutTimer + 1 == Config.BlackoutTimer then
@@ -157,9 +157,6 @@ Citizen.CreateThread(function()
                     else
                         bleedTickTimer = bleedTickTimer + 1
                     end
-
-                else
-
                 end
                 bleedTickTimer = bleedTickTimer + 1
             end
@@ -168,7 +165,7 @@ Citizen.CreateThread(function()
 end)
 
 function ProcessDamage(ped)
-    if not isDead and not onPainKillers then
+    if not isDead and not InLaststand and not onPainKillers then
         for k, v in pairs(injured) do
             if (v.part == 'LLEG' and v.severity > 1) or (v.part == 'RLEG' and v.severity > 1) or (v.part == 'LFOOT' and v.severity > 2) or (v.part == 'RFOOT' and v.severity > 2) then
                 if legCount >= Config.LegInjuryTimer then
@@ -289,7 +286,7 @@ end
 function CheckDamage(ped, bone, weapon, damageDone)
     if weapon == nil then return end
 
-    if Config.Bones[bone] ~= nil and not isDead then
+    if Config.Bones[bone] ~= nil and not isDead and not InLaststand then
         ApplyImmediateEffects(ped, bone, weapon, damageDone)
 
         if not BodyParts[Config.Bones[bone]].isDamaged then

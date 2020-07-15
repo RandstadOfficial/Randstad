@@ -65,6 +65,7 @@ RSCore.Player.CheckPlayerData = function(source, PlayerData)
 	PlayerData.metadata["hunger"] = PlayerData.metadata["hunger"] ~= nil and PlayerData.metadata["hunger"] or 100
 	PlayerData.metadata["thirst"] = PlayerData.metadata["thirst"] ~= nil and PlayerData.metadata["thirst"] or 100
 	PlayerData.metadata["isdead"] = PlayerData.metadata["isdead"] ~= nil and PlayerData.metadata["isdead"] or false
+	PlayerData.metadata["inlaststand"] = PlayerData.metadata["inlaststand"] ~= nil and PlayerData.metadata["inlaststand"] or false
 	PlayerData.metadata["armor"]  = PlayerData.metadata["armor"]  ~= nil and PlayerData.metadata["armor"] or 0
 	PlayerData.metadata["ishandcuffed"] = PlayerData.metadata["ishandcuffed"] ~= nil and PlayerData.metadata["ishandcuffed"] or false	
 	PlayerData.metadata["tracker"] = PlayerData.metadata["tracker"] ~= nil and PlayerData.metadata["tracker"] or false
@@ -110,6 +111,7 @@ RSCore.Player.CheckPlayerData = function(source, PlayerData)
 	PlayerData.job.grade = PlayerData.job.grade ~= nil and PlayerData.job.grade or 1
 
 	PlayerData.position = PlayerData.position ~= nil and PlayerData.position or RSConfig.DefaultSpawn
+	PlayerData.LoggedIn = true
 
 	PlayerData = RSCore.Player.LoadInventory(PlayerData)
 	RSCore.Player.CreatePlayer(PlayerData)

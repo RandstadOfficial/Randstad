@@ -1298,10 +1298,10 @@ function CreateNewDrop(source, fromSlot, toSlot, itemAmount)
 	end
 end
 
-RSCore.Commands.Add("inv", "Open je inventory", {}, false, function(source, args)
-    local Player = RSCore.Functions.GetPlayer(source)
-	TriggerClientEvent("inventory:client:OpenInventory", source, Player.PlayerData.items)
-end)
+-- RSCore.Commands.Add("inv", "Open je inventory", {}, false, function(source, args)
+--     local Player = RSCore.Functions.GetPlayer(source)
+-- 	TriggerClientEvent("inventory:client:OpenInventory", source, Player.PlayerData.items)
+-- end)
 
 RSCore.Commands.Add("resetinv", "Reset inventory (in geval met -None)", {{name="type", help="stash/trunk/glovebox"},{name="id/plate", help="ID van stash of kenteken"}}, true, function(source, args)
 	local invType = args[1]:lower()

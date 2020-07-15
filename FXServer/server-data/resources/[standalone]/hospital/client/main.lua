@@ -298,28 +298,39 @@ AddEventHandler('hospital:client:Revive', function()
     local player = PlayerPedId()
 
 	if isDead then
+        SetLaststand(false)
 		local playerPos = GetEntityCoords(player, true)
         NetworkResurrectLocalPlayer(playerPos, true, true, false)
-        TriggerServerEvent("hospital:server:SetDeathStatus", false)
         isDead = false
         SetEntityInvincible(GetPlayerPed(-1), false)
+    elseif InLaststand then
+        local playerPos = GetEntityCoords(player, true)
+        NetworkResurrectLocalPlayer(playerPos, true, true, false)
+        isDead = false
+        SetEntityInvincible(GetPlayerPed(-1), false)
+        SetLaststand(false)
     end
 
     if isInHospitalBed then
         loadAnimDict(inBedDict)
         TaskPlayAnim(player, inBedDict , inBedAnim, 8.0, 1.0, -1, 1, 0, 0, 0, 0 )
         SetEntityInvincible(GetPlayerPed(-1), true)
-        --SetEntityHeading(player, bedOccupyingData.h - 180.0)
         canLeaveBed = true
     end
 
     TriggerServerEvent("hospital:server:RestoreWeaponDamage")
 
-    SetEntityHealth(player, GetEntityMaxHealth(player))
+    local ped = GetPlayerPed(-1)
+    SetEntityMaxHealth(ped, 200)
+    SetEntityHealth(ped, 200)
     ClearPedBloodDamage(player)
     SetPlayerSprint(PlayerId(), true)
 
     ResetAll()
+
+    TriggerServerEvent('rs-hud:Server:RelieveStress', 100)
+    TriggerServerEvent("hospital:server:SetDeathStatus", false)
+    TriggerServerEvent("hospital:server:SetLaststandStatus", false)
     
     RSCore.Functions.Notify("Je bent weer helemaal top!")
 end)
@@ -425,17 +436,30 @@ end)
 RegisterNetEvent('RSCore:Client:OnPlayerLoaded')
 AddEventHandler('RSCore:Client:OnPlayerLoaded', function()
     exports.spawnmanager:setAutoSpawn(false)
+    local ped = GetPlayerPed(-1)
+    SetEntityMaxHealth(ped, 200)
+    SetEntityHealth(ped, 200)
     isLoggedIn = true
     TriggerServerEvent("hospital:server:SetDoctor")
-    RSCore.Functions.GetPlayerData(function(PlayerData)
-        PlayerJob = PlayerData.job
-        onDuty = PlayerData.job.onduty
-        SetPedArmour(GetPlayerPed(-1), PlayerData.metadata["armor"])
-        isDead = PlayerData.metadata["isdead"]
-        if isDead then 
-            deathTime = Config.DeathTime
-            DeathTimer()
-        end
+    Citizen.CreateThread(function()
+        Wait(1000)
+        RSCore.Functions.GetPlayerData(function(PlayerData)
+            PlayerJob = PlayerData.job
+            onDuty = PlayerData.job.onduty
+            SetPedArmour(GetPlayerPed(-1), PlayerData.metadata["armor"])
+            if (not PlayerData.metadata["inlaststand"] and PlayerData.metadata["isdead"]) then
+                local player = PlayerId()
+                local playerPed = PlayerPedId()
+                deathTime = Laststand.ReviveInterval
+                OnDeath(true)
+                DeathTimer()
+            elseif (PlayerData.metadata["inlaststand"] and not PlayerData.metadata["isdead"]) then
+                SetLaststand(true, true)
+            else
+                TriggerServerEvent("hospital:server:SetDeathStatus", false)
+                TriggerServerEvent("hospital:server:SetLaststandStatus", false)
+            end
+        end)
     end)
 end)
 
@@ -454,6 +478,7 @@ RegisterNetEvent('RSCore:Client:OnPlayerUnload')
 AddEventHandler('RSCore:Client:OnPlayerUnload', function()
     isLoggedIn = false
     TriggerServerEvent("hospital:server:SetDeathStatus", false)
+    TriggerServerEvent('hospital:server:SetLaststandStatus', false)
     TriggerServerEvent("hospital:server:SetArmor", GetPedArmour(GetPlayerPed(-1)))
     if bedOccupying ~= nil then 
         TriggerServerEvent("hospital:server:LeaveBed", bedOccupying)
