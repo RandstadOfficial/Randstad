@@ -298,7 +298,7 @@ AddEventHandler('hospital:client:Revive', function()
     local player = PlayerPedId()
 
 	if isDead then
-        Set(false)
+        SetLaststand(false)
 		local playerPos = GetEntityCoords(player, true)
         NetworkResurrectLocalPlayer(playerPos, true, true, false)
         isDead = false

@@ -65,6 +65,15 @@ AddEventHandler('hospital:server:SetDeathStatus', function(isDead)
 	end
 end)
 
+RegisterServerEvent('hospital:server:SetLaststandStatus')
+AddEventHandler('hospital:server:SetLaststandStatus', function(bool)
+	local src = source
+	local Player = RSCore.Functions.GetPlayer(src)
+	if Player ~= nil then
+		Player.Functions.SetMetaData("inlaststand", bool)
+	end
+end)
+
 RegisterServerEvent('hospital:server:SetArmor')
 AddEventHandler('hospital:server:SetArmor', function(amount)
 	local src = source
