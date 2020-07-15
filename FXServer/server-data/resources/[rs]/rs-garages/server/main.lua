@@ -6,6 +6,13 @@ local OutsideVehicles = {}
 
 -- code
 
+RegisterServerEvent('rs-garages:server:RemoveVehicle')
+AddEventHandler('rs-garages:server:RemoveVehicle', function(CitizenId, Plate)
+    if OutsideVehicles[CitizenId] ~= nil then
+        OutsideVehicles[CitizenId][Plate] = nil
+    end
+end)
+
 RegisterServerEvent('rs-garages:server:UpdateOutsideVehicles')
 AddEventHandler('rs-garages:server:UpdateOutsideVehicles', function(Vehicles)
     local src = source
@@ -32,6 +39,11 @@ RSCore.Functions.CreateCallback("rs-garage:server:GetUserVehicles", function(sou
 
     exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE citizenid = @citizenid AND garage = @garage', {['@citizenid'] = pData.PlayerData.citizenid, ['@garage'] = garage}, function(result)
         if result[1] ~= nil then
+            for k, v in pairs(result) do
+                if v.status ~= nil then
+                    v.status = json.decode(v.status)
+                end
+            end
             cb(result)
         else
             cb(nil)
@@ -56,6 +68,11 @@ RSCore.Functions.CreateCallback("rs-garage:server:GetDepotVehicles", function(so
 
     exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE citizenid = @citizenid AND state = @state', {['@citizenid'] = pData.PlayerData.citizenid, ['@state'] = 0}, function(result)
         if result[1] ~= nil then
+            for k, v in pairs(result) do
+                if v.status ~= nil then
+                    v.status = json.decode(v.status)
+                end
+            end
             cb(result)
         else
             cb(nil)
@@ -69,6 +86,11 @@ RSCore.Functions.CreateCallback("rs-garage:server:GetHouseVehicles", function(so
 
     exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE garage = @garage', {['@garage'] = house}, function(result)
         if result[1] ~= nil then
+            for k, v in pairs(result) do
+                if v.status ~= nil then
+                    v.status = json.decode(v.status)
+                end
+            end
             cb(result)
         else
             cb(nil)
@@ -87,19 +109,6 @@ RSCore.Functions.CreateCallback("rs-garage:server:checkVehicleHouseOwner", funct
             else
                 cb(false)
             end
-        else
-            cb(false)
-        end
-    end)
-end)
-
-RSCore.Functions.CreateCallback("rs-garage:server:checkVehicleOwner", function(source, cb, plate)
-    local src = source
-    local pData = RSCore.Functions.GetPlayer(src)
-
-    exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE plate = @plate AND citizenid = @citizenid', {['@plate'] = plate, ['@citizenid'] = pData.PlayerData.citizenid}, function(result)
-        if result[1] ~= nil then
-            cb(true)
         else
             cb(false)
         end

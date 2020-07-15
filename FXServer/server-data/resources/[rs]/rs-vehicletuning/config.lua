@@ -34,7 +34,7 @@ Config.ValuesLabels = {
 }
 
 Config.RepairCost = {
-    ["body"] = "metalscrap",
+    ["body"] = "plastic",
     ["radiator"] = "plastic",
     ["axle"] = "steel",
     ["brakes"] = "iron",
@@ -50,4 +50,31 @@ Config.Locations = {
     [1] = {x = 937.91, y = -970.64, z = 39.49, h = 271.5, r = 1.0},
     [2] = {x = 937.65, y = -967.71, z = 39.54, h = 183.5, r = 1.0},
     [3] = {x = 945.13, y = -975.84, z = 39.49, h = 181.5, r = 1.0},
+}
+
+Config.MinimalMetersForDamage = {
+    [1] = {
+        min = 8000,
+        max = 12000,
+        multiplier = {
+            min = 1,
+            max = 8,
+        }
+    },
+    [2] = {
+        min = 12000,
+        max = 16000,
+        multiplier = {
+            min = 8,
+            max = 16,
+        }
+    },
+    [3] = {
+        min = 12000,
+        max = 16000,
+        multiplier = {
+            min = 16,
+            max = 24,
+        }
+    },
 }

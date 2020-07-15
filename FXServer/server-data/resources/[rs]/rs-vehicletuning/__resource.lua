@@ -6,6 +6,7 @@ client_scripts {
 	'config.lua',
 	'client/main.lua',
 	'client/gui.lua',
+	'client/drivingdistance.lua',
 }
 
 server_scripts {
