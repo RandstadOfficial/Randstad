@@ -100,7 +100,7 @@ Citizen.CreateThread(function()
             local OffsetCoords = GetOffsetFromEntityInWorldCoords(BrancardObject, 0, 0.85, 0)
             local Distance = GetDistanceBetweenCoords(PlayerPos, OffsetCoords.x, OffsetCoords.y, OffsetCoords.z, true)
 
-            if Distance <= 1.0 then
+            if Distance <= 1.5 then
                 if not IsAttached then
                     DrawText3Ds(OffsetCoords.x, OffsetCoords.y, OffsetCoords.z, '~g~E~w~ - Brancard vastpakken / ~g~H~w~ Vastzetten')
                     if IsControlJustPressed(0, 51) then

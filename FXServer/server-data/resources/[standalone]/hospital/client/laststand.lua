@@ -13,7 +13,7 @@ end)
 -- Config
 
 Laststand = Laststand or {}
-Laststand.ReviveInterval = 30
+Laststand.ReviveInterval = 360
 Laststand.MinimumRevive = 300
 
 -- Code
