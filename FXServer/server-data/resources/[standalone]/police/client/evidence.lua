@@ -418,6 +418,7 @@ Citizen.CreateThread( function()
 			if PlayerJob.name ~= "police" then
 				if IsPedShooting(GetPlayerPed(-1)) and not IsSilentWeapon(currentWeapon) then
 					if IsPedNearby() then
+						print('shooting alert')
 						local coords = GetEntityCoords(GetPlayerPed(-1))
 						local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, coords.x, coords.y, coords.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
 						local streetLabel = GetStreetNameFromHashKey(s1)

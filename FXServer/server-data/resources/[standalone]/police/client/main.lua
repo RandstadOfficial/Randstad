@@ -10,7 +10,7 @@ Keys = {
 	["NENTER"] = 201, ["N4"] = 108, ["N5"] = 60, ["N6"] = 107, ["N+"] = 96, ["N-"] = 97, ["N7"] = 117, ["N8"] = 61, ["N9"] = 118
 }
 
-isLoggedIn = false
+isLoggedIn = true
 
 isHandcuffed = false
 cuffType = 1
@@ -175,7 +175,7 @@ end)
 local DutyBlips = {}
 RegisterNetEvent('police:client:UpdateBlips')
 AddEventHandler('police:client:UpdateBlips', function(players)
-    if PlayerJob ~= nil and (PlayerJob.name == 'police' or PlayerJob.name == 'ambulance' or PlayerJob.name == 'doctor') and onDuty then
+    if PlayerJob ~= nil and (PlayerJob.name == 'police' or PlayerJob.name == 'ambulance') and onDuty then
         if DutyBlips ~= nil then 
             for k, v in pairs(DutyBlips) do
                 RemoveBlip(v)
@@ -234,7 +234,7 @@ AddEventHandler('police:client:SendPoliceEmergencyAlert', function()
         streetLabel = streetLabel .. " " .. street2
     end
     local alertTitle = "Urgent Noodmelding!"
-    if PlayerJob.name == "ambulance" or PlayerJob.name == "doctor" then
+    if PlayerJob.name == "ambulance" then
         alertTitle = "Noodmelding " .. PlayerJob.label
     end
 
@@ -321,7 +321,7 @@ end)
 
 RegisterNetEvent('police:client:PoliceEmergencyAlert')
 AddEventHandler('police:client:PoliceEmergencyAlert', function(callsign, streetLabel, coords)
-    if (PlayerJob.name == 'police' or PlayerJob.name == 'ambulance' or PlayerJob.name == 'doctor') and onDuty then
+    if (PlayerJob.name == 'police' or PlayerJob.name == 'ambulance') and onDuty then
         PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
         Citizen.Wait(100)
         PlaySoundFrontend( -1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1 )
@@ -454,12 +454,35 @@ AddEventHandler('police:client:GunShotAlert', function(streetLabel, fromVehicle,
 end)
 
 RegisterNetEvent('police:client:VehicleCall')
-AddEventHandler('police:client:VehicleCall', function(coords, msg)
+AddEventHandler('police:client:VehicleCall', function(pos, alertTitle, streetLabel, modelPlate, modelName)
     if PlayerJob.name == 'police' and onDuty then
-        TriggerEvent("chatMessage", "MELDING", "error", msg)
+        TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+            timeOut = 4000,
+            alertTitle = alertTitle,
+            coords = {
+                x = pos.x,
+                y = pos.y,
+                z = pos.z,
+            },
+            details = {
+                [1] = {
+                    icon = '<i class="fas fa-car"></i>',
+                    detail = modelName,
+                },
+                [2] = {
+                    icon = '<i class="fas fa-closed-captioning"></i>',
+                    detail = modelPlate,
+                },
+                [3] = {
+                    icon = '<i class="fas fa-globe-europe"></i>',
+                    detail = streetLabel,
+                },
+            },
+            callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+        })
         PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
         local transG = 250
-        local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
+        local blip = AddBlipForCoord(pos.x, pos.y, pos.z)
         SetBlipSprite(blip, 380)
         SetBlipColour(blip, 1)
         SetBlipDisplay(blip, 4)
@@ -532,16 +555,29 @@ AddEventHandler('police:client:HouseRobberyCall', function(coords, msg, gender, 
 end)
 
 RegisterNetEvent('112:client:SendPoliceAlert')
-AddEventHandler('112:client:SendPoliceAlert', function(notifyType, msg, type, blipSettings)
+AddEventHandler('112:client:SendPoliceAlert', function(notifyType, data, blipSettings)
     if PlayerJob.name == 'police' and onDuty then
         if notifyType == "flagged" then
-            TriggerEvent("chatMessage", "MELDING", "error", msg)
+            TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+                timeOut = 5000,
+                alertTitle = "Poging huisinbraak",
+                details = {
+                    [1] = {
+                        icon = '<i class="fas fa-video"></i>',
+                        detail = data.camId,
+                    },
+                    [2] = {
+                        icon = '<i class="fas fa-closed-captioning"></i>',
+                        detail = data.plate,
+                    },
+                    [3] = {
+                        icon = '<i class="fas fa-globe-europe"></i>',
+                        detail = data.streetLabel,
+                    },
+                },
+                callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+            })
             RadarSound()
-        elseif notifyType == "player" then
-            PlaySound(-1, "Event_Start_Text", "GTAO_FM_Events_Soundset", 0, 0, 1)
-        else
-            PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
-            TriggerEvent("chatMessage", "112-MELDING", "error", msg)
         end
     
         if blipSettings ~= nil then
@@ -571,7 +607,7 @@ AddEventHandler('112:client:SendPoliceAlert', function(notifyType, msg, type, bl
 end)
 
 RegisterNetEvent('police:client:PoliceAlertMessage')
-AddEventHandler('police:client:PoliceAlertMessage', function(msg, coords)
+AddEventHandler('police:client:PoliceAlertMessage', function(title, streetLabel, coords)
     if PlayerJob.name == 'police' and onDuty then
         TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
             timeOut = 5000,
@@ -586,7 +622,6 @@ AddEventHandler('police:client:PoliceAlertMessage', function(msg, coords)
         })
 
         PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
-        TriggerEvent("chatMessage", "112-MELDING", "error", msg)
         local transG = 100
         local blip = AddBlipForRadius(coords.x, coords.y, coords.z, 100.0)
         SetBlipSprite(blip, 9)
@@ -594,7 +629,7 @@ AddEventHandler('police:client:PoliceAlertMessage', function(msg, coords)
         SetBlipAlpha(blip, transG)
         SetBlipAsShortRange(blip, false)
         BeginTextCommandSetBlipName('STRING')
-        AddTextComponentString("112 - Verdachte situatie ")
+        AddTextComponentString("112 - "..title)
         EndTextCommandSetBlipName(blip)
         while transG ~= 0 do
             Wait(180 * 4)

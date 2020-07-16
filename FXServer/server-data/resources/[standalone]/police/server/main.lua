@@ -183,9 +183,17 @@ AddEventHandler('police:server:FlaggedPlateTriggered', function(camId, plate, st
         if Player ~= nil then
             if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
                 if street2 ~= nil then
-                    TriggerClientEvent("112:client:SendPoliceAlert", v, "flagged", "Flitser #"..camId.." - Gemarkeerd voertuig ("..plate..") gesignaleerd bij ".. street1 .. " | " .. street2, blipSettings)
+                    TriggerClientEvent("112:client:SendPoliceAlert", v, "flagged", {
+                        camId = camId,
+                        plate = plate,
+                        streetLabel = street1.. " "..street2,
+                    }, blipSettings)
                 else
-                    TriggerClientEvent("112:client:SendPoliceAlert", v, "flagged", "Flitser #"..camId.." - Gemarkeerd voertuig ("..plate..") gesignaleerd bij ".. street1, blipSettings)
+                    TriggerClientEvent("112:client:SendPoliceAlert", v, "flagged", {
+                        camId = camId,
+                        plate = plate,
+                        streetLabel = street1
+                    }, blipSettings)
                 end
             end
         end
@@ -193,16 +201,16 @@ AddEventHandler('police:server:FlaggedPlateTriggered', function(camId, plate, st
 end)
 
 RegisterServerEvent('police:server:PoliceAlertMessage')
-AddEventHandler('police:server:PoliceAlertMessage', function(msg, coords)
+AddEventHandler('police:server:PoliceAlertMessage', function(title, streetLabel, coords)
     local src = source
 
     for k, v in pairs(RSCore.Functions.GetPlayers()) do
         local Player = RSCore.Functions.GetPlayer(v)
         if Player ~= nil then 
             if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
-                TriggerClientEvent("police:client:PoliceAlertMessage", v, msg, coords)
+                TriggerClientEvent("police:client:PoliceAlertMessage", v, title, streetLabel, coords)
             elseif Player.Functions.GetItemByName("radioscanner") ~= nil and math.random(1, 100) <= 50 then
-                TriggerClientEvent("police:client:PoliceAlertMessage", v, msg, coords)
+                TriggerClientEvent("police:client:PoliceAlertMessage", v, title, streetLabel, coords)
             end
         end
     end
@@ -216,23 +224,23 @@ AddEventHandler('police:server:GunshotAlert', function(streetLabel, fromVehicle,
         local Player = RSCore.Functions.GetPlayer(v)
         if Player ~= nil then 
             if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
-                TriggerClientEvent("police:client:GunShotAlert", k, streetLabel, fromVehicle, coords, vehicleInfo)
+                TriggerClientEvent("police:client:GunShotAlert", Player.PlayerData.source, streetLabel, fromVehicle, coords, vehicleInfo)
             elseif Player.Functions.GetItemByName("radioscanner") ~= nil and math.random(1, 100) <= 50 then
-                TriggerClientEvent("police:client:GunShotAlert", k, streetLabel, fromVehicle, coords, vehicleInfo)
+                TriggerClientEvent("police:client:GunShotAlert", Player.PlayerData.source, streetLabel, fromVehicle, coords, vehicleInfo)
             end
         end
     end
 end)
 
 RegisterServerEvent('police:server:VehicleCall')
-AddEventHandler('police:server:VehicleCall', function(coords, msg)
+AddEventHandler('police:server:VehicleCall', function(pos, msg, alertTitle, streetLabel, modelPlate, modelName)
     local src = source
     local alertData = {
         title = "Voertuigdiefstal",
-        coords = {x = coords.x, y = coords.y, z = coords.z},
+        coords = {x = pos.x, y = pos.y, z = pos.z},
         description = msg,
     }
-    TriggerClientEvent("police:client:VehicleCall", -1, coords, msg)
+    TriggerClientEvent("police:client:VehicleCall", -1, pos, alertTitle, streetLabel, modelPlate, modelName)
     TriggerClientEvent("rs-phone:client:addPoliceAlert", -1, alertData)
 end)
 

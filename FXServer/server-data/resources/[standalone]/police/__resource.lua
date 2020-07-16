@@ -32,3 +32,8 @@ files {
 	"html/main.css",
 	"html/vcr-ocd.ttf",
 }
+
+exports {
+	'IsHandcuffed',
+	'IsArmoryWhitelist'
+}
