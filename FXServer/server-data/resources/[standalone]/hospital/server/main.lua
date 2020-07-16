@@ -360,6 +360,13 @@ RSCore.Functions.CreateUseableItem("painkillers", function(source, item)
 	end
 end)
 
+RSCore.Functions.CreateUseableItem("firstaid", function(source, item)
+	local Player = RSCore.Functions.GetPlayer(source)
+	if Player.Functions.GetItemByName(item.name) ~= nil then
+		TriggerClientEvent("hospital:client:UseFirstAid", source)
+	end
+end)
+
 function IsHighCommand(citizenid)
     local retval = false
     for k, v in pairs(Config.Whitelist) do
@@ -369,6 +376,15 @@ function IsHighCommand(citizenid)
     end
     return retval
 end
+
+RegisterServerEvent('hospital:server:UseFirstAid')
+AddEventHandler('hospital:server:UseFirstAid', function(targetId)
+	local src = source
+	local Target = RSCore.Functions.GetPlayer(targetId)
+	if Target ~= nil then
+		TriggerClientEvent('hospital:client:CanHelp', targetId, src)
+	end
+end)
 
 RegisterServerEvent('hospital:server:CanHelp')
 AddEventHandler('hospital:server:CanHelp', function(helperId, canHelp)
