@@ -519,35 +519,54 @@ function Hotwire()
 end
 
 function PoliceCall()
-    
-    local pos = GetEntityCoords(GetPlayerPed(-1))
-    local chance = 20
-    if GetClockHours() >= 1 and GetClockHours() <= 6 then
-        chance = 10
-    end
-    if math.random(1, 100) <= chance then
-        local closestPed = GetNearbyPed()
-        if closestPed ~= nil then
-            local msg = ""
-            local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
-            local streetLabel = GetStreetNameFromHashKey(s1)
-            local street2 = GetStreetNameFromHashKey(s2)
-            if street2 ~= nil and street2 ~= "" then 
-                streetLabel = streetLabel .. " " .. street2
-            end
-            if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-                local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
-                local modelName = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))
-                local modelPlate = GetVehicleNumberPlateText(vehicle)
-                msg = "Poging voertuigdiefstal bij " ..streetLabel.. ". Voertuig: " .. modelName .. ", kenteken: " .. modelPlate
-            else
-                local vehicle = RSCore.Functions.GetClosestVehicle()
-                local modelName = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))
-                local modelPlate = GetVehicleNumberPlateText(vehicle)
-                msg = "Poging inbraak in voertuig bij " ..streetLabel.. ". Voertuig: " .. modelName .. ", kenteken: " .. modelPlate
-            end
-            TriggerServerEvent("police:server:VehicleCall", pos, msg)
+    if not AlertSend then
+        local pos = GetEntityCoords(GetPlayerPed(-1))
+        local chance = 20
+        if GetClockHours() >= 1 and GetClockHours() <= 6 then
+            chance = 10
         end
+        if math.random(1, 100) <= chance then
+            local closestPed = GetNearbyPed()
+            if closestPed ~= nil then
+                local msg = ""
+                local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
+                local streetLabel = GetStreetNameFromHashKey(s1)
+                local street2 = GetStreetNameFromHashKey(s2)
+                if street2 ~= nil and street2 ~= "" then 
+                    streetLabel = streetLabel .. " " .. street2
+                end
+                local alertTitle = ""
+                if IsPedInAnyVehicle(GetPlayerPed(-1)) then
+                    local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+                    local modelName = GetEntityModel(vehicle)
+                    if RSCore.Shared.VehicleModels[modelName] ~= nil then
+                        Name = RSCore.Shared.Vehicles[RSCore.Shared.VehicleModels[modelName]["model"]]["brand"] .. ' ' .. RSCore.Shared.Vehicles[RSCore.Shared.VehicleModels[modelName]["model"]]["name"]
+                    else
+                        Name = "Onbekend"
+                    end
+                    local modelPlate = GetVehicleNumberPlateText(vehicle)
+                    local msg = "Poging voertuigdiefstal bij " ..streetLabel.. ". Voertuig: " .. Name .. ", kenteken: " .. modelPlate
+                    local alertTitle = "Poging voertuigdiefstal"
+                    TriggerServerEvent("police:server:VehicleCall", pos, msg, alertTitle, streetLabel, modelPlate, Name)
+                else
+                    local vehicle = RSCore.Functions.GetClosestVehicle()
+                    local modelName = GetEntityModel(vehicle)
+                    local modelPlate = GetVehicleNumberPlateText(vehicle)
+                    if RSCore.Shared.VehicleModels[modelName] ~= nil then
+                        Name = RSCore.Shared.Vehicles[RSCore.Shared.VehicleModels[modelName]["model"]]["brand"] .. ' ' .. RSCore.Shared.Vehicles[RSCore.Shared.VehicleModels[modelName]["model"]]["name"]
+                    else
+                        Name = "Onbekend"
+                    end
+                    local msg = "Poging inbraak in voertuig bij " ..streetLabel.. ". Voertuig: " .. Name .. ", kenteken: " .. modelPlate
+                    local alertTitle = "Poging voertuiginbraak"
+                    TriggerServerEvent("police:server:VehicleCall", pos, msg, alertTitle, streetLabel, modelPlate, Name)
+                end
+            end
+        end
+        AlertSend = true
+        SetTimeout(2 * (60 * 1000), function()
+            AlertSend = false
+        end)
     end
 end
 
