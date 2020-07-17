@@ -1,6 +1,6 @@
 RSHud = {}
 
-RSHud.Show = false
+RSHud.Show = true
 
 RSHud.Money = {}
 RSHud.Money.ShowConstant = false -- Show money constantly

@@ -10,6 +10,14 @@ local PlayerGender = "male"
 local PlayerHasProp = false
 local PlayerProps = {}
 local SecondPropEmote = false
+CanDoEmote = true
+SmokingWeed = false
+RelieveCount = 0
+
+RegisterNetEvent('animations:ToggleCanDoAnims')
+AddEventHandler('animations:ToggleCanDoAnims', function(bool)
+  CanDoEmote = bool
+end)
 
 Citizen.CreateThread(function()
   while true do
@@ -34,9 +42,47 @@ end)
 -- Commands / Events --------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------
 
+RegisterNetEvent('animations:client:SmokeWeed')
+AddEventHandler('animations:client:SmokeWeed', function()
+  SmokingWeed = true
+  Citizen.CreateThread(function()
+    while SmokingWeed do
+      Citizen.Wait(10000)
+      TriggerServerEvent('rs-hud:Server:RelieveStress', math.random(15, 18))
+      RelieveCount = RelieveCount + 1
+      if RelieveCount == 6 then
+        if ChosenDict == "MaleScenario" and IsInAnimation then
+          ClearPedTasksImmediately(PlayerPedId())
+          IsInAnimation = false
+          DebugPrint("Forced scenario exit")
+        elseif ChosenDict == "Scenario" and IsInAnimation then
+          ClearPedTasksImmediately(PlayerPedId())
+          IsInAnimation = false
+          DebugPrint("Forced scenario exit")
+        end
+      
+        if IsInAnimation then
+          ClearPedTasks(GetPlayerPed(-1))
+          DestroyAllProps()
+          IsInAnimation = false
+        end
+      
+        if SmokingWeed then
+          SmokingWeed = false
+          RelieveCount = 0
+        end
+      end
+    end
+  end)
+end)
+
 RegisterNetEvent('animations:client:EmoteCommandStart')
 AddEventHandler('animations:client:EmoteCommandStart', function(args)
+  if CanDoEmote then
     EmoteCommandStart(args)
+  else
+    RSCore.Functions.Notify("Je kunt op dit moment geen emote's doen", "error")
+  end
 end)
 
 AddEventHandler('onResourceStop', function(resource)
@@ -67,6 +113,11 @@ function EmoteCancel()
     ClearPedTasks(GetPlayerPed(-1))
     DestroyAllProps()
     IsInAnimation = false
+  end
+
+  if SmokingWeed then
+    SmokingWeed = false
+    RelieveCount = 0
   end
 end
 

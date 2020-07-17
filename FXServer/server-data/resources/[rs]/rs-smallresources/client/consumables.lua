@@ -1,4 +1,5 @@
 local alcoholCount = 0
+local onWeed = false
 
 Citizen.CreateThread(function()
     while true do 
@@ -20,9 +21,13 @@ AddEventHandler("consumables:client:UseJoint", function()
 		disableCombat = true,
     }, {}, {}, {}, function() -- Done
         TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["joint"], "remove")
-        TriggerEvent('animations:client:EmoteCommandStart', {"smokeweed"})
+        if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+            TriggerEvent('animations:client:EmoteCommandStart', {"smoke3"})
+        else
+            TriggerEvent('animations:client:EmoteCommandStart', {"smokeweed"})
+        end
         TriggerEvent("evidence:client:SetStatus", "weedsmell", 300)
-        JointEffect()
+        TriggerEvent('animations:client:SmokeWeed')
     end)
 end)
 
@@ -77,7 +82,7 @@ AddEventHandler("consumables:client:ResetParachute", function()
             TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["parachute"], "add")
             local ParachuteRemoveData = { 
                 outfitData = { 
-                    ["bag"] = { item = -1, texture = 0} -- Nek / Das
+                    ["bag"] = { item = 0, texture = 0} -- Nek / Das
                 }
             }
             TriggerEvent('rs-clothing:client:loadOutfit', ParachuteRemoveData)
@@ -274,6 +279,7 @@ AddEventHandler("consumables:client:Eat", function(itemName)
         TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items[itemName], "remove")
         TriggerEvent('animations:client:EmoteCommandStart', {"c"})
         TriggerServerEvent("RSCore:Server:SetMetaData", "hunger", RSCore.Functions.GetPlayerData().metadata["hunger"] + Consumeables[itemName])
+        TriggerServerEvent('rs-hud:Server:RelieveStress', math.random(2, 4))
     end)
 end)
 
@@ -309,22 +315,27 @@ function EcstasyEffect()
     end
 
     startStamina = 0
-    --RevertToStressMultiplier()
 end
 
 function JointEffect()
-    local onWeed = true
-    local weedTime = Config.JointEffectTime
-    Citizen.CreateThread(function()
-        while onWeed do 
-            SetPlayerHealthRechargeMultiplier(PlayerId(), 1.8)
-            Citizen.Wait(1000)
-            weedTime = weedTime - 1
-            if weedTime <= 0 then
-                onWeed = false
-            end
-        end
-    end)
+    -- if not onWeed then
+    --     local RelieveOdd = math.random(35, 45)
+    --     onWeed = true
+    --     local weedTime = Config.JointEffectTime
+    --     Citizen.CreateThread(function()
+    --         while onWeed do 
+    --             SetPlayerHealthRechargeMultiplier(PlayerId(), 1.8)
+    --             Citizen.Wait(1000)
+    --             weedTime = weedTime - 1
+    --             if weedTime == RelieveOdd then
+    --                 TriggerServerEvent('qb-hud:Server:RelieveStress', math.random(14, 18))
+    --             end
+    --             if weedTime <= 0 then
+    --                 onWeed = false
+    --             end
+    --         end
+    --     end)
+    -- end
 end
 
 function CrackBaggyEffect()
