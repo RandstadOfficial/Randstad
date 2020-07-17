@@ -3,6 +3,7 @@ module.exports = {
   TSServer: "54.36.126.156",
 
   //-- [REQUIRED] Port of the ws_server
+  //-- Make sure you open the port you specify below
   WSServerPort: 3000,
 
   //-- [OPTIONAL] IPv4 Address of the ws_server
@@ -16,4 +17,7 @@ module.exports = {
   //-- [OPTIONAL] Port of your FiveM Server
   //-- Set by autoconfig if you run ws_server as FXServer resource
   // FivemServerPort: 32000,
+
+  //-- [OPTIONAL] Enable connection/disconnection logs
+  enableLogs: false,
 };
