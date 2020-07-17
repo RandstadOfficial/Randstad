@@ -76,7 +76,11 @@ function TokoVoip.updateTokoVoipInfo(self, forceUpdate) -- Update the top-left i
 end
 
 function TokoVoip.updatePlugin(self, event, payload)
-	exports.tokovoip_script:doSendNuiMessage(event, payload);
+	--exports.tokovoip_script:doSendNuiMessage(event, payload);
+	SendNUIMessage({
+			type = event,
+			payload = payload
+	})
 end
 
 function TokoVoip.updateConfig(self)
@@ -134,26 +138,26 @@ function TokoVoip.initialize(self)
 
 			if (IsControlPressed(0, self.radioKey) and self.plugin_data.radioChannel ~= -1 and self.config.radioEnabled) then -- Talk on radio
 				if CanTalkOnRadio then
-				self.plugin_data.radioTalking = true;
-				self.plugin_data.localRadioClicks = true;
-				if (self.plugin_data.radioChannel > self.config.radioClickMaxChannel) then
-					self.plugin_data.localRadioClicks = false;
-				end
-				if (not getPlayerData(self.serverId, "radio:talking")) then
-					setPlayerData(self.serverId, "radio:talking", true, true);
-				end
-				self:updateTokoVoipInfo();
-				if (lastTalkState == false and self.myChannels[self.plugin_data.radioChannel] and self.config.radioAnim) then
-					if (not string.match(channelLabel, "Telefoon")) then
-						RequestAnimDict("random@arrests");
-						while not HasAnimDictLoaded("random@arrests") do
-							Wait(5);
-						end
-						TaskPlayAnim(PlayerPedId(),"random@arrests","generic_radio_chatter", 8.0, 0.0, -1, 49, 0, 0, 0, 0);
+					self.plugin_data.radioTalking = true;
+					self.plugin_data.localRadioClicks = true;
+					if (self.plugin_data.radioChannel > self.config.radioClickMaxChannel) then
+						self.plugin_data.localRadioClicks = false;
 					end
-					lastTalkState = true
+					if (not getPlayerData(self.serverId, "radio:talking")) then
+						setPlayerData(self.serverId, "radio:talking", true, true);
+					end
+					self:updateTokoVoipInfo();
+					if (lastTalkState == false and self.myChannels[self.plugin_data.radioChannel] and self.config.radioAnim) then
+						if (not string.match(channelLabel, "Telefoon")) then
+							RequestAnimDict("random@arrests");
+							while not HasAnimDictLoaded("random@arrests") do
+								Wait(5);
+							end
+							TaskPlayAnim(PlayerPedId(),"random@arrests","generic_radio_chatter", 8.0, 0.0, -1, 49, 0, 0, 0, 0);
+						end
+						lastTalkState = true
+					end
 				end
-			end
 			else
 				self.plugin_data.radioTalking = false;
 				if (getPlayerData(self.serverId, "radio:talking")) then
