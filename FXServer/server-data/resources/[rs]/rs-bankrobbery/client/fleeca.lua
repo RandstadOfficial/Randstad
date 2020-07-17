@@ -351,6 +351,7 @@ function openLocker(bankId, lockerId)
                 local pos = GetEntityCoords(GetPlayerPed(-1), true)
                 local DrillObject = CreateObject(GetHashKey("hei_prop_heist_drill"), pos.x, pos.y, pos.z, true, true, true)
                 AttachEntityToEntity(DrillObject, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 57005), 0.14, 0, -0.01, 90.0, -90.0, 180.0, true, true, false, true, 1, true)
+                IsDrilling = true
                 RSCore.Functions.Progressbar("open_locker_drill", "Kluis aan het openbreken..", math.random(40000, 60000), false, true, {
                     disableMovement = true,
                     disableCarMovement = true,
@@ -365,12 +366,20 @@ function openLocker(bankId, lockerId)
                     RSCore.Functions.TriggerCallback('rs-bankrobbery:recieveItem', function()                    
                     end, 'paleto')
                     RSCore.Functions.Notify("Gelukt!", "success")
+                    IsDrilling = false
                 end, function() -- Cancel
                     StopAnimTask(GetPlayerPed(-1), "anim@heists@fleeca_bank@drilling", "drill_straight_idle", 1.0)
                     TriggerServerEvent('rs-bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
                     DetachEntity(DrillObject, true, true)
                     DeleteObject(DrillObject)
                     RSCore.Functions.Notify("Geannuleerd..", "error")
+                    IsDrilling = false
+                end)
+                Citizen.CreateThread(function()
+                    while IsDrilling do
+                        TriggerServerEvent('rs-hud:Server:GainStress', math.random(4, 8))
+                        Citizen.Wait(10000)
+                    end
                 end)
             else
                 RSCore.Functions.Notify("Lijkt erop dat de kluisslot te sterk is..", "error")
@@ -385,6 +394,7 @@ function openLocker(bankId, lockerId)
                 local pos = GetEntityCoords(GetPlayerPed(-1), true)
                 local DrillObject = CreateObject(GetHashKey("hei_prop_heist_drill"), pos.x, pos.y, pos.z, true, true, true)
                 AttachEntityToEntity(DrillObject, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 57005), 0.14, 0, -0.01, 90.0, -90.0, 180.0, true, true, false, true, 1, true)
+                IsDrilling = true
                 RSCore.Functions.Progressbar("open_locker_drill", "Kluis aan het openbreken..", math.random(40000, 60000), false, true, {
                     disableMovement = true,
                     disableCarMovement = true,
@@ -399,12 +409,20 @@ function openLocker(bankId, lockerId)
                     RSCore.Functions.TriggerCallback('rs-bankrobbery:recieveItem', function()                    
                     end, 'pacific')
                     RSCore.Functions.Notify("Gelukt!", "success")
+                    IsDrilling = false
                 end, function() -- Cancel
                     StopAnimTask(GetPlayerPed(-1), "anim@heists@fleeca_bank@drilling", "drill_straight_idle", 1.0)
                     TriggerServerEvent('rs-bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
                     DetachEntity(DrillObject, true, true)
                     DeleteObject(DrillObject)
                     RSCore.Functions.Notify("Geannuleerd..", "error")
+                    IsDrilling = false
+                end)
+                Citizen.CreateThread(function()
+                    while IsDrilling do
+                        TriggerServerEvent('rs-hud:Server:GainStress', math.random(4, 8))
+                        Citizen.Wait(10000)
+                    end
                 end)
             else
                 RSCore.Functions.Notify("Lijkt erop dat de kluisslot te sterk is..", "error")
@@ -412,6 +430,7 @@ function openLocker(bankId, lockerId)
             end
         end, "drill")
     else
+        IsDrilling = true
         RSCore.Functions.Progressbar("open_locker", "Kluis aan het openbreken..", math.random(8000, 16000), false, true, {
             disableMovement = true,
             disableCarMovement = true,
@@ -428,10 +447,18 @@ function openLocker(bankId, lockerId)
             RSCore.Functions.TriggerCallback('rs-bankrobbery:recieveItem', function()                    
             end, 'small')
             RSCore.Functions.Notify("Gelukt!", "success")
+            IsDrilling = false
         end, function() -- Cancel
             StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
             TriggerServerEvent('rs-bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
             RSCore.Functions.Notify("Geannuleerd..", "error")
+            IsDrilling = false
+        end)
+        Citizen.CreateThread(function()
+            while IsDrilling do
+                TriggerServerEvent('rs-hud:Server:GainStress', math.random(4, 8))
+                Citizen.Wait(10000)
+            end
         end)
     end
 end
