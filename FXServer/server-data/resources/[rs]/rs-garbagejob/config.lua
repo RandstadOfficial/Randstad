@@ -33,7 +33,7 @@ Config.Locations = {
         },
         [2] = {
             name = "grovestreet",
-            coords = {x = 118.06, y = -1943.96, z = 20.43, h = 179.5},
+            coords = {x = 130.65, y = -1886.43, z = 23.43, h = 338.5},
         },
         [3] = {
             name = "jamestownstreet",
