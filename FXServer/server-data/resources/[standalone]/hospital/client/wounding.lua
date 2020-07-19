@@ -391,6 +391,34 @@ AddEventHandler('hospital:client:UseBandage', function()
     end)
 end)
 
+RegisterNetEvent('hospital:client:UseIfak')
+AddEventHandler('hospital:client:UseIfak', function()
+    RSCore.Functions.Progressbar("use_ifak", "ifak omdoen..", 4000, false, true, {
+        disableMovement = false,
+        disableCarMovement = false,
+		disableMouse = false,
+		disableCombat = true,
+    }, {
+		animDict = "anim@amb@business@weed@weed_inspecting_high_dry@",
+		anim = "weed_inspecting_high_base_inspector",
+		flags = 49,
+    }, {}, {}, function() -- Done
+        StopAnimTask(GetPlayerPed(-1), "anim@amb@business@weed@weed_inspecting_high_dry@", "weed_inspecting_high_base_inspector", 1.0)
+        TriggerServerEvent("RSCore:Server:RemoveItem", "ifak", 1)
+        TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["ifak"], "remove")
+        SetEntityHealth(GetPlayerPed(-1), GetEntityHealth(GetPlayerPed(-1)) + 20)
+        if math.random(1, 100) < 70 then
+            RemoveBleed(1)
+        end
+        if math.random(1, 100) < 70 then
+            ResetPartial()
+        end
+    end, function() -- Cancel
+        StopAnimTask(GetPlayerPed(-1), "anim@amb@business@weed@weed_inspecting_high_dry@", "weed_inspecting_high_base_inspector", 1.0)
+        RSCore.Functions.Notify("Mislukt", "error")
+    end)
+end)
+
 RegisterNetEvent('hospital:client:UsePainkillers')
 AddEventHandler('hospital:client:UsePainkillers', function()
     RSCore.Functions.Progressbar("use_bandage", "Pijnstillers innemen", 3000, false, true, {
@@ -409,6 +437,12 @@ AddEventHandler('hospital:client:UsePainkillers', function()
         onPainKillers = true
         if painkillerAmount < 3 then
             painkillerAmount = painkillerAmount + 1
+        end
+        if math.random(1, 100) < 70 then
+            RemoveBleed(1)
+        end
+        if math.random(1, 100) < 70 then
+            ResetPartial()
         end
     end, function() -- Cancel
         StopAnimTask(GetPlayerPed(-1), "mp_suicide", "pill", 1.0)

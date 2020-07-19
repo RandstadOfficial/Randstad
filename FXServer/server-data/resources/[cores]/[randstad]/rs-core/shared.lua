@@ -180,8 +180,8 @@ RSShared.Items = {
 	["tunerlaptop"] 				 = {["name"] = "tunerlaptop", 			    	["label"] = "Tunerchip", 				["weight"] = 2000, 		["type"] = "item", 		["image"] = "tunerlaptop.png", 			["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Met deze tjoenertjip kan jij je auto flink wat tandjes sneller laten gaan... Als je weet wat je doet LMAO"},
 	["empty_evidence_bag"] 			 = {["name"] = "empty_evidence_bag", 			["label"] = "Leeg bewijszakje", 		["weight"] = 0, 		["type"] = "item", 		["image"] = "evidence.png", 			["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Wordt vaak gebruikt om bewijs materiaal in op te slaan. Denk aan DNA van bloed, kogelhulsen etc."},
 	["filled_evidence_bag"] 		 = {["name"] = "filled_evidence_bag", 			["label"] = "Bewijszakje", 				["weight"] = 200, 		["type"] = "item", 		["image"] = "evidence.png", 			["unique"] = true, 		["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Een gevuld bewijs zakje om erachter te komen wie de misdaden heeft gedaan >:("},
-	["armor"] 		 				 = {["name"] = "armor", 						["label"] = "Vest", 					["weight"] = 5000, 	    ["type"] = "item", 		["image"] = "armor.png", 				["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Wat bescherming kan nooit kwaad.. toch? (One-time use)"},
-	["heavyarmor"] 		 			 = {["name"] = "heavyarmor", 					["label"] = "Zwaar politie vest", 		["weight"] = 5000, 	    ["type"] = "item", 		["image"] = "armor.png", 				["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Wat bescherming kan nooit kwaad.. toch?"},
+	["armor"] 		 				 = {["name"] = "armor", 						["label"] = "Vest", 					["weight"] = 15000, 	["type"] = "item", 		["image"] = "armor.png", 				["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Wat bescherming kan nooit kwaad.. toch? (One-time use)"},
+	["heavyarmor"] 		 			 = {["name"] = "heavyarmor", 					["label"] = "Zwaar politie vest", 		["weight"] = 17500, 	["type"] = "item", 		["image"] = "armor.png", 				["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Wat bescherming kan nooit kwaad.. toch?"},
 	["weed_brick"] 		 			 = {["name"] = "weed_brick", 					["label"] = "Wiet Brick 1kg", 			["weight"] = 1000, 		["type"] = "item", 		["image"] = "weed_brick.png", 			["unique"] = false, 	["useable"] = false, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "1KG Wiet Brick om te verkopen aan grote inkopers."},
 	["coke_brick"] 		 			 = {["name"] = "coke_brick", 					["label"] = "Coke Brick", 				["weight"] = 1000, 		["type"] = "item", 		["image"] = "coke_brick.png", 			["unique"] = true, 		["useable"] = false, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Zwaar pakket met cocaïne, vaak gebruikt voor verkoop en neemt erg veel ruimte in beslag."},
 	["coke_small_brick"] 		 	 = {["name"] = "coke_small_brick", 				["label"] = "Coke Pakket", 				["weight"] = 350, 		["type"] = "item", 		["image"] = "coke_small_brick.png", 	["unique"] = true, 		["useable"] = false, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Een flink aantal gram cocaïne, vaak gebruikt voor verkoop en neemt erg veel ruimte in beslag."},
@@ -216,8 +216,9 @@ RSShared.Items = {
 	["snspistol_part_2"] 			 = {["name"] = "snspistol_part_2", 				["label"] = "SNS Trigger", 				["weight"] = 1500, 		["type"] = "item", 		["image"] = "snspistol_part_2.png", 	["unique"] = true, 	    ["useable"] = false, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Trigger van een SNS Pistol"},
 	["snspistol_part_3"] 			 = {["name"] = "snspistol_part_3", 				["label"] = "SNS Clip", 				["weight"] = 1500, 		["type"] = "item", 		["image"] = "snspistol_part_3.png", 	["unique"] = true, 	    ["useable"] = false, 	["shouldClose"] = true,    ["combinable"] = {accept = {"snspistol_part_1"}, reward = "snspistol_stage_1", anim = {["dict"] = "anim@amb@business@weed@weed_inspecting_high_dry@", ["lib"] = "weed_inspecting_high_base_inspector", ["text"] = "Onderdelen aan het bevestigen", ["timeOut"] = 15000,}},   ["description"] = "Clip van een SNS Pistol"},
 	["snspistol_stage_1"] 			 = {["name"] = "snspistol_stage_1", 			["label"] = "SNS Body", 				["weight"] = 2500, 		["type"] = "item", 		["image"] = "snspistol_stage_1.png", 	["unique"] = true, 	    ["useable"] = false, 	["shouldClose"] = true,    ["combinable"] = {accept = {"snspistol_part_2"}, reward = "weapon_snspistol", anim = {["dict"] = "anim@amb@business@weed@weed_inspecting_high_dry@", ["lib"] = "weed_inspecting_high_base_inspector", ["text"] = "Onderdelen aan het bevestigen", ["timeOut"] = 15000,}}, ["description"] = "SNS w/ Loop & Clip"},
-	["bandage"] 			 		 = {["name"] = "bandage", 						["label"] = "Verband", 					["weight"] = 0, 		["type"] = "item", 		["image"] = "bandage.png", 				["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil, ["description"] = "Pleister erop, voel je je vast beter"},
-	["painkillers"] 			 	 = {["name"] = "painkillers", 					["label"] = "Pijnstillers", 			["weight"] = 300, 		["type"] = "item", 		["image"] = "painkillers.png", 			["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil, ["description"] = "Voor ondragelijke pijn, een pilletje erbij"},
+	["bandage"] 			 		 = {["name"] = "bandage", 						["label"] = "Verband", 					["weight"] = 100, 		["type"] = "item", 		["image"] = "bandage.png", 				["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil, ["description"] = "Pleister erop, voel je je vast beter"},
+    ["ifak"] 			 		     = {["name"] = "ifak", 							["label"] = "ifak", 					["weight"] = 100, 		["type"] = "item", 		["image"] = "ifak.png", 				["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil, ["description"] = "Ifak omdoen, voel je je vast beter"},
+	["painkillers"] 			 	 = {["name"] = "painkillers", 					["label"] = "Oxycodon", 			    ["weight"] = 300, 		["type"] = "item", 		["image"] = "oxy.png", 			        ["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil, ["description"] = "Voor ondragelijke pijn, een pilletje erbij"},
 	["binoculars"] 			 	 	 = {["name"] = "binoculars", 					["label"] = "Verrekijker", 				["weight"] = 600, 		["type"] = "item", 		["image"] = "binoculars.png", 			["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil, ["description"] = "Sneaky Breaky.."},
 	["snowball"] 		     		 = {["name"] = "snowball", 		 	  			["label"] = "Sneeuwbal", 				["weight"] = 0, 		["type"] = "item", 	 	["image"] = "snowball.png", 			["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil, ["description"] = "Op je kanus"},
 	["firework1"] 				 	 = {["name"] = "firework1", 			  	  	["label"] = "2Brothers", 				["weight"] = 1000, 		["type"] = "item", 		["image"] = "firework1.png", 			["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Gelukkig en gezond 2020 <3 Randstad"},
@@ -5928,6 +5929,17 @@ RSShared.Jobs = {
 			[1] = {
 				label = "",
 				payment = 50,
+			},
+		}
+	},
+	["garbage"] = {
+		label = "Vuilnisman",
+		payment = 12,
+		defaultDuty = true,
+		grades = {
+			[1] = {
+				label = "",
+				payment = 12,
 			},
 		}
 	},
