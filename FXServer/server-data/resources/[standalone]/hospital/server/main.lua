@@ -353,10 +353,20 @@ RSCore.Functions.CreateUseableItem("bandage", function(source, item)
 	end
 end)
 
+RSCore.Functions.CreateUseableItem("ifak", function(source, item)
+	local Player = RSCore.Functions.GetPlayer(source)
+	if Player.Functions.GetItemByName(item.name) ~= nil then
+		TriggerClientEvent("hospital:client:UseIfak", source)
+	end
+end)
+
 RSCore.Functions.CreateUseableItem("painkillers", function(source, item)
 	local Player = RSCore.Functions.GetPlayer(source)
 	if Player.Functions.GetItemByName(item.name) ~= nil then
-		TriggerClientEvent("hospital:client:UsePainkillers", source)
+		Citizen.CreateThread(function()
+            Citizen.Wait(1000)
+            TriggerClientEvent("hospital:client:UsePainkillers", source)
+        end)
 	end
 end)
 

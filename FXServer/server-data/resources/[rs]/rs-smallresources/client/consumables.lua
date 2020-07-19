@@ -14,7 +14,7 @@ Citizen.CreateThread(function()
 end)
 RegisterNetEvent("consumables:client:UseJoint")
 AddEventHandler("consumables:client:UseJoint", function()
-    RSCore.Functions.Progressbar("smoke_joint", "Joint opsteken..", 1500, false, true, {
+    RSCore.Functions.Progressbar("smoke_joint", "Joint opsteken..", 2000, false, true, {
         disableMovement = false,
         disableCarMovement = false,
 		disableMouse = false,
@@ -28,6 +28,8 @@ AddEventHandler("consumables:client:UseJoint", function()
         end
         TriggerEvent("evidence:client:SetStatus", "weedsmell", 300)
         TriggerEvent('animations:client:SmokeWeed')
+        TriggerServerEvent('hospital:server:SetArmor', 15)
+        SetPedArmour(GetPlayerPed(-1), GetPedArmour(GetPlayerPed(-1)) + 15)
     end)
 end)
 

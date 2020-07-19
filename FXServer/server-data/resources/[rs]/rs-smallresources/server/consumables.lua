@@ -1,7 +1,10 @@
 RSCore.Functions.CreateUseableItem("joint", function(source, item)
     local Player = RSCore.Functions.GetPlayer(source)
-	if Player.Functions.RemoveItem(item.name, 1, item.slot) then
-        TriggerClientEvent("consumables:client:UseJoint", source)
+    if Player.Functions.RemoveItem(item.name, 1, item.slot) then
+        Citizen.CreateThread(function()
+            Citizen.Wait(1000)
+            TriggerClientEvent("consumables:client:UseJoint", source)
+        end)
     end
 end)
 
