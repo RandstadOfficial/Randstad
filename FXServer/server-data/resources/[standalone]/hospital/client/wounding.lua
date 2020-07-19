@@ -365,7 +365,7 @@ end
 
 RegisterNetEvent('hospital:client:UseBandage')
 AddEventHandler('hospital:client:UseBandage', function()
-    RSCore.Functions.Progressbar("use_bandage", "Verband omdoen..", 4000, false, true, {
+    RSCore.Functions.Progressbar("use_bandage", "Verband omdoen..", 5000, false, true, {
         disableMovement = false,
         disableCarMovement = false,
 		disableMouse = false,
