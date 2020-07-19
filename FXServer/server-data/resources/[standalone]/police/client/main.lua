@@ -417,7 +417,7 @@ AddEventHandler('police:client:GunShotAlert', function(streetLabel, fromVehicle,
         end
 
         TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
-            timeOut = 4000,
+            timeOut = 5000,
             alertTitle = blipText,
             coords = {
                 x = coords.x,

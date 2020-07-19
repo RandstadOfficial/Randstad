@@ -134,9 +134,9 @@ Citizen.CreateThread(function()
                 local PlayerName = GetPlayerName(player)
                 local PlayerCoords = GetEntityCoords(PlayerPed)
 
-                if not PlayerOptin[PlayerId].permission then
+                --if not PlayerOptin[PlayerId].permission then
                     DrawText3D(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z + 1.0, '['..PlayerId..']')
-                end
+                --end
             end
         end
 

@@ -154,7 +154,7 @@ Config.Products = {
         },
         [5] = {
             name = "screwdriverset",
-            price = 500,
+            price = 400,
             amount = 150,
             info = {},
             type = "item",
@@ -237,7 +237,7 @@ Config.Products = {
         [1] = {
             name = "joint",
             price = 10,
-            amount = 50,
+            amount = 1000,
             info = {},
             type = "item",
             slot = 1,
@@ -245,15 +245,15 @@ Config.Products = {
         [2] = {
             name = "weapon_poolcue",
             price = 100,
-            amount = 250,
+            amount = 1000,
             info = {},
             type = "item",
             slot = 2,
         },
         [3] = {
             name = "weed_nutrition",
-            price = 20,
-            amount = 500,
+            price = 35,
+            amount = 1000,
             info = {},
             type = "item",
             slot = 3,
@@ -265,7 +265,15 @@ Config.Products = {
             info = {},
             type = "item",
             slot = 4,
-        }
+        },
+        [5] = {
+            name = "rolling_paper",
+            price = 2,
+            amount = 1000,
+            info = {},
+            type = "item",
+            slot = 5,
+        },
     },
     ["gearshop"] = {
         [1] = {
@@ -346,7 +354,7 @@ Config.Products = {
         },
         [4] = {
             name = "advancedrepairkit",
-            price = 1000,
+            price = 750,
             amount = 50,
             info = {},
             type = "item",

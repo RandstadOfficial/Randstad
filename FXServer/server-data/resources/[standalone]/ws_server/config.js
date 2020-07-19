@@ -16,7 +16,7 @@ module.exports = {
 
   //-- [OPTIONAL] Port of your FiveM Server
   //-- Set by autoconfig if you run ws_server as FXServer resource
-  // FivemServerPort: 32000,
+  FivemServerPort: 30120,
 
   //-- [OPTIONAL] Enable connection/disconnection logs
   enableLogs: false,
