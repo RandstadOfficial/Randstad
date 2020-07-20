@@ -26,6 +26,8 @@ local tasking = false
 local drugStorePed = 0
 local oxyVehicle = 0
 
+CurrentCops = 0
+
 local OxyDropOffs = {
 	[1] =  { ['x'] = 74.5,['y'] = -762.17,['z'] = 31.68,['h'] = 160.98, ['info'] = ' 1' },
 	[2] =  { ['x'] = 100.58,['y'] = -644.11,['z'] = 44.23,['h'] = 69.11, ['info'] = ' 2' },
@@ -180,7 +182,7 @@ function CreateBlip()
     SetBlipScale(blip, 1.0)
     SetBlipAsShortRange(blip, false)
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString("Drop Off")
+    AddTextComponentString("Afleveren")
     EndTextCommandSetBlipName(blip)
 end
 
@@ -337,24 +339,40 @@ AddEventHandler("oxydelivery:client", function()
 	DeleteBlip()
 end)
 
+RegisterNetEvent('police:SetCopCount')
+AddEventHandler('police:SetCopCount', function(amount)
+    CurrentCops = amount
+end)
+
 Citizen.CreateThread(function()
-    while true do
-	    Citizen.Wait(1)
-	    local dropOff6 = #(GetEntityCoords(PlayerPedId()) - vector3(pillWorker["x"],pillWorker["y"],pillWorker["z"]))
-		if dropOff6 < 1.6 and not OxyRun then
-			DrawText3Ds(pillWorker["x"],pillWorker["y"],pillWorker["z"], "[E] €1500 - Bezorg Job (Beloning Cash + Oxy)") 
-			if IsControlJustReleased(0,38) then
-				TriggerServerEvent("oxydelivery:server")
-				Citizen.Wait(1000)
+	while true do
+		Citizen.Wait(1)
+		if RSCore ~= nil then
+            local pos = GetEntityCoords(GetPlayerPed(-1))
+			if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["job"].x, Config.Locations["job"].y, Config.Locations["job"].z, true) < 1.5) then
+				local hours = GetClockHours()
+            	if hours >= Config.MinimumTime and hours <= Config.MaximumTime then
+					RSCore.Functions.DrawText3D(Config.Locations["job"].x, Config.Locations["job"].y, Config.Locations["job"].z, "~g~[E]~w~ €1500 - Bezorg Job (Beloning Cash + Oxy)")
+					if IsControlJustReleased(0, Keys["E"]) then
+						if CurrentCops >= Config.MinimumOxyPolice then
+							TriggerServerEvent("oxydelivery:server")
+							Citizen.Wait(1000)
+						else
+							RSCore.Functions.Notify('Niet genoeg agenten..', 'error', 3500)
+						end
+					end
+				else
+					RSCore.Functions.DrawText3D(Config.Locations["job"].x, Config.Locations["job"].y, Config.Locations["job"].z, "Apotheek is gesloten (09:00 tot 17:00)")
+				end	
 			end
-		end
-    end
+		else
+            Citizen.Wait(1000)
+        end
+	end
 end)
 
 local firstdeal = false
 Citizen.CreateThread(function()
-
-
     while true do
         if drugdealer then
 	        Citizen.Wait(1000)
@@ -402,7 +420,6 @@ AddEventHandler("oxydelivery:startDealing", function()
 	salecount = 0
 	OxyRun = true
 	firstdeal = true
-	RSCore.Functions.Notify("Er staat een auto voor u buiten. Uw pager wordt binnenkort bijgewerkt met locaties", "success")
 	CreateOxyVehicle()
 end)
 
@@ -492,5 +509,28 @@ AddEventHandler('rs-oxyruns:client:robberyCall', function(msg, streetLabel, coor
             RemoveBlip(blip)
             return
         end
+    end
+end)
+
+
+Citizen.CreateThread(function()
+    local oldCarPos = nil
+    local strike = 0
+    while true do
+        while oxyVehicle ~= 0 do
+            local carPos = GetEntityCoords(oxyVehicle)
+            if oldCarPos == math.floor(carPos) then
+                strike = strike + 1
+            else
+                oldCarPos = math.floor(carPos)
+                strike = 0
+            end
+            if strike >= Config.MaxiumStrikes then
+                DeleteEntity(oxyVehicle)
+                oxyVehicle = 0
+            end
+            Citizen.Wait(10000)
+        end
+        Citizen.Wait(5000)
     end
 end)
