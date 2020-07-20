@@ -5,6 +5,7 @@ hotbarOpen = false
 
 local inventoryTest = {}
 local currentWeapon = nil
+local CurrentWeaponData = {}
 local currentOtherInventory = nil
 
 local Drops = {}
@@ -43,6 +44,15 @@ AddEventHandler('inventory:client:CheckOpenState', function(type, id, label)
         if name ~= CurrentGlovebox or CurrentGlovebox == nil then
             TriggerServerEvent('inventory:server:SetIsOpenState', false, type, id)
         end
+    end
+end)
+
+RegisterNetEvent('weapons:client:SetCurrentWeapon')
+AddEventHandler('weapons:client:SetCurrentWeapon', function(data, bool)
+    if data ~= false then
+        CurrentWeaponData = data
+    else
+        CurrentWeaponData = {}
     end
 end)
 
@@ -320,7 +330,7 @@ Citizen.CreateThread(function()
         if DropsNear ~= nil then
             for k, v in pairs(DropsNear) do
                 if DropsNear[k] ~= nil then
-                    DrawMarker(20, v.coords.x, v.coords.y, v.coords.z - 0.1, 0.0, 0.0, 0.0, 180.0, 0.0, 0.0, 0.5, 0.5, 0.5, 173, 26, 0, 100, false, true, 2, false, false, false, false)
+                    DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.15, 120, 10, 20, 155, false, false, false, 1, false, false, false)
                 end
             end
         end
@@ -357,8 +367,24 @@ AddEventHandler("RSCore:Client:OnPlayerLoaded", function()
     --TriggerServerEvent("inventory:server:LoadDrops")
 end)
 
+RegisterNetEvent('inventory:server:RobPlayer')
+AddEventHandler('inventory:server:RobPlayer', function(TargetId)
+    SendNUIMessage({
+        action = "RobMoney",
+        TargetId = TargetId,
+    })
+end)
+
+RegisterNUICallback('RobMoney', function(data, cb)
+    TriggerServerEvent("police:server:RobPlayer", data.TargetId)
+end)
+
+RegisterNUICallback('Notify', function(data, cb)
+    RSCore.Functions.Notify(data.message, data.type)
+end)
+
 RegisterNetEvent("inventory:client:OpenInventory")
-AddEventHandler("inventory:client:OpenInventory", function(inventory, other)
+AddEventHandler("inventory:client:OpenInventory", function(PlayerAmmo, inventory, other)
     if not IsEntityDead(GetPlayerPed(-1)) then
         ToggleHotbar(false)
         SetNuiFocus(true, true)
@@ -371,9 +397,10 @@ AddEventHandler("inventory:client:OpenInventory", function(inventory, other)
             slots = MaxInventorySlots,
             other = other,
             maxweight = RSCore.Config.Player.MaxWeight,
+            Ammo = PlayerAmmo,
+            maxammo = Config.MaximumAmmoValues,
         })
         inInventory = true
-        --SetTimecycleModifier('hud_def_blur')
     end
 end)
 
@@ -420,6 +447,33 @@ AddEventHandler("inventory:client:CraftItems", function(itemName, itemCosts, amo
 	end)
 end)
 
+RegisterNetEvent('inventory:client:CraftAttachment')
+AddEventHandler('inventory:client:CraftAttachment', function(itemName, itemCosts, amount, toSlot, points)
+    SendNUIMessage({
+        action = "close",
+    })
+    isCrafting = true
+    RSCore.Functions.Progressbar("repair_vehicle", "Bezig met craften..", (math.random(2000, 5000) * amount), false, true, {
+		disableMovement = true,
+		disableCarMovement = true,
+		disableMouse = false,
+		disableCombat = true,
+	}, {
+		animDict = "mini@repair",
+		anim = "fixing_a_player",
+		flags = 16,
+	}, {}, {}, function() -- Done
+		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
+        TriggerServerEvent("inventory:server:CraftAttachment", itemName, itemCosts, amount, toSlot, points)
+        TriggerEvent('inventory:client:ItemBox', RSCore.Shared.Items[itemName], 'add')
+        isCrafting = false
+	end, function() -- Cancel
+		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
+        RSCore.Functions.Notify("Mislukt!", "error")
+        isCrafting = false
+	end)
+end)
+
 RegisterNetEvent("inventory:client:PickupSnowballs")
 AddEventHandler("inventory:client:PickupSnowballs", function()
     LoadAnimDict('anim@mp_snowball')
@@ -431,9 +485,8 @@ AddEventHandler("inventory:client:PickupSnowballs", function()
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         ClearPedTasks(GetPlayerPed(-1))
-        RSCore.Functions.TriggerCallback('RSCore:AddItem', function()                        
-        end, "snowball", 1)
-        TriggerEvent('inventory:client:ItemBox', RSCore.Shared.Items["snowball"], "add")
+        TriggerServerEvent('RSCore:Server:AddItem', "snowball", 1)
+        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items["snowball"], "add")
     end, function() -- Cancel
         ClearPedTasks(GetPlayerPed(-1))
         RSCore.Functions.Notify("Geannuleerd..", "error")
@@ -448,28 +501,34 @@ AddEventHandler("inventory:client:UseSnowball", function(amount)
 end)
 
 RegisterNetEvent("inventory:client:UseWeapon")
-AddEventHandler("inventory:client:UseWeapon", function(weaponData)
+AddEventHandler("inventory:client:UseWeapon", function(weaponData, shootbool)
     local weaponName = tostring(weaponData.name)
     if currentWeapon == weaponName then
         SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey("WEAPON_UNARMED"), true)
         RemoveAllPedWeapons(GetPlayerPed(-1), true)
+        TriggerEvent('weapons:client:SetCurrentWeapon', nil, shootbool)
         currentWeapon = nil
     elseif weaponName == "weapon_stickybomb" then
         GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(weaponName), ammo, false, false)
         SetPedAmmo(GetPlayerPed(-1), GetHashKey(weaponName), 1)
         SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey(weaponName), true)
         TriggerServerEvent('RSCore:Server:RemoveItem', weaponName, 1)
+        TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
         currentWeapon = weaponName
     elseif weaponName == "weapon_snowball" then
         GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(weaponName), ammo, false, false)
         SetPedAmmo(GetPlayerPed(-1), GetHashKey(weaponName), 10)
         SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey(weaponName), true)
         TriggerServerEvent('RSCore:Server:RemoveItem', weaponName, 1)
+        TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
         currentWeapon = weaponName
     else
+        TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
         RSCore.Functions.TriggerCallback("weapon:server:GetWeaponAmmo", function(result)
             local ammo = tonumber(result)
-            if weaponName == "weapon_petrolcan" or weaponName == "weapon_fireextinguisher" then ammo = 4000 end
+            if weaponName == "weapon_petrolcan" or weaponName == "weapon_fireextinguisher" then 
+                ammo = 4000 
+            end
             GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(weaponName), ammo, false, false)
             SetPedAmmo(GetPlayerPed(-1), GetHashKey(weaponName), ammo)
             SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey(weaponName), true)
@@ -479,13 +538,135 @@ AddEventHandler("inventory:client:UseWeapon", function(weaponData)
                 end
             end
             currentWeapon = weaponName
-        end, RSCore.Shared.Items[weaponName]["ammotype"])
+        end, CurrentWeaponData)
     end
+end)
+
+WeaponAttachments = {
+    ["WEAPON_SNSPISTOL"] = {
+        ["extendedclip"] = {
+            component = "COMPONENT_SNSPISTOL_CLIP_02",
+            label = "Extended Clip",
+            item = "pistol_extendedclip",
+        },
+    },
+    ["WEAPON_VINTAGEPISTOL"] = {
+        ["suppressor"] = {
+            component = "COMPONENT_AT_PI_SUPP",
+            label = "Demper",
+            item = "pistol_suppressor",
+        },
+        ["extendedclip"] = {
+            component = "COMPONENT_VINTAGEPISTOL_CLIP_02",
+            label = "Extended Clip",
+            item = "pistol_extendedclip",
+        },
+    },
+    ["WEAPON_MICROSMG"] = {
+        ["suppressor"] = {
+            component = "COMPONENT_AT_AR_SUPP_02",
+            label = "Demper",
+            item = "smg_suppressor",
+        },
+        ["extendedclip"] = {
+            component = "COMPONENT_MICROSMG_CLIP_02",
+            label = "Extended Clip",
+            item = "smg_extendedclip",
+        },
+        ["flashlight"] = {
+            component = "COMPONENT_AT_PI_FLSH",
+            label = "Flashlight",
+            item = "smg_flashlight",
+        },
+        ["scope"] = {
+            component = "COMPONENT_AT_SCOPE_MACRO",
+            label = "Scope",
+            item = "smg_scope",
+        },
+    },
+    ["WEAPON_MINISMG"] = {
+        ["extendedclip"] = {
+            component = "COMPONENT_MINISMG_CLIP_02",
+            label = "Extended Clip",
+            item = "smg_extendedclip",
+        },
+    },
+    ["WEAPON_COMPACTRIFLE"] = {
+        ["extendedclip"] = {
+            component = "COMPONENT_COMPACTRIFLE_CLIP_02",
+            label = "Extended Clip",
+            item = "rifle_extendedclip",
+        },
+        ["drummag"] = {
+            component = "COMPONENT_COMPACTRIFLE_CLIP_03",
+            label = "Drum Mag",
+            item = "rifle_drummag",
+        },
+    },
+}
+
+function FormatWeaponAttachments(itemdata)
+    local attachments = {}
+    itemdata.name = itemdata.name:upper()
+    if itemdata.info.attachments ~= nil and next(itemdata.info.attachments) ~= nil then
+        for k, v in pairs(itemdata.info.attachments) do
+            if WeaponAttachments[itemdata.name] ~= nil then
+                for key, value in pairs(WeaponAttachments[itemdata.name]) do
+                    if value.component == v.component then
+                        table.insert(attachments, {
+                            attachment = key,
+                            label = value.label
+                        })
+                    end
+                end
+            end
+        end
+    end
+    return attachments
+end
+
+RegisterNUICallback('GetWeaponData', function(data, cb)
+    local data = {
+        WeaponData = RSCore.Shared.Items[data.weapon],
+        AttachmentData = FormatWeaponAttachments(data.ItemData)
+    }
+    cb(data)
+end)
+
+RegisterNUICallback('RemoveAttachment', function(data, cb)
+    local WeaponData = RSCore.Shared.Items[data.WeaponData.name]
+    local Attachment = WeaponAttachments[WeaponData.name:upper()][data.AttachmentData.attachment]
+    
+    RSCore.Functions.TriggerCallback('weapons:server:RemoveAttachment', function(NewAttachments)
+        if NewAttachments ~= false then
+            local Attachies = {}
+            RemoveWeaponComponentFromPed(GetPlayerPed(-1), GetHashKey(data.WeaponData.name), GetHashKey(Attachment.component))
+            for k, v in pairs(NewAttachments) do
+                for wep, pew in pairs(WeaponAttachments[WeaponData.name:upper()]) do
+                    if v.component == pew.component then
+                        table.insert(Attachies, {
+                            attachment = pew.item,
+                            label = pew.label,
+                        })
+                    end
+                end
+            end
+            local DJATA = {
+                Attachments = Attachies,
+                WeaponData = WeaponData,
+            }
+            cb(DJATA)
+        else
+            RemoveWeaponComponentFromPed(GetPlayerPed(-1), GetHashKey(data.WeaponData.name), GetHashKey(Attachment.component))
+            cb({})
+        end
+    end, data.AttachmentData, data.WeaponData)
 end)
 
 RegisterNetEvent("inventory:client:CheckWeapon")
 AddEventHandler("inventory:client:CheckWeapon", function(weaponName)
     if currentWeapon == weaponName then 
+        TriggerEvent('weapons:ResetHolster')
         SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey("WEAPON_UNARMED"), true)
         RemoveAllPedWeapons(GetPlayerPed(-1), true)
         currentWeapon = nil
@@ -591,7 +772,6 @@ RegisterNUICallback("CloseInventory", function(data, cb)
     SetNuiFocus(false, false)
     inInventory = false
 end)
-
 RegisterNUICallback("UseItem", function(data, cb)
     TriggerServerEvent("inventory:server:UseItem", data.inventory, data.item)
 end)

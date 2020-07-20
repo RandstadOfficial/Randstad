@@ -47,6 +47,21 @@ AddEventHandler('inventory:server:CraftItems', function(itemName, itemCosts, amo
 	end
 end)
 
+RegisterServerEvent('inventory:server:CraftAttachment')
+AddEventHandler('inventory:server:CraftAttachment', function(itemName, itemCosts, amount, toSlot, points)
+	local src = source
+	local Player = RSCore.Functions.GetPlayer(src)
+	local amount = tonumber(amount)
+	if itemName ~= nil and itemCosts ~= nil then
+		for k, v in pairs(itemCosts) do
+			Player.Functions.RemoveItem(k, (v*amount))
+		end
+		Player.Functions.AddItem(itemName, amount, toSlot)
+		Player.Functions.SetMetaData("attachmentcraftingrep", Player.PlayerData.metadata["attachmentcraftingrep"]+(points*amount))
+		TriggerClientEvent("inventory:client:UpdatePlayerInventory", src, false)
+	end
+end)
+
 RegisterServerEvent("inventory:server:SetIsOpenState")
 AddEventHandler('inventory:server:SetIsOpenState', function(IsOpen, type, id)
 	if not IsOpen then
@@ -64,181 +79,204 @@ RegisterServerEvent("inventory:server:OpenInventory")
 AddEventHandler('inventory:server:OpenInventory', function(name, id, other)
 	local src = source
 	local Player = RSCore.Functions.GetPlayer(src)
-	if name ~= nil and id ~= nil then
-		local secondInv = {}
-		if name == "stash" then
-			if Stashes[id] ~= nil then
-				if Stashes[id].isOpen then
-					local Target = RSCore.Functions.GetPlayer(Stashes[id].isOpen)
-					if Target ~= nil then
-						TriggerClientEvent('inventory:client:CheckOpenState', Stashes[id].isOpen, name, id, Stashes[id].label)
-					else
-						Stashes[id].isOpen = false
+	local PlayerAmmo = {}
+	RSCore.Functions.ExecuteSql(false, "SELECT * FROM `playerammo` WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(ammo)
+		if ammo[1] ~= nil then
+			PlayerAmmo = json.decode(ammo[1].ammo)
+		end
+
+		if name ~= nil and id ~= nil then
+			local secondInv = {}
+			if name == "stash" then
+				if Stashes[id] ~= nil then
+					if Stashes[id].isOpen then
+						local Target = RSCore.Functions.GetPlayer(Stashes[id].isOpen)
+						if Target ~= nil then
+							TriggerClientEvent('inventory:client:CheckOpenState', Stashes[id].isOpen, name, id, Stashes[id].label)
+						else
+							Stashes[id].isOpen = false
+						end
 					end
 				end
-			end
-			local maxweight = 1000000
-			local slots = 50
-			if other ~= nil then 
-				maxweight = other.maxweight ~= nil and other.maxweight or 1000000
-				slots = other.slots ~= nil and other.slots or 50
-			end
-			secondInv.name = "stash-"..id
-			secondInv.label = "Stash-"..id
-			secondInv.maxweight = maxweight
-			secondInv.inventory = {}
-			secondInv.slots = slots
-			if Stashes[id] ~= nil and Stashes[id].isOpen then
-				secondInv.name = "none-inv"
-				secondInv.label = "Stash-None"
-				secondInv.maxweight = 1000000
+				local maxweight = 1000000
+				local slots = 50
+				if other ~= nil then 
+					maxweight = other.maxweight ~= nil and other.maxweight or 1000000
+					slots = other.slots ~= nil and other.slots or 50
+				end
+				secondInv.name = "stash-"..id
+				secondInv.label = "Stash-"..id
+				secondInv.maxweight = maxweight
 				secondInv.inventory = {}
-				secondInv.slots = 0
-			else
-				local stashItems = GetStashItems(id)
-				if next(stashItems) ~= nil then
-					secondInv.inventory = stashItems
-					Stashes[id] = {}
-					Stashes[id].items = stashItems
-					Stashes[id].isOpen = src
-					Stashes[id].label = secondInv.label
+				secondInv.slots = slots
+				if Stashes[id] ~= nil and Stashes[id].isOpen then
+					secondInv.name = "none-inv"
+					secondInv.label = "Stash-None"
+					secondInv.maxweight = 1000000
+					secondInv.inventory = {}
+					secondInv.slots = 0
 				else
-					Stashes[id] = {}
-					Stashes[id].items = {}
-					Stashes[id].isOpen = src
-					Stashes[id].label = secondInv.label
-				end
-			end
-		elseif name == "trunk" then
-			if Trunks[id] ~= nil then
-				if Trunks[id].isOpen then
-					local Target = RSCore.Functions.GetPlayer(Trunks[id].isOpen)
-					if Target ~= nil then
-						TriggerClientEvent('inventory:client:CheckOpenState', Trunks[id].isOpen, name, id, Trunks[id].label)
+					local stashItems = GetStashItems(id)
+					if next(stashItems) ~= nil then
+						secondInv.inventory = stashItems
+						Stashes[id] = {}
+						Stashes[id].items = stashItems
+						Stashes[id].isOpen = src
+						Stashes[id].label = secondInv.label
 					else
-						Trunks[id].isOpen = false
+						Stashes[id] = {}
+						Stashes[id].items = {}
+						Stashes[id].isOpen = src
+						Stashes[id].label = secondInv.label
 					end
 				end
-			end
-			secondInv.name = "trunk-"..id
-			secondInv.label = "Trunk-"..id
-			secondInv.maxweight = other.maxweight ~= nil and other.maxweight or 60000
-			secondInv.inventory = {}
-			secondInv.slots = other.slots ~= nil and other.slots or 50
-			if (Trunks[id] ~= nil and Trunks[id].isOpen) or (RSCore.Shared.SplitStr(id, "PLZI")[2] ~= nil and Player.PlayerData.job.name ~= "police") then
-				secondInv.name = "none-inv"
-				secondInv.label = "Trunk-None"
+			elseif name == "trunk" then
+				if Trunks[id] ~= nil then
+					if Trunks[id].isOpen then
+						local Target = RSCore.Functions.GetPlayer(Trunks[id].isOpen)
+						if Target ~= nil then
+							TriggerClientEvent('inventory:client:CheckOpenState', Trunks[id].isOpen, name, id, Trunks[id].label)
+						else
+							Trunks[id].isOpen = false
+						end
+					end
+				end
+				secondInv.name = "trunk-"..id
+				secondInv.label = "Trunk-"..id
 				secondInv.maxweight = other.maxweight ~= nil and other.maxweight or 60000
 				secondInv.inventory = {}
-				secondInv.slots = 0
-			else
-				if id ~= nil then 
-					local ownedItems = GetOwnedVehicleItems(id)
-					if IsVehicleOwned(id) and next(ownedItems) ~= nil then
-						secondInv.inventory = ownedItems
-						Trunks[id] = {}
-						Trunks[id].items = ownedItems
-						Trunks[id].isOpen = src
-						Trunks[id].label = secondInv.label
-					elseif Trunks[id] ~= nil and not Trunks[id].isOpen then
-						secondInv.inventory = Trunks[id].items
-						Trunks[id].isOpen = src
-						Trunks[id].label = secondInv.label
-					else
-						Trunks[id] = {}
-						Trunks[id].items = {}
-						Trunks[id].isOpen = src
-						Trunks[id].label = secondInv.label
+				secondInv.slots = other.slots ~= nil and other.slots or 50
+				if (Trunks[id] ~= nil and Trunks[id].isOpen) or (RSCore.Shared.SplitStr(id, "PLZI")[2] ~= nil and Player.PlayerData.job.name ~= "police") then
+					secondInv.name = "none-inv"
+					secondInv.label = "Trunk-None"
+					secondInv.maxweight = other.maxweight ~= nil and other.maxweight or 60000
+					secondInv.inventory = {}
+					secondInv.slots = 0
+				else
+					if id ~= nil then 
+						local ownedItems = GetOwnedVehicleItems(id)
+						if IsVehicleOwned(id) and next(ownedItems) ~= nil then
+							secondInv.inventory = ownedItems
+							Trunks[id] = {}
+							Trunks[id].items = ownedItems
+							Trunks[id].isOpen = src
+							Trunks[id].label = secondInv.label
+						elseif Trunks[id] ~= nil and not Trunks[id].isOpen then
+							secondInv.inventory = Trunks[id].items
+							Trunks[id].isOpen = src
+							Trunks[id].label = secondInv.label
+						else
+							Trunks[id] = {}
+							Trunks[id].items = {}
+							Trunks[id].isOpen = src
+							Trunks[id].label = secondInv.label
+						end
 					end
 				end
-			end
-		elseif name == "glovebox" then
-			if Gloveboxes[id] ~= nil then
-				if Gloveboxes[id].isOpen then
-					local Target = RSCore.Functions.GetPlayer(Gloveboxes[id].isOpen)
-					if Target ~= nil then
-						TriggerClientEvent('inventory:client:CheckOpenState', Gloveboxes[id].isOpen, name, id, Gloveboxes[id].label)
-					else
-						Gloveboxes[id].isOpen = false
+			elseif name == "glovebox" then
+				if Gloveboxes[id] ~= nil then
+					if Gloveboxes[id].isOpen then
+						local Target = RSCore.Functions.GetPlayer(Gloveboxes[id].isOpen)
+						if Target ~= nil then
+							TriggerClientEvent('inventory:client:CheckOpenState', Gloveboxes[id].isOpen, name, id, Gloveboxes[id].label)
+						else
+							Gloveboxes[id].isOpen = false
+						end
 					end
 				end
-			end
-			secondInv.name = "glovebox-"..id
-			secondInv.label = "Glovebox-"..id
-			secondInv.maxweight = 10000
-			secondInv.inventory = {}
-			secondInv.slots = 5
-			if Gloveboxes[id] ~= nil and Gloveboxes[id].isOpen then
-				secondInv.name = "none-inv"
-				secondInv.label = "Glovebox-None"
+				secondInv.name = "glovebox-"..id
+				secondInv.label = "Glovebox-"..id
 				secondInv.maxweight = 10000
 				secondInv.inventory = {}
-				secondInv.slots = 0
-			else
-				local ownedItems = GetOwnedVehicleGloveboxItems(id)
-				if Gloveboxes[id] ~= nil and not Gloveboxes[id].isOpen then
-					secondInv.inventory = Gloveboxes[id].items
-					Gloveboxes[id].isOpen = src
-					Gloveboxes[id].label = secondInv.label
-				elseif IsVehicleOwned(id) and next(ownedItems) ~= nil then
-					secondInv.inventory = ownedItems
-					Gloveboxes[id] = {}
-					Gloveboxes[id].items = ownedItems
-					Gloveboxes[id].isOpen = src
-					Gloveboxes[id].label = secondInv.label
+				secondInv.slots = 5
+				if Gloveboxes[id] ~= nil and Gloveboxes[id].isOpen then
+					secondInv.name = "none-inv"
+					secondInv.label = "Glovebox-None"
+					secondInv.maxweight = 10000
+					secondInv.inventory = {}
+					secondInv.slots = 0
 				else
-					Gloveboxes[id] = {}
-					Gloveboxes[id].items = {}
-					Gloveboxes[id].isOpen = src
-					Gloveboxes[id].label = secondInv.label
+					local ownedItems = GetOwnedVehicleGloveboxItems(id)
+					if Gloveboxes[id] ~= nil and not Gloveboxes[id].isOpen then
+						secondInv.inventory = Gloveboxes[id].items
+						Gloveboxes[id].isOpen = src
+						Gloveboxes[id].label = secondInv.label
+					elseif IsVehicleOwned(id) and next(ownedItems) ~= nil then
+						secondInv.inventory = ownedItems
+						Gloveboxes[id] = {}
+						Gloveboxes[id].items = ownedItems
+						Gloveboxes[id].isOpen = src
+						Gloveboxes[id].label = secondInv.label
+					else
+						Gloveboxes[id] = {}
+						Gloveboxes[id].items = {}
+						Gloveboxes[id].isOpen = src
+						Gloveboxes[id].label = secondInv.label
+					end
+				end
+			elseif name == "shop" then
+				secondInv.name = "itemshop-"..id
+				secondInv.label = other.label
+				secondInv.maxweight = 900000
+				secondInv.inventory = SetupShopItems(id, other.items)
+				ShopItems[id] = {}
+				ShopItems[id].items = other.items
+				secondInv.slots = #other.items
+			elseif name == "traphouse" then
+				secondInv.name = "traphouse-"..id
+				secondInv.label = other.label
+				secondInv.maxweight = 900000
+				secondInv.inventory = other.items
+				secondInv.slots = other.slots
+			elseif name == "crafting" then
+				secondInv.name = "crafting"
+				secondInv.label = other.label
+				secondInv.maxweight = 900000
+				secondInv.inventory = other.items
+				secondInv.slots = #other.items
+			elseif name == "attachment_crafting" then
+				secondInv.name = "attachment_crafting"
+				secondInv.label = other.label
+				secondInv.maxweight = 900000
+				secondInv.inventory = other.items
+				secondInv.slots = #other.items
+			elseif name == "otherplayer" then
+				local OtherPlayer = RSCore.Functions.GetPlayer(tonumber(id))
+				if OtherPlayer ~= nil then
+					secondInv.name = "otherplayer-"..id
+					secondInv.label = "Player-"..id
+					secondInv.maxweight = RSCore.Config.Player.MaxWeight
+					secondInv.inventory = OtherPlayer.PlayerData.items
+					if Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty then
+						secondInv.slots = RSCore.Config.Player.MaxInvSlots
+					else
+						secondInv.slots = RSCore.Config.Player.MaxInvSlots - 1
+					end
+					Citizen.Wait(250)
+				end
+			else
+				if Drops[id] ~= nil and not Drops[id].isOpen then
+					secondInv.name = id
+					secondInv.label = "Dropped-"..tostring(id)
+					secondInv.maxweight = 100000
+					secondInv.inventory = Drops[id].items
+					secondInv.slots = 30
+					Drops[id].isOpen = src
+					Drops[id].label = secondInv.label
+				else
+					secondInv.name = "none-inv"
+					secondInv.label = "Dropped-None"
+					secondInv.maxweight = 100000
+					secondInv.inventory = {}
+					secondInv.slots = 0
+					--Drops[id].label = secondInv.label
 				end
 			end
-		elseif name == "shop" then
-			secondInv.name = "itemshop-"..id
-			secondInv.label = other.label
-			secondInv.maxweight = 900000
-			secondInv.inventory = SetupShopItems(id, other.items)
-			ShopItems[id] = {}
-			ShopItems[id].items = other.items
-			secondInv.slots = 30
-		elseif name == "crafting" then
-			secondInv.name = "crafting"
-			secondInv.label = other.label
-			secondInv.maxweight = 900000
-			secondInv.inventory = other.items
-			secondInv.slots = #other.items
-		elseif name == "otherplayer" then
-			local OtherPlayer = RSCore.Functions.GetPlayer(tonumber(id))
-			if OtherPlayer ~= nil then
-				secondInv.name = "otherplayer-"..id
-				secondInv.label = "Player-"..id
-				secondInv.maxweight = RSCore.Config.Player.MaxWeight
-				secondInv.inventory = OtherPlayer.PlayerData.items
-				secondInv.slots = RSCore.Config.Player.MaxInvSlots
-				Citizen.Wait(250)
-			end
+			TriggerClientEvent("inventory:client:OpenInventory", src, PlayerAmmo, Player.PlayerData.items, secondInv)
 		else
-			if Drops[id] ~= nil and not Drops[id].isOpen then
-				secondInv.name = id
-				secondInv.label = "Dropped-"..tostring(id)
-				secondInv.maxweight = 100000
-				secondInv.inventory = Drops[id].items
-				secondInv.slots = 30
-				Drops[id].isOpen = src
-				Drops[id].label = secondInv.label
-			else
-				secondInv.name = "none-inv"
-				secondInv.label = "Dropped-None"
-				secondInv.maxweight = 100000
-				secondInv.inventory = {}
-				secondInv.slots = 0
-				--Drops[id].label = secondInv.label
-			end
+			TriggerClientEvent("inventory:client:OpenInventory", src, PlayerAmmo, Player.PlayerData.items)
 		end
-		TriggerClientEvent("inventory:client:OpenInventory", src, Player.PlayerData.items, secondInv)
-	else
-		TriggerClientEvent("inventory:client:OpenInventory", src, Player.PlayerData.items)
-	end
+	end)
 end)
 
 RegisterServerEvent("inventory:server:SaveInventory")
@@ -257,7 +295,6 @@ AddEventHandler('inventory:server:SaveInventory', function(type, id)
 		end
 	elseif type == "stash" then
 		SaveStashItems(id, Stashes[id].items)
-		
 	elseif type == "drop" then
 		if Drops[id] ~= nil then
 			Drops[id].isOpen = false
@@ -278,7 +315,15 @@ AddEventHandler('inventory:server:UseItemSlot', function(slot)
 	if itemData ~= nil then
 		local itemInfo = RSCore.Shared.Items[itemData.name]
 		if itemData.type == "weapon" then
-			TriggerClientEvent("inventory:client:UseWeapon", src, itemData)
+			if itemData.info.quality ~= nil then
+				if itemData.info.quality > 0 then
+					TriggerClientEvent("inventory:client:UseWeapon", src, itemData, true)
+				else
+					TriggerClientEvent("inventory:client:UseWeapon", src, itemData, false)
+				end
+			else
+				TriggerClientEvent("inventory:client:UseWeapon", src, itemData, true)
+			end
 			TriggerClientEvent('inventory:client:ItemBox', src, itemInfo, "use")
 		elseif itemData.useable then
 			TriggerClientEvent("RSCore:Client:UseItem", src, itemData)
@@ -286,7 +331,6 @@ AddEventHandler('inventory:server:UseItemSlot', function(slot)
 		end
 	end
 end)
-
 
 RegisterServerEvent("inventory:server:UseItem")
 AddEventHandler('inventory:server:UseItem', function(inventory, item)
@@ -377,7 +421,7 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 					TriggerEvent("rs-log:server:CreateLog", "trunk", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - plate: *" .. plate .. "*")
 				end
 				local itemInfo = RSCore.Shared.Items[fromItemData.name:lower()]
-				AddToTrunk(plate, toSlot, itemInfo["name"], fromAmount, fromItemData.info)
+				AddToTrunk(plate, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
 			elseif RSCore.Shared.SplitStr(toInventory, "-")[1] == "glovebox" then
 				local plate = RSCore.Shared.SplitStr(toInventory, "-")[2]
 				local toItemData = Gloveboxes[plate].items[toSlot]
@@ -400,7 +444,7 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 					TriggerEvent("rs-log:server:CreateLog", "glovebox", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - plate: *" .. plate .. "*")
 				end
 				local itemInfo = RSCore.Shared.Items[fromItemData.name:lower()]
-				AddToGlovebox(plate, toSlot, itemInfo["name"], fromAmount, fromItemData.info)
+				AddToGlovebox(plate, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
 			elseif RSCore.Shared.SplitStr(toInventory, "-")[1] == "stash" then
 				local stashId = RSCore.Shared.SplitStr(toInventory, "-")[2]
 				local toItemData = Stashes[stashId].items[toSlot]
@@ -423,7 +467,34 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 					TriggerEvent("rs-log:server:CreateLog", "stash", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - stash: *" .. stashId .. "*")
 				end
 				local itemInfo = RSCore.Shared.Items[fromItemData.name:lower()]
-				AddToStash(stashId, toSlot, itemInfo["name"], fromAmount, fromItemData.info)
+				AddToStash(stashId, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
+			elseif RSCore.Shared.SplitStr(toInventory, "-")[1] == "traphouse" then
+				-- Traphouse
+				local traphouseId = RSCore.Shared.SplitStr(toInventory, "-")[2]
+				local toItemData = exports['rs-traphouses']:GetInventoryData(traphouseId, toSlot)
+				local IsItemValid = exports['rs-traphouses']:CanItemBeSaled(fromItemData.name:lower())
+				if IsItemValid then
+					Player.Functions.RemoveItem(fromItemData.name, fromAmount, fromSlot)
+					TriggerClientEvent("inventory:client:CheckWeapon", src, fromItemData.name)
+					if toItemData ~= nil then
+						local itemInfo = RSCore.Shared.Items[toItemData.name:lower()]
+						local toAmount = tonumber(toAmount) ~= nil and tonumber(toAmount) or toItemData.amount
+						if toItemData.name ~= fromItemData.name then
+							exports['rs-traphouses']:RemoveHouseItem(traphouseId, fromSlot, itemInfo["name"], toAmount)
+							Player.Functions.AddItem(toItemData.name, toAmount, fromSlot, toItemData.info)
+							TriggerEvent("rs-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="traphouse1", toName=toItemData.name, toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=traphouseId})
+							TriggerEvent("rs-log:server:CreateLog", "traphouse", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** with name: **" .. fromItemData.name .. "**, amount: **" .. fromAmount .. "** - traphouse: *" .. traphouseId .. "*")
+						end
+					else
+						local itemInfo = RSCore.Shared.Items[fromItemData.name:lower()]
+						TriggerEvent("rs-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="traphouse2", name=fromItemData.name, amount=fromAmount, target=traphouseId})
+						TriggerEvent("rs-log:server:CreateLog", "traphouse", "Dropped Item", "red", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) dropped new item; name: **"..itemInfo["name"].."**, amount: **" .. fromAmount .. "** - traphouse: *" .. traphouseId .. "*")
+					end
+					local itemInfo = RSCore.Shared.Items[fromItemData.name:lower()]
+					exports['rs-traphouses']:AddHouseItem(traphouseId, toSlot, itemInfo["name"], fromAmount, fromItemData.info, src)
+				else
+					TriggerClientEvent('RSCore:Notify', src, "Je kan dit item niet verkopen..", 'error')
+				end
 			else
 				-- drop
 				toInventory = tonumber(toInventory)
@@ -433,9 +504,7 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 					local toItemData = Drops[toInventory].items[toSlot]
 					Player.Functions.RemoveItem(fromItemData.name, fromAmount, fromSlot)
 					TriggerClientEvent("inventory:client:CheckWeapon", src, fromItemData.name)
-					--Player.PlayerData.items[toSlot] = fromItemData
 					if toItemData ~= nil then
-						--Player.PlayerData.items[fromSlot] = toItemData
 						local itemInfo = RSCore.Shared.Items[toItemData.name:lower()]
 						local toAmount = tonumber(toAmount) ~= nil and tonumber(toAmount) or toItemData.amount
 						if toItemData.name ~= fromItemData.name then
@@ -520,7 +589,7 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 					local toAmount = tonumber(toAmount) ~= nil and tonumber(toAmount) or toItemData.amount
 					if toItemData.name ~= fromItemData.name then
 						Player.Functions.RemoveItem(toItemData.name, toAmount, toSlot)
-						AddToTrunk(plate, fromSlot, itemInfo["name"], toAmount, toItemData.info)
+						AddToTrunk(plate, fromSlot, toSlot, itemInfo["name"], toAmount, toItemData.info)
 						TriggerEvent("rs-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2trunk1", toName=itemInfo["name"], toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=plate})
 						TriggerEvent("rs-log:server:CreateLog", "trunk", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** plate: *" .. plate .. "*")
 					else
@@ -543,13 +612,13 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 					if toItemData.name ~= fromItemData.name then
 						local itemInfo = RSCore.Shared.Items[toItemData.name:lower()]
 						RemoveFromTrunk(plate, toSlot, itemInfo["name"], toAmount)
-						AddToTrunk(plate, fromSlot, itemInfo["name"], toAmount, toItemData.info)
+						AddToTrunk(plate, fromSlot, toSlot, itemInfo["name"], toAmount, toItemData.info)
 					end
 				else
 					--Player.PlayerData.items[fromSlot] = nil
 				end
 				local itemInfo = RSCore.Shared.Items[fromItemData.name:lower()]
-				AddToTrunk(plate, toSlot, itemInfo["name"], fromAmount, fromItemData.info)
+				AddToTrunk(plate, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
 			end
 		else
 			TriggerClientEvent("RSCore:Notify", src, "Item bestaat niet??", "error")
@@ -568,7 +637,7 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 					local toAmount = tonumber(toAmount) ~= nil and tonumber(toAmount) or toItemData.amount
 					if toItemData.name ~= fromItemData.name then
 						Player.Functions.RemoveItem(toItemData.name, toAmount, toSlot)
-						AddToGlovebox(plate, fromSlot, itemInfo["name"], toAmount, toItemData.info)
+						AddToGlovebox(plate, fromSlot, toSlot, itemInfo["name"], toAmount, toItemData.info)
 						TriggerEvent("rs-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2glovebox1", toName=itemInfo["name"], toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=plate})
 						TriggerEvent("rs-log:server:CreateLog", "glovebox", "Swapped", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src..")* swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..itemInfo["name"].."**, amount: **" .. toAmount .. "** plate: *" .. plate .. "*")
 					else
@@ -591,13 +660,13 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 					if toItemData.name ~= fromItemData.name then
 						local itemInfo = RSCore.Shared.Items[toItemData.name:lower()]
 						RemoveFromGlovebox(plate, toSlot, itemInfo["name"], toAmount)
-						AddToGlovebox(plate, fromSlot, itemInfo["name"], toAmount, toItemData.info)
+						AddToGlovebox(plate, fromSlot, toSlot, itemInfo["name"], toAmount, toItemData.info)
 					end
 				else
 					--Player.PlayerData.items[fromSlot] = nil
 				end
 				local itemInfo = RSCore.Shared.Items[fromItemData.name:lower()]
-				AddToGlovebox(plate, toSlot, itemInfo["name"], fromAmount, fromItemData.info)
+				AddToGlovebox(plate, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
 			end
 		else
 			TriggerClientEvent("RSCore:Notify", src, "Item bestaat niet??", "error")
@@ -616,7 +685,7 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 					local toAmount = tonumber(toAmount) ~= nil and tonumber(toAmount) or toItemData.amount
 					if toItemData.name ~= fromItemData.name then
 						Player.Functions.RemoveItem(toItemData.name, toAmount, toSlot)
-						AddToStash(stashId, fromSlot, itemInfo["name"], toAmount, toItemData.info)
+						AddToStash(stashId, fromSlot, toSlot, itemInfo["name"], toAmount, toItemData.info)
 						TriggerEvent("rs-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2stash1", toName=toItemData.name, toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=stashId})
 						TriggerEvent("rs-log:server:CreateLog", "stash", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount .. "** stash: *" .. stashId .. "*")
 					else
@@ -639,13 +708,57 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 					if toItemData.name ~= fromItemData.name then
 						local itemInfo = RSCore.Shared.Items[toItemData.name:lower()]
 						RemoveFromStash(stashId, toSlot, itemInfo["name"], toAmount)
-						AddToStash(stashId, fromSlot, itemInfo["name"], toAmount, toItemData.info)
+						AddToStash(stashId, fromSlot, toSlot, itemInfo["name"], toAmount, toItemData.info)
 					end
 				else
 					--Player.PlayerData.items[fromSlot] = nil
 				end
 				local itemInfo = RSCore.Shared.Items[fromItemData.name:lower()]
-				AddToStash(stashId, toSlot, itemInfo["name"], fromAmount, fromItemData.info)
+				AddToStash(stashId, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
+			end
+		else
+			TriggerClientEvent("RSCore:Notify", src, "Item bestaat niet??", "error")
+		end
+	elseif RSCore.Shared.SplitStr(fromInventory, "-")[1] == "traphouse" then
+		local traphouseId = RSCore.Shared.SplitStr(fromInventory, "-")[2]
+		local fromItemData = exports['rs-traphouses']:GetInventoryData(traphouseId, fromSlot)
+		local fromAmount = tonumber(fromAmount) ~= nil and tonumber(fromAmount) or fromItemData.amount
+		if fromItemData ~= nil and fromItemData.amount >= fromAmount then
+			local itemInfo = RSCore.Shared.Items[fromItemData.name:lower()]
+			if toInventory == "player" or toInventory == "hotbar" then
+				local toItemData = Player.Functions.GetItemBySlot(toSlot)
+				exports['rs-traphouses']:RemoveHouseItem(traphouseId, fromSlot, itemInfo["name"], fromAmount)
+				if toItemData ~= nil then
+					local itemInfo = RSCore.Shared.Items[toItemData.name:lower()]
+					local toAmount = tonumber(toAmount) ~= nil and tonumber(toAmount) or toItemData.amount
+					if toItemData.name ~= fromItemData.name then
+						Player.Functions.RemoveItem(toItemData.name, toAmount, toSlot)
+						exports['rs-traphouses']:AddHouseItem(traphouseId, fromSlot, itemInfo["name"], toAmount, toItemData.info, src)
+						TriggerEvent("rs-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2stash1", toName=toItemData.name, toAmount=toAmount, fromName=fromItemData.name, fromAmount=fromAmount, target=traphouseId})
+						TriggerEvent("rs-log:server:CreateLog", "stash", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount .. "** stash: *" .. traphouseId .. "*")
+					else
+						TriggerEvent("rs-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2stash3", name=toItemData.name, amount=toAmount, target=traphouseId})
+						TriggerEvent("rs-log:server:CreateLog", "stash", "Stacked Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) stacked item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** from stash: *" .. traphouseId .. "*")
+					end
+				else
+					TriggerEvent("rs-log:server:sendLog", Player.PlayerData.citizenid, "itemswapped", {type="2stash2", name=fromItemData.name, amount=fromAmount, target=traphouseId})
+					TriggerEvent("rs-log:server:CreateLog", "stash", "Received Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) reveived item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount.. "** stash: *" .. traphouseId .. "*")
+				end
+				Player.Functions.AddItem(fromItemData.name, fromAmount, toSlot, fromItemData.info)
+			else
+				local toItemData = exports['rs-traphouses']:GetInventoryData(traphouseId, toSlot)
+				exports['rs-traphouses']:RemoveHouseItem(traphouseId, fromSlot, itemInfo["name"], fromAmount)
+				if toItemData ~= nil then
+					local itemInfo = RSCore.Shared.Items[toItemData.name:lower()]
+					local toAmount = tonumber(toAmount) ~= nil and tonumber(toAmount) or toItemData.amount
+					if toItemData.name ~= fromItemData.name then
+						local itemInfo = RSCore.Shared.Items[toItemData.name:lower()]
+						exports['rs-traphouses']:RemoveHouseItem(traphouseId, toSlot, itemInfo["name"], toAmount)
+						exports['rs-traphouses']:AddHouseItem(traphouseId, fromSlot, itemInfo["name"], toAmount, toItemData.info, src)
+					end
+				end
+				local itemInfo = RSCore.Shared.Items[fromItemData.name:lower()]
+				exports['rs-traphouses']:AddHouseItem(traphouseId, toSlot, itemInfo["name"], fromAmount, fromItemData.info, src)
 			end
 		else
 			TriggerClientEvent("RSCore:Notify", src, "Item bestaat niet??", "error")
@@ -661,6 +774,7 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 			if RSCore.Shared.SplitStr(itemData.name, "_")[1] == "weapon" then
 				price = tonumber(itemData.price)
 				if Player.Functions.RemoveMoney("cash", price, "dealer-item-bought") then
+					itemData.info.serie = tostring(Config.RandomInt(2) .. Config.RandomStr(3) .. Config.RandomInt(1) .. Config.RandomStr(2) .. Config.RandomInt(3) .. Config.RandomStr(4))
 					Player.Functions.AddItem(itemData.name, 1, toSlot, itemData.info)
 					TriggerClientEvent('rs-drugs:client:updateDealerItems', src, itemData, 1)
 					TriggerClientEvent('RSCore:Notify', src, itemInfo["label"] .. " ingekocht!", "success")
@@ -717,6 +831,14 @@ AddEventHandler('inventory:server:SetInventoryData', function(fromInventory, toI
 		local itemData = Config.CraftingItems[fromSlot]
 		if hasCraftItems(src, itemData.costs, fromAmount) then
 			TriggerClientEvent("inventory:client:CraftItems", src, itemData.name, itemData.costs, fromAmount, toSlot, itemData.points)
+		else
+			TriggerClientEvent("inventory:client:UpdatePlayerInventory", src, true)
+			TriggerClientEvent('RSCore:Notify', src, "Je hebt niet de juiste items..", "error")
+		end
+	elseif fromInventory == "attachment_crafting" then
+		local itemData = Config.AttachmentCrafting["items"][fromSlot]
+		if hasCraftItems(src, itemData.costs, fromAmount) then
+			TriggerClientEvent("inventory:client:CraftAttachment", src, itemData.name, itemData.costs, fromAmount, toSlot, itemData.points)
 		else
 			TriggerClientEvent("inventory:client:UpdatePlayerInventory", src, true)
 			TriggerClientEvent('RSCore:Notify', src, "Je hebt niet de juiste items..", "error")
@@ -930,25 +1052,60 @@ function SaveStashItems(stashId, items)
 	end
 end
 
-function AddToStash(stashId, slot, itemName, amount, info)
+function AddToStash(stashId, slot, otherslot, itemName, amount, info)
 	local amount = tonumber(amount)
-	if Stashes[stashId].items[slot] ~= nil and Stashes[stashId].items[slot].name == itemName then
-		Stashes[stashId].items[slot].amount = Stashes[stashId].items[slot].amount + amount
+	local ItemData = RSCore.Shared.Items[itemName]
+	if not ItemData.unique then
+		if Stashes[stashId].items[slot] ~= nil and Stashes[stashId].items[slot].name == itemName then
+			Stashes[stashId].items[slot].amount = Stashes[stashId].items[slot].amount + amount
+		else
+			local itemInfo = RSCore.Shared.Items[itemName:lower()]
+			Stashes[stashId].items[slot] = {
+				name = itemInfo["name"],
+				amount = amount,
+				info = info ~= nil and info or "",
+				label = itemInfo["label"],
+				description = itemInfo["description"] ~= nil and itemInfo["description"] or "",
+				weight = itemInfo["weight"], 
+				type = itemInfo["type"], 
+				unique = itemInfo["unique"], 
+				useable = itemInfo["useable"], 
+				image = itemInfo["image"],
+				slot = slot,
+			}
+		end
 	else
-		local itemInfo = RSCore.Shared.Items[itemName:lower()]
-		Stashes[stashId].items[slot] = {
-			name = itemInfo["name"],
-			amount = amount,
-			info = info ~= nil and info or "",
-			label = itemInfo["label"],
-			description = itemInfo["description"] ~= nil and itemInfo["description"] or "",
-			weight = itemInfo["weight"], 
-			type = itemInfo["type"], 
-			unique = itemInfo["unique"], 
-			useable = itemInfo["useable"], 
-			image = itemInfo["image"],
-			slot = slot,
-		}
+		if Stashes[stashId].items[slot] ~= nil and Stashes[stashId].items[slot].name == itemName then
+			local itemInfo = RSCore.Shared.Items[itemName:lower()]
+			Stashes[stashId].items[otherslot] = {
+				name = itemInfo["name"],
+				amount = amount,
+				info = info ~= nil and info or "",
+				label = itemInfo["label"],
+				description = itemInfo["description"] ~= nil and itemInfo["description"] or "",
+				weight = itemInfo["weight"], 
+				type = itemInfo["type"], 
+				unique = itemInfo["unique"], 
+				useable = itemInfo["useable"], 
+				image = itemInfo["image"],
+				slot = otherslot,
+			}
+		else
+			local itemInfo = RSCore.Shared.Items[itemName:lower()]
+			Stashes[stashId].items[slot] = {
+				name = itemInfo["name"],
+				amount = amount,
+				info = info ~= nil and info or "",
+				label = itemInfo["label"],
+				description = itemInfo["description"] ~= nil and itemInfo["description"] or "",
+				weight = itemInfo["weight"], 
+				type = itemInfo["type"], 
+				unique = itemInfo["unique"], 
+				useable = itemInfo["useable"], 
+				image = itemInfo["image"],
+				slot = slot,
+			}
+		end
 	end
 end
 
@@ -964,7 +1121,7 @@ function RemoveFromStash(stashId, slot, itemName, amount)
 			end
 		end
 	else
-		Stashes[stashId].items[slot]= nil
+		Stashes[stashId].items[slot] = nil
 		if Stashes[stashId].items == nil then
 			Stashes[stashId].items[slot] = nil
 		end
@@ -1046,25 +1203,61 @@ function SaveOwnedVehicleItems(plate, items)
 	end
 end
 
-function AddToTrunk(plate, slot, itemName, amount, info)
+function AddToTrunk(plate, slot, otherslot, itemName, amount, info)
 	local amount = tonumber(amount)
-	if Trunks[plate].items[slot] ~= nil and Trunks[plate].items[slot].name == itemName then
-		Trunks[plate].items[slot].amount = Trunks[plate].items[slot].amount + amount
+	local ItemData = RSCore.Shared.Items[itemName]
+
+	if not ItemData.unique then
+		if Trunks[plate].items[slot] ~= nil and Trunks[plate].items[slot].name == itemName then
+			Trunks[plate].items[slot].amount = Trunks[plate].items[slot].amount + amount
+		else
+			local itemInfo = RSCore.Shared.Items[itemName:lower()]
+			Trunks[plate].items[slot] = {
+				name = itemInfo["name"],
+				amount = amount,
+				info = info ~= nil and info or "",
+				label = itemInfo["label"],
+				description = itemInfo["description"] ~= nil and itemInfo["description"] or "",
+				weight = itemInfo["weight"], 
+				type = itemInfo["type"], 
+				unique = itemInfo["unique"], 
+				useable = itemInfo["useable"], 
+				image = itemInfo["image"],
+				slot = slot,
+			}
+		end
 	else
-		local itemInfo = RSCore.Shared.Items[itemName:lower()]
-		Trunks[plate].items[slot] = {
-			name = itemInfo["name"],
-			amount = amount,
-			info = info ~= nil and info or "",
-			label = itemInfo["label"],
-			description = itemInfo["description"] ~= nil and itemInfo["description"] or "",
-			weight = itemInfo["weight"], 
-			type = itemInfo["type"], 
-			unique = itemInfo["unique"], 
-			useable = itemInfo["useable"], 
-			image = itemInfo["image"],
-			slot = slot,
-		}
+		if Trunks[plate].items[slot] ~= nil and Trunks[plate].items[slot].name == itemName then
+			local itemInfo = RSCore.Shared.Items[itemName:lower()]
+			Trunks[plate].items[otherslot] = {
+				name = itemInfo["name"],
+				amount = amount,
+				info = info ~= nil and info or "",
+				label = itemInfo["label"],
+				description = itemInfo["description"] ~= nil and itemInfo["description"] or "",
+				weight = itemInfo["weight"], 
+				type = itemInfo["type"], 
+				unique = itemInfo["unique"], 
+				useable = itemInfo["useable"], 
+				image = itemInfo["image"],
+				slot = otherslot,
+			}
+		else
+			local itemInfo = RSCore.Shared.Items[itemName:lower()]
+			Trunks[plate].items[slot] = {
+				name = itemInfo["name"],
+				amount = amount,
+				info = info ~= nil and info or "",
+				label = itemInfo["label"],
+				description = itemInfo["description"] ~= nil and itemInfo["description"] or "",
+				weight = itemInfo["weight"], 
+				type = itemInfo["type"], 
+				unique = itemInfo["unique"], 
+				useable = itemInfo["useable"], 
+				image = itemInfo["image"],
+				slot = slot,
+			}
+		end
 	end
 end
 
@@ -1161,25 +1354,61 @@ function SaveOwnedGloveboxItems(plate, items)
 	end
 end
 
-function AddToGlovebox(plate, slot, itemName, amount, info)
+function AddToGlovebox(plate, slot, otherslot, itemName, amount, info)
 	local amount = tonumber(amount)
-	if Gloveboxes[plate].items[slot] ~= nil and Gloveboxes[plate].items[slot].name == itemName then
-		Gloveboxes[plate].items[slot].amount = Gloveboxes[plate].items[slot].amount + amount
+	local ItemData = RSCore.Shared.Items[itemName]
+
+	if not ItemData.unique then
+		if Gloveboxes[plate].items[slot] ~= nil and Gloveboxes[plate].items[slot].name == itemName then
+			Gloveboxes[plate].items[slot].amount = Gloveboxes[plate].items[slot].amount + amount
+		else
+			local itemInfo = RSCore.Shared.Items[itemName:lower()]
+			Gloveboxes[plate].items[slot] = {
+				name = itemInfo["name"],
+				amount = amount,
+				info = info ~= nil and info or "",
+				label = itemInfo["label"],
+				description = itemInfo["description"] ~= nil and itemInfo["description"] or "",
+				weight = itemInfo["weight"], 
+				type = itemInfo["type"], 
+				unique = itemInfo["unique"], 
+				useable = itemInfo["useable"], 
+				image = itemInfo["image"],
+				slot = slot,
+			}
+		end
 	else
-		local itemInfo = RSCore.Shared.Items[itemName:lower()]
-		Gloveboxes[plate].items[slot] = {
-			name = itemInfo["name"],
-			amount = amount,
-			info = info ~= nil and info or "",
-			label = itemInfo["label"],
-			description = itemInfo["description"] ~= nil and itemInfo["description"] or "",
-			weight = itemInfo["weight"], 
-			type = itemInfo["type"], 
-			unique = itemInfo["unique"], 
-			useable = itemInfo["useable"], 
-			image = itemInfo["image"],
-			slot = slot,
-		}
+		if Gloveboxes[plate].items[slot] ~= nil and Gloveboxes[plate].items[slot].name == itemName then
+			local itemInfo = RSCore.Shared.Items[itemName:lower()]
+			Gloveboxes[plate].items[otherslot] = {
+				name = itemInfo["name"],
+				amount = amount,
+				info = info ~= nil and info or "",
+				label = itemInfo["label"],
+				description = itemInfo["description"] ~= nil and itemInfo["description"] or "",
+				weight = itemInfo["weight"], 
+				type = itemInfo["type"], 
+				unique = itemInfo["unique"], 
+				useable = itemInfo["useable"], 
+				image = itemInfo["image"],
+				slot = otherslot,
+			}
+		else
+			local itemInfo = RSCore.Shared.Items[itemName:lower()]
+			Gloveboxes[plate].items[slot] = {
+				name = itemInfo["name"],
+				amount = amount,
+				info = info ~= nil and info or "",
+				label = itemInfo["label"],
+				description = itemInfo["description"] ~= nil and itemInfo["description"] or "",
+				weight = itemInfo["weight"], 
+				type = itemInfo["type"], 
+				unique = itemInfo["unique"], 
+				useable = itemInfo["useable"], 
+				image = itemInfo["image"],
+				slot = slot,
+			}
+		end
 	end
 end
 
@@ -1298,10 +1527,10 @@ function CreateNewDrop(source, fromSlot, toSlot, itemAmount)
 	end
 end
 
--- RSCore.Commands.Add("inv", "Open je inventory", {}, false, function(source, args)
---     local Player = RSCore.Functions.GetPlayer(source)
--- 	TriggerClientEvent("inventory:client:OpenInventory", source, Player.PlayerData.items)
--- end)
+RSCore.Commands.Add("inv", "Open je inventory", {}, false, function(source, args)
+    local Player = RSCore.Functions.GetPlayer(source)
+	TriggerClientEvent("inventory:client:OpenInventory", source, Player.PlayerData.items)
+end)
 
 RSCore.Commands.Add("resetinv", "Reset inventory (in geval met -None)", {{name="type", help="stash/trunk/glovebox"},{name="id/plate", help="ID van stash of kenteken"}}, true, function(source, args)
 	local invType = args[1]:lower()
@@ -1363,6 +1592,14 @@ RSCore.Commands.Add("giveitem", "Geef een item aan een speler", {{name="id", hel
 				elseif itemData["type"] == "weapon" then
 					amount = 1
 					info.serie = tostring(Config.RandomInt(2) .. Config.RandomStr(3) .. Config.RandomInt(1) .. Config.RandomStr(2) .. Config.RandomInt(3) .. Config.RandomStr(4))
+				elseif itemData["name"] == "harness" then
+					info.uses = 20
+				elseif itemData["name"] == "markedbills" then
+					info.worth = math.random(5000, 10000)
+				elseif itemData["name"] == "labkey" then
+					info.lab = exports["rs-methlab"]:GenerateRandomLab()
+				elseif itemData["name"] == "printerdocument" then
+					info.url = "https://cdn.discordapp.com/attachments/645995539208470549/707609551733522482/image0.png"
 				end
 
 				if Player.Functions.AddItem(itemData["name"], amount, false, info) then
@@ -1379,7 +1616,7 @@ RSCore.Commands.Add("giveitem", "Geef een item aan een speler", {{name="id", hel
 	else
 		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Speler is niet online!")
 	end
-end, "god")
+end, "admin")
 
 RSCore.Commands.Add("randomitems", "Krijg wat random items (voor testen)", {}, false, function(source, args)
 	local Player = RSCore.Functions.GetPlayer(source)
@@ -1409,24 +1646,17 @@ RSCore.Functions.CreateUseableItem("id_card", function(source, item)
     end
 end)
 
-RSCore.Functions.CreateUseableItem("snowball", function(source, item)
-	local Player = RSCore.Functions.GetPlayer(source)
-	local itemData = Player.Functions.GetItemBySlot(item.slot)
-	if Player.Functions.GetItemBySlot(item.slot) ~= nil then
-        TriggerClientEvent("inventory:client:UseSnowball", source, itemData.amount)
-    end
-end)
+-- RSCore.Functions.CreateUseableItem("snowball", function(source, item)
+-- 	local Player = RSCore.Functions.GetPlayer(source)
+-- 	local itemData = Player.Functions.GetItemBySlot(item.slot)
+-- 	if Player.Functions.GetItemBySlot(item.slot) ~= nil then
+--         TriggerClientEvent("inventory:client:UseSnowball", source, itemData.amount)
+--     end
+-- end)
 
 RSCore.Functions.CreateUseableItem("driver_license", function(source, item)
     local Player = RSCore.Functions.GetPlayer(source)
 	if Player.Functions.GetItemBySlot(item.slot) ~= nil then
         TriggerClientEvent("inventory:client:ShowDriverLicense", -1, source, Player.PlayerData.citizenid, item.info)
-    end
-end)
-
-RSCore.Functions.CreateUseableItem("walkstick", function(source, item)
-    local Player = RSCore.Functions.GetPlayer(source)
-	if Player.Functions.GetItemBySlot(item.slot) ~= nil then
-        TriggerClientEvent("animations:UseWandelStok", source)
     end
 end)

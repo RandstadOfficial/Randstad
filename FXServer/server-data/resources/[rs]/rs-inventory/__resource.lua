@@ -22,4 +22,6 @@ files {
 	'html/js/app.js',
 	'html/images/*.png',
 	'html/images/*.jpg',
+	'html/attachment_images/*.png',
+	'html/*.ttf',
 }
