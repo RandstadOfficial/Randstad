@@ -36,7 +36,8 @@ end
 
 local rareLoot = {
     "weapon_bat",
-    "painkiller"
+    "painkiller",
+    "rubber"
 }
 
 function pickSpecialReward()
@@ -77,7 +78,7 @@ AddEventHandler('rs-houserobbery:server:searchCabin', function(cabin, house)
                 if not itemInfo["unqiue"] then
                     local itemAmount = math.random(3, 6) -- 3 to 6 diamond rings, rolex, tosti, sandwich
                     if randomItem == "plastic" then
-                        itemAmount = math.random(10, 20) -- 15 to 20 pieces of plastic
+                        itemAmount = math.random(10, 15) -- 10 to 15 pieces of plastic
                     elseif randomItem == "goldchain" then
                         itemAmount = math.random(3, 6) -- 3 to 6 pieces of goldchain
                     elseif randomItem == "goldbar" then
