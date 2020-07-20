@@ -43,7 +43,6 @@
                     <div class="inv-options-list">
                         <input type="number" id="item-amount" class="inv-option-item" min=0 value="0" oninput="validity.valid||(value='');"></input>
                         <div class="inv-option-item" id="item-use"><p>GEBRUIK</p></div>
-                        <!--<div class="inv-option-item"><button class="btn btn-inv" id="item-drop">LEG NEER</button></div>-->
                     </div>
                 </div>
                 <div class="oth-inv-container">
@@ -66,15 +65,38 @@
             </div>
             <div class="inv-background"></div>
         </div>
+        <div class="weapon-attachments-container">
+            <div class="weapon-attachments-container-title">Pistol | <span style="font-size: 2vh;">9mm</span></div>
+            <div class="weapon-attachments-container-description">Dit is een water pistool yeey...</div>
+            <div class="weapon-attachments-container-details"><span style="font-weight: bold; letter-spacing: .1vh;">Serie Nummer</span><br> 12345678<br><br><span style="font-weight: bold; letter-spacing: .1vh;">Durability</span> <div class="weapon-attachments-container-detail-durability"><div class="weapon-attachments-container-detail-durability-total"></div></div></div>
+            <img src="./attachment_images/weapon_pistol.png" class="weapon-attachments-container-image">
+        
+            <div class="weapon-attachments-title"><span style="font-weight: bold; letter-spacing: .1vh;">Attachments</span></div>
+            <div class="weapon-attachments">
+                <!-- <div class="weapon-attachment">
+                    <div class="weapon-attachment-label">
+                        <p>Demper</p>
+                    </div>
+                    <div class="weapon-attachment-img"><img src="./images/pistol_suppressor.png"></div>
+                </div> -->
+            </div>
+
+            <div class="weapon-attachments-remove"><i class="fas fa-trash"></i></div>
+
+            <div class="weapon-attachments-back"><p>TERUG</p></div>
+        </div>
         <div class="combine-option-container">
             <div class="btn-combine CombineItem"><p>Combineren</p></div>
             <div class="btn-combine SwitchItem"><p>Omwisselen</p></div>
         </div>
-        <div class="itembox-container">
-            <div id="itembox-action"></div>
-            <div id="itembox-label"><p>Joint</p></div>
-            <div id="itembox-image"></div>
+        <div class="itemboxes-container">
+            <!-- <div class="itembox-container"> -->
+                <!-- <div id="itembox-action"></div>
+                <div id="itembox-label"><p>Joint</p></div>
+                <div id="itembox-image"></div> -->
+            <!-- </div> -->
         </div>
+        <div class="itembox-container template"></div>
         <div class="requiredItem-container">
         </div>
         <div class="z-hotbar-inventory">

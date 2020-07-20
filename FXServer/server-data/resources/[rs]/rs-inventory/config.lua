@@ -223,6 +223,126 @@ Config.CraftingItems = {
     },
 }
 
+Config.AttachmentCrafting = {
+    ["location"] = {x = 88.91, y = 3743.88, z = 40.77, h = 66.5, r = 1.0}, 
+    ["items"] = {
+        [1] = {
+            name = "pistol_extendedclip",
+            amount = 50,
+            info = {},
+            costs = {
+                ["metalscrap"] = 140,
+                ["steel"] = 250,
+                ["rubber"] = 60,
+            },
+            type = "item",
+            slot = 1,
+            threshold = 0,
+            points = 1,
+        },
+        [2] = {
+            name = "pistol_suppressor",
+            amount = 50,
+            info = {},
+            costs = {
+                ["metalscrap"] = 165,
+                ["steel"] = 285,
+                ["rubber"] = 75,
+            },
+            type = "item",
+            slot = 2,
+            threshold = 10,
+            points = 2,
+        },
+        [3] = {
+            name = "rifle_extendedclip",
+            amount = 50,
+            info = {},
+            costs = {
+                ["metalscrap"] = 190,
+                ["steel"] = 305,
+                ["rubber"] = 85,
+                ["smg_extendedclip"] = 1,
+            },
+            type = "item",
+            slot = 7,
+            threshold = 25,
+            points = 8,
+        },
+        [4] = {
+            name = "rifle_drummag",
+            amount = 50,
+            info = {},
+            costs = {
+                ["metalscrap"] = 205,
+                ["steel"] = 340,
+                ["rubber"] = 110,
+                ["smg_extendedclip"] = 2,
+            },
+            type = "item",
+            slot = 8,
+            threshold = 50,
+            points = 8,
+        },
+        [5] = {
+            name = "smg_flashlight",
+            amount = 50,
+            info = {},
+            costs = {
+                ["metalscrap"] = 230,
+                ["steel"] = 365,
+                ["rubber"] = 130,
+            },
+            type = "item",
+            slot = 3,
+            threshold = 75,
+            points = 3,
+        },
+        [6] = {
+            name = "smg_extendedclip",
+            amount = 50,
+            info = {},
+            costs = {
+                ["metalscrap"] = 255,
+                ["steel"] = 390,
+                ["rubber"] = 145,
+            },
+            type = "item",
+            slot = 4,
+            threshold = 100,
+            points = 4,
+        },
+        [7] = {
+            name = "smg_suppressor",
+            amount = 50,
+            info = {},
+            costs = {
+                ["metalscrap"] = 270,
+                ["steel"] = 435,
+                ["rubber"] = 155,
+            },
+            type = "item",
+            slot = 5,
+            threshold = 150,
+            points = 5,
+        },
+        [8] = {
+            name = "smg_scope",
+            amount = 50,
+            info = {},
+            costs = {
+                ["metalscrap"] = 300,
+                ["steel"] = 469,
+                ["rubber"] = 170,
+            },
+            type = "item",
+            slot = 6,
+            threshold = 200,
+            points = 6,
+        },
+    }
+}
+
 Keys = {
     ["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57,
     ["~"] = 243, ["1"] = 157, ["2"] = 158, ["3"] = 160, ["4"] = 164, ["5"] = 165, ["6"] = 159, ["7"] = 161, ["8"] = 162, ["9"] = 163, ["-"] = 84, ["="] = 83, ["BACKSPACE"] = 177,
@@ -273,4 +393,11 @@ BackEngineVehicles = {
     'surfer',
     'surfer2',
     'comet3',
+}
+
+Config.MaximumAmmoValues = {
+    ["pistol"] = 250,
+    ["smg"] = 250,
+    ["shotgun"] = 200,
+    ["rifle"] = 250,
 }
