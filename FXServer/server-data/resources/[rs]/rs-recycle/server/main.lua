@@ -26,4 +26,12 @@ RSCore.Functions.CreateCallback('rs-recycle:getItem', function(source, cb)
         TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[randItem], 'add')
         Citizen.Wait(500)
     end  
+    
+    local Luck = math.random(1, 10)
+    local Odd = math.random(1, 10)
+    if Luck == Odd then
+        local random = math.random(1, 3)
+        Player.Functions.AddItem("rubber", random)
+        TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items["rubber"], 'add')
+    end
 end)

@@ -110,6 +110,8 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
     elseif type == "paleto" then
         local itemType = math.random(#Config.RewardTypes)  -- 50% chance on money, 50% chance on item
         local tierChance = math.random(1, 100)
+        local WeaponChance = math.random(1, 10)
+        local odd1 = math.random(1, 10)
         local tier = 1
         if tierChance < 25 then 
             tier = 1 
@@ -120,6 +122,7 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
         else 
             tier = 4 
         end
+        if WeaponChance ~= odd1 then
 
         if tier ~= 4 then
             if Config.RewardTypes[itemType].type == "item" then
@@ -136,6 +139,10 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
             ply.Functions.AddItem('security_card_02', 1)
             TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['security_card_02'], "add")
         end
+    else
+        ply.Functions.AddItem('weapon_vintagepistol', 1)
+        TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['weapon_vintagepistol'], "add")
+    end
     elseif type == "pacific" then
         local itemType = math.random(#Config.RewardTypes)
         local tierChance = math.random(1, 100)

@@ -105,7 +105,6 @@ Citizen.CreateThread(function ()
                                 ClearPedTasks(GetPlayerPed(-1))
                                 PickupPackage()
                             end)
-                            Citizen.Wait(10000)
                         end
                     else
                         DrawText3D(packagePos.x, packagePos.y, packagePos.z + 1, "Pakketje")
