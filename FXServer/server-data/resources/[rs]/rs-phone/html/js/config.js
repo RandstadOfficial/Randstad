@@ -1,0 +1,12 @@
+Config = []
+
+Config.HeaderDisabledApps = [
+    "settings",
+    "contacts",
+    "phone",
+    "mail",
+    "meos",
+    "whatsapp"
+]
+
+Config.DefaultCryptoPage = "general";
