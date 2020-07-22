@@ -106,9 +106,7 @@ end)
 
 RegisterNUICallback('SetBackground', function(data)
     local background = data.background
-    print("Background saved is: ".. background)
     PhoneData.MetaData.background = background
-    print("meta data: "..PhoneData.MetaData.background)
     TriggerServerEvent('rs-phone:server:SaveMetaData', PhoneData.MetaData)
 end)
 
@@ -340,7 +338,7 @@ function OpenPhone()
         if HasPhone then
             PhoneData.PlayerData = RSCore.Functions.GetPlayerData()
             SetNuiFocus(true, true)
-            SetNuiFocusKeepInput(true)
+            -- SetNuiFocusKeepInput(true)
             SendNUIMessage({
                 action = "open",
                 Tweets = PhoneData.Tweets,
@@ -350,12 +348,12 @@ function OpenPhone()
             })
             PhoneData.isOpen = true
 
-            Citizen.CreateThread(function()
-                while PhoneData.isOpen do
-                    DisableDisplayControlActions()
-                    Citizen.Wait(1)
-                end
-            end)
+            -- Citizen.CreateThread(function()
+            --     while PhoneData.isOpen do
+            --         DisableDisplayControlActions()
+            --         Citizen.Wait(1)
+            --     end
+            -- end)
 
             if not PhoneData.CallData.InCall then
                 DoPhoneAnimation('cellphone_text_in')
@@ -395,7 +393,7 @@ RegisterNUICallback('Close', function()
         DoPhoneAnimation('cellphone_text_to_call')
     end
     SetNuiFocus(false, false)
-    SetNuiFocusKeepInput(false)
+    -- SetNuiFocusKeepInput(false)
     SetTimeout(500, function()
         PhoneData.isOpen = false
     end)
@@ -2080,7 +2078,10 @@ function DisableDisplayControlActions()
     DisableControlAction(0, 5, true) -- disable mouse look
     DisableControlAction(0, 6, true) -- disable mouse look
 
-    DisableControlAction(0, 37, true) -- disable tab
+    DisableControlAction(0, 32, false)
+    DisableControlAction(0, 34, false)
+    DisableControlAction(0, 8, false)
+    DisableControlAction(0, 9, false)
 
     DisableControlAction(0, 263, true) -- disable melee
     DisableControlAction(0, 264, true) -- disable melee

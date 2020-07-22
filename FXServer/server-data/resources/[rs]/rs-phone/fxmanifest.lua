@@ -19,12 +19,16 @@ files {
 
 client_scripts {
     'client/main.lua',
-    'client/animations.lua'
+    'client/animations.lua',
+    '@rs-garages/SharedConfig.lua',
+    '@rs-apartments/config.lua',
 }
 
 server_scripts {
     'server/main.lua',
-    'config.lua'
+    'config.lua',
+    '@rs-garages/SharedConfig.lua',
+    '@rs-apartments/config.lua',
 }
 
 exports {

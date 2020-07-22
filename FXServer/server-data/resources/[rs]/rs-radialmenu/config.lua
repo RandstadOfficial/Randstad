@@ -19,18 +19,10 @@ Config.MenuItems = {
         items = {
             {
                 id    = 'givenum',
-                title = 'Geef Nummer',
+                title = 'Geef Contact Gegevens',
                 icon = '#nummer',
                 type = 'client',
-                event = 'rs-phone:client:giveNumber',
-                shouldClose = true,
-            },
-            {
-                id    = 'givebank',
-                title = 'Geef Bank nr.',
-                icon = '#banknr',
-                type = 'client',
-                event = 'rs-phone:client:giveBankAccount',
+                event = 'rs-phone:client:GiveContactDetails',
                 shouldClose = true,
             },
             {
