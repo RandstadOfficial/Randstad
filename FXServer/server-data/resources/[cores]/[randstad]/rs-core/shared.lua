@@ -5800,15 +5800,7 @@ RSShared.Jobs = {
 				payment = 300,
 			},
 			[4] = {
-				label = "Chirurg",
-				payment = 400,
-			},
-			[5] = {
-				label = "Hoofd Chirurg",
-				payment = 400,
-			},
-			[6] = {
-				label = "Hoofd Medisch Directeur",
+				label = "Hoofd Geneeskunde",
 				payment = 400,
 			},
 		}

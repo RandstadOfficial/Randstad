@@ -23226,12 +23226,12 @@
       <nInitialDriveGears value="6"/>
       <fInitialDriveForce value="0.33826799"/>
       <fDriveInertia value="1.000000"/>
-      <fClutchChangeRateScaleUpShift value="2.150000"/>
-      <fClutchChangeRateScaleDownShift value="2.150000"/>
-      <fInitialDriveMaxFlatVel value="183.19"/>
+      <fClutchChangeRateScaleUpShift value="2.300000"/>
+      <fClutchChangeRateScaleDownShift value="2.300000"/>
+      <fInitialDriveMaxFlatVel value="200.0"/>
       <fBrakeForce value="0.752000"/>
       <fBrakeBiasFront value="0.502510"/>
-      <fHandBrakeForce value="0.500000"/>
+      <fHandBrakeForce value="0.800000"/>
       <fSteeringLock value="50.000000"/>
       <fTractionCurveMax value="2.420000"/>
       <fTractionCurveMin value="2.150000"/>

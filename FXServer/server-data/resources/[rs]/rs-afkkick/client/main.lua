@@ -1,5 +1,5 @@
 -- AFK Kick Time Limit (in seconds)
-secondsUntilKick = 900
+secondsUntilKick = 1800
 
 -- Load RSCore
 RSCore = nil

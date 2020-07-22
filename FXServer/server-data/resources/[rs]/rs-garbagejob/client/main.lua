@@ -199,7 +199,7 @@ Citizen.CreateThread(function()
                                 RSCore.Functions.TriggerCallback('rs-garbagejob:server:CheckBail', function(DidBail)
                                     if DidBail then
                                         BringBackCar()
-                                        RSCore.Functions.Notify("Je hebt €1000,- borg terug ontvangen!")
+                                        RSCore.Functions.Notify("Je hebt €500,- borg terug ontvangen!")
                                     else
                                         RSCore.Functions.Notify("Je hebt geen borg betaald over dit voertuig..")
                                     end
@@ -224,11 +224,11 @@ Citizen.CreateThread(function()
                                             GarbageLocation = 1
                                             IsWorking = true
                                             SetGarbageRoute()
-                                            RSCore.Functions.Notify("Je hebt €1000,- borg betaald!")
+                                            RSCore.Functions.Notify("Je hebt €500,- borg betaald!")
                                             RSCore.Functions.Notify("Je bent begonnen met werken, locatie staat aangegeven op je GPS!")
                                         end, coords, true)
                                     else
-                                        RSCore.Functions.Notify("Je hebt niet genoeg geld voor de borg.. Borg kosten zijn €1000,-")
+                                        RSCore.Functions.Notify("Je hebt niet genoeg geld voor de borg.. Borg kosten zijn €500,-")
                                     end
                                 end)
                             end

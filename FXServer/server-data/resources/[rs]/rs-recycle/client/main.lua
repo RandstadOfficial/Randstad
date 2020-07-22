@@ -9,14 +9,14 @@ local Keys = {
     ["LEFT"] = 174, ["RIGHT"] = 175, ["TOP"] = 27, ["DOWN"] = 173,
 }
 RSCore = nil
-
+ 
 Citizen.CreateThread(function()
     while RSCore == nil do
         TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
         Citizen.Wait(200)
     end
 end)
-
+ 
 local carryPackage = nil
 ---- MARKERS BINNEN/BUITEN/INKLOKKEN/AUTO
 local onDuty = false
@@ -80,8 +80,9 @@ Citizen.CreateThread(function ()
         end
     end
 end)
-
+ 
 local packagePos = nil
+local active = false
 Citizen.CreateThread(function ()
     for k, pickuploc in pairs(Config['delivery'].pickupLocations) do
         local model = GetHashKey(Config['delivery'].warehouseObjects[math.random(1, #Config['delivery'].warehouseObjects)])
@@ -98,12 +99,16 @@ Citizen.CreateThread(function ()
                 local pos = GetEntityCoords(GetPlayerPed(-1), true)
                 if carryPackage == nil then
                     if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, packagePos.x,packagePos.y,packagePos.z, true) < 2.3 then
-                        DrawText3D(packagePos.x,packagePos.y,packagePos.z+ 1, "~g~E~w~ - Pakket pakken")
-                        if IsControlJustReleased(0, Keys["E"]) then
+                        if not active then
+                            DrawText3D(packagePos.x,packagePos.y,packagePos.z+ 1, "~g~E~w~ - Pakket pakken")
+                        end
+                        if IsControlJustReleased(0, Keys["E"]) and not active then
+                            active = true
                             TaskStartScenarioInPlace(GetPlayerPed(-1), "PROP_HUMAN_BUM_BIN", 0, true)
                             RSCore.Functions.Progressbar("pickup_reycle_package", "Pakket oppakken..", 5000, false, true, {}, {}, {}, {}, function() -- Done
                                 ClearPedTasks(GetPlayerPed(-1))
                                 PickupPackage()
+                                active = false
                             end)
                         end
                     else
@@ -137,7 +142,7 @@ Citizen.CreateThread(function ()
         end
     end
 end)
-
+ 
 function ScrapAnim()
     local time = 5
     loadAnimDict("mp_car_bomb")
@@ -155,21 +160,21 @@ function ScrapAnim()
         end
     end)
 end
-
+ 
 function loadAnimDict(dict)
     while (not HasAnimDictLoaded(dict)) do
         RequestAnimDict(dict)
         Citizen.Wait(5)
     end
 end
-
+ 
 RegisterNetEvent('rs-recycle:client:executeEvents')
 AddEventHandler('rs-recycle:client:executeEvents', function()
     TriggerServerEvent('rs-recycle:server:getItem')
 end)
-
+ 
 function DrawText3D(x, y, z, text)
-	SetTextScale(0.35, 0.35)
+    SetTextScale(0.35, 0.35)
     SetTextFont(4)
     SetTextProportional(1)
     SetTextColour(255, 255, 255, 215)
@@ -182,7 +187,7 @@ function DrawText3D(x, y, z, text)
     DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
     ClearDrawOrigin()
 end
-
+ 
 function GetRandomPackage()
     local randSeed = math.random(1, #Config["delivery"].pickupLocations)
     packagePos = {}
@@ -190,7 +195,7 @@ function GetRandomPackage()
     packagePos.y = Config["delivery"].pickupLocations[randSeed].y
     packagePos.z = Config["delivery"].pickupLocations[randSeed].z
 end
-
+ 
 function PickupPackage()
     local pos = GetEntityCoords(GetPlayerPed(-1), true)
     RequestAnimDict("anim@heists@box_carry@")
@@ -205,7 +210,7 @@ function PickupPackage()
     AttachEntityToEntity(object, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 57005), 0.05, 0.1, -0.3, 300.0, 250.0, 20.0, true, true, false, true, 1, true)
     carryPackage = object
 end
-
+ 
 function DropPackage()
     ClearPedTasks(GetPlayerPed(-1))
     DetachEntity(carryPackage, true, true)

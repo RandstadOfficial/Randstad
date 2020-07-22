@@ -103,7 +103,7 @@ AddEventHandler('hospital:server:SetDoctor', function()
 	for k, v in pairs(RSCore.Functions.GetPlayers()) do
         local Player = RSCore.Functions.GetPlayer(v)
         if Player ~= nil then 
-            if ((Player.PlayerData.job.gradelabel == "Doctor" or Player.PlayerData.job.gradelabel == "Chirurg" or Player.PlayerData.job.gradelabel == "Hoofd Chirurg" or Player.PlayerData.job.gradelabel == "Hoofd Medisch Directeur") and Player.PlayerData.job.onduty) then
+            if ((Player.PlayerData.job.gradelabel == "Verpleegkundige" or Player.PlayerData.job.gradelabel == "Doctor" or Player.PlayerData.job.gradelabel == "Hoofd Geneeskunde") and Player.PlayerData.job.onduty) then
                 amount = amount + 1
             end
         end
@@ -136,7 +136,7 @@ AddEventHandler('hospital:server:SendDoctorAlert', function()
 	for k, v in pairs(RSCore.Functions.GetPlayers()) do
 		local Player = RSCore.Functions.GetPlayer(v)
 		if Player ~= nil then 
-			if ((Player.PlayerData.job.gradelabel == "Doctor" or Player.PlayerData.job.gradelabel == "Chirurg" or Player.PlayerData.job.gradelabel == "Hoofd Chirurg" or Player.PlayerData.job.gradelabel == "Hoofd Medisch Directeur") and Player.PlayerData.job.onduty) then
+			if ((Player.PlayerData.job.gradelabel == "Verpleegkundige" or Player.PlayerData.job.gradelabel == "Doctor" or Player.PlayerData.job.gradelabel == "Hoofd Geneeskunde") and Player.PlayerData.job.onduty) then
 				TriggerClientEvent("hospital:client:SendAlert", v, "Er is een dokter nodig bij Pillbox Ziekenhuis")
 			end
 		end
@@ -192,7 +192,7 @@ RSCore.Functions.CreateCallback('hospital:GetDoctors', function(source, cb)
 	for k, v in pairs(RSCore.Functions.GetPlayers()) do
 		local Player = RSCore.Functions.GetPlayer(v)
 		if Player ~= nil then 
-			if ((Player.PlayerData.job.gradelabel == "Doctor" or Player.PlayerData.job.gradelabel == "Chirurg" or Player.PlayerData.job.gradelabel == "Hoofd Chirurg" or Player.PlayerData.job.gradelabel == "Hoofd Medisch Directeur")  and Player.PlayerData.job.onduty) then
+			if ((Player.PlayerData.job.gradelabel == "Verpleegkundige" or Player.PlayerData.job.gradelabel == "Doctor" or Player.PlayerData.job.gradelabel == "Hoofd Geneeskunde") and Player.PlayerData.job.onduty) then
 				amount = amount + 1
 			end
 		end
@@ -322,7 +322,7 @@ RSCore.Commands.Add("setambulance", "Geef de ambulance baan aan iemand ", {{name
     local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))
     local Myself = RSCore.Functions.GetPlayer(source)
     if Player ~= nil then 
-        if Myself.PlayerData.job.name == "ambulance" and Myself.PlayerData.job.gradelabel == "Hoofd Medisch Directeur" then
+        if Myself.PlayerData.job.name == "ambulance" and Myself.PlayerData.job.gradelabel == "Hoofd Geneeskunde" then
             Player.Functions.SetJob("ambulance", tonumber(args[2]))
 		else
 			TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Je hebt hier geen rechten voor")
@@ -336,7 +336,7 @@ RSCore.Commands.Add("fireambulance", "Ontsla een ambulance!", {{name="id", help=
     local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))
     local Myself = RSCore.Functions.GetPlayer(source)
     if Player ~= nil then 
-        if Myself.PlayerData.job.name == "ambulance" and Myself.PlayerData.job.gradelabel == "Hoofd Medisch Directeur" then
+        if Myself.PlayerData.job.name == "ambulance" and Myself.PlayerData.job.gradelabel == "Hoofd Geneeskunde" then
             Player.Functions.SetJob("unemployed", 1)
 		else
 			TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Je hebt hier geen rechten voor")
