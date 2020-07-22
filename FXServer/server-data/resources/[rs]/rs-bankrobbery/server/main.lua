@@ -100,8 +100,11 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
                 ply.Functions.AddItem(item.item, itemAmount)
                 TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[item.item], "add")
             elseif Config.RewardTypes[itemType].type == "money" then
-                local moneyAmount = math.random(1500, 3000)
-                ply.Functions.AddMoney('cash', moneyAmount, "small-bankrobbery")
+                local info = {
+                    worth = math.random(3000, 5000)
+                }
+                ply.Functions.AddItem('markedbills', 1, false, info)
+                TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['markedbills'], "add")
             end
         else
             ply.Functions.AddItem('security_card_01', 1)
@@ -132,8 +135,11 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
                 ply.Functions.AddItem(item.item, itemAmount)
                 TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[item.item], "add")
             elseif Config.RewardTypes[itemType].type == "money" then
-                local moneyAmount = math.random(2500, 5000)
-                ply.Functions.AddMoney('cash', moneyAmount, "paleto-bankrobbery")
+                local info = {
+                    worth = math.random(6000, 8000)
+                }
+                ply.Functions.AddItem('markedbills', 1, false, info)
+                TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['markedbills'], "add")
             end
         else
             ply.Functions.AddItem('security_card_02', 1)
@@ -165,8 +171,11 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
                 ply.Functions.AddItem(item.item, itemAmount)
                 TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[item.item], "add")
             elseif Config.RewardTypes[itemType].type == "money" then
-                local moneyAmount = math.random(2000, 7000)
-                ply.Functions.AddMoney('cash', moneyAmount, "pacific-bankrobbery")
+                local info = {
+                    worth = math.random(9000, 11000)
+                }
+                ply.Functions.AddItem('markedbills', 1, false, info)
+                TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['markedbills'], "add")
             end
         else
             local info = {
