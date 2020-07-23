@@ -28,17 +28,17 @@ AddEventHandler('rs-phone:server:AddAdvert', function(msg)
 
     if Adverts[CitizenId] ~= nil then
         Adverts[CitizenId].message = msg
-        Adverts[CitizenId].name = "@"..Player.PlayerData.charinfo.firstname..""..Player.PlayerData.charinfo.lastname
+        Adverts[CitizenId].name = Player.PlayerData.charinfo.firstname.." "..Player.PlayerData.charinfo.lastname
         Adverts[CitizenId].number = Player.PlayerData.charinfo.phone
     else
         Adverts[CitizenId] = {
             message = msg,
-            name = "@"..Player.PlayerData.charinfo.firstname..""..Player.PlayerData.charinfo.lastname,
+            name = Player.PlayerData.charinfo.firstname.." "..Player.PlayerData.charinfo.lastname,
             number = Player.PlayerData.charinfo.phone,
         }
     end
 
-    TriggerClientEvent('rs-phone:client:UpdateAdverts', -1, Adverts, "@"..Player.PlayerData.charinfo.firstname..""..Player.PlayerData.charinfo.lastname)
+    TriggerClientEvent('rs-phone:client:UpdateAdverts', -1, Adverts, Player.PlayerData.charinfo.firstname.." "..Player.PlayerData.charinfo.lastname)
 end)
 
 function GetOnlineStatus(number)
