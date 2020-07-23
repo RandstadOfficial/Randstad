@@ -14,8 +14,6 @@ Citizen.CreateThread(function()
                 if tonumber(v.takingover) == 1 then
 					takingovers = true
                 end
-                print(tostring(openeds))
-                print(tostring(takingovers))
 				Config.TrapHouses[v.id] = {
 					coords = json.decode(v.coords),
 					keyholders = json.decode(v.keyholders),
@@ -53,7 +51,7 @@ AddEventHandler('rs-traphouses:server:AddHouseKeyHolder', function(CitizenId, Tr
     if Config.TrapHouses[TraphouseId] ~= nil then
         if IsOwner then
             Config.TrapHouses[TraphouseId].keyholders = {}
-            Config.TrapHouses[TraphouseId].pincode = math.random(1111, 4444) 
+            Config.TrapHouses[TraphouseId].pincode = math.random(11111, 55555) 
         end
 
         if Config.TrapHouses[TraphouseId].keyholders == nil then
@@ -138,7 +136,7 @@ end
 RSCore.Commands.Add("entertraphouse", "Betreed traphouse", {}, false, function(source, args)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
-    print("Command triggerd")
+
     TriggerClientEvent('rs-traphouses:client:EnterTraphouse', src)
 end)
 

@@ -131,7 +131,7 @@ $(document).on('click', '.phone-home-container', function(event){
     event.preventDefault();
 
     if (RS.Phone.Data.currentApplication === null) {
-        RS.Phone.Functions.Close();
+        ();
     } else {
         RS.Phone.Animations.TopSlideUp('.phone-application-container', 400, -160);
         RS.Phone.Animations.TopSlideUp('.'+RS.Phone.Data.currentApplication+"-app", 400, -160);

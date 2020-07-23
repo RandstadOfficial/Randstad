@@ -294,7 +294,7 @@ RegisterNUICallback('success', function()
     if currentRegister ~= 0 then
         lockpick(false)
         TriggerServerEvent('rs-storerobbery:server:setRegisterStatus', currentRegister)
-        local lockpickTime = 50000
+        local lockpickTime = 30000
         LockpickDoorAnim(lockpickTime)
         RSCore.Functions.Progressbar("search_register", "Kassa leeghalen..", lockpickTime, false, true, {
             disableMovement = true,

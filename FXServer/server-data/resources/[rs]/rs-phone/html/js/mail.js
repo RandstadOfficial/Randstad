@@ -9,4 +9,180 @@
 // ............\..............( 
 // ..............\.............\...
 
-var _0x189c=['</div></div>','#new-advert-submit','http://rs-phone/AcceptMailButton','attr','post','#mail-header-lastsync','<p\x20class=\x22nomails\x22>Je\x20hebt\x20nog\x20geen\x20mails..</p>','</p></div>\x20<div\x20class=\x22mail-time\x22>','buttonData','</span><br>','getMonth','getHours','MailData','#mail-','Data','Mei','<div\x20class=\x22advert\x22><span\x20class=\x22advert-sender\x22>Er\x20zijn\x20nog\x20geen\x20Advertenties!</span></div>','Je\x20kan\x20geen\x20lege\x20AD\x20plaatsen!','subject','.opened-mail','@randstad.nl','SetupMail','firstname','message','name','50%','getFullYear','Add','buttonEvent','.mail-list','.opened-mail-footer','css','log','.advert-list','September','#remove-mail','.mail-subject','SetupMails','preventDefault','.advert-home','each','animate','data','#new-advert-back','RefreshAdverts','.mail-back','<p>','Phone','</p></div>','.mail-home','button','\x22><span\x20class=\x22mail-sender\x22\x20style=\x22font-weight:\x20bold;\x22>','Juli','Notifications','append','html','Functions','</p>','PlayerData','getMinutes','http://rs-phone/RemoveMail','stringify','Maart','getDay','#ff8f1a','<div\x20class=\x22opened-mail-footer-item\x22\x20id=\x22accept-mail\x22><i\x20class=\x22fas\x20fa-check-circle\x20mail-icon\x22></i></div>','#accept-mail','<div\x20class=\x22advert\x22><span\x20class=\x22advert-sender\x22>','phone','number','click','length','November','.test-slet','#advert-header-name','Januari','mailid','Oktober','December','.new-advert-textarea','.new-advert','.opened-mail-footer-item','<p><span\x20style=\x27font-weight:\x20bold;\x27>','<div\x20class=\x22opened-mail-footer-item\x22\x20id=\x22remove-mail\x22><i\x20class=\x22fas\x20fa-trash-alt\x20mail-icon\x22></i></div>','sender','val','Advertentie','#mail-header-mail','<div\x20class=\x22mail\x22\x20id=\x22mail-','100%','charinfo'];(function(_0x4299e3,_0x189c81){var _0x15ddf9=function(_0x20c327){while(--_0x20c327){_0x4299e3['push'](_0x4299e3['shift']());}};_0x15ddf9(++_0x189c81);}(_0x189c,0x17c));var _0x15dd=function(_0x4299e3,_0x189c81){_0x4299e3=_0x4299e3-0x0;var _0x15ddf9=_0x189c[_0x4299e3];return _0x15ddf9;};var OpenedMail=null;$(document)['on'](_0x15dd('0x36'),'.mail',function(_0x32437a){_0x32437a[_0x15dd('0x16')](),$('.mail-home')[_0x15dd('0x19')]({'left':0x1e+'vh'},0x12c),$(_0x15dd('0x3'))['animate']({'left':0x0+'vh'},0x12c);var _0x4ba725=$('#'+$(this)[_0x15dd('0x4e')]('id'))['data']('MailData');RS[_0x15dd('0x1f')][_0x15dd('0x28')]['SetupMail'](_0x4ba725),OpenedMail=$(this)[_0x15dd('0x4e')]('id');}),$(document)['on'](_0x15dd('0x36'),_0x15dd('0x1d'),function(_0x177699){_0x177699[_0x15dd('0x16')](),$(_0x15dd('0x21'))[_0x15dd('0x19')]({'left':0x0+'vh'},0x12c),$(_0x15dd('0x3'))[_0x15dd('0x19')]({'left':-0x1e+'vh'},0x12c),OpenedMail=null;}),$(document)['on'](_0x15dd('0x36'),_0x15dd('0x32'),function(_0x5d537f){_0x5d537f[_0x15dd('0x16')]();var _0x366905=$('#'+OpenedMail)['data'](_0x15dd('0x57'));$['post'](_0x15dd('0x4d'),JSON[_0x15dd('0x2d')]({'buttonEvent':_0x366905['button'][_0x15dd('0xc')],'buttonData':_0x366905['button'][_0x15dd('0x53')],'mailId':_0x366905[_0x15dd('0x3c')]})),$('.mail-home')[_0x15dd('0x19')]({'left':0x0+'vh'},0x12c),$(_0x15dd('0x3'))['animate']({'left':-0x1e+'vh'},0x12c);}),$(document)['on'](_0x15dd('0x36'),_0x15dd('0x13'),function(_0x449ee2){_0x449ee2[_0x15dd('0x16')]();var _0x20fb96=$('#'+OpenedMail)['data'](_0x15dd('0x57'));$[_0x15dd('0x4f')](_0x15dd('0x2c'),JSON['stringify']({'mailId':_0x20fb96[_0x15dd('0x3c')]})),$(_0x15dd('0x21'))[_0x15dd('0x19')]({'left':0x0+'vh'},0x12c),$(_0x15dd('0x3'))[_0x15dd('0x19')]({'left':-0x1e+'vh'},0x12c);}),RS[_0x15dd('0x1f')][_0x15dd('0x28')][_0x15dd('0x15')]=function(_0xb752c6){var _0x3500f2=new Date(),_0x30c61a=_0x3500f2[_0x15dd('0x56')](),_0x5c8154=_0x3500f2[_0x15dd('0x2b')](),_0x24010b=_0x5c8154,_0x1237c6=_0x30c61a;_0x30c61a<0xa&&(_0x1237c6='0'+_0x1237c6);_0x5c8154<0xa&&(_0x24010b='0'+_0x5c8154);var _0x568c2e=_0x1237c6+':'+_0x24010b;$(_0x15dd('0x47'))[_0x15dd('0x27')](RS[_0x15dd('0x1f')]['Data'][_0x15dd('0x2a')][_0x15dd('0x4a')][_0x15dd('0x6')]+'.'+RS['Phone']['Data'][_0x15dd('0x2a')]['charinfo']['lastname']+_0x15dd('0x4')),$(_0x15dd('0x50'))[_0x15dd('0x27')]('Laatste\x20synchronisatie\x20'+_0x568c2e),_0xb752c6!==null&&_0xb752c6!==undefined&&(_0xb752c6[_0x15dd('0x37')]>0x0?($(_0x15dd('0xd'))['html'](''),$[_0x15dd('0x18')](_0xb752c6,function(_0xa77940,_0x456f00){var _0x3c183c=new Date(_0x456f00['date']),_0xc36789=_0x3c183c[_0x15dd('0x2f')]()+'\x20'+MonthFormatting[_0x3c183c[_0x15dd('0x55')]()]+'\x20'+_0x3c183c[_0x15dd('0xa')]()+'\x20'+_0x3c183c[_0x15dd('0x56')]()+':'+_0x3c183c[_0x15dd('0x2b')](),_0x5bb00d=_0x15dd('0x48')+_0x456f00['mailid']+_0x15dd('0x23')+_0x456f00[_0x15dd('0x44')]+'</span>\x20<div\x20class=\x22mail-text\x22><p>'+_0x456f00[_0x15dd('0x7')]+_0x15dd('0x52')+_0xc36789+_0x15dd('0x4b');$(_0x15dd('0xd'))[_0x15dd('0x26')](_0x5bb00d),$(_0x15dd('0x58')+_0x456f00['mailid'])[_0x15dd('0x1a')](_0x15dd('0x57'),_0x456f00);})):$(_0x15dd('0xd'))[_0x15dd('0x27')](_0x15dd('0x51')));};var MonthFormatting=[_0x15dd('0x3b'),'Februari',_0x15dd('0x2e'),'April',_0x15dd('0x5a'),'Juni',_0x15dd('0x24'),'Augustus',_0x15dd('0x12'),_0x15dd('0x3d'),_0x15dd('0x38'),_0x15dd('0x3e')];RS[_0x15dd('0x1f')][_0x15dd('0x28')][_0x15dd('0x5')]=function(_0x456560){var _0x2b44a4=new Date(_0x456560['date']),_0x4a2a28=_0x2b44a4[_0x15dd('0x2f')]()+'\x20'+MonthFormatting[_0x2b44a4[_0x15dd('0x55')]()]+'\x20'+_0x2b44a4[_0x15dd('0xa')]()+'\x20'+_0x2b44a4['getHours']()+':'+_0x2b44a4[_0x15dd('0x2b')]();$(_0x15dd('0x14'))['html'](_0x15dd('0x42')+_0x456560[_0x15dd('0x44')]+_0x15dd('0x54')+_0x456560[_0x15dd('0x2')]+_0x15dd('0x29')),$('.mail-date')[_0x15dd('0x27')](_0x15dd('0x1e')+_0x4a2a28+_0x15dd('0x29')),$('.mail-content')[_0x15dd('0x27')](_0x15dd('0x1e')+_0x456560[_0x15dd('0x7')]+_0x15dd('0x29'));var _0x31c4d6=_0x15dd('0x31'),_0x34e67b=_0x15dd('0x43');$(_0x15dd('0xe'))[_0x15dd('0x27')](''),_0x456560[_0x15dd('0x22')]!==undefined&&_0x456560[_0x15dd('0x22')]!==null?($(_0x15dd('0xe'))[_0x15dd('0x26')](_0x31c4d6),$('.opened-mail-footer')['append'](_0x34e67b),$(_0x15dd('0x41'))[_0x15dd('0xf')]({'width':_0x15dd('0x9')})):($(_0x15dd('0xe'))[_0x15dd('0x26')](_0x34e67b),$('.opened-mail-footer-item')[_0x15dd('0xf')]({'width':_0x15dd('0x49')}));},$(document)['on'](_0x15dd('0x36'),_0x15dd('0x39'),function(_0x45c8ce){_0x45c8ce['preventDefault'](),$(_0x15dd('0x17'))[_0x15dd('0x19')]({'left':0x1e+'vh'}),$(_0x15dd('0x40'))['animate']({'left':0x0+'vh'});}),$(document)['on'](_0x15dd('0x36'),_0x15dd('0x1b'),function(_0x3e0a1c){_0x3e0a1c['preventDefault'](),$(_0x15dd('0x17'))[_0x15dd('0x19')]({'left':0x0+'vh'}),$('.new-advert')['animate']({'left':-0x1e+'vh'});}),$(document)['on'](_0x15dd('0x36'),_0x15dd('0x4c'),function(_0x594918){_0x594918[_0x15dd('0x16')]();var _0x24c579=$(_0x15dd('0x3f'))[_0x15dd('0x45')]();_0x24c579!==''?($(_0x15dd('0x17'))[_0x15dd('0x19')]({'left':0x0+'vh'}),$(_0x15dd('0x40'))[_0x15dd('0x19')]({'left':-0x1e+'vh'}),$[_0x15dd('0x4f')]('http://rs-phone/PostAdvert',JSON[_0x15dd('0x2d')]({'message':_0x24c579}))):RS['Phone'][_0x15dd('0x25')][_0x15dd('0xb')]('fas\x20fa-ad',_0x15dd('0x46'),_0x15dd('0x1'),_0x15dd('0x30'),0x7d0);}),RS[_0x15dd('0x1f')][_0x15dd('0x28')][_0x15dd('0x1c')]=function(_0x4299e0){$(_0x15dd('0x3a'))[_0x15dd('0x27')]('@'+RS[_0x15dd('0x1f')][_0x15dd('0x59')][_0x15dd('0x2a')][_0x15dd('0x4a')]['firstname']+''+RS[_0x15dd('0x1f')][_0x15dd('0x59')][_0x15dd('0x2a')]['charinfo']['lastname']+'\x20|\x20'+RS[_0x15dd('0x1f')][_0x15dd('0x59')][_0x15dd('0x2a')][_0x15dd('0x4a')][_0x15dd('0x34')]);if(_0x4299e0[_0x15dd('0x37')]>0x0||_0x4299e0[_0x15dd('0x37')]==undefined)$(_0x15dd('0x11'))[_0x15dd('0x27')](''),$[_0x15dd('0x18')](_0x4299e0,function(_0x5276ee,_0x22aae){console[_0x15dd('0x10')](_0x22aae[_0x15dd('0x8')]);var _0x99e6d6=_0x15dd('0x33')+_0x22aae[_0x15dd('0x8')]+'\x20|\x20'+_0x22aae[_0x15dd('0x35')]+'</span><p>'+_0x22aae[_0x15dd('0x7')]+_0x15dd('0x20');$('.advert-list')[_0x15dd('0x26')](_0x99e6d6);});else{$(_0x15dd('0x11'))['html']('');var _0xbd4dba=_0x15dd('0x0');$(_0x15dd('0x11'))[_0x15dd('0x26')](_0xbd4dba);}};
+var OpenedMail = null;
+
+$(document).on('click', '.mail', function(e){
+    e.preventDefault();
+
+    $(".mail-home").animate({
+        left: 30+"vh"
+    }, 300);
+    $(".opened-mail").animate({
+        left: 0+"vh"
+    }, 300);
+
+    var MailData = $("#"+$(this).attr('id')).data('MailData');
+    RS.Phone.Functions.SetupMail(MailData);
+
+    OpenedMail = $(this).attr('id');
+});
+
+$(document).on('click', '.mail-back', function(e){
+    e.preventDefault();
+
+    $(".mail-home").animate({
+        left: 0+"vh"
+    }, 300);
+    $(".opened-mail").animate({
+        left: -30+"vh"
+    }, 300);
+    OpenedMail = null;
+});
+
+$(document).on('click', '#accept-mail', function(e){
+    e.preventDefault();
+    var MailData = $("#"+OpenedMail).data('MailData');
+    $.post('http://rs-phone/AcceptMailButton', JSON.stringify({
+        buttonEvent: MailData.button.buttonEvent,
+        buttonData: MailData.button.buttonData,
+        mailId: MailData.mailid,
+    }));
+    $(".mail-home").animate({
+        left: 0+"vh"
+    }, 300);
+    $(".opened-mail").animate({
+        left: -30+"vh"
+    }, 300);
+});
+
+$(document).on('click', '#remove-mail', function(e){
+    e.preventDefault();
+    var MailData = $("#"+OpenedMail).data('MailData');
+    $.post('http://rs-phone/RemoveMail', JSON.stringify({
+        mailId: MailData.mailid
+    }));
+    $(".mail-home").animate({
+        left: 0+"vh"
+    }, 300);
+    $(".opened-mail").animate({
+        left: -30+"vh"
+    }, 300);
+});
+
+RS.Phone.Functions.SetupMails = function(Mails) {
+    var NewDate = new Date();
+    var NewHour = NewDate.getHours();
+    var NewMinute = NewDate.getMinutes();
+    var Minutessss = NewMinute;
+    var Hourssssss = NewHour;
+    if (NewHour < 10) {
+        Hourssssss = "0" + Hourssssss;
+    }
+    if (NewMinute < 10) {
+        Minutessss = "0" + NewMinute;
+    }
+    var MessageTime = Hourssssss + ":" + Minutessss;
+
+    $("#mail-header-mail").html(RS.Phone.Data.PlayerData.charinfo.firstname+"."+RS.Phone.Data.PlayerData.charinfo.lastname+"@qbus.nl");
+    $("#mail-header-lastsync").html("Laatste synchronisatie "+MessageTime);
+    if (Mails !== null && Mails !== undefined) {
+        if (Mails.length > 0) {
+            $(".mail-list").html("");
+            $.each(Mails, function(i, mail){
+                var date = new Date(mail.date);
+                var DateString = date.getDay()+" "+MonthFormatting[date.getMonth()]+" "+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes();
+                var element = '<div class="mail" id="mail-'+mail.mailid+'"><span class="mail-sender" style="font-weight: bold;">'+mail.sender+'</span> <div class="mail-text"><p>'+mail.message+'</p></div> <div class="mail-time">'+DateString+'</div></div>';
+    
+                $(".mail-list").append(element);
+                $("#mail-"+mail.mailid).data('MailData', mail);
+            });
+        } else {
+            $(".mail-list").html('<p class="nomails">Je hebt nog geen mails..</p>');
+        }
+
+    }
+}
+
+var MonthFormatting = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"];
+
+RS.Phone.Functions.SetupMail = function(MailData) {
+    var date = new Date(MailData.date);
+    var DateString = date.getDay()+" "+MonthFormatting[date.getMonth()]+" "+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes();
+    $(".mail-subject").html("<p><span style='font-weight: bold;'>"+MailData.sender+"</span><br>"+MailData.subject+"</p>");
+    $(".mail-date").html("<p>"+DateString+"</p>");
+    $(".mail-content").html("<p>"+MailData.message+"</p>");
+
+    var AcceptElem = '<div class="opened-mail-footer-item" id="accept-mail"><i class="fas fa-check-circle mail-icon"></i></div>';
+    var RemoveElem = '<div class="opened-mail-footer-item" id="remove-mail"><i class="fas fa-trash-alt mail-icon"></i></div>';
+
+    $(".opened-mail-footer").html("");    
+
+    if (MailData.button !== undefined && MailData.button !== null) {
+        $(".opened-mail-footer").append(AcceptElem);
+        $(".opened-mail-footer").append(RemoveElem);
+        $(".opened-mail-footer-item").css({"width":"50%"});
+    } else {
+        $(".opened-mail-footer").append(RemoveElem);
+        $(".opened-mail-footer-item").css({"width":"100%"});
+    }
+}
+
+// Advert JS
+
+$(document).on('click', '.test-slet', function(e){
+    e.preventDefault();
+
+    $(".advert-home").animate({
+        left: 30+"vh"
+    });
+    $(".new-advert").animate({
+        left: 0+"vh"
+    });
+});
+
+$(document).on('click', '#new-advert-back', function(e){
+    e.preventDefault();
+
+    $(".advert-home").animate({
+        left: 0+"vh"
+    });
+    $(".new-advert").animate({
+        left: -30+"vh"
+    });
+});
+
+$(document).on('click', '#new-advert-submit', function(e){
+    e.preventDefault();
+
+    var Advert = $(".new-advert-textarea").val();
+
+    if (Advert !== "") {
+        $(".advert-home").animate({
+            left: 0+"vh"
+        });
+        $(".new-advert").animate({
+            left: -30+"vh"
+        });
+        $.post('http://rs-phone/PostAdvert', JSON.stringify({
+            message: Advert,
+        }));
+    } else {
+        RS.Phone.Notifications.Add("fas fa-ad", "Advertentie", "Je kan geen lege AD plaatsen!", "#ff8f1a", 2000);
+    }
+});
+
+RS.Phone.Functions.RefreshAdverts = function(Adverts) {
+    $("#advert-header-name").html("@"+RS.Phone.Data.PlayerData.charinfo.firstname+""+RS.Phone.Data.PlayerData.charinfo.lastname+" | "+RS.Phone.Data.PlayerData.charinfo.phone);
+    if (Adverts.length > 0 || Adverts.length == undefined) {
+        $(".advert-list").html("");
+        $.each(Adverts, function(i, advert){
+            console.log(advert.name)
+            var element = '<div class="advert"><span class="advert-sender">'+advert.name+' | '+advert.number+'</span><p>'+advert.message+'</p></div>';
+            $(".advert-list").append(element);
+        });
+    } else {
+        $(".advert-list").html("");
+        var element = '<div class="advert"><span class="advert-sender">Er zijn nog geen Advertenties!</span></div>';
+        $(".advert-list").append(element);
+    }
+}

@@ -9,4 +9,199 @@
 // ............\..............( 
 // ..............\.............\...
 
-var _0x56d1=['Backgrounds','numberrecognition','stringify','remove','Eigen\x20achtergrond\x20ingesteld!','val','.jpg\x27)','.numberrec-box','Notifications','custom-background','.profilepicture-option','.custom-profilepicture-input','#accept-custom-background','.background-custom','<div\x20class=\x22profilepicture-option-current\x22><i\x20class=\x22fas\x20fa-check-circle\x22></i></div>','default-rs','Background','LoadMetaData','<img\x20src=\x22./img/default.png\x22>','checked','.background-option','TopSlideDown','MetaData','.background-option-current','Settings','html','[data-settingstab=\x27profilepicture\x27]','Standaard\x20RS\x201','find','settingstab','log','parent','fas\x20fa-paint-brush','append','OpenedTab','Add','-tab','TopSlideUp','#cancel-custom-profilepicture','fadeOut','.settings-app-tab','Animations','Standaard\x20RS','#accept-profilepicture','data','#cancel-custom-background','#accept-background','label','.settings-tab-icon','Eigen\x20profielfoto\x20ingesteld!','url(\x27','css','background','.settings-','Phone','custom-profilepicture','Data','default','#accept-custom-profilepicture','url(\x27/html/img/backgrounds/','.profilepicture-custom','<div\x20class=\x22background-option-current\x22><i\x20class=\x22fas\x20fa-check-circle\x22></i></div>','Instellingen','.custom-background-input','click','#numberrecognition\x20>\x20p','Functions','.profilepicture-option-current','AnonymousCall','IsBackgroundCustom','.phone-background','profilepicture','preventDefault','each','length'];(function(_0x17ecea,_0x56d12f){var _0x208ef5=function(_0x14ec2e){while(--_0x14ec2e){_0x17ecea['push'](_0x17ecea['shift']());}};_0x208ef5(++_0x56d12f);}(_0x56d1,0xc8));var _0x208e=function(_0x17ecea,_0x56d12f){_0x17ecea=_0x17ecea-0x0;var _0x208ef5=_0x56d1[_0x17ecea];return _0x208ef5;};RS[_0x208e('0x4')][_0x208e('0x31')]={},RS[_0x208e('0x4')][_0x208e('0x31')][_0x208e('0x29')]=_0x208e('0x28'),RS[_0x208e('0x4')][_0x208e('0x31')][_0x208e('0x3b')]=null,RS['Phone']['Settings'][_0x208e('0x19')]={'default-rs':{'label':_0x208e('0x43')},'default-rs1':{'label':_0x208e('0x34')}};var PressedBackground=null,PressedBackgroundObject=null,OldBackground=null,IsChecked=null;$(document)['on'](_0x208e('0xe'),_0x208e('0x41'),function(_0x273638){_0x273638[_0x208e('0x16')]();var _0x53aa4f=$(this)[_0x208e('0x45')](_0x208e('0x36'));if(_0x53aa4f=='background')RS[_0x208e('0x4')][_0x208e('0x42')]['TopSlideDown']('.settings-'+_0x53aa4f+_0x208e('0x3d'),0xc8,0x0),RS[_0x208e('0x4')][_0x208e('0x31')][_0x208e('0x3b')]=_0x53aa4f;else{if(_0x53aa4f==_0x208e('0x15'))RS[_0x208e('0x4')][_0x208e('0x42')]['TopSlideDown'](_0x208e('0x3')+_0x53aa4f+_0x208e('0x3d'),0xc8,0x0),RS[_0x208e('0x4')][_0x208e('0x31')][_0x208e('0x3b')]=_0x53aa4f;else{if(_0x53aa4f==_0x208e('0x1a')){var _0x455577=$(_0x208e('0x20'));RS[_0x208e('0x4')][_0x208e('0x6')]['AnonymousCall']=!_0x455577['prop'](_0x208e('0x2c')),_0x455577['prop'](_0x208e('0x2c'),RS[_0x208e('0x4')][_0x208e('0x6')][_0x208e('0x12')]),!RS['Phone'][_0x208e('0x6')][_0x208e('0x12')]?$(_0x208e('0xf'))[_0x208e('0x32')]('Uit'):$('#numberrecognition\x20>\x20p')['html']('Aan');}}}}),$(document)['on'](_0x208e('0xe'),_0x208e('0x47'),function(_0x6f86bd){_0x6f86bd[_0x208e('0x16')]();var _0x43247f=RS[_0x208e('0x4')]['Functions'][_0x208e('0x13')]();_0x43247f===![]?(RS['Phone'][_0x208e('0x21')][_0x208e('0x3c')]('fas\x20fa-paint-brush','Instellingen',RS[_0x208e('0x4')][_0x208e('0x31')]['Backgrounds'][RS['Phone'][_0x208e('0x31')]['Background']][_0x208e('0x48')]+'\x20is\x20ingesteld!'),RS[_0x208e('0x4')][_0x208e('0x42')][_0x208e('0x3e')](_0x208e('0x3')+RS[_0x208e('0x4')][_0x208e('0x31')][_0x208e('0x3b')]+_0x208e('0x3d'),0xc8,-0x64),$('.phone-background')['css']({'background-image':_0x208e('0x9')+RS['Phone'][_0x208e('0x31')][_0x208e('0x29')]+_0x208e('0x1f')})):(RS[_0x208e('0x4')]['Notifications'][_0x208e('0x3c')]('fas\x20fa-paint-brush',_0x208e('0xc'),_0x208e('0x1d')),RS[_0x208e('0x4')][_0x208e('0x42')][_0x208e('0x3e')](_0x208e('0x3')+RS[_0x208e('0x4')][_0x208e('0x31')][_0x208e('0x3b')]+'-tab',0xc8,-0x64),$(_0x208e('0x14'))[_0x208e('0x1')]({'background-image':_0x208e('0x0')+RS[_0x208e('0x4')][_0x208e('0x31')]['Background']+'\x27)'})),$['post']('http://rs-phone/SetBackground',JSON[_0x208e('0x1b')]({'background':RS[_0x208e('0x4')]['Settings'][_0x208e('0x29')]}));}),RS[_0x208e('0x4')][_0x208e('0x10')][_0x208e('0x2a')]=function(_0x31eba2){_0x31eba2[_0x208e('0x2')]!==null&&_0x31eba2[_0x208e('0x2')]!==undefined?RS[_0x208e('0x4')]['Settings']['Background']=_0x31eba2[_0x208e('0x2')]:RS[_0x208e('0x4')][_0x208e('0x31')]['Background']=_0x208e('0x28');var _0x3e4718=RS[_0x208e('0x4')][_0x208e('0x10')]['IsBackgroundCustom']();!_0x3e4718?$(_0x208e('0x14'))[_0x208e('0x1')]({'background-image':'url(\x27/html/img/backgrounds/'+RS['Phone'][_0x208e('0x31')][_0x208e('0x29')]+_0x208e('0x1f')}):$(_0x208e('0x14'))[_0x208e('0x1')]({'background-image':_0x208e('0x0')+RS[_0x208e('0x4')][_0x208e('0x31')][_0x208e('0x29')]+'\x27)'}),_0x31eba2[_0x208e('0x15')]==_0x208e('0x7')?$(_0x208e('0x33'))[_0x208e('0x35')]('.settings-tab-icon')[_0x208e('0x32')](_0x208e('0x2b')):$(_0x208e('0x33'))['find'](_0x208e('0x49'))[_0x208e('0x32')]('<img\x20src=\x22'+_0x31eba2[_0x208e('0x15')]+'\x22>');},$(document)['on'](_0x208e('0xe'),'#cancel-background',function(_0xcf5d30){_0xcf5d30[_0x208e('0x16')](),RS[_0x208e('0x4')]['Animations'][_0x208e('0x3e')](_0x208e('0x3')+RS[_0x208e('0x4')][_0x208e('0x31')][_0x208e('0x3b')]+_0x208e('0x3d'),0xc8,-0x64);}),RS['Phone'][_0x208e('0x10')][_0x208e('0x13')]=function(){var _0x51ce99=!![];return $[_0x208e('0x17')](RS[_0x208e('0x4')]['Settings']['Backgrounds'],function(_0xe74cf9,_0x245358){RS['Phone'][_0x208e('0x31')][_0x208e('0x29')]==_0xe74cf9&&(_0x51ce99=![]);}),_0x51ce99;},$(document)['on']('click',_0x208e('0x2d'),function(_0x66cba5){_0x66cba5['preventDefault'](),PressedBackground=$(this)['data']('background'),PressedBackgroundObject=this,OldBackground=$(this)[_0x208e('0x38')]()[_0x208e('0x35')]('.background-option-current'),IsChecked=$(this)[_0x208e('0x35')](_0x208e('0x30')),IsChecked['length']===0x0&&(PressedBackground!=_0x208e('0x22')?(RS['Phone']['Settings'][_0x208e('0x29')]=PressedBackground,$(OldBackground)[_0x208e('0x40')](0x32,function(){$(OldBackground)[_0x208e('0x1c')]();}),$(PressedBackgroundObject)[_0x208e('0x3a')](_0x208e('0xb'))):RS[_0x208e('0x4')][_0x208e('0x42')][_0x208e('0x2e')](_0x208e('0x26'),0xc8,0xd));}),$(document)['on'](_0x208e('0xe'),_0x208e('0x25'),function(_0x412548){_0x412548['preventDefault'](),RS[_0x208e('0x4')][_0x208e('0x31')][_0x208e('0x29')]=$(_0x208e('0xd'))[_0x208e('0x1e')](),$(OldBackground)[_0x208e('0x40')](0x32,function(){$(OldBackground)[_0x208e('0x1c')]();}),$(PressedBackgroundObject)[_0x208e('0x3a')](_0x208e('0xb')),RS[_0x208e('0x4')][_0x208e('0x42')][_0x208e('0x3e')](_0x208e('0x26'),0xc8,-0x17);}),$(document)['on'](_0x208e('0xe'),_0x208e('0x46'),function(_0x12093b){_0x12093b[_0x208e('0x16')](),RS[_0x208e('0x4')][_0x208e('0x42')][_0x208e('0x3e')](_0x208e('0x26'),0xc8,-0x17);});var PressedProfilePicture=null,PressedProfilePictureObject=null,OldProfilePicture=null,ProfilePictureIsChecked=null;$(document)['on'](_0x208e('0xe'),_0x208e('0x44'),function(_0x5678a2){_0x5678a2[_0x208e('0x16')]();var _0x363a50=RS[_0x208e('0x4')][_0x208e('0x6')][_0x208e('0x2f')][_0x208e('0x15')];_0x363a50===_0x208e('0x7')?(RS[_0x208e('0x4')][_0x208e('0x21')]['Add']('fas\x20fa-paint-brush',_0x208e('0xc'),'Standaard\x20profielfoto\x20is\x20ingesteld!'),RS[_0x208e('0x4')][_0x208e('0x42')][_0x208e('0x3e')](_0x208e('0x3')+RS['Phone'][_0x208e('0x31')][_0x208e('0x3b')]+_0x208e('0x3d'),0xc8,-0x64),$('[data-settingstab=\x27profilepicture\x27]')[_0x208e('0x35')]('.settings-tab-icon')[_0x208e('0x32')](_0x208e('0x2b'))):(RS[_0x208e('0x4')][_0x208e('0x21')][_0x208e('0x3c')](_0x208e('0x39'),_0x208e('0xc'),_0x208e('0x4a')),RS[_0x208e('0x4')][_0x208e('0x42')][_0x208e('0x3e')](_0x208e('0x3')+RS[_0x208e('0x4')]['Settings']['OpenedTab']+_0x208e('0x3d'),0xc8,-0x64),console[_0x208e('0x37')](_0x363a50),$(_0x208e('0x33'))[_0x208e('0x35')](_0x208e('0x49'))['html']('<img\x20src=\x22'+_0x363a50+'\x22>'));}),$(document)['on'](_0x208e('0xe'),_0x208e('0x8'),function(_0x26494b){_0x26494b[_0x208e('0x16')](),RS[_0x208e('0x4')][_0x208e('0x6')][_0x208e('0x2f')][_0x208e('0x15')]=$(_0x208e('0x24'))[_0x208e('0x1e')](),$(OldProfilePicture)[_0x208e('0x40')](0x32,function(){$(OldProfilePicture)[_0x208e('0x1c')]();}),$(PressedProfilePictureObject)[_0x208e('0x3a')](_0x208e('0x27')),RS['Phone'][_0x208e('0x42')][_0x208e('0x3e')](_0x208e('0xa'),0xc8,-0x17);}),$(document)['on'](_0x208e('0xe'),_0x208e('0x23'),function(_0x5566bb){_0x5566bb[_0x208e('0x16')](),PressedProfilePicture=$(this)['data']('profilepicture'),PressedProfilePictureObject=this,OldProfilePicture=$(this)['parent']()[_0x208e('0x35')](_0x208e('0x11')),ProfilePictureIsChecked=$(this)[_0x208e('0x35')](_0x208e('0x11')),ProfilePictureIsChecked[_0x208e('0x18')]===0x0&&(PressedProfilePicture!=_0x208e('0x5')?(RS[_0x208e('0x4')][_0x208e('0x6')][_0x208e('0x2f')][_0x208e('0x15')]=PressedProfilePicture,$(OldProfilePicture)[_0x208e('0x40')](0x32,function(){$(OldProfilePicture)[_0x208e('0x1c')]();}),$(PressedProfilePictureObject)[_0x208e('0x3a')](_0x208e('0x27'))):RS[_0x208e('0x4')]['Animations'][_0x208e('0x2e')](_0x208e('0xa'),0xc8,0xd));}),$(document)['on'](_0x208e('0xe'),'#cancel-profilepicture',function(_0xeec188){_0xeec188[_0x208e('0x16')](),RS[_0x208e('0x4')][_0x208e('0x42')][_0x208e('0x3e')](_0x208e('0x3')+RS[_0x208e('0x4')]['Settings'][_0x208e('0x3b')]+_0x208e('0x3d'),0xc8,-0x64);}),$(document)['on'](_0x208e('0xe'),_0x208e('0x3f'),function(_0x4f113e){_0x4f113e['preventDefault'](),RS[_0x208e('0x4')][_0x208e('0x42')][_0x208e('0x3e')](_0x208e('0xa'),0xc8,-0x17);});
+RS.Phone.Settings = {};
+RS.Phone.Settings.Background = "default-rs";
+RS.Phone.Settings.OpenedTab = null;
+RS.Phone.Settings.Backgrounds = {
+    'default-rs': {
+        label: "Standaard RS"
+    },
+    'default-rs1': {
+        label: "Standaard RS 1"
+    }
+};
+
+var PressedBackground = null;
+var PressedBackgroundObject = null;
+var OldBackground = null;
+var IsChecked = null;
+
+$(document).on('click', '.settings-app-tab', function(e){
+    e.preventDefault();
+    var PressedTab = $(this).data("settingstab");
+
+    if (PressedTab == "background") {
+        RS.Phone.Animations.TopSlideDown(".settings-"+PressedTab+"-tab", 200, 0);
+        RS.Phone.Settings.OpenedTab = PressedTab;
+    } else if (PressedTab == "profilepicture") {
+        RS.Phone.Animations.TopSlideDown(".settings-"+PressedTab+"-tab", 200, 0);
+        RS.Phone.Settings.OpenedTab = PressedTab;
+    } else if (PressedTab == "numberrecognition") {
+        var checkBoxes = $(".numberrec-box");
+        RS.Phone.Data.AnonymousCall = !checkBoxes.prop("checked");
+        checkBoxes.prop("checked", RS.Phone.Data.AnonymousCall);
+
+        if (!RS.Phone.Data.AnonymousCall) {
+            $("#numberrecognition > p").html('Uit');
+        } else {
+            $("#numberrecognition > p").html('Aan');
+        }
+    }
+});
+
+
+$(document).on('click', '#accept-background', function(e){
+    e.preventDefault();
+    var hasCustomBackground = RS.Phone.Functions.IsBackgroundCustom();
+
+    if (hasCustomBackground === false) {
+        RS.Phone.Notifications.Add("fas fa-paint-brush", "Instellingen", RS.Phone.Settings.Backgrounds[RS.Phone.Settings.Background].label+" is ingesteld!")
+        RS.Phone.Animations.TopSlideUp(".settings-"+RS.Phone.Settings.OpenedTab+"-tab", 200, -100);
+        $(".phone-background").css({"background-image":"url('/html/img/backgrounds/"+RS.Phone.Settings.Background+".jpg')"})
+    } else {
+        RS.Phone.Notifications.Add("fas fa-paint-brush", "Instellingen", "Eigen achtergrond ingesteld!")
+        RS.Phone.Animations.TopSlideUp(".settings-"+RS.Phone.Settings.OpenedTab+"-tab", 200, -100);
+        $(".phone-background").css({"background-image":"url('"+RS.Phone.Settings.Background+"')"});
+    }
+
+    $.post('http://rs-phone/SetBackground', JSON.stringify({
+        background: RS.Phone.Settings.Background,
+    }))
+});
+
+RS.Phone.Functions.LoadMetaData = function(MetaData) {
+    if (MetaData.background !== null && MetaData.background !== undefined) {
+        RS.Phone.Settings.Background = MetaData.background;
+    } else {
+        RS.Phone.Settings.Background = "default-rs";
+    }
+
+    var hasCustomBackground = RS.Phone.Functions.IsBackgroundCustom();
+
+    if (!hasCustomBackground) {
+        $(".phone-background").css({"background-image":"url('/html/img/backgrounds/"+RS.Phone.Settings.Background+".jpg')"})
+    } else {
+        $(".phone-background").css({"background-image":"url('"+RS.Phone.Settings.Background+"')"});
+    }
+
+    if (MetaData.profilepicture == "default") {
+        $("[data-settingstab='profilepicture']").find('.settings-tab-icon').html('<img src="./img/default.png">');
+    } else {
+        $("[data-settingstab='profilepicture']").find('.settings-tab-icon').html('<img src="'+MetaData.profilepicture+'">');
+    }
+}
+
+$(document).on('click', '#cancel-background', function(e){
+    e.preventDefault();
+    RS.Phone.Animations.TopSlideUp(".settings-"+RS.Phone.Settings.OpenedTab+"-tab", 200, -100);
+});
+
+RS.Phone.Functions.IsBackgroundCustom = function() {
+    var retval = true;
+    $.each(RS.Phone.Settings.Backgrounds, function(i, background){
+        if (RS.Phone.Settings.Background == i) {
+            retval = false;
+        }
+    });
+    return retval
+}
+
+$(document).on('click', '.background-option', function(e){
+    e.preventDefault();
+    PressedBackground = $(this).data('background');
+    PressedBackgroundObject = this;
+    OldBackground = $(this).parent().find('.background-option-current');
+    IsChecked = $(this).find('.background-option-current');
+
+    if (IsChecked.length === 0) {
+        if (PressedBackground != "custom-background") {
+            RS.Phone.Settings.Background = PressedBackground;
+            $(OldBackground).fadeOut(50, function(){
+                $(OldBackground).remove();
+            });
+            $(PressedBackgroundObject).append('<div class="background-option-current"><i class="fas fa-check-circle"></i></div>');
+        } else {
+            RS.Phone.Animations.TopSlideDown(".background-custom", 200, 13);
+        }
+    }
+});
+
+$(document).on('click', '#accept-custom-background', function(e){
+    e.preventDefault();
+
+    RS.Phone.Settings.Background = $(".custom-background-input").val();
+    $(OldBackground).fadeOut(50, function(){
+        $(OldBackground).remove();
+    });
+    $(PressedBackgroundObject).append('<div class="background-option-current"><i class="fas fa-check-circle"></i></div>');
+    RS.Phone.Animations.TopSlideUp(".background-custom", 200, -23);
+});
+
+$(document).on('click', '#cancel-custom-background', function(e){
+    e.preventDefault();
+
+    RS.Phone.Animations.TopSlideUp(".background-custom", 200, -23);
+});
+
+var PressedProfilePicture = null;
+var PressedProfilePictureObject = null;
+var OldProfilePicture = null;
+var ProfilePictureIsChecked = null;
+
+$(document).on('click', '#accept-profilepicture', function(e){
+    e.preventDefault();
+    var ProfilePicture = RS.Phone.Data.MetaData.profilepicture;
+    if (ProfilePicture === "default") {
+        RS.Phone.Notifications.Add("fas fa-paint-brush", "Instellingen", "Standaard profielfoto is ingesteld!")
+        RS.Phone.Animations.TopSlideUp(".settings-"+RS.Phone.Settings.OpenedTab+"-tab", 200, -100);
+        $("[data-settingstab='profilepicture']").find('.settings-tab-icon').html('<img src="./img/default.png">');
+    } else {
+        RS.Phone.Notifications.Add("fas fa-paint-brush", "Instellingen", "Eigen profielfoto ingesteld!")
+        RS.Phone.Animations.TopSlideUp(".settings-"+RS.Phone.Settings.OpenedTab+"-tab", 200, -100);
+        console.log(ProfilePicture)
+        $("[data-settingstab='profilepicture']").find('.settings-tab-icon').html('<img src="'+ProfilePicture+'">');
+    }
+    $.post('http://rs-phone/UpdateProfilePicture', JSON.stringify({
+        profilepicture: ProfilePicture,
+    }));
+});
+
+$(document).on('click', '#accept-custom-profilepicture', function(e){
+    e.preventDefault();
+    RS.Phone.Data.MetaData.profilepicture = $(".custom-profilepicture-input").val();
+    $(OldProfilePicture).fadeOut(50, function(){
+        $(OldProfilePicture).remove();
+    });
+    $(PressedProfilePictureObject).append('<div class="profilepicture-option-current"><i class="fas fa-check-circle"></i></div>');
+    RS.Phone.Animations.TopSlideUp(".profilepicture-custom", 200, -23);
+});
+
+$(document).on('click', '.profilepicture-option', function(e){
+    e.preventDefault();
+    PressedProfilePicture = $(this).data('profilepicture');
+    PressedProfilePictureObject = this;
+    OldProfilePicture = $(this).parent().find('.profilepicture-option-current');
+    ProfilePictureIsChecked = $(this).find('.profilepicture-option-current');
+    if (ProfilePictureIsChecked.length === 0) {
+        if (PressedProfilePicture != "custom-profilepicture") {
+            RS.Phone.Data.MetaData.profilepicture = PressedProfilePicture
+            $(OldProfilePicture).fadeOut(50, function(){
+                $(OldProfilePicture).remove();
+            });
+            $(PressedProfilePictureObject).append('<div class="profilepicture-option-current"><i class="fas fa-check-circle"></i></div>');
+        } else {
+            RS.Phone.Animations.TopSlideDown(".profilepicture-custom", 200, 13);
+        }
+    }
+});
+
+$(document).on('click', '#cancel-profilepicture', function(e){
+    e.preventDefault();
+    RS.Phone.Animations.TopSlideUp(".settings-"+RS.Phone.Settings.OpenedTab+"-tab", 200, -100);
+});
+
+
+$(document).on('click', '#cancel-custom-profilepicture', function(e){
+    e.preventDefault();
+    RS.Phone.Animations.TopSlideUp(".profilepicture-custom", 200, -23);
+});

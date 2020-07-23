@@ -9,4 +9,742 @@
 // ............\..............( 
 // ..............\.............\...
 
-var _0x512e=['-app','http://rs-phone/AnswerCall','#incoming-deny','.phone-call-outgoing-caller','fadeOut','#phone-keypad-input','call-notifications-shake','<div\x20class=\x22phone-contact\x22\x20data-contactid=\x22','phonefootertab','addClass','\x20contacten','\x22><div\x20class=\x22phone-contact-avatar\x22\x20style=\x22background-color:\x20#2ecc71;\x22>','In\x20gesprek\x20(','log','<p>','</div><div\x20class=\x22phone-contact-name\x22>','SuggestionData','bank','.phone-contact-list','Dit\x20persoon\x20is\x20niet\x20bereikbaar!','name','http://rs-phone/RemoveSuggestion','outgoing','incoming','http://rs-phone/GetWhatsappChat','Functions','#edit-contact-cancel','Cleared','type','CallActive','.phone-keypad','SetupSuggestedContacts','\x22>\x20<i\x20class=\x22fas\x20fa-plus-square\x22></i>\x20<span\x20class=\x22suggested-name\x22>','iban','http://rs-phone/DeleteContact','LoadContacts','0\x20contacten','.phone-add-contact-number','Je\x20hebt\x20een\x20inkomende\x20oproep\x20van\x20','reverse','#add-contact-cancel','html','.phone-keypad-key','#edit-contact-delete','stringify','#ongoing-cancel','Data','0.0','data','status','default','block','Inkomende\x20oproep','Inkomende\x20Oproep','.whatsapp-chats','ToggleApp','.phone-call-ongoing','.phone-edit-contact-name','.phone-call-app','</div><div\x20class=\x22phone-contact-actions\x22><i\x20class=\x22fas\x20fa-sort-down\x22></i></div><div\x20class=\x22phone-contact-action-buttons\x22>\x20<i\x20class=\x22fas\x20fa-phone-volume\x22\x20id=\x22phone-start-call\x22></i>\x20<i\x20class=\x22fab\x20fa-whatsapp\x22\x20id=\x22new-chat-phone\x22\x20style=\x22font-size:\x202.5vh;\x22></i>\x20<i\x20class=\x22fas\x20fa-user-edit\x22\x20id=\x22edit-contact\x22></i>\x20</div></div>','whatsapp','time','.phone-contact-action-buttons','phone-call','Anoniem','text','.suggested-contact','CallType','4.5vh','InCall','phone-selected-footer-tab','hide','suggestedcontacts','currentApplication','TopSlideUp','Phone','#edit-contact','#phone-plus-icon','.phone-keypad-input','Add','.phone-currentcall-contact','contacts','.phone-add-contact-name','.phone-app-footer','http://rs-phone/CancelOngoingCall','SetupCurrentCall','</div>\x20</div>','find','charAt','.phone-edit-contact-number','ongoing','SetupChatMessages','white','fas\x20fa-phone-volume','met\x20','show','CanCall','Je\x20bent\x20al\x20ingesprek!','TopSlideDown','click','.phone-contact-actions','.call-notifications','.phone-contacts','http://rs-phone/DenyIncomingCall','http://rs-phone/GetWhatsappChats','contactData','anonymous','\x22\x20style=\x22','color:\x20#2ecc71;\x20font-size:\x201.4vh;','[data-phonefootertab=\x22','each','.phone-edit-contact','preventDefault','PlayerData','.phone-currentcall-container','#phone-search-icon','Telefoon','TargetData','toUpperCase','append','number','<div\x20class=\x22phone-recent-call\x22\x20id=\x22recent-','fas\x20fa-phone-slash','none','#outgoing-cancel','1.0','post','remove','keypadvalue','LoadWhatsappChats','parent','.phone-add-contact','[data-contactid=\x27','</div>\x20<div\x20class=\x22phone-recent-call-type\x22><i\x20class=\x22','#incoming-answer','.whatsapp-openedchat','.call-notifications-content','\x22><div\x20class=\x22phone-contact-avatar\x22\x20style=\x22background-color:\x20#e74c3c;\x22>','.call-notifications-title','removeClass','.phone-recent-call','.phone-call-incoming','phone','fas\x20fa-phone','http://rs-phone/AddNewContact','.phone-edit-contact-header','.phone-currentcall-title','</span></span>\x20</div>','http://rs-phone/CallContact','.phone-edit-contact-iban','\x20Bewerken</p>','recent','SetupRecentCalls','recentData','.phone-keypad-key-call','Je\x20wordt\x20door\x20een\x20anoniem\x20nummer\x20gebeld','.phone-app','HeaderTextColor','Notifications','animate','.whatsapp-openedchat-messages','Contact\x20Bewerken','.phone-application-container','.phone-add-contact-iban','.phone-recent','fadeIn','charinfo','#add-contact-save','.suggested-contacts','contactid','Close','Vul\x20alle\x20velden\x20in!','IsOnline','val','.phone-call-incoming-caller','fas\x20fa-exclamation-circle','http://rs-phone/CancelOutgoingCall','.phone-','length','12vh','Je\x20kan\x20niet\x20je\x20eigen\x20nummer\x20bellen!','#suggest-','Animations','Dit\x20persoon\x20is\x20in\x20gesprek!','.phone-call-outgoing','Je\x20kunt\x20jezelf\x20niet\x20appen,\x20sad\x20fuck..','css','http://rs-phone/ClearRecentAlerts','\x22></i></div>\x20<div\x20class=\x22phone-recent-call-time\x22>','Je\x20hebt\x20een\x20anonieme\x20oproep\x20gestart!','.amount-of-suggested-contacts','AnonymousCall','#new-chat-phone'];(function(_0x49419d,_0x512e33){var _0x2f5fe5=function(_0x56b50f){while(--_0x56b50f){_0x49419d['push'](_0x49419d['shift']());}};_0x2f5fe5(++_0x512e33);}(_0x512e,0x198));var _0x2f5f=function(_0x49419d,_0x512e33){_0x49419d=_0x49419d-0x0;var _0x2f5fe5=_0x512e[_0x49419d];return _0x2f5fe5;};var ContactSearchActive=![],CurrentFooterTab=_0x2f5f('0x3b'),CallData={},ClearNumberTimer=null,SelectedSuggestion=null,AmountOfSuggestions=0x0;$(document)['on']('click','.phone-app-footer-button',function(_0x387a32){_0x387a32['preventDefault']();var _0x1b2d1c=$(this)[_0x2f5f('0x1a')](_0x2f5f('0xb3'));if(_0x1b2d1c!==CurrentFooterTab){var _0x3d78f5=$(this)['parent']()[_0x2f5f('0x41')]('[data-phonefootertab=\x22'+CurrentFooterTab+'\x22');$(_0x2f5f('0x3d'))[_0x2f5f('0x41')](_0x2f5f('0x57')+CurrentFooterTab+'\x22')[_0x2f5f('0x75')]('phone-selected-footer-tab'),$(this)[_0x2f5f('0xb4')](_0x2f5f('0x30')),$(_0x2f5f('0x9b')+CurrentFooterTab)[_0x2f5f('0x31')](),$(_0x2f5f('0x9b')+_0x1b2d1c)[_0x2f5f('0x49')]();if(_0x1b2d1c==_0x2f5f('0x81'))$['post'](_0x2f5f('0xa5'));else _0x1b2d1c==_0x2f5f('0x32')&&$[_0x2f5f('0x68')](_0x2f5f('0xa5'));CurrentFooterTab=_0x1b2d1c;}}),$(document)['on'](_0x2f5f('0x4d'),_0x2f5f('0x5d'),function(_0x4763a5){_0x4763a5[_0x2f5f('0x5a')](),!ContactSearchActive?$(_0x2f5f('0x37'))['animate']({'opacity':_0x2f5f('0x19'),'display':_0x2f5f('0x65')},0x96,function(){$('#contact-search')['css']({'display':_0x2f5f('0x1d')})['animate']({'opacity':_0x2f5f('0x67')},0x96);}):$('#contact-search')[_0x2f5f('0x89')]({'opacity':_0x2f5f('0x19')},0x96,function(){$('#contact-search')['css']({'display':_0x2f5f('0x65')}),$(_0x2f5f('0x37'))['animate']({'opacity':'1.0','display':_0x2f5f('0x1d')},0x96);}),ContactSearchActive=!ContactSearchActive;}),RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0x82')]=function(_0x38129e){$('.phone-recent-calls')[_0x2f5f('0x13')](''),_0x38129e=_0x38129e[_0x2f5f('0x11')](),$[_0x2f5f('0x58')](_0x38129e,function(_0x25e8d7,_0x3ee23b){var _0x5a8f96=_0x3ee23b[_0x2f5f('0xbf')]['charAt'](0x0),_0x1e218a=_0x2f5f('0x64'),_0xfa5f1f='color:\x20#e74c3c;';if(_0x3ee23b[_0x2f5f('0x6')]==='outgoing'){_0x1e218a=_0x2f5f('0x47');var _0xfa5f1f=_0x2f5f('0x56');}_0x3ee23b[_0x2f5f('0x54')]&&(_0x5a8f96='A',_0x3ee23b[_0x2f5f('0xbf')]=_0x2f5f('0x2a'));var _0x1df1d9=_0x2f5f('0x63')+_0x25e8d7+'\x22><div\x20class=\x22phone-recent-call-image\x22>'+_0x5a8f96+'</div>\x20<div\x20class=\x22phone-recent-call-name\x22>'+_0x3ee23b[_0x2f5f('0xbf')]+_0x2f5f('0x6f')+_0x1e218a+_0x2f5f('0x55')+_0xfa5f1f+_0x2f5f('0xa6')+_0x3ee23b[_0x2f5f('0x27')]+_0x2f5f('0x40');$('.phone-recent-calls')[_0x2f5f('0x61')](_0x1df1d9),$('#recent-'+_0x25e8d7)[_0x2f5f('0x1a')](_0x2f5f('0x83'),_0x3ee23b);});},$(document)['on']('click',_0x2f5f('0x76'),function(_0x20028c){_0x20028c[_0x2f5f('0x5a')]();var _0x242452=$(this)['attr']('id'),_0x447213=$('#'+_0x242452)['data'](_0x2f5f('0x83'));cData={'number':_0x447213[_0x2f5f('0x62')],'name':_0x447213[_0x2f5f('0xbf')]},console[_0x2f5f('0xb8')](RS[_0x2f5f('0x35')][_0x2f5f('0x18')][_0x2f5f('0xa9')]),$[_0x2f5f('0x68')](_0x2f5f('0x7e'),JSON[_0x2f5f('0x16')]({'ContactData':cData,'Anonymous':RS[_0x2f5f('0x35')][_0x2f5f('0x18')]['AnonymousCall']}),function(_0x545b58){cData[_0x2f5f('0x62')]!==RS[_0x2f5f('0x35')][_0x2f5f('0x18')][_0x2f5f('0x5b')][_0x2f5f('0x90')][_0x2f5f('0x78')]?_0x545b58[_0x2f5f('0x96')]?_0x545b58[_0x2f5f('0x4a')]?!_0x545b58[_0x2f5f('0x2f')]?(RS[_0x2f5f('0x35')][_0x2f5f('0x18')]['AnonymousCall']&&RS[_0x2f5f('0x35')][_0x2f5f('0x88')][_0x2f5f('0x39')](_0x2f5f('0x79'),_0x2f5f('0x5e'),_0x2f5f('0xa7')),$('.phone-call-outgoing')[_0x2f5f('0xa4')]({'display':_0x2f5f('0x1d')}),$(_0x2f5f('0x77'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$(_0x2f5f('0x22'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$(_0x2f5f('0xae'))['html'](cData[_0x2f5f('0xbf')]),RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0x87')](_0x2f5f('0x46'),0x190),RS[_0x2f5f('0x35')][_0x2f5f('0xa0')][_0x2f5f('0x34')](_0x2f5f('0x8c'),0x190,-0xa0),setTimeout(function(){$(_0x2f5f('0x86'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),RS[_0x2f5f('0x35')][_0x2f5f('0xa0')][_0x2f5f('0x4c')](_0x2f5f('0x8c'),0x190,0x0),RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0x21')](_0x2f5f('0x29'),'block');},0x1c2),CallData[_0x2f5f('0xbf')]=cData['name'],CallData[_0x2f5f('0x62')]=cData[_0x2f5f('0x62')],RS[_0x2f5f('0x35')][_0x2f5f('0x18')][_0x2f5f('0x33')]=_0x2f5f('0x29')):RS[_0x2f5f('0x35')][_0x2f5f('0x88')][_0x2f5f('0x39')](_0x2f5f('0x79'),_0x2f5f('0x5e'),'Je\x20bent\x20al\x20ingesprek!'):RS[_0x2f5f('0x35')][_0x2f5f('0x88')][_0x2f5f('0x39')](_0x2f5f('0x79'),_0x2f5f('0x5e'),_0x2f5f('0xa1')):RS[_0x2f5f('0x35')][_0x2f5f('0x88')][_0x2f5f('0x39')](_0x2f5f('0x79'),_0x2f5f('0x5e'),_0x2f5f('0xbe')):RS[_0x2f5f('0x35')][_0x2f5f('0x88')]['Add'](_0x2f5f('0x79'),_0x2f5f('0x5e'),_0x2f5f('0x9e'));});}),$(document)['on'](_0x2f5f('0x4d'),_0x2f5f('0x84'),function(_0x33e9de){_0x33e9de[_0x2f5f('0x5a')]();var _0x2f6051=toString($(_0x2f5f('0x38'))['text']());cData={'number':_0x2f6051,'name':_0x2f6051},$[_0x2f5f('0x68')](_0x2f5f('0x7e'),JSON[_0x2f5f('0x16')]({'ContactData':cData,'Anonymous':RS['Phone'][_0x2f5f('0x18')][_0x2f5f('0xa9')]}),function(_0x42bfc7){cData[_0x2f5f('0x62')]!==RS['Phone'][_0x2f5f('0x18')][_0x2f5f('0x5b')][_0x2f5f('0x90')]['phone']?_0x42bfc7[_0x2f5f('0x96')]?_0x42bfc7[_0x2f5f('0x4a')]?!_0x42bfc7['InCall']?($(_0x2f5f('0xa2'))['css']({'display':_0x2f5f('0x1d')}),$('.phone-call-incoming')[_0x2f5f('0xa4')]({'display':'none'}),$('.phone-call-ongoing')[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$(_0x2f5f('0xae'))['html'](cData[_0x2f5f('0xbf')]),RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0x87')](_0x2f5f('0x46'),0x190),RS[_0x2f5f('0x35')][_0x2f5f('0xa0')][_0x2f5f('0x34')](_0x2f5f('0x8c'),0x190,-0xa0),setTimeout(function(){$(_0x2f5f('0x86'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),RS['Phone'][_0x2f5f('0xa0')][_0x2f5f('0x4c')](_0x2f5f('0x8c'),0x190,0x0),RS['Phone'][_0x2f5f('0x3')][_0x2f5f('0x21')](_0x2f5f('0x29'),_0x2f5f('0x1d'));},0x1c2),CallData['name']=cData['name'],CallData[_0x2f5f('0x62')]=cData['number'],RS['Phone'][_0x2f5f('0x18')][_0x2f5f('0x33')]='phone-call'):RS['Phone'][_0x2f5f('0x88')][_0x2f5f('0x39')](_0x2f5f('0x79'),'Telefoon',_0x2f5f('0x4b')):RS[_0x2f5f('0x35')]['Notifications'][_0x2f5f('0x39')](_0x2f5f('0x79'),_0x2f5f('0x5e'),_0x2f5f('0xa1')):RS[_0x2f5f('0x35')][_0x2f5f('0x88')][_0x2f5f('0x39')](_0x2f5f('0x79'),_0x2f5f('0x5e'),_0x2f5f('0xbe')):RS[_0x2f5f('0x35')]['Notifications'][_0x2f5f('0x39')](_0x2f5f('0x79'),_0x2f5f('0x5e'),_0x2f5f('0x9e'));});}),RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0xd')]=function(_0x35242a){var _0x434b9c=$('.phone-contact-list');$(_0x434b9c)[_0x2f5f('0x13')]('');var _0x2034bd=0x0;$(_0x2f5f('0x50'))[_0x2f5f('0x31')](),$(_0x2f5f('0x8e'))[_0x2f5f('0x31')](),$(_0x2f5f('0x8'))[_0x2f5f('0x31')](),$(_0x2f5f('0x9b')+CurrentFooterTab)[_0x2f5f('0x49')](),console[_0x2f5f('0xb8')](_0x35242a);if(_0x35242a!==null)$[_0x2f5f('0x58')](_0x35242a,function(_0x47e9ce,_0x2ac9bf){var _0x5cd3f1=_0x2f5f('0xb2')+_0x47e9ce+_0x2f5f('0x73')+_0x2ac9bf[_0x2f5f('0xbf')][_0x2f5f('0x42')](0x0)[_0x2f5f('0x60')]()+_0x2f5f('0xba')+_0x2ac9bf[_0x2f5f('0xbf')]+_0x2f5f('0x25');_0x2ac9bf[_0x2f5f('0x1b')]&&(_0x5cd3f1=_0x2f5f('0xb2')+_0x47e9ce+_0x2f5f('0xb6')+_0x2ac9bf[_0x2f5f('0xbf')]['charAt'](0x0)['toUpperCase']()+_0x2f5f('0xba')+_0x2ac9bf['name']+_0x2f5f('0x25')),_0x2034bd=_0x2034bd+0x1,$(_0x434b9c)[_0x2f5f('0x61')](_0x5cd3f1),$(_0x2f5f('0x6e')+_0x47e9ce+'\x27]')[_0x2f5f('0x1a')]('contactData',_0x2ac9bf);});else{}},$(document)['on']('click',_0x2f5f('0xaa'),function(_0x4f10e9){var _0x576326=$(this)['parent']()['parent']()[_0x2f5f('0x1a')](_0x2f5f('0x93')),_0x1f50bc=$('[data-contactid=\x27'+_0x576326+'\x27]')[_0x2f5f('0x1a')](_0x2f5f('0x53'));_0x1f50bc[_0x2f5f('0x62')]!==RS[_0x2f5f('0x35')][_0x2f5f('0x18')][_0x2f5f('0x5b')][_0x2f5f('0x90')][_0x2f5f('0x78')]?($[_0x2f5f('0x68')](_0x2f5f('0x52'),JSON[_0x2f5f('0x16')]({}),function(_0x46d7f7){RS[_0x2f5f('0x35')]['Functions'][_0x2f5f('0x6b')](_0x46d7f7);}),$('.phone-application-container')['animate']({'top':-0xa0+'%'}),RS['Phone'][_0x2f5f('0x3')]['HeaderTextColor'](_0x2f5f('0x46'),0x190),setTimeout(function(){$('.phone-application-container')['animate']({'top':0x0+'%'}),RS[_0x2f5f('0x35')][_0x2f5f('0x3')]['ToggleApp'](_0x2f5f('0x78'),_0x2f5f('0x65')),RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0x21')](_0x2f5f('0x26'),_0x2f5f('0x1d')),RS['Phone'][_0x2f5f('0x18')][_0x2f5f('0x33')]=_0x2f5f('0x26'),$[_0x2f5f('0x68')](_0x2f5f('0x2'),JSON[_0x2f5f('0x16')]({'phone':_0x1f50bc[_0x2f5f('0x62')]}),function(_0x11182e){RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0x45')](_0x11182e,{'name':_0x1f50bc[_0x2f5f('0xbf')],'number':_0x1f50bc['number']});}),$(_0x2f5f('0x8a'))['animate']({'scrollTop':0x270f},0x96),$(_0x2f5f('0x71'))[_0x2f5f('0xa4')]({'display':'block'}),$('.whatsapp-openedchat')[_0x2f5f('0xa4')]({'left':0x0+'vh'}),$(_0x2f5f('0x20'))[_0x2f5f('0x89')]({'left':0x1e+'vh'},0x64,function(){$(_0x2f5f('0x20'))['css']({'display':_0x2f5f('0x65')});});},0x190)):RS[_0x2f5f('0x35')][_0x2f5f('0x88')]['Add']('fa\x20fa-phone-alt',_0x2f5f('0x5e'),_0x2f5f('0xa3'),_0x2f5f('0x1c'),0xdac);});var CurrentEditContactData={};$(document)['on'](_0x2f5f('0x4d'),_0x2f5f('0x36'),function(_0x105cb8){_0x105cb8[_0x2f5f('0x5a')]();var _0x18d043=$(this)['parent']()[_0x2f5f('0x6c')]()[_0x2f5f('0x1a')](_0x2f5f('0x93')),_0x53025e=$(_0x2f5f('0x6e')+_0x18d043+'\x27]')[_0x2f5f('0x1a')](_0x2f5f('0x53'));CurrentEditContactData[_0x2f5f('0xbf')]=_0x53025e[_0x2f5f('0xbf')],CurrentEditContactData[_0x2f5f('0x62')]=_0x53025e[_0x2f5f('0x62')],$(_0x2f5f('0x7b'))[_0x2f5f('0x13')](_0x2f5f('0xb9')+_0x53025e[_0x2f5f('0xbf')]+_0x2f5f('0x80')),$(_0x2f5f('0x23'))[_0x2f5f('0x97')](_0x53025e[_0x2f5f('0xbf')]),$(_0x2f5f('0x43'))[_0x2f5f('0x97')](_0x53025e['number']),_0x53025e[_0x2f5f('0xb')]!=null&&_0x53025e[_0x2f5f('0xb')]!=undefined?($(_0x2f5f('0x7f'))[_0x2f5f('0x97')](_0x53025e[_0x2f5f('0xb')]),CurrentEditContactData[_0x2f5f('0xb')]=_0x53025e[_0x2f5f('0xb')]):($(_0x2f5f('0x7f'))[_0x2f5f('0x97')](''),CurrentEditContactData[_0x2f5f('0xb')]=''),RS['Phone'][_0x2f5f('0xa0')][_0x2f5f('0x4c')]('.phone-edit-contact',0xc8,0x0);}),$(document)['on'](_0x2f5f('0x4d'),'#edit-contact-save',function(_0x37f3cd){_0x37f3cd[_0x2f5f('0x5a')]();var _0x4ee2c5=$(_0x2f5f('0x23'))[_0x2f5f('0x97')](),_0x4b2b89=$(_0x2f5f('0x43'))[_0x2f5f('0x97')](),_0x2e650f=$('.phone-edit-contact-iban')['val']();_0x4ee2c5!=''&&_0x4b2b89!=''?($['post']('http://rs-phone/EditContact',JSON[_0x2f5f('0x16')]({'CurrentContactName':_0x4ee2c5,'CurrentContactNumber':_0x4b2b89,'CurrentContactIban':_0x2e650f,'OldContactName':CurrentEditContactData[_0x2f5f('0xbf')],'OldContactNumber':CurrentEditContactData[_0x2f5f('0x62')],'OldContactIban':CurrentEditContactData[_0x2f5f('0xb')]}),function(_0x592c48){RS['Phone'][_0x2f5f('0x3')][_0x2f5f('0xd')](_0x592c48);}),RS[_0x2f5f('0x35')][_0x2f5f('0xa0')][_0x2f5f('0x34')](_0x2f5f('0x59'),0xfa,-0x64),setTimeout(function(){$('.phone-edit-contact-number')[_0x2f5f('0x97')](''),$('.phone-edit-contact-name')[_0x2f5f('0x97')]('');},0xfa)):RS[_0x2f5f('0x35')][_0x2f5f('0x88')][_0x2f5f('0x39')](_0x2f5f('0x99'),_0x2f5f('0x8b'),_0x2f5f('0x95'));}),$(document)['on']('click',_0x2f5f('0x15'),function(_0x36ac89){_0x36ac89[_0x2f5f('0x5a')]();var _0x505fb8=$(_0x2f5f('0x23'))[_0x2f5f('0x97')](),_0x21958d=$(_0x2f5f('0x43'))['val'](),_0x5cc716=$(_0x2f5f('0x7f'))['val']();$[_0x2f5f('0x68')](_0x2f5f('0xc'),JSON[_0x2f5f('0x16')]({'CurrentContactName':_0x505fb8,'CurrentContactNumber':_0x21958d,'CurrentContactIban':_0x5cc716}),function(_0x214953){RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0xd')](_0x214953);}),RS[_0x2f5f('0x35')][_0x2f5f('0xa0')][_0x2f5f('0x34')](_0x2f5f('0x59'),0xfa,-0x64),setTimeout(function(){$(_0x2f5f('0x43'))[_0x2f5f('0x97')](''),$(_0x2f5f('0x23'))[_0x2f5f('0x97')]('');},0xfa);}),$(document)['on'](_0x2f5f('0x4d'),_0x2f5f('0x4'),function(_0x963fc9){_0x963fc9['preventDefault'](),RS[_0x2f5f('0x35')][_0x2f5f('0xa0')]['TopSlideUp']('.phone-edit-contact',0xfa,-0x64),setTimeout(function(){$(_0x2f5f('0x43'))[_0x2f5f('0x97')](''),$(_0x2f5f('0x23'))['val']('');},0xfa);}),$(document)['on'](_0x2f5f('0x4d'),_0x2f5f('0x14'),function(_0x30656e){_0x30656e['preventDefault']();var _0x5806aa=$(this)[_0x2f5f('0x1a')](_0x2f5f('0x6a'));if(!isNaN(_0x5806aa)){var _0x2daf70=$(_0x2f5f('0xb0'))[_0x2f5f('0x2b')]();$(_0x2f5f('0xb0'))[_0x2f5f('0x2b')](_0x2daf70+_0x5806aa);}else{if(_0x5806aa=='#'){var _0x2daf70=$(_0x2f5f('0xb0'))['text']();$('#phone-keypad-input')[_0x2f5f('0x2b')](_0x2daf70+_0x5806aa);}else _0x5806aa=='*'&&(ClearNumberTimer==null&&($('#phone-keypad-input')[_0x2f5f('0x2b')](_0x2f5f('0x5')),ClearNumberTimer=setTimeout(function(){$(_0x2f5f('0xb0'))[_0x2f5f('0x2b')](''),ClearNumberTimer=null;},0x2ee)));}});var OpenedContact=null;$(document)['on'](_0x2f5f('0x4d'),_0x2f5f('0x4e'),function(_0x11272f){_0x11272f[_0x2f5f('0x5a')]();var _0x1853c8=$(this)[_0x2f5f('0x6c')](),_0x54a8af=$(_0x1853c8)[_0x2f5f('0x1a')](_0x2f5f('0x93'));if(OpenedContact===null)$(_0x1853c8)[_0x2f5f('0x89')]({'height':'12vh'},0x96,function(){$(_0x1853c8)[_0x2f5f('0x41')](_0x2f5f('0x28'))[_0x2f5f('0x8f')](0x64);}),OpenedContact=_0x54a8af;else{if(OpenedContact==_0x54a8af)$(_0x1853c8)[_0x2f5f('0x41')]('.phone-contact-action-buttons')[_0x2f5f('0xaf')](0x64,function(){$(_0x1853c8)[_0x2f5f('0x89')]({'height':_0x2f5f('0x2e')},0x96);}),OpenedContact=null;else{if(OpenedContact!=_0x54a8af){var _0x1d7575=$(_0x2f5f('0xbd'))[_0x2f5f('0x41')]('[data-contactid=\x22'+OpenedContact+'\x22]');$(_0x1d7575)[_0x2f5f('0x41')](_0x2f5f('0x28'))['fadeOut'](0x64,function(){$(_0x1d7575)[_0x2f5f('0x89')]({'height':_0x2f5f('0x2e')},0x96),OpenedContact=_0x54a8af;}),$(_0x1853c8)[_0x2f5f('0x89')]({'height':_0x2f5f('0x9d')},0x96,function(){$(_0x1853c8)[_0x2f5f('0x41')](_0x2f5f('0x28'))[_0x2f5f('0x8f')](0x64);});}}}}),$(document)['on'](_0x2f5f('0x4d'),_0x2f5f('0x37'),function(_0x154390){_0x154390[_0x2f5f('0x5a')](),RS[_0x2f5f('0x35')][_0x2f5f('0xa0')][_0x2f5f('0x4c')](_0x2f5f('0x6d'),0xc8,0x0);}),$(document)['on']('click',_0x2f5f('0x91'),function(_0x2110ff){_0x2110ff[_0x2f5f('0x5a')]();var _0x5af9b0=$(_0x2f5f('0x3c'))['val'](),_0x40b7ee=$(_0x2f5f('0xf'))[_0x2f5f('0x97')](),_0x3c0175=$(_0x2f5f('0x8d'))['val']();if(_0x5af9b0!=''&&_0x40b7ee!=''){$[_0x2f5f('0x68')](_0x2f5f('0x7a'),JSON[_0x2f5f('0x16')]({'ContactName':_0x5af9b0,'ContactNumber':_0x40b7ee,'ContactIban':_0x3c0175}),function(_0x2ed2a5){RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0xd')](_0x2ed2a5);}),RS[_0x2f5f('0x35')][_0x2f5f('0xa0')][_0x2f5f('0x34')]('.phone-add-contact',0xfa,-0x64),setTimeout(function(){$('.phone-add-contact-number')[_0x2f5f('0x97')](''),$(_0x2f5f('0x3c'))[_0x2f5f('0x97')]('');},0xfa);if(SelectedSuggestion!==null){$[_0x2f5f('0x68')](_0x2f5f('0xc0'),JSON[_0x2f5f('0x16')]({'data':$(SelectedSuggestion)[_0x2f5f('0x1a')]('SuggestionData')})),$(SelectedSuggestion)[_0x2f5f('0x69')](),SelectedSuggestion=null;var _0x2700d8=parseInt(AmountOfSuggestions);_0x2700d8-0x1===0x0&&(_0x2700d8=0x0),$(_0x2f5f('0xa8'))[_0x2f5f('0x13')](_0x2700d8+_0x2f5f('0xb5'));}}else RS[_0x2f5f('0x35')][_0x2f5f('0x88')][_0x2f5f('0x39')]('fas\x20fa-plus-square','Contact\x20Toevoegen',_0x2f5f('0x95'));}),$(document)['on'](_0x2f5f('0x4d'),_0x2f5f('0x12'),function(_0x31e34b){_0x31e34b[_0x2f5f('0x5a')](),RS['Phone']['Animations'][_0x2f5f('0x34')](_0x2f5f('0x6d'),0xfa,-0x64),setTimeout(function(){$(_0x2f5f('0xf'))[_0x2f5f('0x97')](''),$(_0x2f5f('0x3c'))[_0x2f5f('0x97')]('');},0xfa);}),$(document)['on'](_0x2f5f('0x4d'),'#phone-start-call',function(_0x3fe14e){_0x3fe14e[_0x2f5f('0x5a')]();var _0x220e03=$(this)[_0x2f5f('0x6c')]()['parent']()[_0x2f5f('0x1a')](_0x2f5f('0x93')),_0x234df9=$(_0x2f5f('0x6e')+_0x220e03+'\x27]')[_0x2f5f('0x1a')](_0x2f5f('0x53'));SetupCall(_0x234df9);}),SetupCall=function(_0x37c373){var _0x335e31=![];$[_0x2f5f('0x68')]('http://rs-phone/CallContact',JSON[_0x2f5f('0x16')]({'ContactData':_0x37c373,'Anonymous':RS[_0x2f5f('0x35')][_0x2f5f('0x18')][_0x2f5f('0xa9')]}),function(_0x1319f5){_0x37c373['number']!==RS[_0x2f5f('0x35')][_0x2f5f('0x18')][_0x2f5f('0x5b')]['charinfo'][_0x2f5f('0x78')]?_0x1319f5[_0x2f5f('0x96')]?_0x1319f5[_0x2f5f('0x4a')]?!_0x1319f5[_0x2f5f('0x2f')]?($(_0x2f5f('0xa2'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x1d')}),$('.phone-call-incoming')[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$(_0x2f5f('0x22'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$('.phone-call-outgoing-caller')['html'](_0x37c373[_0x2f5f('0xbf')]),RS[_0x2f5f('0x35')]['Functions'][_0x2f5f('0x87')](_0x2f5f('0x46'),0x190),RS['Phone'][_0x2f5f('0xa0')][_0x2f5f('0x34')](_0x2f5f('0x8c'),0x190,-0xa0),setTimeout(function(){$(_0x2f5f('0x86'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),RS[_0x2f5f('0x35')][_0x2f5f('0xa0')][_0x2f5f('0x4c')](_0x2f5f('0x8c'),0x190,0x0),RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0x21')](_0x2f5f('0x29'),_0x2f5f('0x1d'));},0x1c2),CallData[_0x2f5f('0xbf')]=_0x37c373['name'],CallData['number']=_0x37c373[_0x2f5f('0x62')],RS[_0x2f5f('0x35')]['Data'][_0x2f5f('0x33')]=_0x2f5f('0x29')):RS[_0x2f5f('0x35')][_0x2f5f('0x88')][_0x2f5f('0x39')](_0x2f5f('0x79'),'Telefoon',_0x2f5f('0x4b')):RS[_0x2f5f('0x35')][_0x2f5f('0x88')][_0x2f5f('0x39')](_0x2f5f('0x79'),_0x2f5f('0x5e'),_0x2f5f('0xa1')):RS[_0x2f5f('0x35')][_0x2f5f('0x88')][_0x2f5f('0x39')]('fas\x20fa-phone',_0x2f5f('0x5e'),_0x2f5f('0xbe')):RS[_0x2f5f('0x35')]['Notifications'][_0x2f5f('0x39')](_0x2f5f('0x79'),_0x2f5f('0x5e'),'Je\x20kan\x20niet\x20je\x20eigen\x20nummer\x20bellen!');});},CancelOutgoingCall=function(){RS[_0x2f5f('0x35')][_0x2f5f('0x18')][_0x2f5f('0x33')]=='phone-call'&&(RS['Phone'][_0x2f5f('0xa0')][_0x2f5f('0x34')](_0x2f5f('0x8c'),0x190,-0xa0),RS[_0x2f5f('0x35')][_0x2f5f('0xa0')]['TopSlideUp']('.'+RS[_0x2f5f('0x35')]['Data'][_0x2f5f('0x33')]+'-app',0x190,-0xa0),setTimeout(function(){RS[_0x2f5f('0x35')]['Functions'][_0x2f5f('0x21')](RS[_0x2f5f('0x35')][_0x2f5f('0x18')][_0x2f5f('0x33')],_0x2f5f('0x65'));},0x190),RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0x87')](_0x2f5f('0x46'),0x12c),RS[_0x2f5f('0x35')][_0x2f5f('0x18')][_0x2f5f('0x7')]=![],RS[_0x2f5f('0x35')][_0x2f5f('0x18')][_0x2f5f('0x33')]=null);},$(document)['on'](_0x2f5f('0x4d'),_0x2f5f('0x66'),function(_0x146e28){_0x146e28[_0x2f5f('0x5a')](),$[_0x2f5f('0x68')](_0x2f5f('0x9a'));}),$(document)['on'](_0x2f5f('0x4d'),_0x2f5f('0xad'),function(_0x1c4fc4){_0x1c4fc4[_0x2f5f('0x5a')](),$[_0x2f5f('0x68')](_0x2f5f('0x51'));}),$(document)['on']('click',_0x2f5f('0x17'),function(_0x239548){_0x239548[_0x2f5f('0x5a')](),$['post'](_0x2f5f('0x3e'));}),IncomingCallAlert=function(_0x8e3241,_0x46d28d,_0x1e0c27){!_0x46d28d?(!RS[_0x2f5f('0x35')]['Data'][_0x2f5f('0x7')]&&(RS[_0x2f5f('0x35')]['Animations'][_0x2f5f('0x34')](_0x2f5f('0x8c'),0x190,-0xa0),RS[_0x2f5f('0x35')]['Animations'][_0x2f5f('0x34')]('.'+RS['Phone'][_0x2f5f('0x18')][_0x2f5f('0x33')]+_0x2f5f('0xab'),0x190,-0xa0),setTimeout(function(){var _0x213b58=_0x2f5f('0x10')+_0x8e3241['name'];_0x1e0c27&&(_0x213b58=_0x2f5f('0x85')),$(_0x2f5f('0x74'))[_0x2f5f('0x13')](_0x2f5f('0x1f')),$(_0x2f5f('0x72'))['html'](_0x213b58),$(_0x2f5f('0x4f'))[_0x2f5f('0xa4')]({'display':'block'}),$(_0x2f5f('0x4f'))[_0x2f5f('0x89')]({'right':0x5+'vh'},0x190),$(_0x2f5f('0xa2'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$(_0x2f5f('0x77'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x1d')}),$(_0x2f5f('0x22'))['css']({'display':_0x2f5f('0x65')}),$(_0x2f5f('0x98'))[_0x2f5f('0x13')](_0x8e3241[_0x2f5f('0xbf')]),$('.phone-app')[_0x2f5f('0xa4')]({'display':'none'}),RS[_0x2f5f('0x35')][_0x2f5f('0x3')]['HeaderTextColor']('white',0x190),$('.'+RS[_0x2f5f('0x35')][_0x2f5f('0x18')]['currentApplication']+_0x2f5f('0xab'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$('.phone-call-app')[_0x2f5f('0xa4')]({'display':_0x2f5f('0x1d')}),setTimeout(function(){RS[_0x2f5f('0x35')][_0x2f5f('0xa0')][_0x2f5f('0x4c')](_0x2f5f('0x8c'),0x190,0x0);},0x190);},0x190),RS[_0x2f5f('0x35')][_0x2f5f('0x18')][_0x2f5f('0x33')]=_0x2f5f('0x29'),RS[_0x2f5f('0x35')]['Data']['CallActive']=!![]),setTimeout(function(){$(_0x2f5f('0x4f'))[_0x2f5f('0xb4')](_0x2f5f('0xb1')),setTimeout(function(){$('.call-notifications')[_0x2f5f('0x75')](_0x2f5f('0xb1'));},0x3e8);},0x190)):($('.call-notifications')[_0x2f5f('0x89')]({'right':-0x23+'vh'},0x190),RS[_0x2f5f('0x35')][_0x2f5f('0xa0')][_0x2f5f('0x34')](_0x2f5f('0x8c'),0x190,-0xa0),RS[_0x2f5f('0x35')]['Animations']['TopSlideUp']('.'+RS['Phone'][_0x2f5f('0x18')][_0x2f5f('0x33')]+_0x2f5f('0xab'),0x190,-0xa0),setTimeout(function(){$('.'+RS[_0x2f5f('0x35')][_0x2f5f('0x18')][_0x2f5f('0x33')]+_0x2f5f('0xab'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$('.phone-call-outgoing')['css']({'display':_0x2f5f('0x65')}),$(_0x2f5f('0x77'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$(_0x2f5f('0x22'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$('.call-notifications')[_0x2f5f('0xa4')]({'display':_0x2f5f('0x1d')});},0x190),RS['Phone'][_0x2f5f('0x3')]['HeaderTextColor'](_0x2f5f('0x46'),0x12c),RS[_0x2f5f('0x35')][_0x2f5f('0x18')][_0x2f5f('0x7')]=![],RS[_0x2f5f('0x35')]['Data'][_0x2f5f('0x33')]=null);},RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0x3f')]=function(_0x45c606){if(_0x45c606[_0x2f5f('0x2f')]){CallData=_0x45c606,$(_0x2f5f('0x5c'))['css']({'display':_0x2f5f('0x1d')});if(_0x45c606[_0x2f5f('0x2d')]==_0x2f5f('0x1'))$(_0x2f5f('0x7c'))[_0x2f5f('0x13')](_0x2f5f('0x1e'));else{if(_0x45c606[_0x2f5f('0x2d')]==_0x2f5f('0x0'))$(_0x2f5f('0x7c'))[_0x2f5f('0x13')]('Uitgaande\x20oproep');else _0x45c606[_0x2f5f('0x2d')]==_0x2f5f('0x44')&&$(_0x2f5f('0x7c'))[_0x2f5f('0x13')](_0x2f5f('0xb7')+_0x45c606['CallTime']+')');}$(_0x2f5f('0x3a'))[_0x2f5f('0x13')](_0x2f5f('0x48')+_0x45c606[_0x2f5f('0x5f')]['name']);}else $('.phone-currentcall-container')[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')});},$(document)['on'](_0x2f5f('0x4d'),_0x2f5f('0x5c'),function(_0x6aa7a1){_0x6aa7a1[_0x2f5f('0x5a')]();if(CallData[_0x2f5f('0x2d')]==_0x2f5f('0x1'))$('.phone-call-incoming')[_0x2f5f('0xa4')]({'display':_0x2f5f('0x1d')}),$(_0x2f5f('0xa2'))['css']({'display':_0x2f5f('0x65')}),$(_0x2f5f('0x22'))['css']({'display':_0x2f5f('0x65')});else{if(CallData[_0x2f5f('0x2d')]==_0x2f5f('0x0'))$(_0x2f5f('0x77'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$('.phone-call-outgoing')[_0x2f5f('0xa4')]({'display':'block'}),$(_0x2f5f('0x22'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')});else CallData['CallType']==_0x2f5f('0x44')&&($(_0x2f5f('0x77'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$(_0x2f5f('0xa2'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$('.phone-call-ongoing')['css']({'display':_0x2f5f('0x1d')}));}$('.phone-call-ongoing-caller')[_0x2f5f('0x13')](CallData['name']),RS['Phone'][_0x2f5f('0x3')]['HeaderTextColor'](_0x2f5f('0x46'),0x1f4),RS[_0x2f5f('0x35')]['Animations'][_0x2f5f('0x4c')](_0x2f5f('0x8c'),0x1f4,0x0),RS[_0x2f5f('0x35')][_0x2f5f('0xa0')][_0x2f5f('0x4c')](_0x2f5f('0x24'),0x1f4,0x0),RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0x21')](_0x2f5f('0x29'),_0x2f5f('0x1d')),RS[_0x2f5f('0x35')]['Data'][_0x2f5f('0x33')]='phone-call';}),$(document)['on']('click',_0x2f5f('0x70'),function(_0x1439d2){_0x1439d2[_0x2f5f('0x5a')](),$[_0x2f5f('0x68')](_0x2f5f('0xac'));}),RS['Phone']['Functions']['AnswerCall']=function(_0x42728e){$(_0x2f5f('0x77'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$('.phone-call-outgoing')[_0x2f5f('0xa4')]({'display':_0x2f5f('0x65')}),$(_0x2f5f('0x22'))[_0x2f5f('0xa4')]({'display':_0x2f5f('0x1d')}),$('.phone-call-ongoing-caller')[_0x2f5f('0x13')](_0x42728e[_0x2f5f('0x5f')][_0x2f5f('0xbf')]),RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0x94')]();},RS[_0x2f5f('0x35')][_0x2f5f('0x3')][_0x2f5f('0x9')]=function(_0x540aa3){$(_0x2f5f('0x92'))['html'](''),AmountOfSuggestions=_0x540aa3[_0x2f5f('0x9c')],AmountOfSuggestions>0x0?($(_0x2f5f('0xa8'))[_0x2f5f('0x13')](AmountOfSuggestions+'\x20contacten'),_0x540aa3=_0x540aa3[_0x2f5f('0x11')](),$[_0x2f5f('0x58')](_0x540aa3,function(_0x258cf3,_0x214201){var _0x2e7504='<div\x20class=\x22suggested-contact\x22\x20id=\x22suggest-'+_0x258cf3+_0x2f5f('0xa')+_0x214201['name'][0x0]+'\x20'+_0x214201['name'][0x1]+'\x20&middot;\x20<span\x20class=\x22suggested-number\x22>'+_0x214201['number']+_0x2f5f('0x7d');$(_0x2f5f('0x92'))[_0x2f5f('0x61')](_0x2e7504),$(_0x2f5f('0x9f')+_0x258cf3)[_0x2f5f('0x1a')]('SuggestionData',_0x214201);})):$('.amount-of-suggested-contacts')[_0x2f5f('0x13')](_0x2f5f('0xe'));},$(document)['on'](_0x2f5f('0x4d'),_0x2f5f('0x2c'),function(_0x56fd38){_0x56fd38[_0x2f5f('0x5a')]();var _0x143509=$(this)[_0x2f5f('0x1a')](_0x2f5f('0xbb'));SelectedSuggestion=this,RS['Phone']['Animations'][_0x2f5f('0x4c')]('.phone-add-contact',0xc8,0x0),$(_0x2f5f('0x3c'))[_0x2f5f('0x97')](_0x143509[_0x2f5f('0xbf')][0x0]+'\x20'+_0x143509[_0x2f5f('0xbf')][0x1]),$(_0x2f5f('0xf'))['val'](_0x143509[_0x2f5f('0x62')]),$(_0x2f5f('0x8d'))['val'](_0x143509[_0x2f5f('0xbc')]);});
+var ContactSearchActive = false;
+var CurrentFooterTab = "contacts";
+var CallData = {};
+var ClearNumberTimer = null;
+var SelectedSuggestion = null;
+var AmountOfSuggestions = 0;
+
+$(document).on('click', '.phone-app-footer-button', function(e){
+    e.preventDefault();
+
+    var PressedFooterTab = $(this).data('phonefootertab');
+
+    if (PressedFooterTab !== CurrentFooterTab) {
+        var PreviousTab = $(this).parent().find('[data-phonefootertab="'+CurrentFooterTab+'"');
+
+        $('.phone-app-footer').find('[data-phonefootertab="'+CurrentFooterTab+'"').removeClass('phone-selected-footer-tab');
+        $(this).addClass('phone-selected-footer-tab');
+
+        $(".phone-"+CurrentFooterTab).hide();
+        $(".phone-"+PressedFooterTab).show();
+
+        if (PressedFooterTab == "recent") {
+            $.post('http://rs-phone/ClearRecentAlerts');
+        } else if (PressedFooterTab == "suggestedcontacts") {
+            $.post('http://rs-phone/ClearRecentAlerts');
+        }
+
+        CurrentFooterTab = PressedFooterTab;
+    }
+});
+
+$(document).on("click", "#phone-search-icon", function(e){
+    e.preventDefault();
+
+    if (!ContactSearchActive) {
+        $("#phone-plus-icon").animate({
+            opacity: "0.0",
+            "display": "none"
+        }, 150, function(){
+            $("#contact-search").css({"display":"block"}).animate({
+                opacity: "1.0",
+            }, 150);
+        });
+    } else {
+        $("#contact-search").animate({
+            opacity: "0.0"
+        }, 150, function(){
+            $("#contact-search").css({"display":"none"});
+            $("#phone-plus-icon").animate({
+                opacity: "1.0",
+                display: "block",
+            }, 150);
+        });
+    }
+
+    ContactSearchActive = !ContactSearchActive;
+});
+
+RS.Phone.Functions.SetupRecentCalls = function(recentcalls) {
+    $(".phone-recent-calls").html("");
+
+    recentcalls = recentcalls.reverse();
+
+    $.each(recentcalls, function(i, recentCall){
+        var FirstLetter = (recentCall.name).charAt(0);
+        var TypeIcon = 'fas fa-phone-slash';
+        var IconStyle = "color: #e74c3c;";
+        if (recentCall.type === "outgoing") {
+            TypeIcon = 'fas fa-phone-volume';
+            var IconStyle = "color: #2ecc71; font-size: 1.4vh;";
+        }
+        if (recentCall.anonymous) {
+            FirstLetter = "A";
+            recentCall.name = "Anoniem";
+        }
+        var elem = '<div class="phone-recent-call" id="recent-'+i+'"><div class="phone-recent-call-image">'+FirstLetter+'</div> <div class="phone-recent-call-name">'+recentCall.name+'</div> <div class="phone-recent-call-type"><i class="'+TypeIcon+'" style="'+IconStyle+'"></i></div> <div class="phone-recent-call-time">'+recentCall.time+'</div> </div>'
+
+        $(".phone-recent-calls").append(elem);
+        $("#recent-"+i).data('recentData', recentCall);
+    });
+}
+
+$(document).on('click', '.phone-recent-call', function(e){
+    e.preventDefault();
+
+    var RecendId = $(this).attr('id');
+    var RecentData = $("#"+RecendId).data('recentData');
+
+    cData = {
+        number: RecentData.number,
+        name: RecentData.name
+    }
+
+    console.log(RS.Phone.Data.AnonymousCall)
+
+    if (RecentData.name == "Anoniem") {
+        RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Je kan een anoniem nummer niet terug bellen!");
+    } else {
+        $.post('http://rs-phone/CallContact', JSON.stringify({
+            ContactData: cData,
+            Anonymous: RS.Phone.Data.AnonymousCall,
+        }), function(status){
+            if (cData.number !== RS.Phone.Data.PlayerData.charinfo.phone) {
+                if (status.IsOnline) {
+                    if (status.CanCall) {
+                        if (!status.InCall) {
+                            if (RS.Phone.Data.AnonymousCall) {
+                                RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Je hebt een anonieme oproep gestart!");
+                            }
+                            $(".phone-call-outgoing").css({"display":"block"});
+                            $(".phone-call-incoming").css({"display":"none"});
+                            $(".phone-call-ongoing").css({"display":"none"});
+                            $(".phone-call-outgoing-caller").html(cData.name);
+                            RS.Phone.Functions.HeaderTextColor("white", 400);
+                            RS.Phone.Animations.TopSlideUp('.phone-application-container', 400, -160);
+                            setTimeout(function(){
+                                $(".phone-app").css({"display":"none"});
+                                RS.Phone.Animations.TopSlideDown('.phone-application-container', 400, 0);
+                                RS.Phone.Functions.ToggleApp("phone-call", "block");
+                            }, 450);
+        
+                            CallData.name = cData.name;
+                            CallData.number = cData.number;
+                        
+                            RS.Phone.Data.currentApplication = "phone-call";
+                        } else {
+                            RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Je bent al ingesprek!");
+                        }
+                    } else {
+                        RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Dit persoon is in gesprek!");
+                    }
+                } else {
+                    RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Dit persoon is niet bereikbaar!");
+                }
+            } else {
+                RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Je kan niet je eigen nummer bellen!");
+            }
+        });
+    }
+});
+
+$(document).on('click', ".phone-keypad-key-call", function(e){
+    e.preventDefault();
+
+    var InputNum = toString($(".phone-keypad-input").text());
+
+    cData = {
+        number: InputNum,
+        name: InputNum,
+    }
+
+    $.post('http://rs-phone/CallContact', JSON.stringify({
+        ContactData: cData,
+        Anonymous: RS.Phone.Data.AnonymousCall,
+    }), function(status){
+        if (cData.number !== RS.Phone.Data.PlayerData.charinfo.phone) {
+            if (status.IsOnline) {
+                if (status.CanCall) {
+                    if (!status.InCall) {
+                        $(".phone-call-outgoing").css({"display":"block"});
+                        $(".phone-call-incoming").css({"display":"none"});
+                        $(".phone-call-ongoing").css({"display":"none"});
+                        $(".phone-call-outgoing-caller").html(cData.name);
+                        RS.Phone.Functions.HeaderTextColor("white", 400);
+                        RS.Phone.Animations.TopSlideUp('.phone-application-container', 400, -160);
+                        setTimeout(function(){
+                            $(".phone-app").css({"display":"none"});
+                            RS.Phone.Animations.TopSlideDown('.phone-application-container', 400, 0);
+                            RS.Phone.Functions.ToggleApp("phone-call", "block");
+                        }, 450);
+    
+                        CallData.name = cData.name;
+                        CallData.number = cData.number;
+                    
+                        RS.Phone.Data.currentApplication = "phone-call";
+                    } else {
+                        RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Je bent al ingesprek!");
+                    }
+                } else {
+                    RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Dit persoon is in gesprek!");
+                }
+            } else {
+                RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Dit persoon is niet bereikbaar!");
+            }
+        } else {
+            RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Je kan niet je eigen nummer bellen!");
+        }
+    });
+});
+
+RS.Phone.Functions.LoadContacts = function(myContacts) {
+    var ContactsObject = $(".phone-contact-list");
+    $(ContactsObject).html("");
+    var TotalContacts = 0;
+
+    $(".phone-contacts").hide();
+    $(".phone-recent").hide();
+    $(".phone-keypad").hide();
+
+    $(".phone-"+CurrentFooterTab).show();
+
+    // $("#contact-search").on("keyup", function() {
+    //     var value = $(this).val().toLowerCase();
+    //     $(".phone-contact-list .phone-contact").filter(function() {
+    //       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+    //     });
+    // });
+    if (myContacts !== null) {
+        $.each(myContacts, function(i, contact){
+            var ContactElement = '<div class="phone-contact" data-contactid="'+i+'"><div class="phone-contact-avatar" style="background-color: #e74c3c;">'+((contact.name).charAt(0)).toUpperCase()+'</div><div class="phone-contact-name">'+contact.name+'</div><div class="phone-contact-actions"><i class="fas fa-sort-down"></i></div><div class="phone-contact-action-buttons"> <i class="fas fa-phone-volume" id="phone-start-call"></i> <i class="fab fa-whatsapp" id="new-chat-phone" style="font-size: 2.5vh;"></i> <i class="fas fa-user-edit" id="edit-contact"></i> </div></div>'
+            if (contact.status) {
+                ContactElement = '<div class="phone-contact" data-contactid="'+i+'"><div class="phone-contact-avatar" style="background-color: #2ecc71;">'+((contact.name).charAt(0)).toUpperCase()+'</div><div class="phone-contact-name">'+contact.name+'</div><div class="phone-contact-actions"><i class="fas fa-sort-down"></i></div><div class="phone-contact-action-buttons"> <i class="fas fa-phone-volume" id="phone-start-call"></i> <i class="fab fa-whatsapp" id="new-chat-phone" style="font-size: 2.5vh;"></i> <i class="fas fa-user-edit" id="edit-contact"></i> </div></div>'
+            }
+            TotalContacts = TotalContacts + 1
+            $(ContactsObject).append(ContactElement);
+            $("[data-contactid='"+i+"']").data('contactData', contact);
+        });
+        // $("#total-contacts").text(TotalContacts+ " contacten");
+    } else {
+        // $("#total-contacts").text("0 contacten #SAD");
+    }
+};
+
+$(document).on('click', '#new-chat-phone', function(e){
+    var ContactId = $(this).parent().parent().data('contactid');
+    var ContactData = $("[data-contactid='"+ContactId+"']").data('contactData');
+
+    if (ContactData.number !== RS.Phone.Data.PlayerData.charinfo.phone) {
+        $.post('http://rs-phone/GetWhatsappChats', JSON.stringify({}), function(chats){
+            RS.Phone.Functions.LoadWhatsappChats(chats);
+        });
+    
+        $('.phone-application-container').animate({
+            top: -160+"%"
+        });
+        RS.Phone.Functions.HeaderTextColor("white", 400);
+        setTimeout(function(){
+            $('.phone-application-container').animate({
+                top: 0+"%"
+            });
+    
+            RS.Phone.Functions.ToggleApp("phone", "none");
+            RS.Phone.Functions.ToggleApp("whatsapp", "block");
+            RS.Phone.Data.currentApplication = "whatsapp";
+        
+            $.post('http://rs-phone/GetWhatsappChat', JSON.stringify({phone: ContactData.number}), function(chat){
+                RS.Phone.Functions.SetupChatMessages(chat, {
+                    name: ContactData.name,
+                    number: ContactData.number
+                });
+            });
+        
+            $('.whatsapp-openedchat-messages').animate({scrollTop: 9999}, 150);
+            $(".whatsapp-openedchat").css({"display":"block"});
+            $(".whatsapp-openedchat").css({left: 0+"vh"});
+            $(".whatsapp-chats").animate({left: 30+"vh"},100, function(){
+                $(".whatsapp-chats").css({"display":"none"});
+            });
+        }, 400)
+    } else {
+        RS.Phone.Notifications.Add("fa fa-phone-alt", "Telefoon", "Je kunt jezelf niet appen, sad fuck..", "default", 3500);
+    }
+});
+
+var CurrentEditContactData = {}
+
+$(document).on('click', '#edit-contact', function(e){
+    e.preventDefault();
+    var ContactId = $(this).parent().parent().data('contactid');
+    var ContactData = $("[data-contactid='"+ContactId+"']").data('contactData');
+
+    CurrentEditContactData.name = ContactData.name
+    CurrentEditContactData.number = ContactData.number
+
+    $(".phone-edit-contact-header").html("<p>"+ContactData.name+" Bewerken</p>")
+    $(".phone-edit-contact-name").val(ContactData.name);
+    $(".phone-edit-contact-number").val(ContactData.number);
+    if (ContactData.iban != null && ContactData.iban != undefined) {
+        $(".phone-edit-contact-iban").val(ContactData.iban);
+        CurrentEditContactData.iban = ContactData.iban
+    } else {
+        $(".phone-edit-contact-iban").val("");
+        CurrentEditContactData.iban = "";
+    }
+
+    RS.Phone.Animations.TopSlideDown(".phone-edit-contact", 200, 0);
+});
+
+$(document).on('click', '#edit-contact-save', function(e){
+    e.preventDefault();
+
+    var ContactName = $(".phone-edit-contact-name").val();
+    var ContactNumber = $(".phone-edit-contact-number").val();
+    var ContactIban = $(".phone-edit-contact-iban").val();
+
+    if (ContactName != "" && ContactNumber != "") {
+        $.post('http://rs-phone/EditContact', JSON.stringify({
+            CurrentContactName: ContactName,
+            CurrentContactNumber: ContactNumber,
+            CurrentContactIban: ContactIban,
+            OldContactName: CurrentEditContactData.name,
+            OldContactNumber: CurrentEditContactData.number,
+            OldContactIban: CurrentEditContactData.iban,
+        }), function(PhoneContacts){
+            RS.Phone.Functions.LoadContacts(PhoneContacts);
+        });
+        RS.Phone.Animations.TopSlideUp(".phone-edit-contact", 250, -100);
+        setTimeout(function(){
+            $(".phone-edit-contact-number").val("");
+            $(".phone-edit-contact-name").val("");
+        }, 250)
+    } else {
+        RS.Phone.Notifications.Add("fas fa-exclamation-circle", "Contact Bewerken", "Vul alle velden in!");
+    }
+});
+
+$(document).on('click', '#edit-contact-delete', function(e){
+    e.preventDefault();
+
+    var ContactName = $(".phone-edit-contact-name").val();
+    var ContactNumber = $(".phone-edit-contact-number").val();
+    var ContactIban = $(".phone-edit-contact-iban").val();
+
+    $.post('http://rs-phone/DeleteContact', JSON.stringify({
+        CurrentContactName: ContactName,
+        CurrentContactNumber: ContactNumber,
+        CurrentContactIban: ContactIban,
+    }), function(PhoneContacts){
+        RS.Phone.Functions.LoadContacts(PhoneContacts);
+    });
+    RS.Phone.Animations.TopSlideUp(".phone-edit-contact", 250, -100);
+    setTimeout(function(){
+        $(".phone-edit-contact-number").val("");
+        $(".phone-edit-contact-name").val("");
+    }, 250);
+});
+
+$(document).on('click', '#edit-contact-cancel', function(e){
+    e.preventDefault();
+
+    RS.Phone.Animations.TopSlideUp(".phone-edit-contact", 250, -100);
+    setTimeout(function(){
+        $(".phone-edit-contact-number").val("");
+        $(".phone-edit-contact-name").val("");
+    }, 250)
+});
+
+$(document).on('click', '.phone-keypad-key', function(e){
+    e.preventDefault();
+
+    var PressedButton = $(this).data('keypadvalue');
+
+    if (!isNaN(PressedButton)) {
+        var keyPadHTML = $("#phone-keypad-input").text();
+        $("#phone-keypad-input").text(keyPadHTML + PressedButton)
+    } else if (PressedButton == "#") {
+        var keyPadHTML = $("#phone-keypad-input").text();
+        $("#phone-keypad-input").text(keyPadHTML + PressedButton)
+    } else if (PressedButton == "*") {
+        if (ClearNumberTimer == null) {
+            $("#phone-keypad-input").text("Cleared")
+            ClearNumberTimer = setTimeout(function(){
+                $("#phone-keypad-input").text("");
+                ClearNumberTimer = null;
+            }, 750);
+        }
+    }
+})
+
+var OpenedContact = null;
+
+$(document).on('click', '.phone-contact-actions', function(e){
+    e.preventDefault();
+
+    var FocussedContact = $(this).parent();
+    var ContactId = $(FocussedContact).data('contactid');
+
+    if (OpenedContact === null) {
+        $(FocussedContact).animate({
+            "height":"12vh"
+        }, 150, function(){
+            $(FocussedContact).find('.phone-contact-action-buttons').fadeIn(100);
+        });
+        OpenedContact = ContactId;
+    } else if (OpenedContact == ContactId) {
+        $(FocussedContact).find('.phone-contact-action-buttons').fadeOut(100, function(){
+            $(FocussedContact).animate({
+                "height":"4.5vh"
+            }, 150);
+        });
+        OpenedContact = null;
+    } else if (OpenedContact != ContactId) {
+        var PreviousContact = $(".phone-contact-list").find('[data-contactid="'+OpenedContact+'"]');
+        $(PreviousContact).find('.phone-contact-action-buttons').fadeOut(100, function(){
+            $(PreviousContact).animate({
+                "height":"4.5vh"
+            }, 150);
+            OpenedContact = ContactId;
+        });
+        $(FocussedContact).animate({
+            "height":"12vh"
+        }, 150, function(){
+            $(FocussedContact).find('.phone-contact-action-buttons').fadeIn(100);
+        });
+    }
+});
+
+
+$(document).on('click', '#phone-plus-icon', function(e){
+    e.preventDefault();
+
+    RS.Phone.Animations.TopSlideDown(".phone-add-contact", 200, 0);
+});
+
+$(document).on('click', '#add-contact-save', function(e){
+    e.preventDefault();
+
+    var ContactName = $(".phone-add-contact-name").val();
+    var ContactNumber = $(".phone-add-contact-number").val();
+    var ContactIban = $(".phone-add-contact-iban").val();
+
+    if (ContactName != "" && ContactNumber != "") {
+        $.post('http://rs-phone/AddNewContact', JSON.stringify({
+            ContactName: ContactName,
+            ContactNumber: ContactNumber,
+            ContactIban: ContactIban,
+        }), function(PhoneContacts){
+            RS.Phone.Functions.LoadContacts(PhoneContacts);
+        });
+        RS.Phone.Animations.TopSlideUp(".phone-add-contact", 250, -100);
+        setTimeout(function(){
+            $(".phone-add-contact-number").val("");
+            $(".phone-add-contact-name").val("");
+        }, 250)
+
+        if (SelectedSuggestion !== null) {
+            $.post('http://rs-phone/RemoveSuggestion', JSON.stringify({
+                data: $(SelectedSuggestion).data('SuggestionData')
+            }));
+            $(SelectedSuggestion).remove();
+            SelectedSuggestion = null;
+            var amount = parseInt(AmountOfSuggestions);
+            if ((amount - 1) === 0) {
+                amount = 0
+            }
+            $(".amount-of-suggested-contacts").html(amount + " contacten");
+        }
+    } else {
+        RS.Phone.Notifications.Add("fas fa-plus-square", "Contact Toevoegen", "Vul alle velden in!");
+    }
+});
+
+$(document).on('click', '#add-contact-cancel', function(e){
+    e.preventDefault();
+
+    RS.Phone.Animations.TopSlideUp(".phone-add-contact", 250, -100);
+    setTimeout(function(){
+        $(".phone-add-contact-number").val("");
+        $(".phone-add-contact-name").val("");
+    }, 250)
+});
+
+$(document).on('click', '#phone-start-call', function(e){
+    e.preventDefault();   
+    
+    var ContactId = $(this).parent().parent().data('contactid');
+    var ContactData = $("[data-contactid='"+ContactId+"']").data('contactData');
+    
+    SetupCall(ContactData);
+});
+
+SetupCall = function(cData) {
+    var retval = false;
+    $.post('http://rs-phone/CallContact', JSON.stringify({
+        ContactData: cData,
+        Anonymous: RS.Phone.Data.AnonymousCall,
+    }), function(status){
+        if (cData.number !== RS.Phone.Data.PlayerData.charinfo.phone) {
+            if (status.IsOnline) {
+                if (status.CanCall) {
+                    if (!status.InCall) {
+                        $(".phone-call-outgoing").css({"display":"block"});
+                        $(".phone-call-incoming").css({"display":"none"});
+                        $(".phone-call-ongoing").css({"display":"none"});
+                        $(".phone-call-outgoing-caller").html(cData.name);
+                        RS.Phone.Functions.HeaderTextColor("white", 400);
+                        RS.Phone.Animations.TopSlideUp('.phone-application-container', 400, -160);
+                        setTimeout(function(){
+                            $(".phone-app").css({"display":"none"});
+                            RS.Phone.Animations.TopSlideDown('.phone-application-container', 400, 0);
+                            RS.Phone.Functions.ToggleApp("phone-call", "block");
+                        }, 450);
+    
+                        CallData.name = cData.name;
+                        CallData.number = cData.number;
+                    
+                        RS.Phone.Data.currentApplication = "phone-call";
+                    } else {
+                        RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Je bent al ingesprek!");
+                    }
+                } else {
+                    RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Dit persoon is in gesprek!");
+                }
+            } else {
+                RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Dit persoon is niet bereikbaar!");
+            }
+        } else {
+            RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Je kan niet je eigen nummer bellen!");
+        }
+    });
+}
+
+CancelOutgoingCall = function() {
+    if (RS.Phone.Data.currentApplication == "phone-call") {
+        RS.Phone.Animations.TopSlideUp('.phone-application-container', 400, -160);
+        RS.Phone.Animations.TopSlideUp('.'+RS.Phone.Data.currentApplication+"-app", 400, -160);
+        setTimeout(function(){
+            RS.Phone.Functions.ToggleApp(RS.Phone.Data.currentApplication, "none");
+        }, 400)
+        RS.Phone.Functions.HeaderTextColor("white", 300);
+    
+        RS.Phone.Data.CallActive = false;
+        RS.Phone.Data.currentApplication = null;
+    }
+}
+
+$(document).on('click', '#outgoing-cancel', function(e){
+    e.preventDefault();
+
+    $.post('http://rs-phone/CancelOutgoingCall');
+});
+
+$(document).on('click', '#incoming-deny', function(e){
+    e.preventDefault();
+
+    $.post('http://rs-phone/DenyIncomingCall');
+});
+
+$(document).on('click', '#ongoing-cancel', function(e){
+    e.preventDefault();
+    
+    $.post('http://rs-phone/CancelOngoingCall');
+});
+
+IncomingCallAlert = function(CallData, Canceled, AnonymousCall) {
+    if (!Canceled) {
+        if (!RS.Phone.Data.CallActive) {
+            RS.Phone.Animations.TopSlideUp('.phone-application-container', 400, -160);
+            RS.Phone.Animations.TopSlideUp('.'+RS.Phone.Data.currentApplication+"-app", 400, -160);
+            setTimeout(function(){
+                var Label = "Je hebt een inkomende oproep van "+CallData.name
+                if (AnonymousCall) {
+                    Label = "Je wordt door een anoniem nummer gebeld"
+                }
+                $(".call-notifications-title").html("Inkomende Oproep");
+                $(".call-notifications-content").html(Label);
+                $(".call-notifications").css({"display":"block"});
+                $(".call-notifications").animate({
+                    right: 5+"vh"
+                }, 400);
+                $(".phone-call-outgoing").css({"display":"none"});
+                $(".phone-call-incoming").css({"display":"block"});
+                $(".phone-call-ongoing").css({"display":"none"});
+                $(".phone-call-incoming-caller").html(CallData.name);
+                $(".phone-app").css({"display":"none"});
+                RS.Phone.Functions.HeaderTextColor("white", 400);
+                $("."+RS.Phone.Data.currentApplication+"-app").css({"display":"none"});
+                $(".phone-call-app").css({"display":"block"});
+                setTimeout(function(){
+                    RS.Phone.Animations.TopSlideDown('.phone-application-container', 400, 0);
+                }, 400);
+            }, 400);
+        
+            RS.Phone.Data.currentApplication = "phone-call";
+            RS.Phone.Data.CallActive = true;
+        }
+        setTimeout(function(){
+            $(".call-notifications").addClass('call-notifications-shake');
+            setTimeout(function(){
+                $(".call-notifications").removeClass('call-notifications-shake');
+            }, 1000);
+        }, 400);
+    } else {
+        $(".call-notifications").animate({
+            right: -35+"vh"
+        }, 400);
+        RS.Phone.Animations.TopSlideUp('.phone-application-container', 400, -160);
+        RS.Phone.Animations.TopSlideUp('.'+RS.Phone.Data.currentApplication+"-app", 400, -160);
+        setTimeout(function(){
+            $("."+RS.Phone.Data.currentApplication+"-app").css({"display":"none"});
+            $(".phone-call-outgoing").css({"display":"none"});
+            $(".phone-call-incoming").css({"display":"none"});
+            $(".phone-call-ongoing").css({"display":"none"});
+            $(".call-notifications").css({"display":"block"});
+        }, 400)
+        RS.Phone.Functions.HeaderTextColor("white", 300);
+        RS.Phone.Data.CallActive = false;
+        RS.Phone.Data.currentApplication = null;
+    }
+}
+
+// IncomingCallAlert = function(CallData, Canceled) {
+//     if (!Canceled) {
+//         if (!RS.Phone.Data.CallActive) {
+//             $(".call-notifications-title").html("Inkomende Oproep");
+//             $(".call-notifications-content").html("Je hebt een inkomende oproep van "+CallData.name);
+//             $(".call-notifications").css({"display":"block"});
+//             $(".call-notifications").animate({
+//                 right: 5+"vh"
+//             }, 400);
+//             $(".phone-call-outgoing").css({"display":"none"});
+//             $(".phone-call-incoming").css({"display":"block"});
+//             $(".phone-call-ongoing").css({"display":"none"});
+//             $(".phone-call-incoming-caller").html(CallData.name);
+//             $(".phone-app").css({"display":"none"});
+//             RS.Phone.Functions.HeaderTextColor("white", 400);
+//             RS.Phone.Animations.TopSlideUp('.phone-application-container', 400, -160);
+//             $(".phone-call-app").css({"display":"block"});
+//             setTimeout(function(){
+//                 RS.Phone.Animations.TopSlideDown('.phone-application-container', 400, 0);
+//             }, 450);
+        
+//             RS.Phone.Data.currentApplication = "phone-call";
+//             RS.Phone.Data.CallActive = true;
+//         }
+//         setTimeout(function(){
+//             $(".call-notifications").addClass('call-notifications-shake');
+//             setTimeout(function(){
+//                 $(".call-notifications").removeClass('call-notifications-shake');
+//             }, 1000);
+//         }, 400);
+//     } else {
+//         $(".call-notifications").animate({
+//             right: -35+"vh"
+//         }, 400);
+//         RS.Phone.Animations.TopSlideUp('.phone-application-container', 400, -160);
+//         RS.Phone.Animations.TopSlideUp('.'+RS.Phone.Data.currentApplication+"-app", 400, -160);
+//         setTimeout(function(){
+//             RS.Phone.Functions.ToggleApp(RS.Phone.Data.currentApplication, "none");
+//             $(".phone-call-outgoing").css({"display":"none"});
+//             $(".phone-call-incoming").css({"display":"none"});
+//             $(".phone-call-ongoing").css({"display":"none"});
+//             $(".call-notifications").css({"display":"block"});
+//         }, 400)
+//         RS.Phone.Functions.HeaderTextColor("white", 300);
+    
+//         RS.Phone.Data.CallActive = false;
+//         RS.Phone.Data.currentApplication = null;
+//     }
+// }
+
+RS.Phone.Functions.SetupCurrentCall = function(cData) {
+    if (cData.InCall) {
+        CallData = cData;
+        $(".phone-currentcall-container").css({"display":"block"});
+
+        if (cData.CallType == "incoming") {
+            $(".phone-currentcall-title").html("Inkomende oproep");
+        } else if (cData.CallType == "outgoing") {
+            $(".phone-currentcall-title").html("Uitgaande oproep");
+        } else if (cData.CallType == "ongoing") {
+            $(".phone-currentcall-title").html("In gesprek ("+cData.CallTime+")");
+        }
+
+        $(".phone-currentcall-contact").html("met "+cData.TargetData.name);
+    } else {
+        $(".phone-currentcall-container").css({"display":"none"});
+    }
+}
+
+$(document).on('click', '.phone-currentcall-container', function(e){
+    e.preventDefault();
+
+    if (CallData.CallType == "incoming") {
+        $(".phone-call-incoming").css({"display":"block"});
+        $(".phone-call-outgoing").css({"display":"none"});
+        $(".phone-call-ongoing").css({"display":"none"});
+    } else if (CallData.CallType == "outgoing") {
+        $(".phone-call-incoming").css({"display":"none"});
+        $(".phone-call-outgoing").css({"display":"block"});
+        $(".phone-call-ongoing").css({"display":"none"});
+    } else if (CallData.CallType == "ongoing") {
+        $(".phone-call-incoming").css({"display":"none"});
+        $(".phone-call-outgoing").css({"display":"none"});
+        $(".phone-call-ongoing").css({"display":"block"});
+    }
+    $(".phone-call-ongoing-caller").html(CallData.name);
+
+    RS.Phone.Functions.HeaderTextColor("white", 500);
+    RS.Phone.Animations.TopSlideDown('.phone-application-container', 500, 0);
+    RS.Phone.Animations.TopSlideDown('.phone-call-app', 500, 0);
+    RS.Phone.Functions.ToggleApp("phone-call", "block");
+                
+    RS.Phone.Data.currentApplication = "phone-call";
+});
+
+$(document).on('click', '#incoming-answer', function(e){
+    e.preventDefault();
+
+    $.post('http://rs-phone/AnswerCall');
+});
+
+RS.Phone.Functions.AnswerCall = function(CallData) {
+    $(".phone-call-incoming").css({"display":"none"});
+    $(".phone-call-outgoing").css({"display":"none"});
+    $(".phone-call-ongoing").css({"display":"block"});
+    $(".phone-call-ongoing-caller").html(CallData.TargetData.name);
+
+    RS.Phone.Functions.ClosePhone();
+}
+
+RS.Phone.Functions.SetupSuggestedContacts = function(Suggested) {
+    $(".suggested-contacts").html("");
+    AmountOfSuggestions = Suggested.length;
+    if (AmountOfSuggestions > 0) {
+        $(".amount-of-suggested-contacts").html(AmountOfSuggestions + " contacten");
+        Suggested = Suggested.reverse();
+        $.each(Suggested, function(index, suggest){
+            var elem = '<div class="suggested-contact" id="suggest-'+index+'"> <i class="fas fa-plus-square"></i> <span class="suggested-name">'+suggest.name[0]+' '+suggest.name[1]+' &middot; <span class="suggested-number">'+suggest.number+'</span></span> </div>';
+            $(".suggested-contacts").append(elem);
+            $("#suggest-"+index).data('SuggestionData', suggest);
+        });
+    } else {
+        $(".amount-of-suggested-contacts").html("0 contacten");
+    }
+}
+
+$(document).on('click', '.suggested-contact', function(e){
+    e.preventDefault();
+
+    var SuggestionData = $(this).data('SuggestionData');
+    SelectedSuggestion = this;
+
+    RS.Phone.Animations.TopSlideDown(".phone-add-contact", 200, 0);
+    
+    $(".phone-add-contact-name").val(SuggestionData.name[0] + " " + SuggestionData.name[1]);
+    $(".phone-add-contact-number").val(SuggestionData.number);
+    $(".phone-add-contact-iban").val(SuggestionData.bank);
+});

@@ -54,12 +54,6 @@ try {
     });
   });
 
-//   API
-// - resources count
-// - player count
-// - queue count
-// - 
-
 
 app.get('/maestro', (err, res) => {
     res.send("Maestro is noob");

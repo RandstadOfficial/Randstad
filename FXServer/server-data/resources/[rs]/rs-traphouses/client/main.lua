@@ -128,13 +128,11 @@ AddEventHandler('rs-traphouses:client:EnterTraphouse', function(code)
         if InTraphouseRange then
             local data = Config.TrapHouses[ClosestTraphouse]
             if not IsKeyHolder then
-                print("Geen sleutel eigenaar")
                 SendNUIMessage({
                     action = "open"
                 })
                 SetNuiFocus(true, true)
             else
-                print("Wel sleutel eigenaar")
                 EnterTraphouse(data)
             end
         end
@@ -152,7 +150,6 @@ end)
 RegisterNUICallback('EnterPincode', function(d)
     local data = Config.TrapHouses[ClosestTraphouse]
     if tonumber(d.pin) == data.pincode then
-        print("Command triggerd")
         EnterTraphouse(data)
     else
         RSCore.Functions.Notify('Deze code is incorrect..', 'error')
@@ -338,15 +335,9 @@ Citizen.CreateThread(function()
 end)
 
 function EnterTraphouse(data)
-    print("Triggered")
     local coords = { x = data.coords["enter"].x, y = data.coords["enter"].y, z= data.coords["enter"].z - Config.MinZOffset}
-    print("Triggered1")
-
     TriggerServerEvent("InteractSound_SV:PlayOnSource", "houses_door_open", 0.25)
-    print("Triggered2")
-
     data = exports['rs-interior']:CreateTrapHouseShell(coords)
-    print("Triggered3")
 
     TraphouseObj = data[1]
     POIOffsets = data[2]
@@ -354,7 +345,6 @@ function EnterTraphouse(data)
     InsideTraphouse = true
     SetRainFxIntensity(0.0)
     TriggerEvent('rs-weathersync:client:DisableSync')
-    print('Entered')
     FreezeEntityPosition(TraphouseObj, true)
     SetWeatherTypePersist('EXTRASUNNY')
     SetWeatherTypeNow('EXTRASUNNY')

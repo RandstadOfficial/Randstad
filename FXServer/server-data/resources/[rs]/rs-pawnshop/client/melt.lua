@@ -110,6 +110,7 @@ Citizen.CreateThread(function()
                                 openingDoor = false
                                 ClearPedTasks(GetPlayerPed(-1))
                                 TriggerServerEvent('rs-pawnshop:server:sellGold')
+                                RSCore.Functions.Notify("Check ook Traphouse bro, daar verkoop je voor meer..", "primary")
                             end, function() -- Cancel
                                 openingDoor = false
                                 ClearPedTasks(GetPlayerPed(-1))

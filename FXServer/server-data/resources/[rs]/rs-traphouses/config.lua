@@ -98,12 +98,12 @@ Config.AllowedItems = {
     },
     ["10kgoldchain"] = {
         name = "10kgoldchain",
-        wait = 10000,
-        reward = 3000,
-    },
-    ["goldbars"] = {
-        name = "goldbars",
         wait = 15000,
-        reward = 3500,
+        reward = math.random(1500, 2500),
+    },
+    ["goldbar"] = {
+        name = "goldbar",
+        wait = 30000,
+        reward = math.random(3000, 4500),
     },
 }
