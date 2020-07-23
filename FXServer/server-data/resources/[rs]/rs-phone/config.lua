@@ -72,12 +72,12 @@ Config.PhoneApplications = {
     },
     ["advertentie"] = {
         app = "advertentie",
-        color = "#ff8f1a",
+        color = "#017ff7",
         icon = "fas fa-ad",
         tooltipText = "Advertenties",
         job = false,
         blockedjobs = {},
-        slot = 7,
+        slot = 8,
         Alerts = 0,
     },
     ["bank"] = {
