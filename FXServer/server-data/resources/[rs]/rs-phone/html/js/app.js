@@ -203,11 +203,15 @@ $(document).on('click', '.phone-application', function(e){
                         app: "mail"
                     }));
                 } else if (PressedApplication == "whatsapp") {
-                    $.post('http://qb-phone_new/GetWhatsappChats', JSON.stringify({}), function(chats){
+                    $.post('http://rs-phone/GetWhatsappChats', JSON.stringify({}), function(chats){
                         RS.Phone.Functions.LoadWhatsappChats(chats);
                     });
                 } else if (PressedApplication == "meos") {
                     SetupMeosHome();
+                } else if (PressedApplication == "advertentie") {
+                    $.post('http://rs-phone/LoadAdverts', JSON.stringify({}), function(adverts){
+                        RS.Phone.Functions.LoadAdverts(adverts);
+                    });
                 }
             }
         }
@@ -333,8 +337,8 @@ $(document).ready(function() {
                 RS.Phone.Functions.SetupMails(event.data.Mails);
                 break;
             case "RefreshAdverts":
-                if (RS.Phone.Data.currentApplication == "advert") {
-                    RS.Phone.Functions.RefreshAdverts(event.data.Adverts);
+                if (RS.Phone.Data.currentApplication == "advertentie") {
+                    RS.Phone.Functions.LoadAdverts(event.data.Adverts);
                 }
                 break;
             case "AddPoliceAlert":
