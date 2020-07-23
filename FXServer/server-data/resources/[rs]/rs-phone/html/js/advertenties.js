@@ -8,6 +8,7 @@
 // ..........''...\.......... _.·´ 
 // ............\..............( 
 // ..............\.............\...
+// waaRoM KopIEeR jE qbuS
 
 // Functions
 RS.Phone.Functions.LoadAdverts = (adverts) => {
