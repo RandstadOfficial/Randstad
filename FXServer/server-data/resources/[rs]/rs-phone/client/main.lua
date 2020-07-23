@@ -831,7 +831,7 @@ AddEventHandler('rs-phone:client:UpdateAdverts', function(Adverts, LastAd)
                 title = "Advertentie",
                 text = "Er is een nieuwe AD gepost door "..LastAd,
                 icon = "fas fa-ad",
-                color = "#ff8f1a",
+                color = "#fff",
                 timeout = 2500,
             },
         })
@@ -843,7 +843,7 @@ AddEventHandler('rs-phone:client:UpdateAdverts', function(Adverts, LastAd)
                 content = "Er is een nieuwe AD gepost door "..LastAd,
                 icon = "fas fa-ad", 
                 timeout = 2500, 
-                color = "#ff8f1a",
+                color = "#017ff7",
             },
         })
     end

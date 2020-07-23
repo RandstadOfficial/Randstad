@@ -246,12 +246,12 @@ body {
 .call-notifications {
     display: none;
     position: absolute;
-    background: #e67d22ea;
+    background: #333c45;
     height: 9vh;
     width: 34vh;
     bottom: 16vh;
     right: -35vh;
-    border-radius: 1.7vh;
+    border-radius: 1vh;
     z-index: -5;
 }
 .call-notifications-shake {
@@ -284,7 +284,7 @@ body {
     width: 34vh;
     bottom: 5vh;
     right: -35vh;
-    border-radius: 1.7vh;
+    border-radius: 1vh;
     z-index: -5;
 }
 
