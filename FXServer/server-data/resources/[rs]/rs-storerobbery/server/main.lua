@@ -40,9 +40,9 @@ RSCore.Functions.CreateCallback('rs-storerobbery:takeMoney', function(source, cb
     local src   = source
     local Player = RSCore.Functions.GetPlayer(src)
 
-    Player.Functions.AddMoney('cash', math.random(25, 45), "robbery-store")
+    Player.Functions.AddMoney('cash', math.random(25, 50), "robbery-store")
     if isDone then
-        if math.random(1, 100) <= 17 then
+        if math.random(1, 100) <= 10 then
             local code = SafeCodes[Config.Registers[register].safeKey]
             local info = {}
             if Config.Safes[Config.Registers[register].safeKey].type == "keypad" then
@@ -90,7 +90,7 @@ RSCore.Functions.CreateCallback('rs-storerobbery:SafeReward', function(source, c
         TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items["rolex"], "add")
         if luck == odd then
             Citizen.Wait(500)
-            Player.Functions.AddItem("goldbar", math.random(1, 2))
+            Player.Functions.AddItem("goldbar", 1)
             TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items["goldbar"], "add")
         end
     end

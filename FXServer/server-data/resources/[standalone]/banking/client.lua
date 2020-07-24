@@ -125,6 +125,7 @@ local banks = {
   {name="Bank", id=108, x=314.187, y=-278.621, z=54.170},
   {name="Bank", id=108, x=-351.534, y=-49.529, z=49.042},
   {name="Bank", id=108, x=241.727, y=220.706, z=106.286},
+  {name="Bank", id=108, x=1175.21, y=2706.517, z=38.09},
 }
 
 -- Display Map Blips
@@ -274,6 +275,11 @@ RegisterNUICallback('deposit', function(data, cb)
   cb('ok')
 end)
 
+RegisterNUICallback('depositSubmit', function(data, cb)
+  TriggerEvent('bank:deposit', data.amount)
+  cb('ok')
+end)
+
 RegisterNUICallback('withdrawSubmit', function(data, cb)
   TriggerServerEvent('bank:withdraw', data.amount)
   SetTimeout(500, function()
@@ -287,7 +293,7 @@ RegisterNUICallback('withdrawSubmit', function(data, cb)
 end)
 
 RegisterNUICallback('depositSubmit', function(data, cb)
-  TriggerServerEvent('bank:deposit', data.amount)
+  --TriggerServerEvent('bank:deposit', data.amount)
   SetTimeout(500, function()
     local PlayerData = RSCore.Functions.GetPlayerData()
     SendNUIMessage({
@@ -346,6 +352,16 @@ end
 RegisterNetEvent('banking:client:executeEvents')
 AddEventHandler('banking:client:executeEvents', function()
   TriggerServerEvent('banking:server:giveCash', playerId, amount)
+end)
+
+-- Process deposit if conditions met
+RegisterNetEvent('bank:deposit')
+AddEventHandler('bank:deposit', function(amount)
+  if(IsNearBank() == true or depositAtATM == true and IsNearATM() == true) then
+    TriggerServerEvent("bank:deposit", tonumber(amount))
+  else
+    RSCore.Functions.Notify("ERROR, deze geldautomaat is kaduuk!", "error")
+  end
 end)
 
 -- Check if player is near another player

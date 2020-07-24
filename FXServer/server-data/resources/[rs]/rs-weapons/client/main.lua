@@ -30,6 +30,14 @@ Citizen.CreateThread(function()
     end
 end)
 
+Citizen.CreateThread(function()
+    while true do
+        Wait(5)
+
+        SetPedSuffersCriticalHits(PlayerPedId(), false)
+    end
+end) 
+
 Citizen.CreateThread(function() 
     while true do
         if isLoggedIn then
