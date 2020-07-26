@@ -529,6 +529,14 @@ Config.JobInteractions = {
                     event = 'police:client:JailPlayer',
                     shouldClose = true,
                 },
+                {
+                    id    = 'lockhouse',
+                    title = 'Deur vergrendelen',
+                    icon = '#general',
+                    type = 'client',
+                    event = 'rs-houserobbery:client:PoliceLockHouse',
+                    shouldClose = true,
+                },
             }
         },
         {

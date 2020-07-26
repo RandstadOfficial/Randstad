@@ -111,3 +111,9 @@ RegisterServerEvent('rs-houserobbery:server:clearAnimsAllPedsInsideRobberyHouses
 AddEventHandler('rs-houserobbery:server:clearAnimsAllPedsInsideRobberyHouses', function()
     TriggerClientEvent('rs-houserobbery:client:ClearPedAnims', -1)
 end)
+
+RegisterServerEvent('rs-houserobbery:server:SetHouseLocked')
+AddEventHandler('rs-houserobbery:server:SetHouseLocked', function(house)
+    Config.Houses[house]["opened"] = false
+    TriggerClientEvent('rs-houserobbery:client:SetHouseLockStatus', -1, house, false)
+end)

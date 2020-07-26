@@ -5,6 +5,7 @@ local IsLayingOnBed = false
 local Validvehicles = {
     "asprinter",
     "aeklasse",
+    "alifeliner"
 }
 
 function CheckForVehicles()

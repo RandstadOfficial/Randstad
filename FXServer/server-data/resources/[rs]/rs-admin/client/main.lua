@@ -652,7 +652,7 @@ end
 function OpenTargetAppartmentInventory(target)
     WarMenu.CloseMenu()
     
-    TriggerServerEvent("inventory:server:OpenInventory", "stash", target)
+    --TriggerServerEvent("inventory:server:OpenInventory", "stash", target)
 end
 
 Citizen.CreateThread(function()

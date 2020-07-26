@@ -158,7 +158,7 @@ AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
             retval = tonumber(retval)
 
             if (total + retval) <= (retval + 1) then
-                RSCore.Functions.Progressbar("taking_bullets", "Kogels inladen..", math.random(4000, 6000), false, true, {
+                RSCore.Functions.Progressbar("taking_bullets", "Kogels inladen..", math.random(3000, 4000), false, true, {
                     disableMovement = false,
                     disableCarMovement = false,
                     disableMouse = false,

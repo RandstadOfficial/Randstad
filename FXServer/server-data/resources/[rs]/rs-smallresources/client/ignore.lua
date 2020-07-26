@@ -139,7 +139,8 @@ function RemoveWeaponDrops()
 end
 
 Citizen.CreateThread(function()
-	while true do    
+	while true do  
+		DisablePlayerVehicleRewards(GetPlayerPed(-1))
 		RemoveWeaponDrops()
 		Citizen.Wait(3)
 	end

@@ -474,6 +474,9 @@ function ProcessRunStuff(ped)
         end
         SetPedMovementClipset(ped, "move_m@injured", 1 )
         SetPlayerSprint(PlayerId(), false)
+    else
+        Citizen.Wait(1000)
+        ResetPedMovementClipset(PlayerPedId())
     end
 end
 

@@ -84,12 +84,11 @@ Config.Locations = {
 }
 
 Config.ArmoryWhitelist = {
-    "KZY14747", -- Ryan
+    "UXO50693", -- Ryan
     "DTE65403", -- MaBo
     "YND19022", -- Maestro
     "ZOY23072", -- Anton
     "CKQ80729", -- Danny
-	"LYE72460", -- Birdzor
 	"LWP29900", -- Nico
 	"BQL92466", -- Goudenaapje (Dwight)
 }
@@ -328,7 +327,7 @@ Config.Items = {
         [3] = {
             name = "weapon_pumpshotgun",
             price = 0,
-            amount = 1,
+            amount = 0,
             info = {
                 serie = "",
                 attachments = {
@@ -355,7 +354,7 @@ Config.Items = {
         [5] = {
             name = "weapon_carbinerifle",
             price = 0,
-            amount = 1,
+            amount = 0,
             info = {
                 serie = "",
                 attachments = {
@@ -393,7 +392,7 @@ Config.Items = {
         [9] = {
             name = "shotgun_ammo",
             price = 0,
-            amount = 5,
+            amount = 0,
             info = {},
             type = "item",
             slot = 9,
@@ -401,7 +400,7 @@ Config.Items = {
         [10] = {
             name = "rifle_ammo",
             price = 0,
-            amount = 5,
+            amount = 0,
             info = {},
             type = "item",
             slot = 10,

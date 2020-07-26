@@ -436,12 +436,37 @@ end)
 
 RegisterNetEvent('rs-houserobbery:client:ClearPedAnims')
 AddEventHandler('rs-houserobbery:client:ClearPedAnims', function()
-    print("Animation bug abuse fix inside robbery house triggered") -- If triggered, player sees this. Animation gets canceled because of bug abuse, player is invisible for other player if animation is happening
+    --print("Animation bug abuse fix inside robbery house triggered") -- If triggered, player sees this. Animation gets canceled because of bug abuse, player is invisible for other player if animation is happening
     if inside then
         local ped = GetPlayerPed(-1)
         ClearPedTasks(ped)
         ClearPedTasksImmediately(ped)
     end
+end)
+
+RegisterNetEvent('rs-houserobbery:client:PoliceLockHouse')
+AddEventHandler('rs-houserobbery:client:PoliceLockHouse', function(house)
+    local found = false
+    local PlayerPed = GetPlayerPed(-1)
+    local job = RSCore.Functions.GetPlayerData().job.name
+    for k in pairs(Config.Houses) do
+        local dist = GetDistanceBetweenCoords(GetEntityCoords(PlayerPed), Config.Houses[k]["coords"]["x"], Config.Houses[k]["coords"]["y"], Config.Houses[k]["coords"]["z"], true)
+        if dist < 1.5 and job == 'police' then
+            found = true
+            TriggerServerEvent('rs-houserobbery:server:SetHouseLocked', k)
+            break
+        end
+    end
+    if found then
+        RSCore.Functions.Notify('De deur is opslot!', 'success', 3500)
+    else
+        RSCore.Functions.Notify('Geen huis in de buurt', 'error', 3500)
+    end
+end)
+
+RegisterNetEvent('rs-houserobbery:client:SetHouseLockStatus')
+AddEventHandler('rs-houserobbery:client:SetHouseLockStatus', function(house, status)
+    Config.Houses[house]["opened"] = status
 end)
 
 function IsWearingHandshoes()
