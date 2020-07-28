@@ -1,5 +1,5 @@
 .twitter-app {
-    display: none;
+    display: none; /* VERANDER NAAR NONE */
     height: 100%;
     width: 100%;
     background: #20232a;
@@ -92,7 +92,7 @@
 .twitter-footer-btn {
     position: relative;
     float: left;
-    width: 25%;
+    width: 33.3%;
     height: 100%;
     text-align: center;
     line-height: 6vh;
@@ -112,7 +112,7 @@
 }
 
 .twitter-tweets {
-    display: block;
+    display: block; /* VERANDER NAAR BLOCK */
     position: absolute;
     height: 77%;
     width: 100%;
@@ -148,7 +148,7 @@
     position: relative;
     width: 4vh;
     top: 1.7vh;
-    left: 1vh;
+    left: 0.5vh;
 }
 
 .twitter-avatar-img {
@@ -160,7 +160,7 @@
 .twitter-creator {
     position: relative;
     top: -2vh;
-    left: 6vh;
+    left: 5.5vh;
 }
 
 .twitter-tag {
@@ -214,7 +214,7 @@
 }
 
 .twitter-trending {
-    display: none;
+    display: none; /* VERANDER NAAR NONE */
     position: absolute;
     height: 77%;
     width: 100%;
@@ -236,12 +236,49 @@
     background-color: #ebebeb00;
 }
 
+.twitter-hashtag {
+    position: relative;
+    width: 92%;
+    left: 0.3vh;
+    right: 0;
+    margin: 1.5vh auto;
+    background-color: #2b2f38;
+    color: white;
+    padding-bottom: 1vh;
+}
+
+.twitter-hashtag-status {
+    position: relative;
+    left: 0.5vh;
+    top: 0.5vh;
+    font-size: 1.2vh;
+    color: #7b8792;
+    font-family: 'Roboto light';
+}
+
+.twitter-hashtag-tag {
+    position: relative;
+    left: 0.5vh;
+    top: 0.5vh;
+    font-size: 1.5vh;
+    font-family:'Roboto Bold';
+}
+
+.twitter-hashtag-messages {
+    position: relative;
+    left: 0.5vh;
+    top: 0.5vh;
+    font-size: 1.2vh;
+    color: #7b8792;
+    font-family: 'Roboto light';
+}
+
 .twitter-new {
     display: none;
     position: absolute;
     height: 77%;
     width: 100%;
-    top: 8vh;
+    top: 62vh;
     overflow: hidden;
     overflow-y: scroll !important;
     overflow-x: hidden !important;

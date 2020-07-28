@@ -979,7 +979,7 @@ end)
 
 local patt = "[?!@#]"
 
-RegisterNUICallback('PostNewTweet', function(data, cb)
+RegisterNUICallback('SendNewTweet', function(data, cb)
     local TweetMessage = {
         firstName = PhoneData.PlayerData.charinfo.firstname,
         lastName = PhoneData.PlayerData.charinfo.lastname,
