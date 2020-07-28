@@ -99,6 +99,24 @@
     font-size: 1.3vh;
 }
 
+.advertentie-nummer1 {
+    position: relative;
+    float: right;
+    right: 0.5vh;
+    top: 1vh;
+    width: 8vh;
+    font-size: 1.3vh;
+    background: transparent;
+    outline: none;
+    border: none;
+}
+
+.advertentie-nummer1::selection {
+    background: transparent;
+    outline: none;
+    border: none;
+}
+
 .advertentie-bericht {
     position: relative;
     top: 2vh;

@@ -212,6 +212,18 @@ $(document).on('click', '.phone-application', function(e){
                     $.post('http://rs-phone/LoadAdverts', JSON.stringify({}), function(adverts){
                         RS.Phone.Functions.LoadAdverts(adverts);
                     });
+                } else if (PressedApplication == "twitter") {
+                    $.post('http://rs-phone/GetMentionedTweets', JSON.stringify({}), function(MentionedTweets){
+                        RS.Phone.Functions.LoadMentionedTweets(MentionedTweets)
+                    })
+                    $.post('http://rs-phone/GetHashtags', JSON.stringify({}), function(Hashtags){
+                        RS.Phone.Functions.LoadHashtags(Hashtags)
+                    })
+                    if (RS.Phone.Data.IsOpen) {
+                        $.post('http://rs-phone/GetTweets', JSON.stringify({}), function(Tweets){
+                            RS.Phone.Functions.LoadTweets(Tweets);
+                        });
+                    }
                 }
             }
         }
@@ -248,7 +260,7 @@ $(document).ready(function() {
                 RS.Phone.Functions.SetupAppWarnings(event.data.AppData);                
                 break;
             case "UpdateMentionedTweets":
-                RS.Phone.Notifications.LoadMentionedTweets(event.data.Tweets);                
+                RS.Phone.Functions.LoadMentionedTweets(event.data.Tweets);                
                 break;
             case "UpdateBank":
                 $(".bank-app-account-balance").html("&euro; "+event.data.NewBalance);
@@ -257,16 +269,16 @@ $(document).ready(function() {
             case "UpdateChat":
                 if (RS.Phone.Data.currentApplication == "whatsapp") {
                     if (OpenedChatData.number !== null && OpenedChatData.number == event.data.chatNumber) {
-                        console.log('Chat reloaded')
+                        console.log('Chat reloaded 0')
                         RS.Phone.Functions.SetupChatMessages(event.data.chatData);
                     } else {
-                        console.log('Chats reloaded')
+                        console.log('Chats reloaded 1')
                         RS.Phone.Functions.LoadWhatsappChats(event.data.Chats);
                     }
                 }
                 break;
             case "UpdateHashtags":
-                RS.Phone.Notifications.LoadHashtags(event.data.Hashtags);
+                RS.Phone.Functions.LoadHashtags(event.data.Hashtags);
                 break;
             case "RefreshWhatsappAlerts":
                 RS.Phone.Functions.ReloadWhatsappAlerts(event.data.Chats);
@@ -371,6 +383,36 @@ $(document).on('keydown', function() {
     }
 });
 
+RS.Screen.Notification = function(title, content, icon, timeout, color) {
+    var NotificationTimeout;
+    $.post('http://rs-phone/HasPhone', JSON.stringify({}), function(HasPhone){
+        if (HasPhone) {
+            if (color != null && color != undefined) {
+                $(".screen-notifications-container").css({"background-color":color});
+            }
+            $(".screen-notification-icon").html('<i class="'+icon+'"></i>');
+            $(".screen-notification-title").text(title);
+            $(".screen-notification-content").text(content);
+            $(".screen-notifications-container").css({'display':'block'}).animate({
+                right: 5+"vh",
+            }, 200);
+        
+            if (NotificationTimeout != null) {
+                clearTimeout(NotificationTimeout);
+            }
+        
+            NotificationTimeout = setTimeout(function(){
+                $(".screen-notifications-container").animate({
+                    right: -35+"vh",
+                }, 200, function(){
+                    $(".screen-notifications-container").css({'display':'none'});
+                });
+                NotificationTimeout = null;
+            }, timeout);
+        }
+    });
+}
+
 RS.Phone.Functions.SetupApplications = function(data) {
     RS.Phone.Data.Applications = data.applications;
 
@@ -405,6 +447,8 @@ RS.Phone.Functions.SetupApplications = function(data) {
             }
         }
     });
+
+    $('.twitter-avatar-img').attr("src", RS.Phone.Data.MetaData.profilepicture);
 
     $('[data-toggle="tooltip"]').tooltip();
 }
