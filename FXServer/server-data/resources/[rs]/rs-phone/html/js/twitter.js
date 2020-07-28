@@ -22,8 +22,6 @@ $(document).on('click', '.twitter-footer-btn', function(e) {
     var PreviousTab = $('.twitter-footer').find('[data-tweettab="'+ ActiveTwitterTab +'"]');
 
     if (ActiveTwitterTab != PressedTab) {
-        console.log("Pressed: " + PressedTab);
-        console.log("Active: " + ActiveTwitterTab);
 
         switch (PressedTab) {
             case "twitter-tweets":
