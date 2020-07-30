@@ -168,3 +168,7 @@ $(document).on('keydown', function() {
             break;
     }
 });
+
+$(document).on('click', '.closebtn-db', function() {
+    Databank.Close();
+});
