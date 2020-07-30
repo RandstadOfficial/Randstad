@@ -89,8 +89,8 @@ Citizen.CreateThread(function()
                                     if math.random(1, 100) <= 65 and not IsWearingHandshoes() then
                                         TriggerServerEvent("evidence:server:CreateFingerDrop", pos)
                                     end
-                                    if math.random(100) <= 50 then
-                                        TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 3))
+                                    if math.random(100) <= 40 then
+                                        TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 2))
                                     end
                                     if Config.Safes[safe].type == "keypad" then
                                         SendNUIMessage({
@@ -319,7 +319,7 @@ RegisterNUICallback('success', function()
         end)
         Citizen.CreateThread(function()
             while openingDoor do
-                TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 3))
+                TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 2))
                 Citizen.Wait(10000)
             end
         end)
