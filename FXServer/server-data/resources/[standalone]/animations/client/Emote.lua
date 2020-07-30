@@ -49,8 +49,14 @@ AddEventHandler('animations:client:SmokeWeed', function()
     while SmokingWeed do
       Citizen.Wait(10000)
       TriggerServerEvent('rs-hud:Server:RelieveStress', math.random(15, 18))
+      
+      TriggerServerEvent('hospital:server:SetArmor', 10)
+      SetPedArmour(GetPlayerPed(-1), GetPedArmour(GetPlayerPed(-1)) + 10)
+
       RelieveCount = RelieveCount + 1
+      
       if RelieveCount == 6 then
+        
         if ChosenDict == "MaleScenario" and IsInAnimation then
           ClearPedTasksImmediately(PlayerPedId())
           IsInAnimation = false
