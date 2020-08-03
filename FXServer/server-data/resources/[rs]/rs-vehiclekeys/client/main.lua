@@ -403,7 +403,7 @@ function LockpickIgnition(isAdvanced)
                             FailedAttemps = 0
                             SucceededAttempts = 0
                             NeededAttempts = 0
-                            TriggerServerEvent('rs-hud:Server:GainStress', math.random(2, 4))
+                            TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 3))
                         else
                             if vehicle ~= nil and vehicle ~= 0 then
                                 TaskPlayAnim(GetPlayerPed(-1), dict, anim, 8.0, 8.0, -1, 16, -1, false, false, false)
@@ -452,10 +452,10 @@ function LockpickIgnition(isAdvanced)
                                 RSCore.Functions.Notify("Je moet in het voertuig zitten", "error")
                                 IsHotwiring = false
                                 FailedAttemps = FailedAttemps + 1
-                                local c = math.random(2)
-                                local o = math.random(2)
+                                local c = math.random(3)
+                                local o = math.random(3)
                                 if c == o then
-                                    TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 4))
+                                    TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 3))
                                 end
                             end
                         end
@@ -468,10 +468,10 @@ function LockpickIgnition(isAdvanced)
                         RSCore.Functions.Notify("Lockpicken mislukt!", "error")
                         IsHotwiring = false
                         FailedAttemps = FailedAttemps + 1
-                        local c = math.random(2)
-                        local o = math.random(2)
+                        local c = math.random(3)
+                        local o = math.random(3)
                         if c == o then
-                            TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 4))
+                            TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 3))
                         end
                     end
                 end)

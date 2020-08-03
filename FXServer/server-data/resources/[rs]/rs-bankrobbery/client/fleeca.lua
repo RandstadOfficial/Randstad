@@ -377,7 +377,7 @@ function openLocker(bankId, lockerId)
                 end)
                 Citizen.CreateThread(function()
                     while IsDrilling do
-                        TriggerServerEvent('rs-hud:Server:GainStress', math.random(4, 8))
+                        TriggerServerEvent('rs-hud:Server:GainStress', math.random(3, 6))
                         Citizen.Wait(10000)
                     end
                 end)
@@ -420,7 +420,7 @@ function openLocker(bankId, lockerId)
                 end)
                 Citizen.CreateThread(function()
                     while IsDrilling do
-                        TriggerServerEvent('rs-hud:Server:GainStress', math.random(4, 8))
+                        TriggerServerEvent('rs-hud:Server:GainStress', math.random(3, 6))
                         Citizen.Wait(10000)
                     end
                 end)
@@ -456,7 +456,7 @@ function openLocker(bankId, lockerId)
         end)
         Citizen.CreateThread(function()
             while IsDrilling do
-                TriggerServerEvent('rs-hud:Server:GainStress', math.random(4, 8))
+                TriggerServerEvent('rs-hud:Server:GainStress', math.random(3, 6))
                 Citizen.Wait(10000)
             end
         end)

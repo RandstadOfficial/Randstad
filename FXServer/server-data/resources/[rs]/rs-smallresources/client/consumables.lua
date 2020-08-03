@@ -28,8 +28,6 @@ AddEventHandler("consumables:client:UseJoint", function()
         end
         TriggerEvent("evidence:client:SetStatus", "weedsmell", 300)
         TriggerEvent('animations:client:SmokeWeed')
-        TriggerServerEvent('hospital:server:SetArmor', 15)
-        SetPedArmour(GetPlayerPed(-1), GetPedArmour(GetPlayerPed(-1)) + 15)
     end)
 end)
 
