@@ -16,6 +16,16 @@ var ClearNumberTimer = null;
 var SelectedSuggestion = null;
 var AmountOfSuggestions = 0;
 
+$(document).on('keydown', function() {
+    switch(event.keyCode) {
+        case 8: // ESC
+            var text = $("#phone-keypad-input").text();
+            var res = text.slice(0, -1);
+            $("#phone-keypad-input").text(res);
+            break;
+    }
+});
+
 $(document).on('click', '.phone-app-footer-button', function(e){
     e.preventDefault();
 
