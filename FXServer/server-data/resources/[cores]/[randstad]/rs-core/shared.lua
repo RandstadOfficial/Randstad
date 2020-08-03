@@ -5965,6 +5965,17 @@ RSShared.Jobs = {
 			},
 		}
 	},
+	['taquila'] = {
+		label = "Tequi-la-la",
+		payment = 10,
+		defaultDuty = true,
+		grades = {
+			[1] = {
+				label = "",
+				payment = 10,
+			},
+		}
+	},
 }
 
 RSShared.StarterItems = {

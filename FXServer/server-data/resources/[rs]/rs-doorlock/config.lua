@@ -1238,6 +1238,186 @@ RS.Doors = {
 		distance = 7.5,
 		size = 2
 	},
+	-- HOSPITAL
+	-- DUBBELE DEUR 1
+	{
+		textCoords = vector3(313.0346, -572.3839, 43.2841),
+		authorizedJobs = { 'police', 'ambulance' },
+		locking = false,
+		locked = false,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'gabz_pillbox_doubledoor_l',
+				objYaw = 340.0,
+				objCoords = vector3(312.4186, -571.9518, 43.2841)
+			},
+			{
+				objName = 'gabz_pillbox_doubledoor_r',
+				objYaw = 340.0,
+				objCoords = vector3(313.8146, -572.4988, 43.2841)
+			}
+		}
+	},
+	-- DUBBELE DEUR 2
+	{
+		textCoords = vector3(318.7802, -574.5489, 43.2841),
+		authorizedJobs = { 'police', 'ambulance' },
+		locking = false,
+		locked = false,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'gabz_pillbox_doubledoor_l',
+				objYaw = 340.0,
+				objCoords = vector3(318.3313, -574.1353, 43.2841)
+			},
+			{
+				objName = 'gabz_pillbox_doubledoor_r',
+				objYaw = 340.0,
+				objCoords = vector3(319.6115, -574.491, 43.2841)
+			}
+		}
+	},
+	-- DUBBELE DEUR 3
+	{
+		textCoords = vector3(324.1619, -576.7534, 43.2841),
+		authorizedJobs = { 'police', 'ambulance' },
+		locking = false,
+		locked = false,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'gabz_pillbox_doubledoor_l',
+				objYaw = 340.0,
+				objCoords = vector3(323.5222, -576.136, 43.2841)
+			},
+			{
+				objName = 'gabz_pillbox_doubledoor_r',
+				objYaw = 340.0,
+				objCoords = vector3(325.1437, -576.5668, 43.2841)
+			}
+		}
+	},
+	-- DUBBELE DEUR 4
+	{
+		textCoords = vector3(317.4712, -578.3271, 43.2841),
+		authorizedJobs = { 'police', 'ambulance' },
+		locking = false,
+		locked = false,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'gabz_pillbox_doubledoor_l',
+				objYaw = 160.0,
+				objCoords = vector3(318.2804, -578.6685, 43.2841)
+			},
+			{
+				objName = 'gabz_pillbox_doubledoor_r',
+				objYaw = 160.0,
+				objCoords = vector3(316.7887, -578.1945, 43.2841)
+			}
+		}
+	},
+	-- DUBBELE DEUR 5 (NAAR HET DAK)
+	{
+		textCoords = vector3(327.2453, -593.8099, 43.2841),
+		authorizedJobs = { 'police', 'ambulance' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'gabz_pillbox_doubledoor_l',
+				objYaw = 250.0,
+				objCoords = vector3(327.5656, -593.0653, 43.2841)
+			},
+			{
+				objName = 'gabz_pillbox_doubledoor_r',
+				objYaw = 250.0,
+				objCoords = vector3(327.012, -594.5692, 43.2841)
+			}
+		}
+	},
+	-- MRI
+	{
+		objName = 'gabz_pillbox_singledoor',
+		objYaw = 340.0,
+		objCoords  = vector3(336.5847, -580.932, 43.2841),
+		textCoords = vector3(336.5847, -580.932, 43.2841),
+		authorizedJobs = { 'police', 'ambulance' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 1.0,
+	},
+	-- DIAGNOSTICS / STAFF ONLY
+	{
+		objName = 'gabz_pillbox_singledoor',
+		objYaw = 340.0,
+		objCoords  = vector3(341.3274, -582.6184, 43.2841),
+		textCoords = vector3(341.3274, -582.6184, 43.2841),
+		authorizedJobs = { 'police', 'ambulance' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 1.0,
+	},
+	-- XRAY
+	{
+		objName = 'gabz_pillbox_singledoor',
+		objYaw = 340.0,
+		objCoords  = vector3(347.223, -584.766, 43.2841),
+		textCoords = vector3(347.223, -584.766, 43.2841),
+		authorizedJobs = { 'police', 'ambulance' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 1.0,
+	},
+	-- DIRECTOR OFFICE
+	{
+		objName = 'gabz_pillbox_singledoor',
+		objYaw = 340.0,
+		objCoords  = vector3(337.5511, -592.2172, 43.2841),
+		textCoords = vector3(337.5511, -592.2172, 43.2841),
+		authorizedJobs = { 'police', 'ambulance' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 1.0,
+	},
+	-- KANTINE
+	{
+		objName = 'gabz_pillbox_singledoor',
+		objYaw = 160.0,
+		objCoords  = vector3(308.7049, -597.1008, 43.2841),
+		textCoords = vector3(308.7049, -597.1008, 43.2841),
+		authorizedJobs = { 'police', 'ambulance' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 1.0,
+	},
+
+	-- TESTING
+	{
+		objName = 'v_ilev_roc_door4',
+		objYaw = 355.0,
+		objCoords  = vector3(-564.4547, 276.5066, 83.1162),
+		textCoords = vector3(-564.4547, 276.5066, 83.1162),
+		authorizedJobs = { 'police', 'taquila' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 1.5,
+	},
+	
 	-----
 	-- Import Garage
 	-----
