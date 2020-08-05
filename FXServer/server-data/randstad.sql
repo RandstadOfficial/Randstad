@@ -549,6 +549,34 @@ CREATE TABLE `whitelist` (
   `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+ --
+-- Tabelstructuur voor tabel `traphouses`
+--
+
+CREATE TABLE `traphouses` (
+  `id` int(50) NOT NULL,
+  `coords` text NOT NULL,
+  `keyholders` text NOT NULL,
+  `pincode` int(4) NOT NULL,
+  `inventory` text NOT NULL,
+  `opened` tinyint(1) NOT NULL,
+  `takingover` tinyint(1) NOT NULL,
+  `money` bigint(20) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `traphouses`
+--
+
+INSERT INTO `traphouses` (`id`, `coords`, `keyholders`, `pincode`, `inventory`, `opened`, `takingover`, `money`) VALUES
+(1, '{\"interaction\":{\"y\":-1702.135,\"z\":-0.972,\"h\":358.11,\"x\":-186.1495,\"r\":1},\"enter\":{\"y\":-1702.602,\"z\":32.78,\"h\":129,\"x\":-185.69,\"r\":1}}', '[{\"owner\":true,\"citizenid\":\"ADB48437\"},{\"owner\":false,\"citizenid\":\"RIR27646\"}]', 46857, '[]', 0, 0, 0);
+
+--
+-- Indexen voor tabel `traphouses`
+--
+ALTER TABLE `traphouses`
+  ADD PRIMARY KEY (`id`);
+  
 --
 -- Gegevens worden geëxporteerd voor tabel `whitelist`
 --
@@ -906,6 +934,8 @@ ALTER TABLE `trunkitems`
 --
 ALTER TABLE `trunkitemsnew`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ 
+  
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

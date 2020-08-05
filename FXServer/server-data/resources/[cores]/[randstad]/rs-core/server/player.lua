@@ -24,9 +24,14 @@ RSCore.Player.Login = function(source, citizenid, newData)
 					PlayerData.metadata = json.decode(PlayerData.metadata)
 					PlayerData.charinfo = json.decode(PlayerData.charinfo)
 				end
+				print("i was here")
+				print(PlayerData.job.onduty)
 				RSCore.Player.CheckPlayerData(source, PlayerData)
+				print("i was here after checkplayerdata")
+				print(PlayerData.job.onduty)
 			end)
 		else
+			print("i was also here")
 			RSCore.Player.CheckPlayerData(source, newData)
 		end
 		return true
@@ -108,7 +113,8 @@ RSCore.Player.CheckPlayerData = function(source, PlayerData)
 	PlayerData.job.name = PlayerData.job.name ~= nil and PlayerData.job.name or "unemployed"
 	PlayerData.job.label = PlayerData.job.label ~= nil and PlayerData.job.label or "Werkloos"
 	PlayerData.job.payment = PlayerData.job.payment ~= nil and PlayerData.job.payment or 10
-	PlayerData.job.onduty = PlayerData.job.onduty ~= nil and PlayerData.job.onduty or true
+	if PlayerData.job.onduty == nil then PlayerData.job.onduty = true end
+	--PlayerData.job.onduty = PlayerData.job.onduty ~= nil and PlayerData.job.onduty or true -- a ? b:c, dus onduty not nil? dan =onduty anders true.
 	PlayerData.job.gradelabel = PlayerData.job.gradelabel ~= nil and PlayerData.job.gradelabel or ""
 	PlayerData.job.grade = PlayerData.job.grade ~= nil and PlayerData.job.grade or 1
 
