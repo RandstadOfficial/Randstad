@@ -72,7 +72,11 @@ AddEventHandler('rs-houserobbery:server:searchCabin', function(cabin, house)
             if math.random(1, 100) == 69 then -- 1% chance to get rare item as item per itemcount
                 randomItem = pickSpecialReward()
                 itemInfo = RSCore.Shared.Items[randomItem]
-                Player.Functions.AddItem(randomItem, 1)   
+                local amountSpecialItem = 1
+                if randomItem == "rubber" then
+                    amountSpecialItem = 10
+                end
+                Player.Functions.AddItem(randomItem, amountSpecialItem)   
                 TriggerClientEvent('inventory:client:ItemBox', src, itemInfo, "add")
             else
                 if not itemInfo["unqiue"] then
@@ -90,6 +94,12 @@ AddEventHandler('rs-houserobbery:server:searchCabin', function(cabin, house)
                     Player.Functions.AddItem(randomItem, 1)
                 end
                 TriggerClientEvent('inventory:client:ItemBox', src, itemInfo, "add")
+            end
+            -- Add pistol_ammo chance
+            if math.random(1,100) > 95 then
+                local pistol_ammo = RSCore.Shared.Items["pistol_ammo"]
+                Player.Functions.AddItem(pistol_ammo, 1)
+                TriggerClientEvent('inventory:client:ItemBox', src, pistol_ammo, "add")
             end
             Citizen.Wait(500)
         end
