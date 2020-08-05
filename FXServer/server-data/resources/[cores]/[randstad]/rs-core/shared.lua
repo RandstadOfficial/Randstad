@@ -5832,7 +5832,7 @@ RSShared.Jobs = {
 			},
 			[3] = {
 				label = "Doctor",
-				payment = 300,
+				payment = 400,
 			},
 			[4] = {
 				label = "Hoofd Geneeskunde",
