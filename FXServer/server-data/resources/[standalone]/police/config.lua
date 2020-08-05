@@ -87,7 +87,7 @@ Config.ArmoryWhitelist = {
     "UXO50693", -- Ryan
     "DTE65403", -- MaBo
     "YND19022", -- Maestro
-    "ZOY23072", -- Anton
+    "UXP35132", -- Cees
     "CKQ80729", -- Danny
 	"LWP29900", -- Nico
 	"BQL92466", -- Goudenaapje (Dwight)

@@ -105,7 +105,7 @@ Citizen.CreateThread(function ()
                         if IsControlJustReleased(0, Keys["E"]) and not active then
                             active = true
                             TaskStartScenarioInPlace(GetPlayerPed(-1), "PROP_HUMAN_BUM_BIN", 0, true)
-                            RSCore.Functions.Progressbar("pickup_reycle_package", "Pakket oppakken..", 5000, false, true, {}, {}, {}, {}, function() -- Done
+                            RSCore.Functions.Progressbar("pickup_reycle_package", "Pakket oppakken..", 4000, false, true, {}, {}, {}, {}, function() -- Done
                                 ClearPedTasks(GetPlayerPed(-1))
                                 PickupPackage()
                                 active = false
@@ -120,7 +120,7 @@ Citizen.CreateThread(function ()
                         if IsControlJustReleased(0, Keys["E"]) then
                             DropPackage()
                             ScrapAnim()
-                            RSCore.Functions.Progressbar("deliver_reycle_package", "Pakket uitpakken..", 5000, false, true, {
+                            RSCore.Functions.Progressbar("deliver_reycle_package", "Pakket uitpakken..", 4000, false, true, {
                                 disableMovement = true,
                                 disableCarMovement = true,
                                 disableMouse = false,

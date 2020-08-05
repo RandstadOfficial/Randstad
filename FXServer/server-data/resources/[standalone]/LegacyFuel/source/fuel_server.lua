@@ -12,6 +12,6 @@ AddEventHandler('fuel:pay', function(price)
 	local amount = round(price)
 
 	if pData.Functions.RemoveMoney('cash', amount, "bought-fuel") then
-		TriggerClientEvent("RSCore:Notify", src, "Uw auto is bijgevuld", "success")
+		TriggerClientEvent("RSCore:Notify", src, "Uw Voertuig is bijgevuld", "success")
 	end
 end)

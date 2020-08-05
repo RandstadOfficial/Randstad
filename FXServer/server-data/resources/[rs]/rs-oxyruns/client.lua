@@ -446,7 +446,7 @@ function checkPedDistance()
     if closestDistance < 40 and closestPed ~= 0 then
         local callChance = math.random(1, 100)
 
-        if callChance < 50 then
+        if callChance < 40 then
             doPoliceAlert()
         end
     end

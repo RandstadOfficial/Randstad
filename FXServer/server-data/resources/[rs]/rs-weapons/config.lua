@@ -67,7 +67,7 @@ Config.DurabilityMultiplier = {
     ["weapon_briefcase_02"] 		 = 0.15,
     ["weapon_ball"] 				 = 0.15,
     ["weapon_flare"] 				 = 0.15,
-    ["weapon_snspistol"] 			 = 0.15,
+    ["weapon_snspistol"] 			 = 0.10,
     ["weapon_bottle"] 				 = 0.15,
     ["weapon_gusenberg"] 			 = 0.15,
     ["weapon_specialcarbine"] 		 = 0.15,
@@ -86,7 +86,7 @@ Config.DurabilityMultiplier = {
     ["weapon_garbagebag"] 			 = 0.15,
     ["weapon_handcuffs"] 			 = 0.15,
     ["weapon_combatpdw"] 			 = 0.15,
-    ["weapon_marksmanpistol"] 		 = 0.15,
+    ["weapon_marksmanpistol"] 		 = 0.10,
     ["weapon_knuckle"] 				 = 0.15,
     ["weapon_hatchet"] 				 = 0.15,
     ["weapon_railgun"] 				 = 0.15,
@@ -189,4 +189,12 @@ Config.WeaponAttachments = {
             item = "rifle_drummag",
         },
     },
+}
+
+Config.WeaponCapacity = {
+    ["pistol"] = 156,
+    ["smg"] = 260,
+    ["shotgun"] = 200,
+    ["rifle"] = 270,
+    ["mg"] = 240
 }

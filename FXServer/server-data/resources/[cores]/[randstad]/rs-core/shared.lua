@@ -3769,6 +3769,18 @@ RSShared.VehicleModels = {
 		["trunkslots"] = 80,
 		["shop"] = "pdm",
 	},
+	[GetHashKey("bobcatxl2")] = {
+		["name"] = "Bobcat XL Closed",
+		["brand"] = "Vapid",
+		["model"] = "bobcatxl2",
+		["price"] = 23000,
+		["category"] = "vans",
+		["hash"] = "1712326151",
+		["image"] = "https://vignette.wikia.nocookie.net/gtawiki/images/3/37/BobcatXL-GTAV-front.png",
+		["trunkspace"] = 100000,
+		["trunkslots"] = 80,
+		["shop"] = "pdm",
+	},
 	[GetHashKey("burrito3")] = {
 		["name"] = "Burrito",
 		["brand"] = "Declasse",

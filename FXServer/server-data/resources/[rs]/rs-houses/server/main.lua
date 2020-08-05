@@ -492,3 +492,7 @@ RSCore.Commands.Add("ring", "Aanbellen bij huis", {}, false, function(source, ar
  
     TriggerClientEvent('rs-houses:client:RequestRing', src)
 end)
+
+RSCore.Commands.Add("givehouse", "Huis geven aan nieuwe eigenaar", {}, false, function(source, args)
+	-- TODO: VOEG COMMAND TOE OM HUIS AAN IEMAND ANDERS TE GEVEN
+end)

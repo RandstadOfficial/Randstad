@@ -157,8 +157,11 @@ AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
             local retval = GetMaxAmmoInClip(ped, weapon, 1)
             retval = tonumber(retval)
 
-            if (total + retval) <= (retval + 1) then
-                RSCore.Functions.Progressbar("taking_bullets", "Kogels inladen..", math.random(3000, 4000), false, true, {
+            local WeaponData = RSCore.Shared.Weapons[GetHashKey(CurrentWeaponData.name)]
+            local WeaponClass = (RSCore.Shared.SplitStr(WeaponData.ammotype, "_")[2]):lower()
+
+            if (total + retval) <= Config.WeaponCapacity[WeaponClass] then
+                RSCore.Functions.Progressbar("taking_bullets", "Kogels inladen..", math.random(3000, 5000), false, true, {
                     disableMovement = false,
                     disableCarMovement = false,
                     disableMouse = false,
@@ -166,8 +169,8 @@ AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
                 }, {}, {}, {}, function() -- Done
                     if RSCore.Shared.Weapons[weapon] ~= nil then
                         SetAmmoInClip(ped, weapon, 0)
-                        SetPedAmmo(ped, weapon, retval)
-                        TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, retval)
+                        SetPedAmmo(ped, weapon, (total+retval))
+                        TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, (total+retval))
                         TriggerServerEvent('RSCore:Server:RemoveItem', itemData.name, 1, itemData.slot)
                         TriggerEvent('inventory:client:ItemBox', RSCore.Shared.Items[itemData.name], "remove")
                         TriggerEvent('RSCore:Notify', retval.." kogels ingeladen!", "success")

@@ -636,20 +636,18 @@ RegisterServerEvent('rs-phone:server:UpdateMessages')
 AddEventHandler('rs-phone:server:UpdateMessages', function(ChatMessages, ChatNumber, New)
     local src = source
     local SenderData = RSCore.Functions.GetPlayer(src)
-
     RSCore.Functions.ExecuteSql(false, "SELECT * FROM `players` WHERE `charinfo` LIKE '%"..ChatNumber.."%'", function(Player)
         if Player[1] ~= nil then
             local TargetData = RSCore.Functions.GetPlayerByCitizenId(Player[1].citizenid)
-
             if TargetData ~= nil then
+
                 RSCore.Functions.ExecuteSql(false, "SELECT * FROM `phone_messages` WHERE `citizenid` = '"..SenderData.PlayerData.citizenid.."' AND `number` = '"..ChatNumber.."'", function(Chat)
+                    
                     if Chat[1] ~= nil then
                         -- Update for target
                         RSCore.Functions.ExecuteSql(false, "UPDATE `phone_messages` SET `messages` = '"..json.encode(ChatMessages).."' WHERE `citizenid` = '"..TargetData.PlayerData.citizenid.."' AND `number` = '"..SenderData.PlayerData.charinfo.phone.."'")
-                                
                         -- Update for sender
                         RSCore.Functions.ExecuteSql(false, "UPDATE `phone_messages` SET `messages` = '"..json.encode(ChatMessages).."' WHERE `citizenid` = '"..SenderData.PlayerData.citizenid.."' AND `number` = '"..TargetData.PlayerData.charinfo.phone.."'")
-                    
                         -- Send notification & Update messages for target
                         TriggerClientEvent('rs-phone:client:UpdateMessages', TargetData.PlayerData.source, ChatMessages, SenderData.PlayerData.charinfo.phone, false)
                     else
@@ -668,7 +666,6 @@ AddEventHandler('rs-phone:server:UpdateMessages', function(ChatMessages, ChatNum
                     if Chat[1] ~= nil then
                         -- Update for target
                         RSCore.Functions.ExecuteSql(false, "UPDATE `phone_messages` SET `messages` = '"..json.encode(ChatMessages).."' WHERE `citizenid` = '"..Player[1].citizenid.."' AND `number` = '"..SenderData.PlayerData.charinfo.phone.."'")
-                                
                         -- Update for sender
                         Player[1].charinfo = json.decode(Player[1].charinfo)
                         RSCore.Functions.ExecuteSql(false, "UPDATE `phone_messages` SET `messages` = '"..json.encode(ChatMessages).."' WHERE `citizenid` = '"..SenderData.PlayerData.citizenid.."' AND `number` = '"..Player[1].charinfo.phone.."'")
