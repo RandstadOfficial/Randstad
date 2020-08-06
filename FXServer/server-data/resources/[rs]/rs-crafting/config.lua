@@ -10,7 +10,7 @@ Config.AttachmentCrafting = {
             costs = {
                 ["metalscrap"] = 200,
                 ["steel"] = 200,
-                ["rubber"] = 30,
+                ["rubber"] = 50,
             },
             type = "item",
             slot = 1,
@@ -24,7 +24,7 @@ Config.AttachmentCrafting = {
             costs = {
                 ["metalscrap"] = 235,
                 ["steel"] = 235,
-                ["rubber"] = 38,
+                ["rubber"] = 65,
             },
             type = "item",
             slot = 2,

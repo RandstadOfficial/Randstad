@@ -4,7 +4,7 @@ module.exports = {
 
   //-- [REQUIRED] Port of the ws_server
   //-- Make sure you open the port you specify below
-  WSServerPort: 3000,
+  WSServerPort: 30005,
 
   //-- [OPTIONAL] IPv4 Address of the ws_server
   //-- Set by autoconfig

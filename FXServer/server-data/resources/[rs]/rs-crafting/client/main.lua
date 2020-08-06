@@ -155,7 +155,7 @@ function ItemsToItemInfo()
 		[5] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 10x, " ..RSCore.Shared.Items["plastic"]["label"] .. ": 50x, "..RSCore.Shared.Items["aluminum"]["label"] .. ": 30x, "..RSCore.Shared.Items["iron"]["label"] .. ": 17x, "..RSCore.Shared.Items["electronickit"]["label"] .. ": 1x."},
 		[6] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 36x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 24x, "..RSCore.Shared.Items["aluminum"]["label"] .. ": 28x."},
 		[7] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 32x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 43x, "..RSCore.Shared.Items["plastic"]["label"] .. ": 61x."},
-		[8] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 50x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 37x, "..RSCore.Shared.Items["copper"]["label"] .. ": 26x."},
+		[8] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 25x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 18x, "..RSCore.Shared.Items["copper"]["label"] .. ": 13x."},
 		[9] = {costs = RSCore.Shared.Items["iron"]["label"] .. ": 60x, " ..RSCore.Shared.Items["glass"]["label"] .. ": 30x."},
 		[10] = {costs = RSCore.Shared.Items["aluminum"]["label"] .. ": 60x, " ..RSCore.Shared.Items["glass"]["label"] .. ": 30x."},
 		[11] = {costs = RSCore.Shared.Items["iron"]["label"] .. ": 33x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 44x, "..RSCore.Shared.Items["plastic"]["label"] .. ": 55x, "..RSCore.Shared.Items["aluminum"]["label"] .. ": 22x."},

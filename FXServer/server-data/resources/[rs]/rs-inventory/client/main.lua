@@ -154,7 +154,7 @@ Citizen.CreateThread(function()
         DisableControlAction(0, Keys["3"], true)
         DisableControlAction(0, Keys["4"], true)
         DisableControlAction(0, Keys["5"], true)
-        if IsDisabledControlJustReleased(0, Keys["TAB"]) and not isCrafting then
+        if IsDisabledControlJustPressed(0, Keys["TAB"]) and not isCrafting then
             RSCore.Functions.GetPlayerData(function(PlayerData)
                 if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
                     local curVeh = nil

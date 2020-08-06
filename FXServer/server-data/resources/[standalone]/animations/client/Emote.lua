@@ -47,7 +47,7 @@ AddEventHandler('animations:client:SmokeWeed', function()
   SmokingWeed = true
   Citizen.CreateThread(function()
     while SmokingWeed do
-      Citizen.Wait(10000)
+      Citizen.Wait(1500)
       TriggerServerEvent('rs-hud:Server:RelieveStress', math.random(15, 18))
       
       TriggerServerEvent('hospital:server:SetArmor', 10)

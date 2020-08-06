@@ -15,6 +15,9 @@
 --------------------------------------------------------------------------------
 
 local channels = TokoVoipConfig.channels;
+local serverId;
+
+SetConvarReplicated("gametype", GetConvar("GameName"));
 
 function addPlayerToRadio(channelId, playerServerId, type)
 	if (not channels[channelId]) then
@@ -111,3 +114,13 @@ function SplitStr(inputstr, sep)
 	end
 	return t
 end
+
+function getServerId() TriggerClientEvent("TokoVoip:onClientGetServerId", source, serverId); end
+RegisterServerEvent("TokoVoip:getServerId");
+AddEventHandler("TokoVoip:getServerId", getServerId);
+
+AddEventHandler("onResourceStart", function(resource)
+	if (resource ~= GetCurrentResourceName()) then return end;
+	serverId = randomString(32);
+	print("TokoVOIP FiveM Server ID: " .. serverId);
+end);

@@ -12,23 +12,37 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
+function IsInVehicle()
+    local Player = GetPlayerPed(-1)
+    if IsPedSittingInAnyVehicle(Player) then
+      return true
+    else
+      return false
+    end
+end
+
 RegisterNetEvent("consumables:client:UseJoint")
 AddEventHandler("consumables:client:UseJoint", function()
-    RSCore.Functions.Progressbar("smoke_joint", "Joint opsteken..", 2000, false, true, {
-        disableMovement = false,
-        disableCarMovement = false,
-		disableMouse = false,
-		disableCombat = true,
-    }, {}, {}, {}, function() -- Done
-        TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["joint"], "remove")
-        if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
-            TriggerEvent('animations:client:EmoteCommandStart', {"smoke3"})
-        else
-            TriggerEvent('animations:client:EmoteCommandStart', {"smokeweed"})
-        end
-        TriggerEvent("evidence:client:SetStatus", "weedsmell", 300)
-        TriggerEvent('animations:client:SmokeWeed')
-    end)
+    if (IsInVehicle()) then
+        RSCore.Functions.Notify("Actie niet mogelijk!", "error")
+    else
+        RSCore.Functions.Progressbar("smoke_joint", "Joint opsteken..", 2000, false, true, {
+            disableMovement = false,
+            disableCarMovement = false,
+            disableMouse = false,
+            disableCombat = true,
+        }, {}, {}, {}, function() -- Done
+            TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["joint"], "remove")
+            if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+                TriggerEvent('animations:client:EmoteCommandStart', {"smoke3"})
+            else
+                TriggerEvent('animations:client:EmoteCommandStart', {"smokeweed"})
+            end
+            TriggerEvent("evidence:client:SetStatus", "weedsmell", 300)
+            TriggerEvent('animations:client:SmokeWeed')
+        end)
+    end
 end)
 
 function loadAnimDict(dict)

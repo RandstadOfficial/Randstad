@@ -19,10 +19,11 @@ channelLabel = nil
 local targetPed;
 local useLocalPed = true;
 local isRunning = false;
-local scriptVersion = "1.5.3";
+local scriptVersion = "1.5.4";
 local animStates = {}
 local displayingPluginScreen = false;
 local HeadBone = 0x796e;
+local radioVolume = 0;
 
 --------------------------------------------------------------------------------
 --	Plugin functions
@@ -37,6 +38,14 @@ local function setPlayerTalkingState(player, playerServerId)
 		PlayFacialAnim(GetPlayerPed(player), "mood_normal_1", "facials@gen_male@base");
 	end
 	animStates[playerServerId] = talking;
+end
+
+local function PlayRedMFacialAnimation(player, animDict, animName)
+	RequestAnimDict(animDict)
+	while not HasAnimDictLoaded(animDict) do
+		Wait(100)
+	end
+  SetFacialIdleAnimOverride(player, animName, animDict)
 end
 
 RegisterNetEvent('RSCore:Client:OnPlayerUnload')
@@ -56,7 +65,7 @@ RegisterNUICallback("updatePluginData", function(data, cb)
 	setPlayerData(voip.serverId, "voip:" .. payload.key, voip[payload.key], true);
 	voip:updateConfig();
 	voip:updateTokoVoipInfo(true);
-	cb('ok')
+	cb('ok');
 end);
 
 -- Receives data from the TS plugin on microphone toggle
@@ -65,21 +74,29 @@ RegisterNUICallback("setPlayerTalking", function(data, cb)
 
 	if (voip.talking == 1) then
 		setPlayerData(voip.serverId, "voip:talking", 1, true);
-		PlayFacialAnim(GetPlayerPed(PlayerId()), "mic_chatter", "mp_facial");
-		TriggerEvent('rs-hud:client:ProximityActive', true)
+		if (GetConvar("gametype") == "gta5") then
+			PlayFacialAnim(GetPlayerPed(PlayerId()), "mic_chatter", "mp_facial");
+			TriggerEvent('rs-hud:client:ProximityActive', true)
+		elseif (GetConvar("gametype") == "rdr3") then
+			PlayRedMFacialAnimation(GetPlayerPed(PlayerId()), "face_human@gen_male@base", "mood_talking_normal");
+		end
 	else
 		setPlayerData(voip.serverId, "voip:talking", 0, true);
-		PlayFacialAnim(PlayerPedId(), "mood_normal_1", "facials@gen_male@base");
-		TriggerEvent('rs-hud:client:ProximityActive', false)
+		if (GetConvar("gametype") == "gta5") then
+			PlayFacialAnim(PlayerPedId(), "mood_normal_1", "facials@gen_male@base");
+			TriggerEvent('rs-hud:client:ProximityActive', false)
+		elseif (GetConvar("gametype") == "rdr3") then
+			PlayRedMFacialAnimation(PlayerPedId(), "face_human@gen_male@base", "mood_normal");
+		end
 	end
-	cb('ok')
+	cb('ok');
 end)
 
 local function clientProcessing()
 	local playerList = voip.playerList;
 	local usersdata = {};
 	local localHeading;
-	local ped = PlayerPedId()
+	local ped = PlayerPedId();
 
 	if (voip.headingType == 1) then
 		localHeading = math.rad(GetEntityHeading(ped));
@@ -97,10 +114,17 @@ local function clientProcessing()
 	for i=1, #playerList do
 		local player = playerList[i];
 		local playerServerId = GetPlayerServerId(player);
-		if (GetPlayerPed(player) and voip.serverId ~= playerServerId) then
-			local playerPos = GetPedBoneCoords(GetPlayerPed(player), HeadBone);
+		local playerPed = GetPlayerPed(player);
+
+		local playerTalking = getPlayerData(playerServerId, "voip:talking");
+
+		if (voip.serverId == playerServerId or not playerPed or not playerTalking or playerTalking == 0) then goto continue end
+
+		do
+			local playerPos = GetPedBoneCoords(playerPed, HeadBone);
 			local dist = #(localPos - playerPos);
-			if(dist > 40) then goto continue end
+			if (dist > voip.distance[3]) then goto continue end
+
 
 			if (not getPlayerData(playerServerId, "voip:mode")) then
 				setPlayerData(playerServerId, "voip:mode", 1);
@@ -116,10 +140,10 @@ local function clientProcessing()
 			--
 			local angleToTarget = localHeading - math.atan(playerPos.y - localPos.y, playerPos.x - localPos.x);
 
-			-- Set player's default data
-			local tbl = {
+			-- Set player's position
+			local userData = {
 				uuid = getPlayerData(playerServerId, "voip:pluginUUID"),
-				volume = -30,
+				volume = volume,
 				muted = 1,
 				radioEffect = false,
 				posX = voip.plugin_data.enableStereoAudio and math.cos(angleToTarget) * dist or 0,
@@ -129,69 +153,58 @@ local function clientProcessing()
 			--
 
 			-- Process proximity
-			tbl.forceUnmuted = 0
 			if (dist >= voip.distance[mode]) then
-				tbl.muted = 1;
+				userData.muted = 1;
 			else
-				tbl.volume = volume;
-				tbl.muted = 0;
-				tbl.forceUnmuted = 1
+				userData.volume = volume;
+				userData.muted = 0;
 			end
 
-			usersdata[#usersdata + 1] = tbl
-			setPlayerTalkingState(player, playerServerId);
-			::continue::
+			if (GetConvar("gametype") == "gta5") then
+				setPlayerTalkingState(player, playerServerId);
+			end
+			usersdata[#usersdata + 1] = userData;
 		end
+
+		::continue::
 	end
 
 	-- Process channels
 	for _, channel in pairs(voip.myChannels) do
 		for _, subscriber in pairs(channel.subscribers) do
-			if (subscriber == voip.serverId) then goto continue end
-			
-				local remotePlayerUsingRadio = getPlayerData(subscriber, "radio:talking");
-				local remotePlayerChannel = getPlayerData(subscriber, "radio:channel");
-					local remotePlayerUuid = getPlayerData(subscriber, "voip:pluginUUID");
+			if (subscriber == voip.serverId) then goto channelContinue end
 
-					local founduserData = nil
-					for k, v in pairs(usersdata) do
-						if(v.uuid == remotePlayerUuid) then
-							founduserData = v
-						end
-					end
+			local remotePlayerUsingRadio = getPlayerData(subscriber, "radio:talking");
+			local remotePlayerChannel = getPlayerData(subscriber, "radio:channel");
 
-					if not founduserData then
-						founduserData = {
-							uuid = remotePlayerUuid,
-							radioEffect = false,
-							resave = true,
-							volume = 0,
-							muted = 1
-						}
-					end
+			if (not remotePlayerUsingRadio or remotePlayerChannel ~= channel.id) then goto channelContinue end
 
+			local remotePlayerUuid = getPlayerData(subscriber, "voip:pluginUUID");
 
-				if (remotePlayerUsingRadio and remotePlayerChannel == channel.id) then
-					if (type(remotePlayerChannel) == "number" and remotePlayerChannel <= voip.config.radioClickMaxChannel) then
-						founduserData.radioEffect = true;
-					end
+			local userData = {
+				uuid = remotePlayerUuid,
+				radioEffect = false,
+				muted = false,
+				volume = radioVolume,
+				posX = 0,
+				posY = 0,
+				posZ = voip.plugin_data.enableStereoAudio and localPos.z or 0
+			};
 
-						founduserData.muted = false
-						founduserData.volume = 0;
-						founduserData.posX = 0;
-						founduserData.posY = 0;
-						founduserData.posZ = voip.plugin_data.enableStereoAudio and localPos.z or 0;
+			if ((type(remotePlayerChannel) == "number" and remotePlayerChannel <= voip.config.radioClickMaxChannel) or channel.radio) then
+				userData.radioEffect = true;
+			end
+
+			for k, v in pairs(usersdata) do
+				if (v.uuid == remotePlayerUuid) then
+					usersdata[k] = userData;
+					goto channelContinue;
 				end
-						
-				if founduserData.forceUnmuted then
-					founduserData.muted = false;
-				end
+			end
 
-				if(founduserData.resave) then
-					usersdata[#usersdata + 1] = founduserData
-				end
+			usersdata[#usersdata + 1] = userData;
 
-			::continue::
+			::channelContinue::
 		end
 	end
 
@@ -235,15 +248,31 @@ AddEventHandler("initializeVoip", function()
 	-- Set targetped (used for spectator mod for admins)
 	targetPed = GetPlayerPed(-1);
 
-	voip.processFunction = clientProcessing; -- Link the processing function that will be looped
-	voip:initialize(); -- Initialize the websocket and controls
-	voip:loop(); -- Start TokoVoip's loop
+	-- Request this stuff here only one time
+	if (GetConvar("gametype") == "gta5") then
+		RequestAnimDict("mp_facial");
+		RequestAnimDict("facials@gen_male@base");
+	elseif (GetConvar("gametype") == "rdr3") then
+		RequestAnimDict("face_human@gen_male@base");
+	end
 
 	Citizen.Trace("TokoVoip: Initialized script (" .. scriptVersion .. ")\n");
 
-	-- Request this stuff here only one time
-	RequestAnimDict("mp_facial");
-	RequestAnimDict("facials@gen_male@base");
+	local response;
+	Citizen.CreateThread(function()
+		local function handler(serverId) response = serverId or "N/A"; end
+		RegisterNetEvent("TokoVoip:onClientGetServerId");
+		AddEventHandler("TokoVoip:onClientGetServerId", handler);
+		TriggerServerEvent("TokoVoip:getServerId");
+		while (not response) do Wait(5) end
+
+		voip.fivemServerId = response;
+		print("TokoVoip: FiveM Server ID is " .. voip.fivemServerId);
+
+		voip.processFunction = clientProcessing; -- Link the processing function that will be looped
+		voip:initialize(); -- Initialize the websocket and controls
+		voip:loop(); -- Start TokoVoip's loop
+	end);
 
 	-- Debug data stuff
 	if (voip.config.enableDebug) then
@@ -358,6 +387,12 @@ function isPlayerInChannel(channel)
 	end
 end
 
+function setRadioVolume(volume)
+	radioVolume = volume;
+end
+RegisterNetEvent('TokoVoip:setRadioVolume');
+AddEventHandler('TokoVoip:setRadioVolume', setRadioVolume);
+
 --------------------------------------------------------------------------------
 --	Specific utils
 --------------------------------------------------------------------------------
@@ -386,3 +421,4 @@ end)
 exports("addPlayerToRadio", addPlayerToRadio);
 exports("removePlayerFromRadio", removePlayerFromRadio);
 exports("isPlayerInChannel", isPlayerInChannel);
+exports("setRadioVolume", setRadioVolume);

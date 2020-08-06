@@ -156,9 +156,9 @@ Config.CraftingItems = {
         amount = 50,
         info = {},
         costs = {
-            ["metalscrap"] = 50,
-            ["steel"] = 37,
-            ["copper"] = 26,
+            ["metalscrap"] = 25,
+            ["steel"] = 18,
+            ["copper"] = 13,
         },
         type = "item",
         slot = 8,

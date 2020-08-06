@@ -232,6 +232,7 @@ AddEventHandler('rs-trunk:client:GetIn', function(isKidnapped)
                                 inTrunk = true
                                 Citizen.Wait(500)
                                 SetVehicleDoorShut(closestVehicle, 5, false)
+                                SetEntityVisible(ped, false, false)
                                 RSCore.Functions.Notify('Je ligt in de kofferbak.', 'success', 4000)
                                 TrunkCam(true)
                             else
@@ -277,6 +278,7 @@ Citizen.CreateThread(function()
                             TriggerServerEvent('rs-trunk:server:setTrunkBusy', plate, false)
                             SetEntityCoords(ped, vehCoords.x, vehCoords.y, vehCoords.z)
                             SetEntityCollision(PlayerPedId(), true, true)
+                            SetEntityVisible(ped, true, true)
                             TrunkCam(false)
                         else
                             RSCore.Functions.Notify('Is de kofferbak dicht?', 'error', 2500)
@@ -308,6 +310,7 @@ Citizen.CreateThread(function()
 
         if not inTrunk then
             Citizen.Wait(1000)
+            SetEntityVisible(ped, true, true)
         end
 
         Citizen.Wait(3)
