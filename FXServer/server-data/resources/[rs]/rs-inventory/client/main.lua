@@ -240,6 +240,7 @@ Citizen.CreateThread(function()
                         TriggerServerEvent("inventory:server:OpenInventory", "drop", CurrentDrop)
                     else
                         TriggerServerEvent("inventory:server:OpenInventory")
+                        --TriggerEvent('inventory:client:DropItemAnim')
                     end
                 end
             end)
@@ -702,7 +703,7 @@ AddEventHandler("inventory:client:DropItemAnim", function()
     while not HasAnimDictLoaded("pickup_object") do
         Citizen.Wait(7)
     end
-    TaskPlayAnim(GetPlayerPed(-1), "pickup_object" ,"pickup_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
+    TaskPlayAnim(GetPlayerPed(-1), "pickup_object" ,"putdown_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
     Citizen.Wait(2000)
     ClearPedTasks(GetPlayerPed(-1))
 end)

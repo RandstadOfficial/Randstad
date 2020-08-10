@@ -482,7 +482,7 @@ function GetKeyByDate(Number, Date)
 end
 
 function GetKeyByNumber(Number)
-    local retval = nil
+    local retval = Number
     if PhoneData.Chats then
         for k, v in pairs(PhoneData.Chats) do
             if v.number == Number then
@@ -1157,7 +1157,8 @@ end
 RegisterNUICallback('TransferMoney', function(data, cb)
     data.amount = tonumber(data.amount)
     if tonumber(PhoneData.PlayerData.money.bank) >= data.amount then
-        local amaountata = PhoneData.PlayerData.money.bank - data.amount
+        local amaountata = RSCore.Functions.GetPlayerData().money["bank"] - data.amount
+        --local amaountata = PhoneData.PlayerData.money.bank - data.amount
         TriggerServerEvent('rs-phone:server:TransferMoney', data.iban, data.amount)
         local cbdata = {
             CanTransfer = true,

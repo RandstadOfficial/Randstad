@@ -1086,6 +1086,8 @@ AddEventHandler('rs-clothes:client:CreateFirstCharacter', function()
     end)
 end)
 
+local currentTattoos = {}
+
 RegisterNetEvent("rs-clothes:loadSkin")
 AddEventHandler("rs-clothes:loadSkin", function(new, model, data)
     model = model ~= nil and tonumber(model) or false
@@ -1099,6 +1101,21 @@ AddEventHandler("rs-clothes:loadSkin", function(new, model, data)
         SetPedComponentVariation(GetPlayerPed(-1), 0, 0, 0, 2)
         data = json.decode(data)
         TriggerEvent('rs-clothing:client:loadPlayerClothing', data, GetPlayerPed(-1))
+        RSCore.Functions.TriggerCallback('rs-tattoos:GetPlayerTattoos', function(tattooList)
+            if tattooList then
+                ClearPedDecorations(PlayerPedId())
+                for k, v in pairs(tattooList) do
+                    if v.Count ~= nil then
+                        for i = 1, v.Count do
+                            SetPedDecoration(PlayerPedId(), v.collection, v.nameHash)
+                        end
+                    else
+                        SetPedDecoration(PlayerPedId(), v.collection, v.nameHash)
+                    end
+                end
+                currentTattoos = tattooList
+            end
+        end)
     end)
 end)
 

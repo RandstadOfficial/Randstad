@@ -75,6 +75,12 @@ Citizen.CreateThread(function()
                         local ammo = GetAmmoInPedWeapon(GetPlayerPed(-1), weapon)
                         if RSCore.Shared.Weapons[weapon]["name"] == "weapon_snowball" then
                             TriggerServerEvent('RSCore:Server:RemoveItem', "snowball", 1)
+                        elseif RSCore.Shared.Weapons[weapon]["name"] == "weapon_pipebomb" then
+                            TriggerServerEvent('RSCore:Server:RemoveItem', "weapon_pipebomb", 1)
+                        elseif RSCore.Shared.Weapons[weapon]["name"] == "weapon_molotov" then
+                            TriggerServerEvent('RSCore:Server:RemoveItem', "weapon_molotov", 1)
+                        elseif RSCore.Shared.Weapons[weapon]["name"] == "weapon_stickybomb" then
+                            TriggerServerEvent('RSCore:Server:RemoveItem', "weapon_stickybomb", 1)
                         else
                             if ammo > 0 then
                                 MultiplierAmount = MultiplierAmount + 1
@@ -98,29 +104,29 @@ Citizen.CreateThread(function()
         local player = PlayerId()
         local weapon = GetSelectedPedWeapon(ped)
         local ammo = GetAmmoInPedWeapon(ped, weapon)
-
-        if ammo == 1 then
-            DisableControlAction(0, 24, true) -- Attack
-            DisableControlAction(0, 257, true) -- Attack 2
-            if IsPedInAnyVehicle(ped, true) then
-                SetPlayerCanDoDriveBy(player, false)
+        if weapon ~= 911657153 and weapon ~= -1169823560 and weapon ~= 615608432 and weapon ~= 741814745 then
+            if ammo == 1 then
+                DisableControlAction(0, 24, true) -- Attack
+                DisableControlAction(0, 257, true) -- Attack 2
+                if IsPedInAnyVehicle(ped, true) then
+                    SetPlayerCanDoDriveBy(player, false)
+                end
+            else
+                EnableControlAction(0, 24, true) -- Attack
+                EnableControlAction(0, 257, true) -- Attack 2
+                if IsPedInAnyVehicle(ped, true) then
+                    SetPlayerCanDoDriveBy(player, true)
+                end
             end
-        else
-            EnableControlAction(0, 24, true) -- Attack
-			EnableControlAction(0, 257, true) -- Attack 2
-            if IsPedInAnyVehicle(ped, true) then
-                SetPlayerCanDoDriveBy(player, true)
+
+            if IsPedShooting(ped) then
+                --print('schiet')
+                if ammo - 1 < 1 then
+                -- print('reset')
+                    SetAmmoInClip(GetPlayerPed(-1), GetHashKey(RSCore.Shared.Weapons[weapon]["name"]), 1)
+                end
             end
         end
-
-        if IsPedShooting(ped) then
-            --print('schiet')
-            if ammo - 1 < 1 then
-               -- print('reset')
-                SetAmmoInClip(GetPlayerPed(-1), GetHashKey(RSCore.Shared.Weapons[weapon]["name"]), 1)
-            end
-        end
-        
         Citizen.Wait(0)
     end
 end)

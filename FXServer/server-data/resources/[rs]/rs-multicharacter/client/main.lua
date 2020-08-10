@@ -120,6 +120,21 @@ RegisterNUICallback('cDataPed', function(data)
                     SetBlockingOfNonTemporaryEvents(charPed, true)         
                     data = json.decode(data)
                     TriggerEvent('rs-clothing:client:loadPlayerClothing', data, charPed)
+                    RSCore.Functions.TriggerCallback('rs-tattoos:GetPlayerTattoosMC', function(tattooList)
+                        if tattooList then
+                            ClearPedDecorations(charPed)
+                            for k, v in pairs(tattooList) do
+                                if v.Count ~= nil then
+                                    for i = 1, v.Count do
+                                        SetPedDecoration(charPed, v.collection, v.nameHash)
+                                    end
+                                else
+                                    SetPedDecoration(charPed, v.collection, v.nameHash)
+                                end
+                            end
+                            currentTattoos = tattooList
+                        end
+                    end, cData.citizenid)
                 end)
             else
                 Citizen.CreateThread(function()
