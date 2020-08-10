@@ -86,7 +86,7 @@ AddEventHandler('rs-houserobbery:server:searchCabin', function(cabin, house)
                     elseif randomItem == "goldchain" then
                         itemAmount = math.random(2, 6) -- 3 to 6 pieces of goldchain
                     elseif randomItem == "goldbar" then
-                        itemAmount = math.random(1, 2) -- 1 to 2 pieces of goldbar
+                        itemAmount = 1 -- 1 pieces of goldbar
                     end
                     Player.Functions.AddItem(randomItem, itemAmount)
                     --TriggerClientEvent('RSCore:Notify', src, '+'..itemAmount..' '..itemInfo["label"], 'success', 3500)

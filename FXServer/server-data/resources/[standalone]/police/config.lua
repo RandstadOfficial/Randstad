@@ -88,9 +88,9 @@ Config.ArmoryWhitelist = {
     "DTE65403", -- MaBo
     "YND19022", -- Maestro
     "UXP35132", -- Cees
-    "CKQ80729", -- Danny
 	"LWP29900", -- Nico
-	"BQL92466", -- Goudenaapje (Dwight)
+    "BQL92466", -- Goudenaapje (Dwight)
+    "OWU99747", -- Juriaan De Cock
 }
 
 Config.Helicopter = "pzulu"

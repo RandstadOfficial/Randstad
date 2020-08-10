@@ -104,6 +104,6 @@ Config.AllowedItems = {
     ["goldbar"] = {
         name = "goldbar",
         wait = 30000,
-        reward = math.random(3000, 4000),
+        reward = math.random(3500, 4000),
     },
 }

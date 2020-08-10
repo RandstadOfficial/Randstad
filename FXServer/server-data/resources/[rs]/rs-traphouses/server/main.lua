@@ -154,7 +154,7 @@ RSCore.Commands.Add("geeftrapsleutels", "Geef sleutels van het traphouse", {{nam
                 if Config.TrapHouses[Traphouse] ~= nil then
                     if IsOwner then
                         Config.TrapHouses[Traphouse].keyholders = {}
-                        Config.TrapHouses[Traphouse].pincode = math.random(1111, 4444) 
+                        Config.TrapHouses[Traphouse].pincode = math.random(11111, 55555) 
                     end
             
                     if Config.TrapHouses[Traphouse].keyholders == nil then

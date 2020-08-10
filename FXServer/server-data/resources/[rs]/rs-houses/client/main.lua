@@ -613,10 +613,10 @@ function enterOwnedHouse(house)
         data = exports['rs-interior']:CreateApartmentShell(coords)
     elseif Config.Houses[house].tier == 5 then
         data = exports['rs-interior']:CreateCaravanShell(coords)
-    -- elseif Config.Houses[house].tier == 6 then
-    --     data = exports['rs-interior']:CreateFranklinShell(coords)
-    -- elseif Config.Houses[house].tier == 7 then
-    --     data = exports['rs-interior']:CreateFranklinAuntShell(coords)
+    elseif Config.Houses[house].tier == 6 then
+        data = exports['rs-interior']:CreateFranklinShell(coords)
+    elseif Config.Houses[house].tier == 7 then
+        data = exports['rs-interior']:CreateFranklinAuntShell(coords)
     end
 
     Citizen.Wait(100)
@@ -705,10 +705,10 @@ function enterNonOwnedHouse(house)
         data = exports['rs-interior']:CreateApartmentShell(coords)
     elseif Config.Houses[house].tier == 5 then
         data = exports['rs-interior']:CreateCaravanShell(coords)
-    -- elseif Config.Houses[house].tier == 6 then
-    --     data = exports['rs-interior']:CreateFranklinShell(coords)
-    -- elseif Config.Houses[house].tier == 7 then
-    --     data = exports['rs-interior']:CreateFranklinAuntShell(coords)
+    elseif Config.Houses[house].tier == 6 then
+        data = exports['rs-interior']:CreateFranklinShell(coords)
+    elseif Config.Houses[house].tier == 7 then
+        data = exports['rs-interior']:CreateFranklinAuntShell(coords)
     end
 
     houseObj = data[1]

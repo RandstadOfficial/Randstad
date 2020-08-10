@@ -25,7 +25,7 @@ RSCore.Functions.CreateCallback('rs-recycle:getItem', function(source, cb)
         local amount = math.random(2, 6)
         if randItem == "metalscrap" or randItem == "steel" or randItem == "copper" then
             local r1 = math.random(1, 100)
-            if r1 > 98 then
+            if r1 > 95 then
                 amount = amount + 10
             end
         end
