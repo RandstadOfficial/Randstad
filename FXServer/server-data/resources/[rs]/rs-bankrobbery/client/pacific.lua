@@ -54,23 +54,6 @@ Citizen.CreateThread(function()
                     end
                 end
             end
-            -- if GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][1]["x"], Config.BigBanks["pacific"]["coords"][1]["y"], Config.BigBanks["pacific"]["coords"][1]["z"], true) < 10.0 then
-            --     inRange = true
-            --     if not Config.BigBanks["pacific"]["isOpened"] then
-            --         local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][1]["x"], Config.BigBanks["pacific"]["coords"][1]["y"], Config.BigBanks["pacific"]["coords"][1]["z"], true)
-            --         if dist < 1 then
-            --             if not requiredItemsShowed then
-            --                 requiredItemsShowed = true
-            --                 TriggerEvent('inventory:client:requiredItems', requiredItems, true)
-            --             end
-            --         else
-            --             if requiredItemsShowed then
-            --                 requiredItemsShowed = false
-            --                 TriggerEvent('inventory:client:requiredItems', requiredItems, false)
-            --             end
-            --         end
-            --     end
-            -- end
             if GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["thermite"][1]["x"], Config.BigBanks["pacific"]["thermite"][1]["y"], Config.BigBanks["pacific"]["thermite"][1]["z"], true) < 10.0 then
                 inRange = true
                 if not Config.BigBanks["pacific"]["thermite"][1]["isOpened"] then
@@ -280,7 +263,6 @@ function OnHackPacificDone(success, timeremaining)
     if success then
         TriggerEvent('mhacking:hide')
         TriggerServerEvent('rs-bankrobbery:server:setBankState', "pacific", true)
-        --TriggerServerEvent('rs-bankrobbery:server:setBankState', closestBank, true)
     else
 		TriggerEvent('mhacking:hide')
 	end

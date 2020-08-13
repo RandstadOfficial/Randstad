@@ -182,6 +182,8 @@ AddEventHandler('electronickit:UseElectronickit', function()
                                 RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
                                     if result then 
                                         TriggerEvent('inventory:client:requiredItems', requiredItems, false)
+                                        TriggerServerEvent("RSCore:Server:RemoveItem", "electronickit", 1)
+                                        TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["electronickit"], "remove")
                                         RSCore.Functions.Progressbar("hack_gate", "Electronic kit aansluiten..", math.random(5000, 10000), false, true, {
                                             disableMovement = true,
                                             disableCarMovement = true,

@@ -118,15 +118,21 @@ ATMObjects = {
 
 -- Banks
 local banks = {
-  {name="Bank", id=108, x=150.266, y=-1040.203, z=29.374},
-  {name="Bank", id=108, x=-1212.980, y=-330.841, z=37.787},
-  {name="Bank", id=108, x=-2962.582, y=482.627, z=15.703},
-  {name="Bank", id=108, x=-112.202, y=6469.295, z=31.626},
-  {name="Bank", id=108, x=314.187, y=-278.621, z=54.170},
-  {name="Bank", id=108, x=-351.534, y=-49.529, z=49.042},
-  {name="Bank", id=108, x=241.727, y=220.706, z=106.286},
-  {name="Bank", id=108, x=1175.21, y=2706.517, z=38.09},
+  [1] = {name="Bank", Closed = false, id=108, x = 314.187,   y = -278.621,  z = 54.170},
+  [2] = {name="Bank", Closed = false, id=108, x = 150.266,   y = -1040.203, z = 29.374},
+  [3] = {name="Bank", Closed = false,  id=108, x = -351.534,  y = -49.529,   z = 49.042},
+  [4] = {name="Bank", Closed = false, id=108, x = -1212.980, y = -330.841,  z = 37.787},
+  [5] = {name="Bank", Closed = false, id=108, x = -2962.582, y = 482.627,   z = 15.703},
+  [6] = {name="Bank", Closed = false, id=108, x = -112.202,  y = 6469.295,  z = 31.626},
+  [7] = {name="Bank", Closed = false, id=108, x = 241.727,   y = 220.706,   z = 106.286},
+  [8] = {name="Bank", Closed = false, id=108, x = -1310.45, y = -824.98, z = 17.14},
+  [9] = {name="Bank", Closed = false, id=108, x = 1175.21,  y = 2706.517, z = 38.09},
 }
+
+RegisterNetEvent('rs-banking:client:SetBankClosed')
+AddEventHandler('rs-banking:client:SetBankClosed', function(BankId, bool)
+  banks[BankId].Closed = bool
+end)
 
 -- Display Map Blips
 Citizen.CreateThread(function()
@@ -134,7 +140,7 @@ Citizen.CreateThread(function()
     for _, item in pairs(banks) do
         item.blip = AddBlipForCoord(item.x, item.y, item.z)
         SetBlipSprite(item.blip, item.id)
-        SetBlipColour(item.blip, 25)
+        SetBlipColour(item.blip, 0)
         SetBlipScale(item.blip, 0.6)
         SetBlipAsShortRange(item.blip, true)
         BeginTextCommandSetBlipName("STRING")
@@ -211,15 +217,35 @@ Citizen.CreateThread(function()
         inRange = false
 
         local pos = GetEntityCoords(GetPlayerPed(-1))
+        local nearbank, bankkey = IsNearBank()
         
-        if(IsNearBank() or IsNearATM()) then
+        if nearbank then
+          atBank = true
+          inRange = true
+          if not banks[bankkey].Closed then
+            DrawMarker(2, banks[bankkey].x, banks[bankkey].y, banks[bankkey].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.2, 0.1, 55, 255, 55, 255, 0, 0, 0, 1, 0, 0, 0)
+            DrawText3Ds(banks[bankkey].x, banks[bankkey].y, banks[bankkey].z + 0.3, '[E] Kaart valideren')
+            if IsControlJustPressed(1, Keys["E"])  then
+                if (not IsInVehicle()) then
+                    if bankOpen then
+                        closeGui()
+                        bankOpen = false
+                    else
+                        openGui()
+                        bankOpen = true
+                    end
+                end
+            end
+          else
+            DrawText3Ds(banks[bankkey].x, banks[bankkey].y, banks[bankkey].z + 0.3, 'De bank is gesloten')
+            DrawMarker(2, banks[bankkey].x, banks[bankkey].y, banks[bankkey].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.2, 0.1, 255, 55, 55, 255, 0, 0, 0, 1, 0, 0, 0)
+          end
+        elseif IsNearATM() then
             atBank = true
             inRange = true
             DrawText3Ds(pos.x, pos.y, pos.z, '[E] Kaart valideren')
             if IsControlJustPressed(1, Keys["E"])  then
-                if (IsInVehicle()) then
-                    RSCore.Functions.Notify('Actie momenteel niet mogelijk..', 'error')
-                else
+              if (not IsInVehicle()) then
                     if bankOpen then
                         closeGui()
                         bankOpen = false
@@ -341,10 +367,10 @@ end
 function IsNearBank()
   local ply = GetPlayerPed(-1)
   local plyCoords = GetEntityCoords(ply, 0)
-  for _, item in pairs(banks) do
+  for key, item in pairs(banks) do
     local distance = GetDistanceBetweenCoords(item.x, item.y, item.z,  plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
     if(distance <= 2) then
-      return true
+      return true, key
     end
   end
 end
