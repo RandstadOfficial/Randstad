@@ -70,7 +70,7 @@ end, "admin")
 
 RSCore.Commands.Add("debug", "Zet debug mode aan/uit", {}, false, function(source, args)
 	TriggerClientEvent('koil-debug:toggle', source)
-end, "god")
+end, "admin")
 
 RSCore.Commands.Add("dv", "Spawn een voertuig", {}, false, function(source, args)
 	TriggerClientEvent('RSCore:Command:DeleteVehicle', source)
@@ -98,15 +98,6 @@ RSCore.Commands.Add("setmoney", "Zet het geld voor een speler", {{name="id", hel
 	end
 end, "god")
 
--- RSCore.Commands.Add("setjob", "Geef een baan aan een speler", {{name="id", help="Speler ID"}, {name="job", help="Naam van een baan"}}, true, function(source, args)
--- 	local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))
--- 	if Player ~= nil then
--- 		Player.Functions.SetJob(tostring(args[2]))
--- 	else
--- 		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Speler is niet online!")
--- 	end
--- end, "admin")
-
 RSCore.Commands.Add("setjob", "Geef een baan aan een speler", {{name="id", help="Speler ID"}, {name="job", help="Naam van een baan"}, {name="grade", help="level"}}, true, function(source, args)
 	local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))
 	if Player ~= nil then
@@ -116,14 +107,33 @@ RSCore.Commands.Add("setjob", "Geef een baan aan een speler", {{name="id", help=
 	end
 end, "admin")
 
-RSCore.Commands.Add("testnotify", "test notify", {{name="text", help="Tekst enzo"}}, true, function(source, args)
-	TriggerClientEvent('RSCore:Notify', source, table.concat(args, " "), "success")
-end, "god")
-
 RSCore.Commands.Add("baan", "Kijk wat je baan is", {}, false, function(source, args)
 	local Player = RSCore.Functions.GetPlayer(source)
 	TriggerClientEvent('chatMessage', source, "SYSTEM", "warning", "Baan: "..Player.PlayerData.job.label.." - "..Player.PlayerData.job.gradelabel)
 end)
+
+RSCore.Commands.Add("setgang", "Geef een gang aan een speler", {{name="id", help="Speler ID"}, {name="job", help="Naam van een baan"}}, true, function(source, args)
+	local Player = RSCore.Functions.GetPlayer(tonumber(args[1]))
+	if Player ~= nil then
+		Player.Functions.SetGang(tostring(args[2]))
+	else
+		TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Speler is niet online!")
+	end
+end, "admin")
+
+RSCore.Commands.Add("gang", "Kijk wat je baan is", {}, false, function(source, args)
+	local Player = RSCore.Functions.GetPlayer(source)
+
+	if Player.PlayerData.gang.name ~= "geen" then
+		TriggerClientEvent('chatMessage', source, "SYSTEM", "warning", "Gang: "..Player.PlayerData.gang.label)
+	else
+		TriggerClientEvent('RSCore:Notify', source, "Je zit niet in een gang!", "error")
+	end
+end)
+
+RSCore.Commands.Add("testnotify", "test notify", {{name="text", help="Tekst enzo"}}, true, function(source, args)
+	TriggerClientEvent('RSCore:Notify', source, table.concat(args, " "), "success")
+end, "god")
 
 RSCore.Commands.Add("clearinv", "Leeg de inventory van jezelf of een speler", {{name="id", help="Speler ID"}}, false, function(source, args)
 	local playerId = args[1] ~= nil and args[1] or source 
@@ -144,7 +154,7 @@ RSCore.Commands.Add("ooc", "Out Of Character chat bericht (alleen gebruiken wann
 	for k, v in pairs(RSCore.Functions.GetPlayers()) do
 		if RSCore.Functions.HasPermission(v, "admin") then
 			if RSCore.Functions.IsOptin(v) then
-				TriggerClientEvent('chatMessage', v, "OOC | " .. GetPlayerName(source), "normal", message)
+				TriggerClientEvent('chatMessage', v, "OOC " .. GetPlayerName(source), "normal", message)
 				TriggerEvent("rs-log:server:CreateLog", "ooc", "OOC", "white", "**"..GetPlayerName(source).."** (CitizenID: "..Player.PlayerData.citizenid.." | ID: "..source..") **Bericht:** " ..message, false)
 			end
 		end

@@ -10,34 +10,35 @@ body {
     width: 20vw;
     position: absolute;
     top: 4vh;
-    right: 1vw;
+    right: 12vw;
     display: flex;
     flex-flow: row;
     flex-wrap: wrap;
 }
 
 .notification {
-    padding: 10px;
+    position: relative;
+    padding: 1vh;
     width: fit-content;
-    border-radius: 2px;
+    border-radius: .4vh;
     margin: 5px;
     font: caption;
-    font-size: 12px;
+    font-size: 1.2vh;
     font-weight: bold;
-    float: right;
+    float: left;
 }
 
 .success {
-    background: rgb(91, 168, 91);
+    background: #27ae60;
     color: #fff;
 }
 
 .primary {
-    background-color: rgb(47, 92, 115);
+    background-color: #2980b9;
     color: #ffffff;
 }
 
 .error {
-    background: rgb(179, 39, 39);
+    background: #c0392b;
     color: #fff;
 }

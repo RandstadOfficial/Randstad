@@ -314,6 +314,11 @@ end
 RSCore.Functions.GetVehicleProperties = function(vehicle)
 	local color1, color2               = GetVehicleColours(vehicle)
 	local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
+	local livery = GetVehicleLivery(vehicle)
+	if livery == 0 then
+		livery = GetVehicleMod(vehicle, 48)
+	end
+	
 
 	return {
 
@@ -396,7 +401,7 @@ RSCore.Functions.GetVehicleProperties = function(vehicle)
 		modTrimB          = GetVehicleMod(vehicle, 44),
 		modTank           = GetVehicleMod(vehicle, 45),
 		modWindows        = GetVehicleMod(vehicle, 46),
-		modLivery         = GetVehicleMod(vehicle, 48),
+		modLivery         = livery,
 		modCustomTyres	  = GetVehicleModVariation(vehicle, 23)
 	}
 end
@@ -641,7 +646,7 @@ RSCore.Functions.SetVehicleProperties = function(vehicle, props)
 
 	if props.modLivery ~= nil then
 		SetVehicleMod(vehicle, 48, props.modLivery, false)
-		--SetVehicleLivery(vehicle, props.modLivery)
+		SetVehicleLivery(vehicle, props.modLivery)
 	end
 	if props.modCustomTyres ~= nil and props.modCustomTyres then 
 		SetVehicleMod(vehicle, 23, props.modCustomTyres, true)

@@ -23,11 +23,15 @@ RSCore.Player.Login = function(source, citizenid, newData)
 					PlayerData.position = json.decode(PlayerData.position)
 					PlayerData.metadata = json.decode(PlayerData.metadata)
 					PlayerData.charinfo = json.decode(PlayerData.charinfo)
+					if PlayerData.gang ~= nil then
+						PlayerData.gang = json.decode(PlayerData.gang)
+					else
+						PlayerData.gang = {}
+					end
 				end
 				RSCore.Player.CheckPlayerData(source, PlayerData)
 			end)
 		else
-			print("i was also here")
 			RSCore.Player.CheckPlayerData(source, newData)
 		end
 		return true
@@ -60,7 +64,7 @@ RSCore.Player.CheckPlayerData = function(source, PlayerData)
 	PlayerData.charinfo.backstory = PlayerData.charinfo.backstory ~= nil and PlayerData.charinfo.backstory or "placeholder backstory"
 	PlayerData.charinfo.nationality = PlayerData.charinfo.nationality ~= nil and PlayerData.charinfo.nationality or "Nederlands"
 	PlayerData.charinfo.phone = PlayerData.charinfo.phone ~= nil and PlayerData.charinfo.phone or "06"..math.random(11111111, 99999999)
-	PlayerData.charinfo.account = PlayerData.charinfo.account ~= nil and PlayerData.charinfo.account or "NL0"..math.random(1,9).."RANDSTAD"..math.random(1111,9999)..math.random(1111,9999)..math.random(11,99)
+	PlayerData.charinfo.account = PlayerData.charinfo.account ~= nil and PlayerData.charinfo.account or "NL0"..math.random(1,9).."RAND"..math.random(1111,9999)..math.random(1111,9999)..math.random(11,99)
 	
 	PlayerData.metadata = PlayerData.metadata ~= nil and PlayerData.metadata or {}
 	PlayerData.metadata["hunger"] = PlayerData.metadata["hunger"] ~= nil and PlayerData.metadata["hunger"] or 100
@@ -86,9 +90,11 @@ RSCore.Player.CheckPlayerData = function(source, PlayerData)
 		["tow"] = 0,
 		["trucker"] = 0,
 		["taxi"] = 0,
-	}
+		["hotdog"] = 0,
+		}
 	PlayerData.metadata["callsign"] = PlayerData.metadata["callsign"] ~= nil and PlayerData.metadata["callsign"] or "NO CALLSIGN"
 	PlayerData.metadata["fingerprint"] = PlayerData.metadata["fingerprint"] ~= nil and PlayerData.metadata["fingerprint"] or RSCore.Player.CreateFingerId()
+	PlayerData.metadata["walletid"] = PlayerData.metadata["walletid"] ~= nil and PlayerData.metadata["walletid"] or RSCore.Player.CreateWalletId()
 	PlayerData.metadata["criminalrecord"] = PlayerData.metadata["criminalrecord"] ~= nil and PlayerData.metadata["criminalrecord"] or {
 		["hasRecord"] = false,
 		["date"] = nil
@@ -113,6 +119,10 @@ RSCore.Player.CheckPlayerData = function(source, PlayerData)
 	--PlayerData.job.onduty = PlayerData.job.onduty ~= nil and PlayerData.job.onduty or true -- a ? b:c, dus onduty not nil? dan =onduty anders true.
 	PlayerData.job.gradelabel = PlayerData.job.gradelabel ~= nil and PlayerData.job.gradelabel or ""
 	PlayerData.job.grade = PlayerData.job.grade ~= nil and PlayerData.job.grade or 1
+
+	PlayerData.gang = PlayerData.gang ~= nil and PlayerData.gang or {}
+	PlayerData.gang.name = PlayerData.gang.name ~= nil and PlayerData.gang.name or "geen"
+	PlayerData.gang.label = PlayerData.gang.label ~= nil and PlayerData.gang.label or "Geen Gang"
 
 	PlayerData.position = PlayerData.position ~= nil and PlayerData.position or RSConfig.DefaultSpawn
 	PlayerData.LoggedIn = true
@@ -142,7 +152,16 @@ RSCore.Player.CreatePlayer = function(PlayerData)
 			self.PlayerData.job.payment = RSCore.Shared.Jobs[job].grades[grade].payment
 			self.Functions.UpdatePlayerData()
 			TriggerClientEvent("RSCore:Client:OnJobUpdate", self.PlayerData.source, self.PlayerData.job)
-			--TriggerEvent("RSCore:Server:OnJobUpdate", self.PlayerData.job)
+		end
+	end
+
+	self.Functions.SetGang = function(gang)
+		local gang = gang:lower()
+		if RSCore.Shared.Gangs[gang] ~= nil then
+			self.PlayerData.gang.name = gang
+			self.PlayerData.gang.label = RSCore.Shared.Gangs[gang].label
+			self.Functions.UpdatePlayerData()
+			TriggerClientEvent("RSCore:Client:OnGangUpdate", self.PlayerData.source, self.PlayerData.gang)
 		end
 	end
 
@@ -205,6 +224,7 @@ RSCore.Player.CreatePlayer = function(PlayerData)
 				TriggerEvent("rs-log:server:CreateLog", "playermoney", "RemoveMoney", "red", "**"..GetPlayerName(self.PlayerData.source) .. " (citizenid: "..self.PlayerData.citizenid.." | id: "..self.PlayerData.source..")** €"..amount .. " ("..moneytype..") eraf, nieuw "..moneytype.." balans: "..self.PlayerData.money[moneytype])
 			end
 			TriggerClientEvent("hud:client:OnMoneyChange", self.PlayerData.source, moneytype, amount, true)
+			TriggerClientEvent('rs-phone:client:RemoveBankMoney', self.PlayerData.source, amount)
 			return true
 		end
 		return false
@@ -527,6 +547,20 @@ RSCore.Player.CreateFingerId = function()
 		end)
 	end
 	return FingerId
+end
+
+RSCore.Player.CreateWalletId = function()
+	local UniqueFound = false
+	local WalletId = nil
+	while not UniqueFound do
+		WalletId = "RS-"..math.random(11111111, 99999999)
+		RSCore.Functions.ExecuteSql(true, "SELECT COUNT(*) as count FROM `players` WHERE `metadata` LIKE '%"..WalletId.."%'", function(result)
+			if result[1].count == 0 then
+				UniqueFound = true
+			end
+		end)
+	end
+	return WalletId
 end
 
 RSCore.EscapeSqli = function(str)

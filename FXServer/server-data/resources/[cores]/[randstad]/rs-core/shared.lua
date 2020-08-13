@@ -5760,6 +5760,15 @@ RSShared.VehicleModels = {
 	},
 }
 
+RSShared.Gangs = {
+	["geen"] = {
+		label = "Geen Gang"
+	},
+	["testgang"] = {
+		label = "Test Gang"
+	}
+}
+
 RSShared.Jobs = {
 	["unemployed"] = {
 		label = "Werkloos",
@@ -5945,12 +5954,12 @@ RSShared.Jobs = {
 		}
 	},
 	["mechanic"] = {
-		label = "Voertuig Monteur",
+		label = "Autocare",
 		payment = 150,
 		defaultDuty = true,
 		grades = {
 			[1] = {
-				label = "",
+				label = "Monteur",
 				payment = 150,
 			},
 		}
@@ -5968,6 +5977,17 @@ RSShared.Jobs = {
 	},
 	["garbage"] = {
 		label = "Vuilnisman",
+		payment = 12,
+		defaultDuty = true,
+		grades = {
+			[1] = {
+				label = "",
+				payment = 12,
+			},
+		}
+	},
+	["hotdog"] = {
+		label = "Hotdog Verkoper",
 		payment = 12,
 		defaultDuty = true,
 		grades = {
