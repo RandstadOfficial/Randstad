@@ -3,6 +3,15 @@ TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 
 -- Code
 
+local BankStatus = {}
+
+RegisterServerEvent('rs-banking:server:SetBankClosed')
+AddEventHandler('rs-banking:server:SetBankClosed', function(BankId, bool)
+  print(BankId)
+  BankStatus[BankId] = bool
+  TriggerClientEvent('rs-banking:client:SetBankClosed', -1, BankId, bool)
+end)
+
 RegisterServerEvent('bank:withdraw')
 AddEventHandler('bank:withdraw', function(amount)
     local src = source

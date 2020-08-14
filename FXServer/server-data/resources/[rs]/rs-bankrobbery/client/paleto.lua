@@ -108,6 +108,7 @@ AddEventHandler('rs-bankrobbery:UseBankcardA', function()
                             StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
                             TriggerServerEvent('rs-bankrobbery:server:setBankState', "paleto", true)
                             TriggerServerEvent("RSCore:Server:RemoveItem", "security_card_01", 1)
+                            TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["security_card_01"], "remove")
                             TriggerServerEvent('rs-doorlock:server:updateState', 75, false)
                             if not copsCalled then
                                 local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())

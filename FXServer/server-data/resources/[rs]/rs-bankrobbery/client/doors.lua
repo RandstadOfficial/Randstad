@@ -1,9 +1,8 @@
-local inRange = false
-
 Citizen.CreateThread(function()
     while true do
         local ped = GetPlayerPed(-1)
         local pos = GetEntityCoords(ped)
+        local inRange = true
         
         local PaletoDist = GetDistanceBetweenCoords(pos, Config.BigBanks["paleto"]["coords"]["x"], Config.BigBanks["paleto"]["coords"]["y"], Config.BigBanks["paleto"]["coords"]["z"], true)
         local PacificDist = GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][2]["x"], Config.BigBanks["pacific"]["coords"][2]["y"], Config.BigBanks["pacific"]["coords"][2]["z"], true)

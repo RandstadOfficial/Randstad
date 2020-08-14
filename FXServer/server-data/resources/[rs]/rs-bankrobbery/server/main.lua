@@ -28,32 +28,29 @@ end)
 RegisterServerEvent('rs-bankrobbery:server:setBankState')
 AddEventHandler('rs-bankrobbery:server:setBankState', function(bankId, state)
     if bankId == "paleto" then
-        Config.BigBanks["paleto"]["isOpened"] = state
-        TriggerClientEvent('rs-bankrobbery:client:setBankState', -1, bankId, state)
         if not robberyBusy then
+            Config.BigBanks["paleto"]["isOpened"] = state
+            TriggerClientEvent('rs-bankrobbery:client:setBankState', -1, bankId, state)
             TriggerEvent('rs-scoreboard:server:SetActivityBusy', "bankrobbery", true)
             TriggerEvent('rs-bankrobbery:server:setTimeout')
         end
     elseif bankId == "pacific" then
-        Config.BigBanks["pacific"]["isOpened"] = state
-        TriggerClientEvent('rs-bankrobbery:client:setBankState', -1, bankId, state)
         if not robberyBusy then
+            Config.BigBanks["pacific"]["isOpened"] = state
+            TriggerClientEvent('rs-bankrobbery:client:setBankState', -1, bankId, state)
             TriggerEvent('rs-scoreboard:server:SetActivityBusy', "pacific", true)
             TriggerEvent('rs-bankrobbery:server:setTimeout')
         end
     else
-        Config.SmallBanks[bankId]["isOpened"] = state
-        TriggerClientEvent('rs-bankrobbery:client:setBankState', -1, bankId, state)
         if not robberyBusy then
+            Config.SmallBanks[bankId]["isOpened"] = state
+            TriggerClientEvent('rs-bankrobbery:client:setBankState', -1, bankId, state)
+            TriggerEvent('rs-banking:server:SetBankClosed', bankId, true)
             TriggerEvent('rs-scoreboard:server:SetActivityBusy', "bankrobbery", true)
-            TriggerEvent('rs-bankrobbery:server:setTimeout')
+            TriggerEvent('rs-bankrobbery:server:SetSmallbankTimeout', bankId)
         end
     end
-    
-
-    if not robberyBusy then
-        robberyBusy = true
-    end
+    robberyBusy = true
 end)
 
 RegisterServerEvent('rs-bankrobbery:server:setLockerState')
@@ -80,6 +77,8 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
 
     if type == "small" then
         local itemType = math.random(#Config.RewardTypes) -- 50% chance on money, 50% chance on item
+        local WeaponChance = math.random(1, 50)
+        local odd1 = math.random(1, 50)
         local tierChance = math.random(1, 100)
         local tier = 1
         if tierChance < 50 then 
@@ -92,6 +91,7 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
             tier = 4 
         end
 
+        if WeaponChance ~= odd1 then
         if tier ~= 4 then
             if Config.RewardTypes[itemType].type == "item" then
                 local item = Config.LockerRewards["tier"..tier][math.random(#Config.LockerRewards["tier"..tier])]            
@@ -110,6 +110,10 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
             ply.Functions.AddItem('security_card_01', 1)
             TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['security_card_01'], "add")
         end
+    else
+        ply.Functions.AddItem('weapon_stungun', 1)
+        TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['weapon_stungun'], "add")
+    end
     elseif type == "paleto" then
         local itemType = math.random(#Config.RewardTypes)  -- 50% chance on money, 50% chance on item
         local tierChance = math.random(1, 100)
@@ -197,22 +201,47 @@ end)
 
 RegisterServerEvent('rs-bankrobbery:server:setTimeout')
 AddEventHandler('rs-bankrobbery:server:setTimeout', function()
-    if not timeOut then
-        timeOut = true
-        Citizen.CreateThread(function()
-            Citizen.Wait(60 * 1000 * 60)
+    if not robberyBusy then
+        if not timeOut then
+            timeOut = true
+            Citizen.CreateThread(function()
+                Citizen.Wait(60 * (60 * 1000))
+                timeOut = false
+                robberyBusy = false
+                TriggerEvent('rs-scoreboard:server:SetActivityBusy', "bankrobbery", false)
+                TriggerEvent('rs-scoreboard:server:SetActivityBusy', "pacific", false)
 
-            for k,_ in pairs(Config.SmallBanks) do
-                Config.SmallBanks[k]["isOpened"] = false
-                for _, v in pairs(Config.SmallBanks[k]["lockers"]) do
-                    v["isOpened"] = false
+                for k, v in pairs(Config.BigBanks["pacific"]["lockers"]) do
+                    Config.BigBanks["pacific"]["lockers"][k]["isBusy"] = false
+                    Config.BigBanks["pacific"]["lockers"][k]["isOpened"] = false
                 end
+
+                for k, v in pairs(Config.BigBanks["paleto"]["lockers"]) do
+                    Config.BigBanks["paleto"]["lockers"][k]["isBusy"] = false
+                    Config.BigBanks["paleto"]["lockers"][k]["isOpened"] = false
+                end
+
+                TriggerClientEvent('rs-bankrobbery:client:ClearTimeoutDoors', -1)
+                Config.BigBanks["paleto"]["isOpened"] = false
+                Config.BigBanks["pacific"]["isOpened"] = false
+            end)
+        end
+    end
+end)
+
+RegisterServerEvent('rs-bankrobbery:server:SetSmallbankTimeout')
+AddEventHandler('rs-bankrobbery:server:SetSmallbankTimeout', function(BankId)
+    if not robberyBusy then
+        SetTimeout(30 * (60 * 1000), function()
+            Config.SmallBanks[BankId]["isOpened"] = false
+            for k, v in pairs(Config.SmallBanks[BankId]["lockers"]) do
+                Config.SmallBanks[BankId]["lockers"][k]["isOpened"] = false
+                Config.SmallBanks[BankId]["lockers"][k]["isBusy"] = false
             end
-            TriggerClientEvent('rs-bankrobbery:client:ClearTimeoutDoors', -1)
             timeOut = false
             robberyBusy = false
-            TriggerEvent('rs-scoreboard:server:SetActivityBusy', "bankrobbery", false)
-            TriggerEvent('rs-scoreboard:server:SetActivityBusy', "pacific", false)
+            TriggerClientEvent('rs-bankrobbery:client:ResetFleecaLockers', -1, BankId)
+            TriggerEvent('rs-banking:server:SetBankClosed', BankId, false)
         end)
     end
 end)
