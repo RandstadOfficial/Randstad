@@ -1598,3 +1598,18 @@ $(document).on('click', '#rob-money', function(e){
     }));
     $("#rob-money").remove();
 });
+
+$(document).on('dblclick', '.item-slot', function(event){
+    fromData = $(this).data("item");
+    fromInventory = $(this).parent().attr("data-inventory");
+
+    if(fromData.useable) {
+        if (fromData.shouldClose) {
+            Inventory.Close();
+        }
+        $.post("http://rs-inventory/UseItem", JSON.stringify({
+            inventory: fromInventory,
+            item: fromData,
+        }));
+    }
+});

@@ -7,6 +7,7 @@ PlayerStatus = {}
 Casings = {}
 BloodDrops = {}
 FingerDrops = {}
+local RobbedPlayers = {}
 local Objects = {}
 
 
@@ -16,6 +17,13 @@ Citizen.CreateThread(function()
         local curCops = GetCurrentCops()
         TriggerClientEvent("police:SetCopCount", -1, curCops)
     end
+end)
+
+
+RegisterServerEvent('police:server:ShareRobbedPlayers')
+AddEventHandler('police:server:ShareRobbedPlayers', function(id, bool) 
+    RobbedPlayers[id] = bool
+    TriggerClientEvent('police:client:ShareRobbedPlayers', -1, RobbedPlayers)
 end)
 
 RegisterServerEvent('police:server:CheckBills')
@@ -342,8 +350,17 @@ RSCore.Functions.CreateCallback('police:RobPlayer', function(source, cb, playerI
         Player.Functions.AddMoney("cash", money, "police-player-robbed")
         SearchedPlayer.Functions.RemoveMoney("cash", money, "police-player-robbed")
         TriggerClientEvent('RSCore:Notify', SearchedPlayer.PlayerData.source, "Je bent van €"..money.." beroofd")
+        RobbedPlayerDelay(playerId)     
     end
 end)
+
+function RobbedPlayerDelay(id)
+    Citizen.CreateThread(function()
+        Citizen.Wait(15000)
+        RobbedPlayers[id] = false
+        TriggerClientEvent('police:client:ShareRobbedPlayers', -1, RobbedPlayers)
+    end)
+end
 
 RegisterServerEvent('police:server:UpdateBlips')
 AddEventHandler('police:server:UpdateBlips', function()

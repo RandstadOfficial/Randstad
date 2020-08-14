@@ -1,3 +1,5 @@
+local RobbedPlayers = {}
+
 Citizen.CreateThread(function()
     while true do 
         Citizen.Wait(1)
@@ -123,6 +125,10 @@ AddEventHandler('police:client:SeizeDriverLicense', function()
     end
 end)
 
+RegisterNetEvent('police:client:ShareRobbedPlayers')
+AddEventHandler('police:client:ShareRobbedPlayers', function(data)
+    RobbedPlayers = data
+end)
 
 RegisterNetEvent('police:client:RobPlayer')
 AddEventHandler('police:client:RobPlayer', function()
@@ -131,31 +137,36 @@ AddEventHandler('police:client:RobPlayer', function()
         local playerPed = GetPlayerPed(player)
         local playerId = GetPlayerServerId(player)
         if IsEntityPlayingAnim(playerPed, "missminuteman_1ig_2", "handsup_base", 3) or IsEntityPlayingAnim(playerPed, "mp_arresting", "idle", 3) or IsTargetDead(playerId) then
-            RSCore.Functions.Progressbar("robbing_player", "Spullen stelen..", math.random(5000, 7000), false, true, {
-                disableMovement = true,
-                disableCarMovement = true,
-                disableMouse = false,
-                disableCombat = true,
-            }, {
-                animDict = "random@shop_robbery",
-                anim = "robbery_action_b",
-                flags = 16,
-            }, {}, {}, function() -- Done
-                local plyCoords = GetEntityCoords(playerPed)
-                local pos = GetEntityCoords(GetPlayerPed(-1))
-                local dist = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, plyCoords.x, plyCoords.y, plyCoords.z, true)
-                if dist < 2.5 then
+            if RobbedPlayers ~= nil and RobbedPlayers[playerId] == true then
+                RSCore.Functions.Notify("Deze persoon is al berooft!", "error")
+            else
+                TriggerServerEvent('police:server:ShareRobbedPlayers', playerId, true)
+                RSCore.Functions.Progressbar("robbing_player", "Spullen stelen..", math.random(5000, 7000), false, true, {
+                    disableMovement = true,
+                    disableCarMovement = true,
+                    disableMouse = false,
+                    disableCombat = true,
+                }, {
+                    animDict = "random@shop_robbery",
+                    anim = "robbery_action_b",
+                    flags = 16,
+                }, {}, {}, function() -- Done
+                    local plyCoords = GetEntityCoords(playerPed)
+                    local pos = GetEntityCoords(GetPlayerPed(-1))
+                    local dist = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, plyCoords.x, plyCoords.y, plyCoords.z, true)
+                    if dist < 2.5 then
+                        StopAnimTask(GetPlayerPed(-1), "random@shop_robbery", "robbery_action_b", 1.0)
+                        TriggerServerEvent("inventory:server:OpenInventory", "otherplayer", playerId)
+                        RSCore.Functions.TriggerCallback('police:RobPlayer', function()
+                        end, playerId)
+                    else
+                        RSCore.Functions.Notify("Niemand in de buurt!", "error")
+                    end
+                end, function() -- Cancel
                     StopAnimTask(GetPlayerPed(-1), "random@shop_robbery", "robbery_action_b", 1.0)
-                    TriggerServerEvent("inventory:server:OpenInventory", "otherplayer", playerId)
-                    RSCore.Functions.TriggerCallback('police:RobPlayer', function()
-                    end, playerId)
-                else
-                    RSCore.Functions.Notify("Niemand in de buurt!", "error")
-                end
-            end, function() -- Cancel
-                StopAnimTask(GetPlayerPed(-1), "random@shop_robbery", "robbery_action_b", 1.0)
-                RSCore.Functions.Notify("Geannuleerd..", "error")
-            end)
+                    RSCore.Functions.Notify("Geannuleerd..", "error")
+                end)
+            end
         end
     else
         RSCore.Functions.Notify("Niemand in de buurt!", "error")

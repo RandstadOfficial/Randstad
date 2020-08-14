@@ -24,11 +24,7 @@ RSCore.Player.Login = function(source, citizenid, newData)
 					PlayerData.metadata = json.decode(PlayerData.metadata)
 					PlayerData.charinfo = json.decode(PlayerData.charinfo)
 				end
-				print("i was here")
-				print(PlayerData.job.onduty)
 				RSCore.Player.CheckPlayerData(source, PlayerData)
-				print("i was here after checkplayerdata")
-				print(PlayerData.job.onduty)
 			end)
 		else
 			print("i was also here")
