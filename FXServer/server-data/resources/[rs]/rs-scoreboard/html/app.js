@@ -38,6 +38,15 @@ RSScoreboard.Open = function(data) {
             var Astatus = $(Abeam).find(".info-beam-status");
             $(Astatus).html('<i class="fas fa-times"></i>');
         }
+        if (data.currentAutocare > 0) {
+            var Aubeam = $(".scoreboard-info").find('[data-type="autocare"]');
+            var Austatus = $(Aubeam).find(".info-beam-status");
+            $(Austatus).html('<i class="fas fa-check"></i>');
+        } else {
+            var Aubeam = $(".scoreboard-info").find('[data-type="autocare"]');
+            var Austatus = $(Aubeam).find(".info-beam-status");
+            $(Austatus).html('<i class="fas fa-times"></i>');
+        }
     });
 }
 

@@ -9,7 +9,7 @@
 .scoreboard-block {
     display: none;
     position: absolute;
-    height: 36vh;
+    height: 40vh;
     width: 31vh;
     background: #282828ad;
     right: 5vh;
@@ -39,7 +39,7 @@
 
 .scoreboard-info {
     position: relative;
-    height: 30vh;
+    height: 32vh;
     width: 28vh;
     top: 45%;
     transform: translateY(-50%);
@@ -96,7 +96,7 @@
 
 .scoreboard-info-beam {
     position: relative;
-    height: 4.25vh;
+    height: 4vh;
     width: 100%;
     font-weight: bold;
 }

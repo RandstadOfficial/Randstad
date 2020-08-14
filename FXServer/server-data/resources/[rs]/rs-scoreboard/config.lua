@@ -42,3 +42,6 @@ Config.CurrentCops = 0
 
 -- Current Ambulance / Doctors Online
 Config.CurrentAmbulance = 0
+
+
+Config.CurrentAutocare = 0

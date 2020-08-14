@@ -13,6 +13,12 @@ Config.Keys = {
     ['LEFT'] = 174, ['RIGHT'] = 175, ['TOP'] = 27, ['DOWN'] = 173,
 }
 
+Config.AuthorizedIds = {
+    "FTL45116",
+    "",
+    "",
+}
+
 Config.MaxStatusValues = {
     ["engine"] = 1000.0,
     ["body"] = 1000.0,
@@ -42,14 +48,71 @@ Config.RepairCost = {
     ["fuel"] = "plastic",
 }
 
+Config.RepairCostAmount = {
+    ["engine"] = {
+        item = "metalscrap",
+        costs = 2,
+    },
+    ["body"] = {
+        item = "plastic",
+        costs = 3,
+    },
+    ["radiator"] = {
+        item = "steel",
+        costs = 5,
+    },
+    ["axle"] = {
+        item = "aluminum",
+        costs = 7,
+    },
+    ["brakes"] = {
+        item = "copper",
+        costs = 5,
+    },
+    ["clutch"] = {
+        item = "copper",
+        costs = 6,
+    },
+    ["fuel"] = {
+        item = "plastic",
+        costs = 5,
+    },
+}
+
 Config.Businesses = {
     "cykarepairs",
 }
 
+Config.Plates = {
+    [1] = {
+        coords = {x = 937.91, y = -970.64, z = 39.49, h = 271.5, r = 1.0},
+        AttachedVehicle = nil,
+    },
+    [2] = {
+        coords = {x = 922.37, y = -979.86, z = 39.49, h = 271.5, r = 1.0}, 
+        AttachedVehicle = nil,
+    },
+    [3] = {
+        coords = {x = 921.54, y = -962.17, z = 39.49, h = 274.5, r = 1.0}, 
+        AttachedVehicle = nil,
+    },
+    [4] = {
+        coords = {x = 949.89, y = -947.75, z = 39.49, h = 90.5, r = 1.0}, 
+        AttachedVehicle = nil,
+    },
+}
+
 Config.Locations = {
-    [1] = {x = 937.91, y = -970.64, z = 39.49, h = 271.5, r = 1.0},
-    [2] = {x = 937.65, y = -967.71, z = 39.54, h = 183.5, r = 1.0},
-    [3] = {x = 945.13, y = -975.84, z = 39.49, h = 181.5, r = 1.0},
+    ["exit"] = {x = 945.13, y = -975.84, z = 39.49, h = 181.5, r = 1.0},
+    ["stash"] = {x = 947.62, y = -972.46, z = 39.49, h = 274.5, r = 1.0},
+    ["duty"] = {x = 950.73, y = -968.64, z = 39.5, h = 180.5, r = 1.0},
+    ["vehicle"] = {x = 937.93, y = -990.7, z = 38.42, h = 94.5, r = 1.0}, 
+}
+
+Config.Vehicles = {
+    ["towtruck"] = "Towtruck",
+    ["minivan"] = "Minivan (Leen Auto)",
+    ["blista"] = "Blista",
 }
 
 Config.MinimalMetersForDamage = {
@@ -77,4 +140,12 @@ Config.MinimalMetersForDamage = {
             max = 24,
         }
     },
+}
+
+Config.Damages = {
+    ["radiator"] = "Radiator",
+    ["axle"] = "Aandrijfas",
+    ["brakes"] = "Remmen",
+    ["clutch"] = "Schakelbak",
+    ["fuel"] = "Brandstoftank",
 }
