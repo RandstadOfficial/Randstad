@@ -6,6 +6,7 @@ TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 RSCore.Functions.CreateCallback('rs-scoreboard:server:GetActivity', function(source, cb)
     local PoliceCount = 0
     local AmbulanceCount = 0
+    local AutocareCount = 0
     
     for k, v in pairs(RSCore.Functions.GetPlayers()) do
         local Player = RSCore.Functions.GetPlayer(v)
@@ -14,13 +15,17 @@ RSCore.Functions.CreateCallback('rs-scoreboard:server:GetActivity', function(sou
                 PoliceCount = PoliceCount + 1
             end
 
-            if ((Player.PlayerData.job.name == "ambulance" or Player.PlayerData.job.name == "doctor") and Player.PlayerData.job.onduty) then
+            if (Player.PlayerData.job.name == "ambulance" and Player.PlayerData.job.onduty) then
                 AmbulanceCount = AmbulanceCount + 1
+            end
+
+            if (Player.PlayerData.job.name == "mechanic" and Player.PlayerData.job.onduty) then
+                AutocareCount = AutocareCount + 1
             end
         end
     end
 
-    cb(PoliceCount, AmbulanceCount)
+    cb(PoliceCount, AmbulanceCount, AutocareCount)
 end)
 
 RSCore.Functions.CreateCallback('rs-scoreboard:server:GetConfig', function(source, cb)

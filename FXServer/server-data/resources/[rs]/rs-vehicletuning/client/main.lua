@@ -7,10 +7,13 @@ Citizen.CreateThread(function()
     end
 end)
 
-local ModdedVehicles = {}
-local VehicleStatus = {}
-isLoggedIn = false
+ModdedVehicles = {}
+VehicleStatus = {}
+ClosestPlate = nil
+isLoggedIn = true
 PlayerJob = {}
+
+local onDuty = false
 
 function DrawText3Ds(x, y, z, text)
 	SetTextScale(0.35, 0.35)
@@ -27,29 +30,80 @@ function DrawText3Ds(x, y, z, text)
     ClearDrawOrigin()
 end
 
+Citizen.CreateThread(function()
+    while true do
+        if isLoggedIn then
+            SetClosestPlate()
+        end
+        Citizen.Wait(1000)
+    end
+end)
+
+function SetClosestPlate()
+    local pos = GetEntityCoords(GetPlayerPed(-1), true)
+    local current = nil
+    local dist = nil
+    for id,_ in pairs(Config.Plates) do
+        if current ~= nil then
+            if(GetDistanceBetweenCoords(pos, Config.Plates[id].coords.x, Config.Plates[id].coords.y, Config.Plates[id].coords.z, true) < dist)then
+                current = id
+                dist = GetDistanceBetweenCoords(pos, Config.Plates[id].coords.x, Config.Plates[id].coords.y, Config.Plates[id].coords.z, true)
+            end
+        else
+            dist = GetDistanceBetweenCoords(pos, Config.Plates[id].coords.x, Config.Plates[id].coords.y, Config.Plates[id].coords.z, true)
+            current = id
+        end
+    end
+    ClosestPlate = current
+end
+
 RegisterNetEvent('RSCore:Client:OnPlayerLoaded')
 AddEventHandler('RSCore:Client:OnPlayerLoaded', function()
     RSCore.Functions.GetPlayerData(function(PlayerData)
         PlayerJob = PlayerData.job
+        if PlayerData.job.onduty then
+            if PlayerData.job.name == "mechanic" then
+                TriggerServerEvent("RSCore:ToggleDuty")
+            end
+        end
     end)
     isLoggedIn = true
+    RSCore.Functions.TriggerCallback('rs-vehicletuning:server:GetAttachedVehicle', function(plates)
+        for k, v in pairs(plates) do
+            Config.Plates[k].AttachedVehicle = v.AttachedVehicle
+        end
+    end)
 
-    RSCore.Functions.TriggerCallback('rs-vehicletuning:server:GetAttachedVehicle', function(veh)
-        Config.AttachedVehicle = veh
+    RSCore.Functions.TriggerCallback('rs-vehicletuning:server:GetDrivingDistances', function(retval)
+        DrivingDistance = retval
     end)
 end)
 
 RegisterNetEvent('RSCore:Client:OnJobUpdate')
 AddEventHandler('RSCore:Client:OnJobUpdate', function(JobInfo)
     PlayerJob = JobInfo
+    onDuty = PlayerJob.onduty
+end)
+
+RegisterNetEvent('RSCore:Client:SetDuty')
+AddEventHandler('RSCore:Client:SetDuty', function(duty)
+    onDuty = duty
 end)
 
 Citizen.CreateThread(function()
-    Wait(250)
-    RSCore.Functions.GetPlayerData(function(PlayerData)
-        PlayerJob = PlayerData.job
-    end)
-    isLoggedIn = true
+    local c = Config.Locations["exit"]
+    local Blip = AddBlipForCoord(c.x, c.y, c.z)
+
+    SetBlipSprite (Blip, 446)
+    SetBlipDisplay(Blip, 4)
+    SetBlipScale  (Blip, 0.7)
+    SetBlipAsShortRange(Blip, true)
+    SetBlipColour(Blip, 0)
+    SetBlipAlpha(Blip, 0.7)
+
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentSubstringPlayerName("Autocare Mechanic")
+    EndTextCommandSetBlipName(Blip)
 end)
 
 Citizen.CreateThread(function()
@@ -58,65 +112,111 @@ Citizen.CreateThread(function()
 
         if isLoggedIn then
             if PlayerJob.name == "mechanic" then
-                local coords = {
-                    [1] = Config.Locations[1],
-                    [2] = Config.Locations[2],
-                    [3] = Config.Locations[3],
-                } 
                 local pos = GetEntityCoords(GetPlayerPed(-1))
-                local dist1 = GetDistanceBetweenCoords(pos, coords[1].x, coords[1].y, coords[1].z)
-                local dist2 = GetDistanceBetweenCoords(pos, coords[2].x, coords[2].y, coords[2].z)
-                if dist1 < 20 then
-                    inRange = true
+                local StashDistance = GetDistanceBetweenCoords(pos, Config.Locations["stash"].x, Config.Locations["stash"].y, Config.Locations["stash"].z, true)
+                local OnDutyDistance = GetDistanceBetweenCoords(pos, Config.Locations["duty"].x, Config.Locations["duty"].y, Config.Locations["duty"].z, true)
+                local VehicleDistance = GetDistanceBetweenCoords(pos, Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, true)
 
-                    if Config.AttachedVehicle == nil then
-                        DrawMarker(2, coords[1].x, coords[1].y, coords[1].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 210, 50, 9, 255, false, false, false, true, false, false, false)
+                if onDuty then
+                    if StashDistance < 20 then
+                        inRange = true
+                        DrawMarker(2, Config.Locations["stash"].x, Config.Locations["stash"].y, Config.Locations["stash"].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 210, 50, 9, 255, false, false, false, true, false, false, false)
 
-                        if dist1 < 2 then
-                            local veh = GetVehiclePedIsIn(GetPlayerPed(-1))
-                            if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-                                if not IsThisModelABicycle(GetEntityModel(veh)) then
-                                    DrawText3Ds(coords[1].x, coords[1].y, coords[1].z, "[E] Voertuig op de plaat zetten")
-                                    if IsControlJustPressed(0, Config.Keys["E"]) then
-                                        DoScreenFadeOut(150)
-                                        Wait(150)
-                                        Config.AttachedVehicle = veh
-                                        SetEntityCoords(veh, coords[1].x, coords[1].y, coords[1].z)
-                                        SetEntityHeading(veh, coords[1].h)
-                                        FreezeEntityPosition(veh, true)
-                                        SetEntityCoords(GetPlayerPed(-1), coords[2].x, coords[2].y, coords[2].z)
-                                        SetEntityHeading(GetPlayerPed(-1), coords[2].h)
-                                        Wait(500)
-                                        DoScreenFadeIn(250)
-                                        TriggerServerEvent('rs-vehicletuning:server:SetAttachedVehicle', veh)
-                                    end
-                                else
-                                    RSCore.Functions.Notify("Je kan geen fietsen op de plaat zetten!", "error")
-                                end
-                            else
-                                DrawText3Ds(coords[1].x, coords[1].y, coords[1].z, "Je moet in een voertuig zitten!")
+                        if StashDistance < 1 then
+                            DrawText3Ds(Config.Locations["stash"].x, Config.Locations["stash"].y, Config.Locations["stash"].z, "[E] Stash openen")
+                            if IsControlJustReleased(0, Keys["E"]) then
+                                TriggerEvent("inventory:client:SetCurrentStash", "mechanicstash")
+                                TriggerServerEvent("inventory:server:OpenInventory", "stash", "mechanicstash", {
+                                    maxweight = 4000000,
+                                    slots = 500,
+                                })
                             end
                         end
                     end
                 end
 
-                if dist2 < 20 then
-                    DrawMarker(2, coords[2].x, coords[2].y, coords[2].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 210, 50, 9, 255, false, false, false, true, false, false, false)
+                if onDuty then
+                    if VehicleDistance < 20 then
+                        inRange = true
+                        DrawMarker(2, Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 210, 50, 9, 255, false, false, false, true, false, false, false)
+                        if VehicleDistance < 1 then
+                            local InVehicle = IsPedInAnyVehicle(GetPlayerPed(-1))
 
-                    if dist2 < 1.2 then
-                        local text = "Er staat nog geen voertuig op de plaat"
-                        if Config.AttachedVehicle ~= nil then
-                            text = "[E] Menu openen"
-                            if IsControlJustPressed(0, Keys["E"]) then
-                                OpenMenu()
-                                Menu.hidden = not Menu.hidden
+                            if InVehicle then
+                                DrawText3Ds(Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, '[E] Voertuig wegstoppen')
+                                if IsControlJustPressed(0, Keys["E"]) then
+                                    DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
+                                end
+                            else
+                                DrawText3Ds(Config.Locations["vehicle"].x, Config.Locations["vehicle"].y, Config.Locations["vehicle"].z, '[E] Voertuig pakken')
+                                if IsControlJustPressed(0, Keys["E"]) then
+                                    if IsControlJustPressed(0, Keys["E"]) then
+                                        VehicleList()
+                                        Menu.hidden = not Menu.hidden
+                                    end
+                                end
+                                Menu.renderGUI()
                             end
-                            Menu.renderGUI()
                         end
-                        DrawText3Ds(coords[2].x, coords[2].y, coords[2].z, text)
-                    elseif dist2 > 1.1 then
-                        if not Menu.hidden then
-                            CloseMenu()
+                    end
+                end
+
+                if OnDutyDistance < 20 then
+                    inRange = true
+                    DrawMarker(2, Config.Locations["duty"].x, Config.Locations["duty"].y, Config.Locations["duty"].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 210, 50, 9, 255, false, false, false, true, false, false, false)
+
+                    if OnDutyDistance < 1 then
+                        if onDuty then
+                            DrawText3Ds(Config.Locations["duty"].x, Config.Locations["duty"].y, Config.Locations["duty"].z, "[E] Uit dienst gaan")
+                        else
+                            DrawText3Ds(Config.Locations["duty"].x, Config.Locations["duty"].y, Config.Locations["duty"].z, "[E] In dienst gaan")
+                        end
+                        if IsControlJustReleased(0, Keys["E"]) then
+                            TriggerServerEvent("RSCore:ToggleDuty")
+                        end
+                    end
+                end
+
+                if onDuty then
+                    for k, v in pairs(Config.Plates) do
+                        if v.AttachedVehicle == nil then
+                            local PlateDistance = GetDistanceBetweenCoords(pos, v.coords.x, v.coords.y, v.coords.z)
+                            if PlateDistance < 20 then
+                                inRange = true
+                                DrawMarker(2, v.coords.x, v.coords.y, v.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 255, 255, 255, 255, 0, 0, 0, 1, 0, 0, 0)
+                                if PlateDistance < 2 then
+                                    local veh = GetVehiclePedIsIn(GetPlayerPed(-1))
+                                    if IsPedInAnyVehicle(GetPlayerPed(-1)) then
+                                        if not IsThisModelABicycle(GetEntityModel(veh)) then
+                                            DrawText3Ds(v.coords.x, v.coords.y, v.coords.z + 0.3, "[E] Voertuig op de plaat zetten")
+                                            if IsControlJustPressed(0, Config.Keys["E"]) then
+                                                DoScreenFadeOut(150)
+                                                Wait(150)
+                                                Config.Plates[ClosestPlate].AttachedVehicle = veh
+                                                SetEntityCoords(veh, v.coords.x, v.coords.y, v.coords.z)
+                                                SetEntityHeading(veh, v.coords.h)
+                                                FreezeEntityPosition(veh, true)
+                                                Wait(500)
+                                                DoScreenFadeIn(250)
+                                                TriggerServerEvent('rs-vehicletuning:server:SetAttachedVehicle', veh, k)
+                                            end
+                                        else
+                                            RSCore.Functions.Notify("Je kan geen fietsen op de plaat zetten!", "error")
+                                        end
+                                    end
+                                end
+                            end
+                        else
+                            local PlateDistance = GetDistanceBetweenCoords(pos, v.coords.x, v.coords.y, v.coords.z)
+                            if PlateDistance < 3 then
+                                inRange = true
+                                DrawText3Ds(v.coords.x, v.coords.y, v.coords.z, "[E] Menu optie's openen")
+                                if IsControlJustPressed(0, Keys["E"]) then
+                                    OpenMenu()
+                                    Menu.hidden = not Menu.hidden
+                                end
+                                Menu.renderGUI()
+                            end
                         end
                     end
                 end
@@ -135,45 +235,124 @@ Citizen.CreateThread(function()
     end
 end)
 
+function niks()
+    print('niks')
+end
+
 function OpenMenu()
     ClearMenu()
     Menu.addButton("Opties", "VehicleOptions", nil)
     Menu.addButton("Sluit Menu", "CloseMenu", nil) 
 end
 
+function VehicleList()
+    ClearMenu()
+    for k, v in pairs(Config.Vehicles) do
+        Menu.addButton(v, "SpawnListVehicle", k) 
+    end
+    Menu.addButton("Sluit Menu", "CloseMenu", nil) 
+end
+
+function SpawnListVehicle(model)
+    local coords = {
+        x = Config.Locations["vehicle"].x,
+        y = Config.Locations["vehicle"].y,
+        z = Config.Locations["vehicle"].z,
+        h = Config.Locations["vehicle"].h,
+    }
+    local plate = "AC"..math.random(1111, 9999)
+    RSCore.Functions.SpawnVehicle(model, function(veh)
+        SetVehicleNumberPlateText(veh, "ACBV"..tostring(math.random(1000, 9999)))
+        SetEntityHeading(veh, coords.h)
+        exports['LegacyFuel']:SetFuel(veh, 100.0)
+        Menu.hidden = true
+        TaskWarpPedIntoVehicle(GetPlayerPed(-1), veh, -1)
+        TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
+        SetVehicleEngineOn(veh, true, true)
+    end, coords, true)
+end
+
 function VehicleOptions()
     ClearMenu()
     Menu.addButton("Voertuig Loskoppelen", "UnattachVehicle", nil)
-    Menu.addButton("Check Status", "CheckStatus", nil)
+    -- Menu.addButton("Check Status", "CheckStatus", nil)
     Menu.addButton("Onderdelen", "PartsMenu", nil)
     Menu.addButton("Sluit Menu", "CloseMenu", nil)
-    SetVehicleDoorsShut(Config.AttachedVehicle)
 end
 
-local Doors = {
-    [0] = 0,
-    [1] = 1,
-    [2] = 2,
-    [3] = 3,
-    [4] = 4,
-    [5] = 5,
-    [6] = 6,
-    [7] = 7,
-}
+
+function VehicleOptions()
+    ClearMenu()
+    local plate = GetVehicleNumberPlateText(Config.Plates[ClosestPlate].AttachedVehicle)
+    RSCore.Functions.TriggerCallback('rs-vehicletuning:server:GetVehicleDistance', function(distance)
+        if distance ~= nil then
+            Menu.addButton("Voertuig Loskoppelen", "UnattachVehicle", nil)
+            Menu.addButton("Onderdelen", "PartsMenu", nil)
+            if distance >= 8000000 then
+                Menu.addButton("Reset KM-teller", "ResetKM", nil)
+            end
+            Menu.addButton("Sluit Menu", "CloseMenu", nil)
+        else
+            Menu.addButton("Voertuig Loskoppelen", "UnattachVehicle", nil)
+            Menu.addButton("Onderdelen", "PartsMenu", nil)
+            Menu.addButton("Sluit Menu", "CloseMenu", nil)
+        end
+    end, plate)
+end
+
+
+-- function VehicleOptions()
+--     ClearMenu()
+--     local plate = GetVehicleNumberPlateText(Config.Plates[ClosestPlate].AttachedVehicle)
+--     RSCore.Functions.TriggerCallback('rs-vehicletuning:server:GetVehicleDistance', function(distance)
+--         if distance ~= nil then
+--             Menu.addButton("Voertuig Loskoppelen", "UnattachVehicle", nil)
+--             Menu.addButton("Onderdelen", "PartsMenu", nil)
+--             if distance >= 8000000 then
+--                 Menu.addButton("Reset KM-teller", "ResetKM", nil)
+--             end
+--             Menu.addButton("Sluit Menu", "CloseMenu", nil)
+--         else
+--             Menu.addButton("Voertuig Loskoppelen", "UnattachVehicle", nil)
+--             Menu.addButton("Onderdelen", "PartsMenu", nil)
+--             Menu.addButton("Sluit Menu", "CloseMenu", nil)
+--         end
+--     end, plate)
+-- end
+
+-- function ResetKM()
+--     local plate = GetVehicleNumberPlateText(Config.Plates[ClosestPlate].AttachedVehicle)
+--     DrivingDistance[plate] = 0
+--     TriggerEvent('rs-hud:client:UpdateDrivingMeters', true, DrivingDistance[plate])
+--     TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', DrivingDistance[plate], plate, true)
+-- end
 
 function PartsMenu()
     ClearMenu()
-    for k, v in pairs(Doors) do
-        SetVehicleDoorOpen(Config.AttachedVehicle, v, false, false)
-    end
-    local plate = GetVehicleNumberPlateText(Config.AttachedVehicle)
+    local plate = GetVehicleNumberPlateText(Config.Plates[ClosestPlate].AttachedVehicle)
     if VehicleStatus[plate] ~= nil then
         for k, v in pairs(Config.ValuesLabels) do
-            Menu.addButton(v..": "..math.ceil(VehicleStatus[plate][k]), "PartMenu", k) 
+            if math.ceil(VehicleStatus[plate][k]) ~= Config.MaxStatusValues[k] then
+                local percentage = math.ceil(VehicleStatus[plate][k])
+                if percentage > 100 then
+                    percentage = math.ceil(VehicleStatus[plate][k]) / 10
+                end
+                Menu.addButton(v..": "..percentage.."%", "PartMenu", k) 
+            else
+                local percentage = math.ceil(Config.MaxStatusValues[k])
+                if percentage > 100 then
+                    percentage = math.ceil(Config.MaxStatusValues[k]) / 10
+                end
+                Menu.addButton(v..": "..percentage.."%", "NoDamage", nil) 
+            end
         end
     else
         for k, v in pairs(Config.ValuesLabels) do
-            Menu.addButton(v..": "..Config.MaxStatusValues[k], "VehicleOptions", nil) 
+            local percentage = math.ceil(Config.MaxStatusValues[k])
+            if percentage > 100 then
+                percentage = math.ceil(Config.MaxStatusValues[k]) / 10
+            end
+            Menu.addButton(v..": "..percentage.."%", "NoDamage", nil) 
         end
     end
     Menu.addButton("Terug", "VehicleOptions", nil) 
@@ -181,46 +360,103 @@ function PartsMenu()
 end
 
 function CheckStatus()
-    local plate = GetVehicleNumberPlateText(Config.AttachedVehicle)
+    local plate = GetVehicleNumberPlateText(Config.Plates[ClosestPlate].AttachedVehicle)
     SendStatusMessage(VehicleStatus[plate])
 end
 
 function PartMenu(part)
     ClearMenu()
-    Menu.addButton("Repareer ("..Config.ValuesLabels[part]..")", "RepairPart", part)
+    Menu.addButton("Repareer ("..RSCore.Shared.Items[Config.RepairCostAmount[part].item]["label"].." "..Config.RepairCostAmount[part].costs.."x)", "RepairPart", part)
+    Menu.addButton("Terug", "VehicleOptions", nil)
+    Menu.addButton("Sluit Menu", "CloseMenu", nil) 
+end
+
+function NoDamage(part)
+    ClearMenu()
+    Menu.addButton("Er is geen schade aan dit onderdeel!", "PartsMenu", part)
     Menu.addButton("Terug", "VehicleOptions", nil)
     Menu.addButton("Sluit Menu", "CloseMenu", nil) 
 end
 
 function RepairPart(part)
-    local plate = GetVehicleNumberPlateText(Config.AttachedVehicle)
-    TriggerServerEvent('rs-vehicletuning:server:SetPartLevel', plate, part, Config.MaxStatusValues[part])
-    RSCore.Functions.Notify(Config.ValuesLabels[part].." is gerepareerd!", "success")
-    PartsMenu()
+    local plate = GetVehicleNumberPlateText(Config.Plates[ClosestPlate].AttachedVehicle)
+    local PartData = Config.RepairCostAmount[part]
+
+    RSCore.Functions.TriggerCallback('rs-inventory:server:GetStashItems', function(StashItems)
+        for k, v in pairs(StashItems) do
+            if v.name == PartData.item then
+                if v.amount >= PartData.costs then
+                    RSCore.Functions.Progressbar("repair_part", Config.ValuesLabels[part].." aan het repareren", math.random(5000, 10000), false, true, {
+                        disableMovement = true,
+                        disableCarMovement = true,
+                        disableMouse = false,
+                        disableCombat = true,
+                    }, {}, {}, {}, function() -- Done
+                        if (v.amount - PartData.costs) <= 0 then
+                            StashItems[k] = nil
+                        else
+                            v.amount = (v.amount - PartData.costs)
+                        end
+                        TriggerEvent('rs-vehicletuning:client:RepaireeePart', part)
+                        TriggerServerEvent('rs-inventory:server:SaveStashItems', "mechanicstash", StashItems)
+                        SetTimeout(250, function()
+                            PartsMenu()
+                        end)
+                    end, function()
+                        RSCore.Functions.Notify("Reparatie geannuleerd..", "error")
+                    end)
+                    break
+                else
+                    RSCore.Functions.Notify('Er zijn niet genoeg materialen in de kluis..', 'error')
+                end
+                break
+            else
+                RSCore.Functions.Notify('Er zijn niet genoeg materialen in de kluis..', 'error')
+            end
+        end
+    end, "mechanicstash")
 end
 
-function UnattachVehicle()
-    local coords = {
-        [1] = Config.Locations[1],
-        [2] = Config.Locations[2],
-        [3] = Config.Locations[3],
-    } 
+--
 
+RegisterNetEvent('rs-vehicletuning:client:RepaireeePart')
+AddEventHandler('rs-vehicletuning:client:RepaireeePart', function(part)
+    local veh = Config.Plates[ClosestPlate].AttachedVehicle
+    local plate = GetVehicleNumberPlateText(veh)
+    if part == "engine" then
+        SetVehicleEngineHealth(veh, Config.MaxStatusValues[part])
+        TriggerServerEvent("vehiclemod:server:updatePart", plate, "engine", Config.MaxStatusValues[part])
+    elseif part == "body" then
+        SetVehicleBodyHealth(veh, Config.MaxStatusValues[part])
+        TriggerServerEvent("vehiclemod:server:updatePart", plate, "body", Config.MaxStatusValues[part])
+        SetVehicleFixed(veh)
+    else
+        TriggerServerEvent("vehiclemod:server:updatePart", plate, part, Config.MaxStatusValues[part])
+    end
+    RSCore.Functions.Notify("De "..Config.ValuesLabels[part].." is gerepareerd!")
+end)
+
+function UnattachVehicle()
+    local coords = Config.Locations["exit"]
     DoScreenFadeOut(150)
     Wait(150)
-    FreezeEntityPosition(Config.AttachedVehicle, false)
-    SetEntityCoords(Config.AttachedVehicle, coords[3].x, coords[3].y, coords[3].z)
-    SetEntityHeading(Config.AttachedVehicle, coords[3].h)
-    TaskWarpPedIntoVehicle(GetPlayerPed(-1), Config.AttachedVehicle, -1)
+    FreezeEntityPosition(Config.Plates[ClosestPlate].AttachedVehicle, false)
+    SetEntityCoords(Config.Plates[ClosestPlate].AttachedVehicle, Config.Plates[ClosestPlate].coords.x, Config.Plates[ClosestPlate].coords.y, Config.Plates[ClosestPlate].coords.z)
+    SetEntityHeading(Config.Plates[ClosestPlate].AttachedVehicle, Config.Plates[ClosestPlate].coords.h)
+    TaskWarpPedIntoVehicle(GetPlayerPed(-1), Config.Plates[ClosestPlate].AttachedVehicle, -1)
     Wait(500)
     DoScreenFadeIn(250)
-    Config.AttachedVehicle = nil
-    TriggerServerEvent('rs-vehicletuning:server:SetAttachedVehicle', nil)
+    Config.Plates[ClosestPlate].AttachedVehicle = nil
+    TriggerServerEvent('rs-vehicletuning:server:SetAttachedVehicle', false, ClosestPlate)
 end
 
 RegisterNetEvent('rs-vehicletuning:client:SetAttachedVehicle')
-AddEventHandler('rs-vehicletuning:client:SetAttachedVehicle', function(veh)
-    Config.AttachedVehicle = veh
+AddEventHandler('rs-vehicletuning:client:SetAttachedVehicle', function(veh, key)
+    if veh ~= false then
+        Config.Plates[key].AttachedVehicle = veh
+    else
+        Config.Plates[key].AttachedVehicle = nil
+    end
 end)
 
 Citizen.CreateThread(function()
@@ -236,6 +472,7 @@ Citizen.CreateThread(function()
                 SetVehicleHandlingField(veh, 'CHandlingData', 'fSteeringLock', fSteeringLock)]]--
 
                 local fInitialDriveMaxFlatVel = GetVehicleHandlingFloat(veh, 'CHandlingData', 'fInitialDriveMaxFlatVel')
+
                 if IsThisModelABike(GetEntityModel(veh)) then
                     local fTractionCurveMin = GetVehicleHandlingFloat(veh, 'CHandlingData', 'fTractionCurveMin')
 
@@ -243,11 +480,10 @@ Citizen.CreateThread(function()
                     SetVehicleHandlingFloat(veh, 'CHandlingData', 'fTractionCurveMin', fTractionCurveMin)
                     SetVehicleHandlingField(veh, 'CHandlingData', 'fTractionCurveMin', fTractionCurveMin)   
 
-                    local fTractionCurveMax = GetVehicleHandlingFloat(veh, 'CHandlingData', 'fTractionCurveMax')
-
-                    fTractionCurveMax = fTractionCurveMax * 0.6
-                    SetVehicleHandlingFloat(veh, 'CHandlingData', 'fTractionCurveMax', fTractionCurveMax)
-                    SetVehicleHandlingField(veh, 'CHandlingData', 'fTractionCurveMax', fTractionCurveMax)
+                    -- local fTractionCurveMax = GetVehicleHandlingFloat(veh, 'CHandlingData', 'fTractionCurveMax')
+                    -- fTractionCurveMax = fTractionCurveMax * 0.6
+                    -- SetVehicleHandlingFloat(veh, 'CHandlingData', 'fTractionCurveMax', fTractionCurveMax)
+                    -- SetVehicleHandlingField(veh, 'CHandlingData', 'fTractionCurveMax', fTractionCurveMax)
 
                     local fInitialDriveForce = GetVehicleHandlingFloat(veh, 'CHandlingData', 'fInitialDriveForce')
                     fInitialDriveForce = fInitialDriveForce * 2.4
@@ -702,12 +938,10 @@ end
 
 -- Menu Functions
 
-
 CloseMenu = function()
     Menu.hidden = true
     currentGarage = nil
     ClearMenu()
-    SetVehicleDoorsShut(Config.AttachedVehicle)
 end
 
 ClearMenu = function()

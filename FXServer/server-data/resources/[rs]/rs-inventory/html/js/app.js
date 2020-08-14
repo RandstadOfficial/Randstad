@@ -1527,9 +1527,9 @@ var requiredItemOpen = false;
         $itembox.removeClass('template');
         $itembox.html('<div id="itembox-action"><p>' + type + '</p></div><div id="itembox-label"><p>'+data.item.label+'</p></div><div class="item-slot-img"><img src="images/' + data.item.image + '" alt="' + data.item.name + '" /></div>');
         $(".itemboxes-container").prepend($itembox);
-        $itembox.fadeIn(250);
+        $itembox.fadeIn(850);
         setTimeout(function() {
-            $.when($itembox.fadeOut(300)).done(function() {
+            $.when($itembox.fadeOut(850)).done(function() {
                 $itembox.remove()
             });
         }, 3000);

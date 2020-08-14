@@ -149,44 +149,110 @@ RSCore.Commands.Add("setvehiclestatus", "Zet vehicle status", {{name="part", hel
     TriggerClientEvent("vehiclemod:client:setPartLevel", source, part, level)
 end, "god")
 
-RSCore.Commands.Add("repareer", "Repareer een voertuig", {{name="part", help="Onderdeel dat je wilt repareren"}, {name="aantal", help="Aantal levels"}}, true, function(source, args)
-    local part = args[1]:lower()
-    local level = tonumber(args[2])
-    local needAmount = level
-    if part == "body" then
-        needAmount = tonumber(level / 10)
-        if needAmount <= 0 then needAmount = 1 end
-    end
-    local Player = RSCore.Functions.GetPlayer(source)
-    local neededItem = Player.Functions.GetItemByName(Config.RepairCost[part])
-    if neededItem ~= nil and neededItem.amount >= needAmount then 
-        TriggerClientEvent("vehiclemod:client:repairPart", source, part, level, needAmount)
-    else
-        if neededItem == nil then 
-            TriggerClientEvent('RSCore:Notify', source, "Je mist " .. level .. " " .. RSCore.Shared.Items[Config.RepairCost[part]]["label"] , "error", 5000)
-        else
-            TriggerClientEvent('RSCore:Notify', source, "Je mist " .. (level - neededItem.amount) .. " " .. RSCore.Shared.Items[Config.RepairCost[part]]["label"] , "error", 5000)
-        end
-        
-    end
+RSCore.Functions.CreateCallback('rs-vehicletuning:server:GetAttachedVehicle', function(source, cb)
+    cb(Config.Plates)
 end)
 
--- RSCore.Commands.Add("vehstatus", "Krijg vehicle status", {}, false, function(source, args)
---     local Player = RSCore.Functions.GetPlayer(souce)
-
---     if Player.PlayerData.job.name == "mechanic" then
---         TriggerClientEvent("vehiclemod:client:getVehicleStatus", source)
---     end
--- end)
-
-RSCore.Functions.CreateCallback('rs-vehicletuning:server:GetAttachedVehicle', function(source, cb)
-    cb(Config.AttachedVehicle)
+RSCore.Functions.CreateCallback('rs-vehicletuning:server:IsMechanicAvailable', function(source, cb)
+	local amount = 0
+	for k, v in pairs(RSCore.Functions.GetPlayers()) do
+        local Player = RSCore.Functions.GetPlayer(v)
+        if Player ~= nil then 
+            if (Player.PlayerData.job.name == "mechanic" and Player.PlayerData.job.onduty) then
+                amount = amount + 1
+            end
+        end
+    end
+    cb(amount)
 end)
 
 RegisterServerEvent('rs-vehicletuning:server:SetAttachedVehicle')
-AddEventHandler('rs-vehicletuning:server:SetAttachedVehicle', function(veh)
-    Config.AttachedVehicle = veh
-    TriggerClientEvent('rs-vehicletuning:client:SetAttachedVehicle', -1, veh)
+AddEventHandler('rs-vehicletuning:server:SetAttachedVehicle', function(veh, k)
+    if veh ~= false then
+        Config.Plates[k].AttachedVehicle = veh
+        TriggerClientEvent('rs-vehicletuning:client:SetAttachedVehicle', -1, veh, k)
+    else
+        Config.Plates[k].AttachedVehicle = nil
+        TriggerClientEvent('rs-vehicletuning:client:SetAttachedVehicle', -1, false, k)
+    end
+end)
+
+RegisterServerEvent('rs-vehicletuning:server:CheckForItems')
+AddEventHandler('rs-vehicletuning:server:CheckForItems', function(part)
+    local src = source
+    local Player = RSCore.Functions.GetPlayer(src)
+    local RepairPart = Player.Functions.GetItemByName(Config.RepairCostAmount[part].item)
+
+    if RepairPart ~= nil then
+        if RepairPart.amount >= Config.RepairCostAmount[part].costs then
+            TriggerClientEvent('rs-vehicletuning:client:RepaireeePart', src, part)
+            Player.Functions.RemoveItem(Config.RepairCostAmount[part].item, Config.RepairCostAmount[part].costs)
+
+            for i = 1, Config.RepairCostAmount[part].costs, 1 do
+                TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[Config.RepairCostAmount[part].item], "remove")
+                Citizen.Wait(500)
+            end
+        else
+            TriggerClientEvent('RSCore:Notify', src, "Je hebt niet genoeg "..RSCore.Shared.Items[Config.RepairCostAmount[part].item]["label"].." (min. "..Config.RepairCostAmount[part].costs.."x)", "error")
+        end
+    else
+        TriggerClientEvent('RSCore:Notify', src, "Je hebt geen "..RSCore.Shared.Items[Config.RepairCostAmount[part].item]["label"].." bij je!", "error")
+    end
+end)
+
+function IsAuthorized(CitizenId)
+    local retval = false
+    for _, cid in pairs(Config.AuthorizedIds) do
+        if cid == CitizenId then
+            retval = true
+            break
+        end
+    end
+    return retval
+end
+
+RSCore.Commands.Add("setmechanic", "Geef iemand Mechanic baan", {{name="id", help="ID van de speler"}}, false, function(source, args)
+    local Player = RSCore.Functions.GetPlayer(source)
+
+    if IsAuthorized(Player.PlayerData.citizenid) then
+        local TargetId = tonumber(args[1])
+        if TargetId ~= nil then
+            local TargetData = RSCore.Functions.GetPlayer(TargetId)
+            if TargetData ~= nil then
+                TargetData.Functions.SetJob("mechanic")
+                TriggerClientEvent('RSCore:Notify', TargetData.PlayerData.source, "Je aangenomen als Autocare medewerker!")
+                TriggerClientEvent('RSCore:Notify', source, "Je hebt ("..TargetData.PlayerData.charinfo.firstname..") aangenomen als Autocare medewerker!")
+            end
+        else
+            TriggerClientEvent('RSCore:Notify', source, "Je moet wel een Speler ID meegeven!")
+        end
+    else
+        TriggerClientEvent('RSCore:Notify', source, "Je kan dit niet doen!", "error") 
+    end
+end)
+
+RSCore.Commands.Add("takemechanic", "Neem iemand zijn Mechanic baan af", {{name="id", help="ID van de speler"}}, false, function(source, args)
+    local Player = RSCore.Functions.GetPlayer(source)
+
+    if IsAuthorized(Player.PlayerData.citizenid) then
+        local TargetId = tonumber(args[1])
+        if TargetId ~= nil then
+            local TargetData = RSCore.Functions.GetPlayer(TargetId)
+            if TargetData ~= nil then
+                if TargetData.PlayerData.job.name == "mechanic" then
+                    TargetData.Functions.SetJob("unemployed")
+                    TriggerClientEvent('RSCore:Notify', TargetData.PlayerData.source, "Je bent ontslagen als Autocare medewerker!")
+                    TriggerClientEvent('RSCore:Notify', source, "Je hebt ("..TargetData.PlayerData.charinfo.firstname..") ontslagen als Autocare medewerker!")
+                else
+                    TriggerClientEvent('RSCore:Notify', source, "Dit is geen medewerker van Autocare!", "error")
+                end
+            end
+        else
+            TriggerClientEvent('RSCore:Notify', source, "Je moet wel een Speler ID meegeven!", "error")
+        end
+    else
+        TriggerClientEvent('RSCore:Notify', source, "Je kan dit niet doen!", "error")
+    end
 end)
 
 RSCore.Functions.CreateCallback('rs-vehicletuning:server:GetStatus', function(source, cb, plate)

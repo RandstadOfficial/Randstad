@@ -100,7 +100,7 @@ Citizen.CreateThread(function()
         if IsControlJustPressed(0, Config.OpenKey) then
             if not scoreboardOpen then
                 RSCore.Functions.TriggerCallback('rs-scoreboard:server:GetPlayersArrays', function(playerList)
-                    RSCore.Functions.TriggerCallback('rs-scoreboard:server:GetActivity', function(cops, ambulance)
+                    RSCore.Functions.TriggerCallback('rs-scoreboard:server:GetActivity', function(cops, ambulance, autocare)
                         PlayerOptin = playerList
                         Config.CurrentCops = cops
 
@@ -110,7 +110,8 @@ Citizen.CreateThread(function()
                             maxPlayers = Config.MaxPlayers,
                             requiredCops = Config.IllegalActions,
                             currentCops = Config.CurrentCops,
-                            currentAmbulance = ambulance
+                            currentAmbulance = ambulance,
+                            currentAutocare = autocare
                         })
                         scoreboardOpen = true
                     end)
