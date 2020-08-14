@@ -185,6 +185,7 @@ RegisterServerEvent("RSCore:UpdatePlayer")
 AddEventHandler('RSCore:UpdatePlayer', function(data)
 	local src = source
 	local Player = RSCore.Functions.GetPlayer(src)
+
 	if Player ~= nil then
 		Player.PlayerData.position = data.position
 
@@ -359,4 +360,16 @@ RSCore.Functions.CreateCallback('RSCore:HasItem', function(source, cb, itemName)
 	end
 	
 	cb(retval)
+end)
+
+RegisterServerEvent('RSCore:Command:CheckOwnedVehicle')
+AddEventHandler('RSCore:Command:CheckOwnedVehicle', function(VehiclePlate)
+	if VehiclePlate ~= nil then
+		RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_vehicles` WHERE `plate` = '"..VehiclePlate.."'", function(result)
+			if result[1] ~= nil then
+				RSCore.Functions.ExecuteSql(false, "UPDATE `player_vehicles` SET `state` = '1' WHERE `citizenid` = '"..result[1].citizenid.."'")
+				TriggerEvent('rs-garages:server:RemoveVehicle', result[1].citizenid, VehiclePlate)
+			end
+		end)
+	end
 end)

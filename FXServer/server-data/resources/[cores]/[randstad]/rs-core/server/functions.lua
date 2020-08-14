@@ -165,6 +165,7 @@ RSCore.Functions.AddPermission = function(source, permission)
 		RSCore.Functions.ExecuteSql(true, "DELETE FROM `permissions` WHERE `steam` = '"..GetPlayerIdentifiers(source)[1].."'")
 		RSCore.Functions.ExecuteSql(true, "INSERT INTO `permissions` (`name`, `steam`, `license`, `permission`) VALUES ('"..GetPlayerName(source).."', '"..GetPlayerIdentifiers(source)[1].."', '"..GetPlayerIdentifiers(source)[2].."', '"..permission:lower().."')")
 		Player.Functions.UpdatePlayerData()
+		TriggerClientEvent('RSCore:Client:OnPermissionUpdate', source, permission)
 	end
 end
 

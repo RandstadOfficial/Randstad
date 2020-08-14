@@ -29,12 +29,9 @@ end)
 
 RegisterNetEvent('RSCore:Command:DeleteVehicle')
 AddEventHandler('RSCore:Command:DeleteVehicle', function()
-	if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-		RSCore.Functions.DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1), false))
-	else
-		local vehicle = RSCore.Functions.GetClosestVehicle()
-		RSCore.Functions.DeleteVehicle(vehicle)
-	end
+	local vehicle = RSCore.Functions.GetClosestVehicle()
+	if IsPedInAnyVehicle(GetPlayerPed(-1)) then vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false) else vehicle = RSCore.Functions.GetClosestVehicle() end
+	RSCore.Functions.DeleteVehicle(vehicle)
 end)
 
 RegisterNetEvent('RSCore:Command:Revive')
@@ -91,8 +88,6 @@ AddEventHandler('RSCore:Command:GoToMarker', function()
 				cz = -300.0
 			end
 			success = true
-		else
-			TriggerEvent('esx:showNotification', "~w~Zet een locatie neer waar ~y~ik ~w~heen moet toveren!")
 		end
 
 		if success then

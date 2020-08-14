@@ -15,9 +15,9 @@ function ShowNotif(data) {
     $notification.addClass(data.type);
     $notification.html(data.text);
     $notification.fadeIn();
-    $('.notif-container').append($notification);
+    $('.notif-container').prepend($notification);
     setTimeout(function() {
-        $.when($notification.fadeOut()).done(function() {
+        $.when($notification.fadeOut(1500)).done(function() {
             $notification.remove()
         });
     }, data.length != null ? data.length : 2500);
