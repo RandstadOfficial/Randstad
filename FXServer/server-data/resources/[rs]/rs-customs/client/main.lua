@@ -81,9 +81,11 @@ RegisterNUICallback('CanRepairVehicle', function(data, cb)
 
     RSCore.Functions.TriggerCallback('rs-customs:server:CanPurchase', function(CanBuy)
         if CanBuy then
+            local PlayerData = RSCore.Functions.GetPlayerData()
 	        SetVehicleFixed(veh)
             TriggerServerEvent("InteractSound_SV:PlayOnSource", "airwrench", 0.1)
             cb(true)
+            TriggerServerEvent("rs-log:server:CreateLog", "bennys", "Reparatie", "yellow", "**" .. PlayerData.name .. "** (citizenid: *" .. PlayerData.citizenid .. "* | id: *(" .. PlayerData.source .. ")* heeft auto gerepareerd voor **€" .. data.price .. "**\n")
         else
             RSCore.Functions.Notify('Je hebt niet voldoende geld..', 'error')
             cb(false)
@@ -831,7 +833,7 @@ RegisterNUICallback('PurchaseUpgrades', function(data, cb)
                 local PlayerData = RSCore.Functions.GetPlayerData()
                 RSCore.Functions.Notify('Aanpassingen gekocht', 'success')
                 TriggerServerEvent("rs-log:server:sendLog", PlayerData.citizenid, "buy", {upgrades = String, citizenid = PlayerData.citizenid})
-	            TriggerServerEvent("rs-log:server:CreateLog", "bennys", "buy", "green", "**" .. PlayerData.name .. "** (citizenid: *" .. PlayerData.citizenid .. "* | id: *(" .. PlayerData.source .. ")* heeft voor **€" .. TotalPrice .. "** de volgende upgrade\'s gekocht: \n" .. String)
+	            TriggerServerEvent("rs-log:server:CreateLog", "bennys", "Aanpassing", "green", "**" .. PlayerData.name .. "** (citizenid: *" .. PlayerData.citizenid .. "* | id: *(" .. PlayerData.source .. ")* heeft voor **€" .. TotalPrice .. "** de volgende upgrade\'s gekocht: \n" .. String)
             end
 
             CurrentShop = nil

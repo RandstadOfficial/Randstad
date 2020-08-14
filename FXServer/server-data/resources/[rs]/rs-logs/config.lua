@@ -12,7 +12,7 @@ Config.Webhooks = {
     ["glovebox"] = "https://discordapp.com/api/webhooks/716442325768863786/o7-hAS11nO4Ueja-lzPJuq7YEU6y4uB1Qi__8FdQGl0L474TW59V8BjNja7Dy0-QGSB6",
     ["banking"] = "https://discordapp.com/api/webhooks/716442241438318883/bdzhyyFYcJxDljuPMawksInAOO3g2apJ8ND16m6qK4rnn7zpQj6V3M9YuVI6Db2hrnpT",
     ["vehicleshop"] = "https://discordapp.com/api/webhooks/716442102371975208/BJa_VPSzh6bKma9e7Rqu5rRZyfs_nqR5ZyJyVLbYYc_6Sh43CiLCRp8zex24oOBJLmsZ",
-    ["vehicleupgrades"] = "https://discordapp.com/api/webhooks/716441978212188161/j3xH5kLtxUOHY4Dswg0jhHHmDVWNQxq8uQuDX-P0CSiZfXp4ayclegJnGfhJ9yxb6Wd5",
+    -- ["vehicleupgrades"] = "https://discordapp.com/api/webhooks/716441978212188161/j3xH5kLtxUOHY4Dswg0jhHHmDVWNQxq8uQuDX-P0CSiZfXp4ayclegJnGfhJ9yxb6Wd5",
     ["shops"] = "https://discordapp.com/api/webhooks/716441870594474044/Mii_cN0iX7EkmYh9eR143DnKmzqEKwxGzcTp22CKPwNFIguSG62RzshCGbsP316ARmVi",
     ["dealers"] = "https://discordapp.com/api/webhooks/716441757377626113/EBtS3zs2Ow9TjPorMI3xvr7lblrUTcu13dHku42P8SrnkgfLZJ3ILMK6duV9BmukHZET",
     ["storerobbery"] = "https://discordapp.com/api/webhooks/716441663920144415/GECHolO2x4GYC7HbjAgwsDIdHVdSapjTColTmJ70hBWE6U0HRFDlw_4Jew0sgsCuwpXi",
@@ -21,7 +21,6 @@ Config.Webhooks = {
     ["death"] = "https://discordapp.com/api/webhooks/716440902100320316/_D91g4lXySpGzmXuX2AfY_d6i5tt30VePFWm_10IZ6DbKc1gC78TwPeP5jUW9d07zsyg",
     ["joinleave"] = "https://discordapp.com/api/webhooks/716423788824363110/52jmqfVEwU7rYhxg7vfjSpc-jQo9mRUrDrwbHLoRnbc87fygLSVP7meVm62hJd1zbxHZ",
     ["bans"] = "https://discordapp.com/api/webhooks/721132528856989816/MRMH2YijFk-Gr1uRCBFMQSSHEVdrNvEaK7pQ5GxuG4B4qMSeHRxLbofHPOHzE7SyBF0P",
-    -- New
     ["report"] = "https://discordapp.com/api/webhooks/730837928296710164/lydkXrpTl01XvEt0eFVTOAdzQxasafzdS4nuDE5O1VoG1V-O3lPMpiRr0TSrrLuCGlCZ",
     ["me"] = "https://discordapp.com/api/webhooks/730837517166837820/_EpQeLmC7ygc_09HTW2yZQUOACRJeAz4nksIS_ab-YLxJzOM2xV0Kbg5xgmphl9LgZOt",
     ["pmelding"] = "https://discordapp.com/api/webhooks/730837993291513937/khANY9HSzlIGcya46e_O3YRZZ0P9e4A6OxHUYk1EPu8HhaBu-vo49Mg4IyND2zChByrf",
@@ -29,8 +28,8 @@ Config.Webhooks = {
     ["ooc"] = "https://discordapp.com/api/webhooks/730837250614624297/dKrFM6ZgOiz_i9iDCicNOkZToSJZcEyQ3_Nn-WBTJE1HvCwriAA6Mzt3V0m3XirHCwVr",
     -- ["anticheat"] = "https://discordapp.com/api/webhooks/675134231579590677/yxuq71hhZazDpoJj6iyXcXcERnvrFWgKBr7x9napwyI2Ob-9xrUPQ6ZbP3ULlkoOtf04",
     -- ["weather"] = "https://discordapp.com/api/webhooks/694176597489745999/JXQF4UbtsX79W-mVKABVoJr28WcikKyheEnLkvLf_tJQg7D3grMxR1HL8aFi91SbX4XE",
-    -- ["moneysafes"] = "https://discordapp.com/api/webhooks/699387466171285545/TbZPo5bvgACD7dM74yHHAsRdQX42Hd3X9xWsY3BIKF0hhAlNyU6bbBOWxP3zwr8cv9CI",
-    -- ["bennys"] = "https://discordapp.com/api/webhooks/699677283371188224/oY32QOszf3XvlU7qu62U1ndZmusx9eVohIGjBNdpZZkHbPVnjTj6W3yHc_Ysv6T4rj0X",
+    ["moneysafes"] = "https://discordapp.com/api/webhooks/743821290309156887/LHLtucEu8RYpsYtXBzZVC-WOTcZn9amE0-rcIUocN2zD-n6bj_FXQnpvUvatjtYEItlN",
+    ["bennys"] = "https://discordapp.com/api/webhooks/743821593263865936/zHUuKS4SDmANjeoYSSWAoNx5X1t_pzD34Hz7jkpflDpDvtonDdcMRLei82GYvuYgdf0F",
 }
 
 Config.Colors = {
