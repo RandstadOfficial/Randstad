@@ -1,5 +1,9 @@
 RS = {}
 
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-- !!!!!!!!DIT IS EEN ARRAY DIE DOORTELT!!!!!!!!!!!!
+-- !!!!NIEUWE DEUREN HELEMAAL ONDERAAN TOEVOEGEN!!!!
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 RS.Doors = {
 	--
 	-- Mission Row First Floor
@@ -565,6 +569,8 @@ RS.Doors = {
 		distance = 10,
 		size = 2
 	},
+
+
 	--outside doors
 	{
 		objName = 'prop_fnclink_03gate5',
@@ -1015,7 +1021,7 @@ RS.Doors = {
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 0.5,
+		distance = 1.5,
 		size = 2
 	},
 	-- Paleto Door 2
@@ -1418,18 +1424,216 @@ RS.Doors = {
 		distance = 1.5,
 	},
 	
-	-----
-	-- Import Garage
-	-----
+	-- Bureau Sandy Shores - Voordeur
+	{
+		textCoords = vector3(1855.2, 3683.6, 34.6),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'v_ilev_shrfdoor',
+				objCoords = vector3(1855.7, 3683.9, 34.5),
+				objYaw = 30.0
+			},
+		}
+	},
+	-- Bureau Sandy Shores - Dubbele deuren links
+	{
+		textCoords = vector3(1850.5, 3683.0 ,34.4),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'v_ilev_rc_door2',
+				objCoords = vector3(1851.2, 3681.8, 34.4),	
+				objYaw = 120.0
+			},
+			{
+				objName = 'v_ilev_rc_door2',
+				objCoords = vector3(1849.9, 3684.1 ,34.4),		
+				objYaw = -60.0
+			},
+		}
+	},	
+	-- Bureau Sandy Shores - Dubbele deuren centraal
+	{
+		textCoords = vector3(1848.45, 3690.3, 34.4),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'v_ilev_rc_door2',
+				objCoords = vector3(1847.1, 3689.9, 34.4),			
+				objYaw = 30.0									
+			},
+			{
+				objName = 'v_ilev_rc_door2',
+				objCoords = vector3(1849.4, 3691.2, 34.4),				
+				objYaw = -152.0
+			},
+		}
+	},
+		-- Bureau Sandy Shores - Deur rechts
+	{
+		textCoords = vector3(1856.6, 3690.2, 34.4),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'v_ilev_rc_door2',
+				objCoords = vector3(1857.2, 3690.2, 34.4),	
+				objYaw = -150.0
+			},
+		}
+	},
+	-- Bureau Sandy Shores - Dubbele deuren beneden
 	-- {
-	-- 	objName = 'gabz_imp_garage_door',
-	-- 	objCoords  = vector3(945.9343, -985.5709, 41.1689),
-	-- 	textCoords = vector3(945.9343, -985.5709, 41.1689),
-	-- 	authorizedJobs = { 'mechanic' },
+	-- 	textCoords = vector3(1847.5, 3683.4, 30.4),
+	-- 	authorizedJobs = { 'police' },
 	-- 	locking = false,
 	-- 	locked = true,
 	-- 	pickable = false,
-	-- 	distance = 15.0,
-	-- 	size = 2
-	-- },
+	-- 	distance = 2.0,
+	-- 	doors = {
+	-- 		{
+	-- 			objName = 'v_ilev_rc_door2',
+	-- 			objCoords = vector3(1848.6, 3683.9, 30.4),			
+	-- 			objYaw = 210.0									
+	-- 		},
+	-- 		{
+	-- 			objName = 'v_ilev_rc_door2',
+	-- 			objCoords = vector3(1846.4, 3682.6, 30.4),			
+	-- 			objYaw = 30.0
+	-- 		},
+	-- 	}
+	-- },	
+	-- Bureau Sandy Shores - Dubbele deuren cellencomplex
+	{
+		textCoords = vector3(1850.2, 3682.7, 30.4),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.0,
+		doors = {
+			{
+				objName = 'v_ilev_rc_door2',
+				objCoords = vector3(1850.9, 3681.6, 30.4),			
+				objYaw = 120.0									
+			},
+			{
+				objName = 'v_ilev_rc_door2',
+				objCoords = vector3(1849.6, 3683.8, 30.4),			
+				objYaw = -60.0
+			},
+		}
+	},		
+	-- Bureau Sandy Shores - Verhoorkamer
+	{
+		textCoords = vector3(1852.2, 3686.4, 30.4),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'v_ilev_arm_secdoor',
+				objCoords = vector3(1852.9, 3686.4, 30.4),	
+				objYaw = 30.0
+			},
+		}
+	},	
+	-- Bureau Sandy Shores - Observatiekamer
+	{
+		textCoords = vector3(1855.5, 3688.2, 30.4),		
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'v_ilev_arm_secdoor',
+				objCoords = vector3(1856.1, 3688.2, 30.4),	
+				objYaw = 30.0
+			},
+		}
+	},	
+	-- Bureau Sandy Shores - Celdeur 1
+	{
+		textCoords = vector3(1859.3, 3687.2, 30.4),		
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.3,
+		doors = {
+			{
+				objName = 'v_ilev_ph_cellgate1',
+				objCoords = vector3(1859.6, 3686.644, 30.4),		
+				objYaw = -60.0
+			},
+		}
+	},	
+	-- Bureau Sandy Shores - Celdeur 2
+	{
+		textCoords = vector3(1862.4, 3688.9, 30.4),		
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.3,
+		doors = {
+			{
+				objName = 'v_ilev_ph_cellgate1',
+				objCoords = vector3(1862.7, 3688.4, 30.4),			
+				objYaw = -60.0
+			},
+		}
+	},			
+	-- Bureau Sandy Shores - Celdeur 3
+	{
+		textCoords = vector3(1860.5, 3692.1, 30.4),		
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.3,
+		doors = {
+			{
+				objName = 'v_ilev_ph_cellgate1',
+				objCoords = vector3(1860.8, 3691.6, 30.4),			
+				objYaw = -60.0
+			},
+		}
+	},		
+	-- Bureau Sandy Shores - Celdeur 4
+	{
+		textCoords = vector3(1858.6, 3695.4, 30.4),		
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.3,
+		doors = {
+			{
+				objName = 'v_ilev_ph_cellgate1',
+				objCoords = vector3(1858.9, 3694.9, 30.4),				
+				objYaw = -60.0
+			},
+		}
+	},
 }

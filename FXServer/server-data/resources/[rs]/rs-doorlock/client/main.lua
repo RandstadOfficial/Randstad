@@ -26,7 +26,7 @@ end
 
 Citizen.CreateThread(function()
 	while true do
-		for _,doorID in ipairs(RS.Doors) do
+		for key, doorID in ipairs(RS.Doors) do
 			if doorID.doors then
 				for k,v in ipairs(doorID.doors) do
 					if not v.object or not DoesEntityExist(v.object) then
@@ -47,7 +47,6 @@ end)
 local maxDistance = 1.25
 
 Citizen.CreateThread(function()
-	Citizen.Wait(500)
 	while true do
 		Citizen.Wait(0)
 		local playerCoords, awayFromDoors = GetEntityCoords(GetPlayerPed(-1)), true
@@ -113,7 +112,11 @@ Citizen.CreateThread(function()
 					end
 				end
 
-				DrawText3Ds(doorID.textCoords.x, doorID.textCoords.y, doorID.textCoords.z, displayText)
+				if doorID.objCoords == nil then
+					doorID.objCoords = doorID.textCoords
+				end
+
+				DrawText3Ds(doorID.objCoords.x, doorID.objCoords.y, doorID.objCoords.z, displayText)
 
 				if IsControlJustReleased(0, 38) then
 					if isAuthorized then
@@ -124,10 +127,39 @@ Citizen.CreateThread(function()
 		end
 
 		if awayFromDoors then
-			Citizen.Wait(5000)
+			Citizen.Wait(1000)
 		end
 	end
 end)
+
+-- Debug 
+-- local props = {
+-- 	"prison_prop_door1",
+-- 	"prison_prop_door2",
+-- 	"v_ilev_gtdoor",
+-- 	"prison_prop_door1a"
+-- }
+
+-- Citizen.CreateThread(function()
+-- 	while true do
+-- 		for k, v in pairs(props) do
+-- 			local ped = GetPlayerPed(-1)
+-- 			local pos = GetEntityCoords(ped)
+-- 			local ClosestDoor = GetClosestObjectOfType(pos.x, pos.y, pos.z, 5.0, GetHashKey(v), 0, 0, 0)
+-- 			if ClosestDoor ~= 0 then
+-- 				local DoorCoords = GetEntityCoords(ClosestDoor)
+	
+-- 				DrawText3Ds(DoorCoords.x, DoorCoords.y, DoorCoords.z, "OBJ: "..v..", x: "..round(DoorCoords.x, 0)..", y: "..round(DoorCoords.y, 0)..", z: "..round(DoorCoords.z, 0))
+-- 			end
+-- 		end
+-- 		Citizen.Wait(1)
+-- 	end
+-- end)
+
+function round(num, numDecimalPlaces)
+	local mult = 10^(numDecimalPlaces or 0)
+	return math.floor(num * mult + 0.5) / mult
+end
 
 RegisterNetEvent('lockpicks:UseLockpick')
 AddEventHandler('lockpicks:UseLockpick', function()
