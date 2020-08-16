@@ -26,6 +26,14 @@ Config.MenuItems = {
                 shouldClose = true,
             },
             {
+                id    = 'getintrunk',
+                title = 'Stap in kofferbak',
+                icon = '#vehiclekey',
+                type = 'client',
+                event = 'rs-trunk:client:GetIn',
+                shouldClose = true,
+            },
+            {
                 id    = 'cornerselling',
                 title = 'Corner Selling',
                 icon = '#cornerselling',
@@ -34,11 +42,11 @@ Config.MenuItems = {
                 shouldClose = true,
             },
             {
-                id    = 'getintrunk',
-                title = 'Stap in kofferbak',
-                icon = '#vehiclekey',
+                id    = 'togglehotdogsell',
+                title = 'Hotdog Verkoop',
+                icon = '#cornerselling',
                 type = 'client',
-                event = 'rs-trunk:client:GetIn',
+                event = 'rs-hotdogjob:client:ToggleSell',
                 shouldClose = true,
             },
             {
@@ -344,7 +352,7 @@ Config.MenuItems = {
     [4] = {
         id = 'jobinteractions',
         title = 'Werk',
-        icon = '#vehicle',
+        icon = '#work',
         items = {},
     },
 }
@@ -477,6 +485,14 @@ Config.JobInteractions = {
             shouldClose = true,
         },
         {
+            id    = 'resethouse',
+            title = 'Reset Huisslot',
+            icon = '#vehiclekey',
+            type = 'client',
+            event = 'rs-houses:client:ResetHouse',
+            shouldClose = true,
+        },
+        {
             id    = 'takedriverlicense',
             title = 'Neem Rijbewijs',
             icon = '#vehicle',
@@ -601,6 +617,16 @@ Config.JobInteractions = {
                     shouldClose = false,
                 },
             }
+        },
+    },
+    ["hotdog"] = {
+        {
+            id    = 'togglesell',
+            title = 'Toggle Verkoop',
+            icon = '#general',
+            type = 'client',
+            event = 'rs-hotdogjob:client:ToggleSell',
+            shouldClose = true,
         },
     },
 }
