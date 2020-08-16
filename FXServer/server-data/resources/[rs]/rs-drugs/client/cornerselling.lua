@@ -159,6 +159,7 @@ function SellToPed(ped)
         return
     elseif succesChance >= 19 then
         callPolice(GetEntityCoords(ped))
+        hasTarget = false
         return
     end
 
@@ -208,6 +209,11 @@ function SellToPed(ped)
     TaskStartScenarioInPlace(ped, "WORLD_HUMAN_STAND_IMPATIENT_UPRIGHT", 0, false)
     currentPed = ped
 
+    if IsEntityDead(ped) then
+        hasTarget = false
+        return
+    end
+    
     if hasTarget then
         while pedDist < 1.5 do
             coords = GetEntityCoords(GetPlayerPed(-1), true)
