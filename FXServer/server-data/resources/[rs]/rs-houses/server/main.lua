@@ -120,6 +120,12 @@ AddEventHandler('rs-houses:server:lockHouse', function(bool, house)
 	TriggerClientEvent('rs-houses:client:lockHouse', -1, bool, house)
 end)
 
+RegisterServerEvent('rs-houses:server:SetRamState')
+AddEventHandler('rs-houses:server:SetRamState', function(bool, house)
+	Config.Houses[house].IsRaming = bool
+	TriggerClientEvent('rs-houses:server:SetRamState', -1, bool, house)
+end)
+
 --------------------------------------------------------------
 
 --------------------------------------------------------------
@@ -479,6 +485,105 @@ AddEventHandler('rs-houses:server:SetInsideMeta', function(insideId, bool)
     end
 end)
 
+RSCore.Functions.CreateCallback('rs-phone:server:GetPlayerHouses', function(source, cb)
+	local src = source
+	local Player = RSCore.Functions.GetPlayer(src)
+	local MyHouses = {}
+	local keyholders = {}
+
+	RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_houses` WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(result)
+		if result[1] ~= nil then
+			for k, v in pairs(result) do
+				v.keyholders = json.decode(v.keyholders)
+				if v.keyholders ~= nil and next(v.keyholders) then
+					for f, data in pairs(v.keyholders) do
+						RSCore.Functions.ExecuteSql(false, "SELECT * FROM `players` WHERE `citizenid` = '"..data.."'", function(keyholderdata)
+							if keyholderdata[1] ~= nil then
+								keyholders[f] = keyholderdata[1]
+							end
+						end)
+					end
+				else
+					keyholders[1] = Player.PlayerData
+				end
+
+				table.insert(MyHouses, {
+					name = v.house,
+					keyholders = keyholders,
+					owner = v.citizenid,
+					price = Config.Houses[v.house].price,
+					label = Config.Houses[v.house].adress,
+					tier = Config.Houses[v.house].tier,
+					garage = Config.Houses[v.house].garage,
+				})
+			end
+				
+			cb(MyHouses)
+		end
+	end)
+end)
+
+function escape_sqli(source)
+    local replacements = { ['"'] = '\\"', ["'"] = "\\'" }
+    return source:gsub( "['\"]", replacements ) -- or string.gsub( source, "['\"]", replacements )
+end
+
+RSCore.Functions.CreateCallback('rs-phone:server:MeosGetPlayerHouses', function(source, cb, input)
+	local src = source
+	if input ~= nil then
+		local search = escape_sqli(input)
+		local searchData = {}
+
+		RSCore.Functions.ExecuteSql(false, 'SELECT * FROM `players` WHERE `citizenid` = "'..search..'" OR `charinfo` LIKE "%'..search..'%"', function(result)
+			if result[1] ~= nil then
+				RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_houses` WHERE `citizenid` = '"..result[1].citizenid.."'", function(houses)
+					if houses[1] ~= nil then
+						for k, v in pairs(houses) do
+							table.insert(searchData, {
+								name = v.house,
+								keyholders = keyholders,
+								owner = v.citizenid,
+								price = Config.Houses[v.house].price,
+								label = Config.Houses[v.house].adress,
+								tier = Config.Houses[v.house].tier,
+								garage = Config.Houses[v.house].garage,
+								charinfo = json.decode(result[1].charinfo),
+								coords = {
+									x = Config.Houses[v.house].coords.enter.x,
+									y = Config.Houses[v.house].coords.enter.y,
+									z = Config.Houses[v.house].coords.enter.z,
+								}
+							})
+						end
+
+						cb(searchData)
+					end
+				end)
+			else
+				cb(nil)
+			end
+		end)
+	else
+		cb(nil)
+	end
+end)
+
+RSCore.Functions.CreateUseableItem("police_stormram", function(source, item)
+	local Player = RSCore.Functions.GetPlayer(source)
+
+	if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
+		TriggerClientEvent("rs-houses:client:HomeInvasion", source)
+	else
+		TriggerClientEvent('RSCore:Notify', source, "Dit is alleen mogelijk voor hulpdiensten!", "error")
+	end
+end)
+
+RegisterServerEvent('rs-houses:server:SetHouseRammed')
+AddEventHandler('rs-houses:server:SetHouseRammed', function(bool, house)
+	Config.Houses[house].IsRammed = bool
+	TriggerClientEvent('rs-houses:client:SetHouseRammed', -1, bool, house)
+end)
+
 RSCore.Commands.Add("enter", "Betreed huis", {}, false, function(source, args)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
@@ -491,8 +596,4 @@ RSCore.Commands.Add("ring", "Aanbellen bij huis", {}, false, function(source, ar
     local Player = RSCore.Functions.GetPlayer(src)
  
     TriggerClientEvent('rs-houses:client:RequestRing', src)
-end)
-
-RSCore.Commands.Add("givehouse", "Huis geven aan nieuwe eigenaar", {}, false, function(source, args)
-	-- TODO: VOEG COMMAND TOE OM HUIS AAN IEMAND ANDERS TE GEVEN
 end)

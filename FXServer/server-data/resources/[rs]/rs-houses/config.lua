@@ -2,6 +2,8 @@ Config = Config or {}
 
 Config.MinZOffset = 30
 
+Config.RamsNeeded = 3
+
 Config.Houses = {}
 
 Config.Furniture = {

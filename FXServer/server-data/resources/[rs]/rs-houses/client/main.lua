@@ -1035,3 +1035,120 @@ AddEventHandler('rs-houses:client:refreshLocations', function(house, location, t
         end
     end
 end)
+
+local RamsDone = 0
+
+function DoRamAnimation(bool)
+    local ped = GetPlayerPed(-1)
+    local dict = "missheistfbi3b_ig7"
+    local anim = "lift_fibagent_loop"
+
+    if bool then
+        RequestAnimDict(dict)
+        while not HasAnimDictLoaded(dict) do
+            Citizen.Wait(1)
+        end
+        TaskPlayAnim(ped, dict, anim, 8.0, 8.0, -1, 1, -1, false, false, false)
+    else
+        RequestAnimDict(dict)
+        while not HasAnimDictLoaded(dict) do
+            Citizen.Wait(1)
+        end
+        TaskPlayAnim(ped, dict, "exit", 8.0, 8.0, -1, 1, -1, false, false, false)
+    end
+end
+
+RegisterNetEvent('rs-houses:client:HomeInvasion')
+AddEventHandler('rs-houses:client:HomeInvasion', function()
+    local ped = GetPlayerPed(-1)
+    local pos = GetEntityCoords(ped)
+    local Skillbar = exports['rs-skillbar']:GetSkillbarObject()
+
+    if closesthouse ~= nil then
+        RSCore.Functions.TriggerCallback('police:server:IsPoliceForcePresent', function(IsPresent)
+            if IsPresent then
+                local dist = GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, true)
+                if Config.Houses[closesthouse].IsRaming == nil then
+                    Config.Houses[closesthouse].IsRaming = false
+                end
+        
+                if dist < 1 then
+                    if Config.Houses[closesthouse].locked then
+                        if not Config.Houses[closesthouse].IsRaming then
+                            DoRamAnimation(true)
+                            Skillbar.Start({
+                                duration = math.random(5000, 10000),
+                                pos = math.random(10, 30),
+                                width = math.random(10, 20),
+                            }, function()
+                                if RamsDone + 1 >= Config.RamsNeeded then
+                                    TriggerServerEvent('rs-houses:server:lockHouse', false, closesthouse)
+                                    RSCore.Functions.Notify('Het is gelukt, de deur ligt er nu uit.', 'success')
+                                    TriggerServerEvent('rs-houses:server:SetHouseRammed', true, closesthouse)
+                                    DoRamAnimation(false)
+                                else
+                                    DoRamAnimation(true)
+                                    Skillbar.Repeat({
+                                        duration = math.random(500, 1000),
+                                        pos = math.random(10, 30),
+                                        width = math.random(5, 12),
+                                    })
+                                    RamsDone = RamsDone + 1
+                                end
+                            end, function()
+                                RamsDone = 0
+                                TriggerServerEvent('rs-houses:server:SetRamState', false, closesthouse)
+                                RSCore.Functions.Notify('Het is mislukt.. Probeer het nogmaals.', 'error')
+                                DoRamAnimation(false)
+                            end)
+                            TriggerServerEvent('rs-houses:server:SetRamState', true, closesthouse)
+                        else
+                            RSCore.Functions.Notify('Er is al iemand bezig met de deur..', 'error')
+                        end
+                    else
+                        RSCore.Functions.Notify('Dit huis is al open..', 'error')
+                    end
+                else
+                    RSCore.Functions.Notify('Je bent niet bij een huis in de buurt..', 'error')
+                end
+            else
+                RSCore.Functions.Notify('Er is geen korpsleiding aanwezig..', 'error')
+            end
+        end)
+    else
+        RSCore.Functions.Notify('Je bent niet bij een huis in de buurt..', 'error')
+    end
+end)
+
+RegisterNetEvent('rs-houses:client:SetRamState')
+AddEventHandler('rs-houses:client:SetRamState', function(bool, house)
+    Config.Houses[house].IsRaming = bool
+end)
+
+RegisterNetEvent('rs-houses:client:SetHouseRammed')
+AddEventHandler('rs-houses:client:SetHouseRammed', function(bool, house)
+    Config.Houses[house].IsRammed = bool
+end)
+
+RegisterNetEvent('rs-houses:client:ResetHouse')
+AddEventHandler('rs-houses:client:ResetHouse', function()
+    local ped = GetPlayerPed(-1)
+
+    if closesthouse ~= nil then
+        if Config.Houses[closesthouse].IsRammed == nil then
+            Config.Houses[closesthouse].IsRammed = false
+            TriggerServerEvent('rs-houses:server:SetHouseRammed', false, closesthouse)
+            TriggerServerEvent('rs-houses:server:SetRamState', false, closesthouse)
+        end
+        if Config.Houses[closesthouse].IsRammed then
+            openHouseAnim()
+            TriggerServerEvent('rs-houses:server:SetHouseRammed', false, closesthouse)
+            TriggerServerEvent('rs-houses:server:SetRamState', false, closesthouse)
+            TriggerServerEvent('rs-houses:server:lockHouse', true, closesthouse)
+            RamsDone = 0
+            RSCore.Functions.Notify('Je hebt het huis weer opslot gedaan..', 'success')
+        else
+            RSCore.Functions.Notify('Deze deur is niet open gebroken..', 'error')
+        end
+    end
+end)
