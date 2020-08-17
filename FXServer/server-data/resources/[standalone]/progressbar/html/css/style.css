@@ -63,7 +63,7 @@ body {
 }
 
 .progress-bar {
-    background-color: #1787e2a6;
+    background-color: #03a2b5a6;
     width: 0%;
     height: 40px;
     transition: width 0.3s;
