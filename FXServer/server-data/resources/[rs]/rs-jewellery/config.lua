@@ -11,7 +11,7 @@ Keys = {
 
 Config = Config or {}
 
-Config.Timeout = 30 * (60 * 1000)
+Config.Timeout = 45 * (60 * 1000)
 
 Config.RequiredCops = 5
 
@@ -51,19 +51,22 @@ Config.VitrineRewards = {
     [1] = {
         ["item"] = "rolex",
         ["amount"] = {
-            ["max"] = 5
+            ["min"] = 3,
+            ["max"] = 10
         },
     },
     [2] = {
         ["item"] = "diamond_ring",
         ["amount"] = {
-            ["max"] = 5
+            ["min"] = 3,
+            ["max"] = 10
         },
     },
     [3] = {
         ["item"] = "goldchain",
         ["amount"] = {
-            ["max"] = 5
+            ["min"] = 3,
+            ["max"] = 10
         },
     },
 }

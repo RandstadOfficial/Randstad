@@ -53,41 +53,39 @@ Citizen.CreateThread(function()
             if isLoggedIn then
                 PlayerData = RSCore.Functions.GetPlayerData()
                 for case,_ in pairs(Config.Locations) do
-                    -- if PlayerData.job.name ~= "police" then
-                        local dist = GetDistanceBetweenCoords(pos, Config.Locations[case]["coords"]["x"], Config.Locations[case]["coords"]["y"], Config.Locations[case]["coords"]["z"])
-                        local storeDist = GetDistanceBetweenCoords(pos, Config.JewelleryLocation["coords"]["x"], Config.JewelleryLocation["coords"]["y"], Config.JewelleryLocation["coords"]["z"])
-                        if dist < 30 then
-                            inRange = true
+                    local dist = GetDistanceBetweenCoords(pos, Config.Locations[case]["coords"]["x"], Config.Locations[case]["coords"]["y"], Config.Locations[case]["coords"]["z"])
+                    local storeDist = GetDistanceBetweenCoords(pos, Config.JewelleryLocation["coords"]["x"], Config.JewelleryLocation["coords"]["y"], Config.JewelleryLocation["coords"]["z"])
+                    if dist < 30 then
+                        inRange = true
 
-                            if dist < 0.6 then
-                                if not Config.Locations[case]["isBusy"] and not Config.Locations[case]["isOpened"] then
-                                    DrawText3Ds(Config.Locations[case]["coords"]["x"], Config.Locations[case]["coords"]["y"], Config.Locations[case]["coords"]["z"], '[E] Vitrine in slaan')
-                                    if IsControlJustPressed(0, Keys["E"]) then
-                                        RSCore.Functions.TriggerCallback('rs-jewellery:server:getCops', function(cops)
-                                            if cops >= Config.RequiredCops then
-                                                if validWeapon() then
-                                                    smashVitrine(case)
-                                                else
-                                                    RSCore.Functions.Notify('Je wapen lijkt niet sterk genoeg..', 'error')
-                                                end
+                        if dist < 0.6 then
+                            if not Config.Locations[case]["isBusy"] and not Config.Locations[case]["isOpened"] then
+                                DrawText3Ds(Config.Locations[case]["coords"]["x"], Config.Locations[case]["coords"]["y"], Config.Locations[case]["coords"]["z"], '[E] Vitrine in slaan')
+                                if IsControlJustPressed(0, Keys["E"]) then
+                                    RSCore.Functions.TriggerCallback('rs-jewellery:server:getCops', function(cops)
+                                        if cops >= Config.RequiredCops then
+                                            if validWeapon() then
+                                                smashVitrine(case)
                                             else
-                                                RSCore.Functions.Notify('Er zijn niet genoeg agenten...', 'error')
-                                            end                
-                                        end)
-                                    end
-                                end
-                            end
-
-                            if storeDist < 2 then
-                                if not firstAlarm then
-                                    if validWeapon() then
-                                        TriggerServerEvent('rs-jewellery:server:PoliceAlertMessage', 'Er is een verdachte situatie bij Vangelico Juwelier', pos, true)
-                                        firstAlarm = true
-                                    end
+                                                RSCore.Functions.Notify('Je wapen lijkt niet sterk genoeg..', 'error')
+                                            end
+                                        else
+                                            RSCore.Functions.Notify('Er zijn niet genoeg agenten...', 'error')
+                                        end                
+                                    end)
                                 end
                             end
                         end
-                    -- end
+
+                        if storeDist < 2 then
+                            if not firstAlarm then
+                                if validWeapon() then
+                                    TriggerServerEvent('rs-jewellery:server:PoliceAlertMessage', "Verdachte situatie", pos, true)
+                                    firstAlarm = true
+                                end
+                            end
+                        end
+                    end
                 end
             end
         end
@@ -147,31 +145,24 @@ function smashVitrine(k)
 
     smashing = true
 
-    RSCore.Functions.Progressbar("smash_vitrine", "Vitrine aan het inslaan..", Config.WhitelistedWeapons[pedWeapon]["timeOut"], false, true, {
+    RSCore.Functions.Progressbar("smash_vitrine", "Vitrine inslaan..", Config.WhitelistedWeapons[pedWeapon]["timeOut"], false, true, {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         TriggerServerEvent('rs-jewellery:server:setVitrineState', "isOpened", true, k)
-        RSCore.Functions.TriggerCallback('rs-jewellery:vitrineReward', function(result)
-
-        end, "isBusy", false, k)
-        RSCore.Functions.TriggerCallback('rs-jewellery:vitrineReward', function(result)
-            if result then
-                TriggerClientEvent('RSCore:Notify', src, 'Success..', 'error')
-            else
-                TriggerClientEvent('RSCore:Notify', src, 'Je hebt teveel op zak..', 'error')
-            end
+        TriggerServerEvent('rs-jewellery:server:setVitrineState', "isBusy", false, k)
+        RSCore.Functions.TriggerCallback('rs-jewellery:vitrineReward', function()
         end)
-        
         TriggerServerEvent('rs-jewellery:server:setTimeout')
-        TriggerServerEvent('rs-jewellery:server:PoliceAlertMessage', "Er is een overval gaande bij Vangelico Juwelier", plyCoords, false)
+        TriggerServerEvent('rs-jewellery:server:PoliceAlertMessage', "Juwelier overval", plyCoords, false)
         smashing = false
         TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
     end, function() -- Cancel
         TriggerServerEvent('rs-jewellery:server:setVitrineState', "isBusy", false, k)
         TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
+        smashing = false
     end)
     TriggerServerEvent('rs-jewellery:server:setVitrineState', "isBusy", true, k)
 
@@ -204,11 +195,11 @@ AddEventHandler('rs-jewellery:client:executeEvents', function()
 end)
 
 RegisterNetEvent('rs-jewellery:client:PoliceAlertMessage')
-AddEventHandler('rs-jewellery:client:PoliceAlertMessage', function(msg, coords, blip)
+AddEventHandler('rs-jewellery:client:PoliceAlertMessage', function(title, coords, blip)
     if blip then
         TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
             timeOut = 5000,
-            alertTitle = "Verdachte situatie Juwelier",
+            alertTitle = title,
             details = {
                 [1] = {
                     icon = '<i class="fas fa-gem"></i>',
@@ -230,7 +221,6 @@ AddEventHandler('rs-jewellery:client:PoliceAlertMessage', function(msg, coords, 
         PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
         Citizen.Wait(100)
         PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
-        --TriggerEvent("chatMessage", "112-MELDING", "error", msg)
         local transG = 100
         local blip = AddBlipForRadius(coords.x, coords.y, coords.z, 100.0)
         SetBlipSprite(blip, 9)
@@ -253,10 +243,9 @@ AddEventHandler('rs-jewellery:client:PoliceAlertMessage', function(msg, coords, 
     else
         if not robberyAlert then
             PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
-            --TriggerEvent("chatMessage", "112-MELDING", "error", msg)
             TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
                 timeOut = 5000,
-                alertTitle = "Juwelier overval!",
+                alertTitle = title,
                 details = {
                     [1] = {
                         icon = '<i class="fas fa-gem"></i>',

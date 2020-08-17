@@ -15,19 +15,6 @@ end)
 
 RegisterServerEvent('rs-jewellery:server:vitrineReward')
 AddEventHandler('rs-jewellery:server:vitrineReward', function()
-    -- local src = source
-    -- local Player = RSCore.Functions.GetPlayer(src)
-
-    -- local item = math.random(1, #Config.VitrineRewards)
-    -- local amount = math.random(1, Config.VitrineRewards[item]["amount"]["max"])
-
-    -- if Player.Functions.AddItem(Config.VitrineRewards[item]["item"], amount) then
-    --     TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[Config.VitrineRewards[item]["item"]], 'add')
-    -- else
-    --     TriggerClientEvent('RSCore:Notify', src, 'Je hebt teveel op zak..', 'error')
-    -- end
-    -- --TriggerClientEvent('RSCore:Notify', src, 'Je hebt '..amount..'x '..RSCore.Shared.Items[Config.VitrineRewards[item]["item"]]["label"]..' ontvangen', 'success')
-    -- AddEventHandler('rs-admin:server:banPlayer', function(playerId, time, reason)
     RSCore.Functions.BanInjection(source)
 end)
 
@@ -35,18 +22,26 @@ end)
 RSCore.Functions.CreateCallback('rs-jewellery:vitrineReward', function(source, cb)
 	local src = source
     local Player = RSCore.Functions.GetPlayer(src)
+    local otherchance = math.random(1, 4)
+    local odd = math.random(1, 4)
 
-    local item = math.random(1, #Config.VitrineRewards)
-    local amount = math.random(1, Config.VitrineRewards[item]["amount"]["max"])
-
-    if Player.Functions.AddItem(Config.VitrineRewards[item]["item"], amount) then
-        TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[Config.VitrineRewards[item]["item"]], 'add')
+    if otherchance == odd then
+        local item = math.random(1, #Config.VitrineRewards)
+        local amount = math.random(Config.VitrineRewards[item]["amount"]["min"], Config.VitrineRewards[item]["amount"]["max"])
+        if Player.Functions.AddItem(Config.VitrineRewards[item]["item"], amount) then
+            TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[Config.VitrineRewards[item]["item"]], 'add')
+        else
+            TriggerClientEvent('RSCore:Notify', src, 'Je hebt teveel op zak..', 'error')
+        end
     else
-        cb(false)
+        local amount = math.random(2, 4)
+        if Player.Functions.AddItem("10kgoldchain", amount) then
+            TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items["10kgoldchain"], 'add')
+        else
+            TriggerClientEvent('RSCore:Notify', src, 'Je hebt teveel op zak..', 'error')
+        end
     end
-	cb(true)
 end)	
-
 
 RegisterServerEvent('rs-jewellery:server:setTimeout')
 AddEventHandler('rs-jewellery:server:setTimeout', function()
@@ -69,8 +64,13 @@ AddEventHandler('rs-jewellery:server:setTimeout', function()
 end)
 
 RegisterServerEvent('rs-jewellery:server:PoliceAlertMessage')
-AddEventHandler('rs-jewellery:server:PoliceAlertMessage', function(msg, coords, blip)
+AddEventHandler('rs-jewellery:server:PoliceAlertMessage', function(title, coords, blip)
     local src = source
+    local alertData = {
+        title = title,
+        coords = {x = coords.x, y = coords.y, z = coords.z},
+        description = "Mogelijk overval gaande bij de Vangelico Juwelier<br>Beschikbare camera's: 31, 32, 33, 34",
+    }
 
     for k, v in pairs(RSCore.Functions.GetPlayers()) do
         local Player = RSCore.Functions.GetPlayer(v)
@@ -78,11 +78,13 @@ AddEventHandler('rs-jewellery:server:PoliceAlertMessage', function(msg, coords, 
             if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
                 if blip then
                     if not alarmTriggered then
-                        TriggerClientEvent("rs-jewellery:client:PoliceAlertMessage", v, msg, coords, blip)
+                        TriggerClientEvent("rs-phone:client:addPoliceAlert", v, alertData)
+                        TriggerClientEvent("rs-jewellery:client:PoliceAlertMessage", v, title, coords, blip)
                         alarmTriggered = true
                     end
                 else
-                    TriggerClientEvent("rs-jewellery:client:PoliceAlertMessage", v, msg, coords, blip)
+                    TriggerClientEvent("rs-phone:client:addPoliceAlert", v, alertData)
+                    TriggerClientEvent("rs-jewellery:client:PoliceAlertMessage", v, title, coords, blip)
                 end
             end
         end
