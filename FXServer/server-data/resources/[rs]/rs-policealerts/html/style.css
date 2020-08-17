@@ -27,7 +27,8 @@ body {
 .alert-container {
     position: relative;
     width: 98%;
-    height: fit-content;
+    min-height: 100px;
+    overflow: hidden;
     background-color: #1e37997c;
     border-right: .8vh solid rgb(58, 109, 204);
     margin-bottom: 1vh;

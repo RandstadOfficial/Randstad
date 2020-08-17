@@ -53,8 +53,8 @@ body {
 .bar-total {
     height: 100%;
     width: 0%;
-    background: rgb(125,29,29);
-    background: linear-gradient(-90deg, rgba(125,29,29,0.75) 0%, rgba(228,66,66,0.75) 100%);
+    background: rgb(23, 107, 133);
+    background: linear-gradient(-90deg, rgba(29, 114, 125, 0.75) 0%, rgba(66, 209, 228, 0.75) 100%);
     z-index: 100;
 }
 
