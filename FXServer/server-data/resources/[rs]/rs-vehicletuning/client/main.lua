@@ -280,53 +280,6 @@ function VehicleOptions()
     Menu.addButton("Sluit Menu", "CloseMenu", nil)
 end
 
-
-function VehicleOptions()
-    ClearMenu()
-    local plate = GetVehicleNumberPlateText(Config.Plates[ClosestPlate].AttachedVehicle)
-    RSCore.Functions.TriggerCallback('rs-vehicletuning:server:GetVehicleDistance', function(distance)
-        if distance ~= nil then
-            Menu.addButton("Voertuig Loskoppelen", "UnattachVehicle", nil)
-            Menu.addButton("Onderdelen", "PartsMenu", nil)
-            if distance >= 8000000 then
-                Menu.addButton("Reset KM-teller", "ResetKM", nil)
-            end
-            Menu.addButton("Sluit Menu", "CloseMenu", nil)
-        else
-            Menu.addButton("Voertuig Loskoppelen", "UnattachVehicle", nil)
-            Menu.addButton("Onderdelen", "PartsMenu", nil)
-            Menu.addButton("Sluit Menu", "CloseMenu", nil)
-        end
-    end, plate)
-end
-
-
--- function VehicleOptions()
---     ClearMenu()
---     local plate = GetVehicleNumberPlateText(Config.Plates[ClosestPlate].AttachedVehicle)
---     RSCore.Functions.TriggerCallback('rs-vehicletuning:server:GetVehicleDistance', function(distance)
---         if distance ~= nil then
---             Menu.addButton("Voertuig Loskoppelen", "UnattachVehicle", nil)
---             Menu.addButton("Onderdelen", "PartsMenu", nil)
---             if distance >= 8000000 then
---                 Menu.addButton("Reset KM-teller", "ResetKM", nil)
---             end
---             Menu.addButton("Sluit Menu", "CloseMenu", nil)
---         else
---             Menu.addButton("Voertuig Loskoppelen", "UnattachVehicle", nil)
---             Menu.addButton("Onderdelen", "PartsMenu", nil)
---             Menu.addButton("Sluit Menu", "CloseMenu", nil)
---         end
---     end, plate)
--- end
-
--- function ResetKM()
---     local plate = GetVehicleNumberPlateText(Config.Plates[ClosestPlate].AttachedVehicle)
---     DrivingDistance[plate] = 0
---     TriggerEvent('rs-hud:client:UpdateDrivingMeters', true, DrivingDistance[plate])
---     TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', DrivingDistance[plate], plate, true)
--- end
-
 function PartsMenu()
     ClearMenu()
     local plate = GetVehicleNumberPlateText(Config.Plates[ClosestPlate].AttachedVehicle)
