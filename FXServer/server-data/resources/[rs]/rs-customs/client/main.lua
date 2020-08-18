@@ -460,6 +460,10 @@ function OnIndexChange(id, data)
                 ToggleVehicleMod(veh, 20, true)
                 SetVehicleTyreSmokeColor(veh, data.smokecolor[1], data.smokecolor[2], data.smokecolor[3])
             end
+        -- elseif id == 46 then
+        --     if data.modid ~= -1 then
+        --         SetVehicleWindowTint(veh, data.tint)
+        --     end
         elseif id == 48 then
             if data.modid ~= -1 then
                 data.modid = tonumber(data.modid)
@@ -811,6 +815,8 @@ RegisterNUICallback('PurchaseUpgrades', function(data, cb)
                                     SetVehicleLivery(veh, v.modid)
                                 end
                             end
+                        elseif v.modid == 46 then
+                            SetVehicleMod(veh, 46, v.tint)
                         elseif v.modtype == "frontwheels" then
                             SetVehicleWheelType(veh, 6)
                             SetVehicleMod(veh, 23, v.modid)

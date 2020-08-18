@@ -321,11 +321,11 @@ RSCustoms.Mods = {
         label = "Windows",
         multiplier = 0.02,
         buttons = {
-        --     {name = "Standaard",	 modtype = 46, tint = -1, price = 0,    increaseby = 0},
-        --     {name = "Lightsmoke",    modtype = 46, tint = 0,  price = 1000, increaseby = 1000},
-        --     {name = "Darksmoke",	 modtype = 46, tint = 1,  price = 1000, increaseby = 1000},
-        --     {name = "Limo",	         modtype = 46, tint = 2,  price = 1000, increaseby = 1000},
-        --     {name = "Green",	     modtype = 46, tint = 3,  price = 1000, increaseby = 1000},
+            -- {name = "Standaard",     modid = 46, tint = 4, price = 0,    increaseby = 0},
+            -- {name = "Lightsmoke",    modid = 46, tint = 3,  price = 500, increaseby = 1000},
+            -- {name = "Limo",          modid = 46, tint = 2,  price = 500, increaseby = 1000},
+            -- {name = "Darksmoke",     modid = 46, tint = 1,  price = 500, increaseby = 1000},
+            -- {name = "Green",         modid = 46, tint = 0,  price = 500, increaseby = 1000},
         },
     },
     ["respray"] = {
