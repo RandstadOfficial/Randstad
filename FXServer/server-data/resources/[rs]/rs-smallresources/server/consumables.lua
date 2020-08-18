@@ -9,16 +9,12 @@ end)
 
 RSCore.Functions.CreateUseableItem("armor", function(source, item)
     local Player = RSCore.Functions.GetPlayer(source)
-	if Player.Functions.RemoveItem(item.name, 1, item.slot) then
-        TriggerClientEvent("consumables:client:UseArmor", source)
-    end
+    TriggerClientEvent("consumables:client:UseArmor", source)
 end)
 
 RSCore.Functions.CreateUseableItem("heavyarmor", function(source, item)
     local Player = RSCore.Functions.GetPlayer(source)
-	if Player.Functions.RemoveItem(item.name, 1, item.slot) then
-        TriggerClientEvent("consumables:client:UseHeavyArmor", source)
-    end
+    TriggerClientEvent("consumables:client:UseHeavyArmor", source)
 end)
 
 -- RSCore.Functions.CreateUseableItem("smoketrailred", function(source, item)

@@ -11,6 +11,12 @@ Citizen.CreateThread(function()
 end)
 
 --CODE
+local camZPlus1 = 1500
+local camZPlus2 = 50
+local pointCamCoords = 75
+local pointCamCoords2 = 0
+local cam1Time = 500
+local cam2Time = 1000
 
 local choosingSpawn = false
 
@@ -18,10 +24,10 @@ RegisterNetEvent('rs-spawn:client:openUI')
 AddEventHandler('rs-spawn:client:openUI', function(value, new)
     SetEntityVisible(GetPlayerPed(-1), false)
     DoScreenFadeOut(250)
-    Citizen.Wait(2000)
+    Citizen.Wait(1000)
     DoScreenFadeIn(250)
     RSCore.Functions.GetPlayerData(function(PlayerData)     
-        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", PlayerData.position.x, PlayerData.position.y, PlayerData.position.z + 150, -85.00, 0.00, 0.00, 100.00, false, 0)
+        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", PlayerData.position.x, PlayerData.position.y, PlayerData.position.z + camZPlus1, -85.00, 0.00, 0.00, 100.00, false, 0)
         SetCamActive(cam, true)
         RenderScriptCams(true, false, 1, true, true)
     end)
@@ -41,23 +47,13 @@ end)
 local cam = nil
 local cam2 = nil
 
--- function setupSpawnLocations()
---     SendNUIMessage({
---         action = "setupLocations",
---         locations = RS.Spawns
---     })
--- end
-
 RegisterNUICallback('setCam', function(data)
     local location = tostring(data.posname)
     local type = tostring(data.type)
 
-    local camZPlus1 = 300
-    local camZPlus2 = 100
-    local pointCamCoords = 75
-    local pointCamCoords2 = 0
-    local cam1Time = 500
-    local cam2Time = 1000
+    DoScreenFadeOut(200)
+    Citizen.Wait(500)
+    DoScreenFadeIn(200)
 
     if DoesCamExist(cam) then
         DestroyCam(cam, true)
@@ -161,7 +157,7 @@ RegisterNUICallback('spawnplayer', function(data)
         print('current')
         SetDisplay(false)
         DoScreenFadeOut(500)
-        Citizen.Wait(5000)
+        Citizen.Wait(2000)
         RSCore.Functions.GetPlayerData(function(PlayerData)
             SetEntityCoords(GetPlayerPed(-1), PlayerData.position.x, PlayerData.position.y, PlayerData.position.z)
             SetEntityHeading(GetPlayerPed(-1), PlayerData.position.a)
@@ -190,7 +186,7 @@ RegisterNUICallback('spawnplayer', function(data)
     elseif type == "house" then
         SetDisplay(false)
         DoScreenFadeOut(500)
-        Citizen.Wait(5000)
+        Citizen.Wait(2000)
         TriggerEvent('rs-houses:client:enterOwnedHouse', location)
         TriggerServerEvent('RSCore:Server:OnPlayerLoaded')
         TriggerEvent('RSCore:Client:OnPlayerLoaded')
@@ -211,7 +207,7 @@ RegisterNUICallback('spawnplayer', function(data)
         local pos = RS.Spawns[location].coords
         SetDisplay(false)
         DoScreenFadeOut(500)
-        Citizen.Wait(5000)
+        Citizen.Wait(2000)
         SetEntityCoords(ped, pos.x, pos.y, pos.z)
         TriggerServerEvent('RSCore:Server:OnPlayerLoaded')
         TriggerEvent('RSCore:Client:OnPlayerLoaded')
@@ -242,10 +238,14 @@ function SetDisplay(bool)
 end
 
 Citizen.CreateThread(function()
-    while choosingSpawn do
+    while true do
         Citizen.Wait(0)
 
-        DisableAllControlActions(0)
+        if choosingSpawn then
+            DisableAllControlActions(0)
+        else
+            Citizen.Wait(1000)
+        end
     end
 end)
 
