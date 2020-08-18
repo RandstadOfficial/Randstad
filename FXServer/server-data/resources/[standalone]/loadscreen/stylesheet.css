@@ -2,7 +2,7 @@
     --background-contrast: 95%;
     --background-blur: 3px;
     --loadbar-color: #ffffff5b;
-    --loadbar-progress-color: #b12424;
+    --loadbar-progress-color: #97D5F9;
     --loadbar-height: 27px;
     --footer-font-color: #dfdfdf98;
     --footer-font-size: 24px;
@@ -135,4 +135,23 @@ body {
     animation: music 3s;
 	margin-left: 0px;
 	margin-top: 45%;
+}
+
+.fin-heading{
+    font-family:'Oswald',sans-serif;
+    font-size:120px;
+    line-height:1;
+    font-style:normal;
+    font-weight:400;
+    letter-spacing:.15em;
+    color:#fff;
+    text-transform:uppercase;
+    text-align:center;
+    margin:41px auto 43px auto;
+    padding:0
+}
+
+.fin-heading.blue {
+    color:  #97D5F9;
+    margin-bottom: -30px;
 }
