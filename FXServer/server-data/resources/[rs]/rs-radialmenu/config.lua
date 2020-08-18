@@ -347,6 +347,14 @@ Config.MenuItems = {
                     },
                 }
             },
+            {
+                id    = 'vehicleflip',
+                title = 'Voertuig flippen',
+                icon = '#flip',
+                type = 'client',
+                event = 'FlipVehicle',
+                shouldClose = true,
+            },
         }
     },
     [4] = {
