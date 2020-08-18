@@ -1593,13 +1593,15 @@ RSCore.Commands.Add("giveitem", "Geef een item aan een speler", {{name="id", hel
 					amount = 1
 					info.serie = tostring(Config.RandomInt(2) .. Config.RandomStr(3) .. Config.RandomInt(1) .. Config.RandomStr(2) .. Config.RandomInt(3) .. Config.RandomStr(4))
 				elseif itemData["name"] == "harness" then
-					info.uses = 20
+					info.uses = 5
 				elseif itemData["name"] == "markedbills" then
 					info.worth = math.random(5000, 10000)
 				elseif itemData["name"] == "labkey" then
 					info.lab = exports["rs-methlab"]:GenerateRandomLab()
 				elseif itemData["name"] == "printerdocument" then
-					info.url = "https://cdn.discordapp.com/attachments/645995539208470549/707609551733522482/image0.png"
+					info.url = "https://cdn.discordapp.com/attachments/721080706167472169/734044907915706409/Krant_4.jpg"
+				-- elseif itemData["name"] == "newspaper" then
+				-- 	info.url = "https://cdn.discordapp.com/attachments/721080706167472169/734044907915706409/Krant_4.jpg"
 				end
 
 				if Player.Functions.AddItem(itemData["name"], amount, false, info) then
