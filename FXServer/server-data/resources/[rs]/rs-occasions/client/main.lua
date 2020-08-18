@@ -275,8 +275,6 @@ RegisterNUICallback('sellVehicle', function(data)
     local vehicleData = {}
     local PlayerData = RSCore.Functions.GetPlayerData()
     vehicleData.ent = GetVehiclePedIsUsing(GetPlayerPed(-1))
-    print(vehicleData.ent)
-    print(GetEntityModel(vehicleData.ent))
     vehicleData.model = RSCore.Shared.VehicleModels[GetEntityModel(vehicleData.ent)]["model"]
     vehicleData.plate = GetVehicleNumberPlateText(GetVehiclePedIsUsing(GetPlayerPed(-1)))
     vehicleData.mods = RSCore.Functions.GetVehicleProperties(vehicleData.ent)

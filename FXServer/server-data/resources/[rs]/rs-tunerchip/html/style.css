@@ -34,6 +34,16 @@
     z-index: 100;
 }
 
+.stancer-block {
+    display: none;
+    position: absolute;
+    width: 55vh;
+    left: 12vh;
+    height: 35vh;
+    top: 20vh;
+    z-index: 100;
+}
+
 .neon-software-color-pallete {
     position: absolute;
     width: 20vh;
@@ -314,4 +324,33 @@ height: 40vh; */
     height: 1vh;
     background: rgb(72, 67, 107);
     cursor: pointer;
+}
+
+
+.stancer-front-offset-slider {
+    position: absolute;
+    width: 30vh;
+    top: 4vh;
+    left: 8vh;
+}
+
+.stancer-front-rotation-slider {
+    position: absolute;
+    width: 30vh;
+    top: 9vh;
+    left: 8vh;
+}
+
+.stancer-rear-offset-slider {
+    position: absolute;
+    width: 30vh;
+    top: 14vh;
+    left: 8vh;
+}
+
+.stancer-rear-rotation-slider {
+    position: absolute;
+    width: 30vh;
+    top: 19vh;
+    left: 8vh;
 }

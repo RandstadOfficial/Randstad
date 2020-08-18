@@ -11,8 +11,6 @@ Keys = {
 
 RSCore = nil
 
-infiniteStamina = false
-
 Citizen.CreateThread(function() 
     while true do
         Citizen.Wait(10)
@@ -23,28 +21,12 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent('infiniteStamina')
-AddEventHandler('infiniteStamina', function()
-    if infiniteStamina then
-        infiniteStamina = false
-        RSCore.Functions.Notify('Infinite Stamina is uit', 'success', 2500)
-    else
-        infiniteStamina = true
-        RSCore.Functions.Notify('Infinite Stamina is aan', 'success', 2500)
-
-    end
-end)
-
-
-Citizen.CreateThread( function()
-    while infiniteStamina do
-      Citizen.Wait(5)
-      RestorePlayerStamina(PlayerId(), 1.0)
-    end
-  end)
 -- Code
 
 local inTuner = false
+local RainbowNeon = false
+
+LastEngineMultiplier = 1.0
 
 function setVehData(veh,data)
     local multp = 0.12
@@ -54,6 +36,7 @@ function setVehData(veh,data)
     SetVehicleHandlingFloat(veh, "CHandlingData", "fInitialDriveForce", data.boost * multp)
     SetVehicleHandlingFloat(veh, "CHandlingData", "fDriveInertia", data.acceleration * multp)
     SetVehicleEnginePowerMultiplier(veh, data.gearchange * multp)
+    LastEngineMultiplier = data.gearchange * multp
     SetVehicleHandlingFloat(veh, "CHandlingData", "fDriveBiasFront", dTrain*1.0)
     SetVehicleHandlingFloat(veh, "CHandlingData", "fBrakeBiasFront", data.breaking * multp)
 end
@@ -71,10 +54,12 @@ RegisterNUICallback('save', function(data)
         if HasChip then
             local ped = GetPlayerPed(-1)
             local veh = GetVehiclePedIsUsing(ped)
-            setVehData(veh, data)
-            RSCore.Functions.Notify('Tjoenertjip v1.05: Voertuig aangepast!', 'error')
 
-            TriggerServerEvent('rs-tunerchip:server:TuneStatus', GetVehicleNumberPlateText(veh), true)
+            RSCore.Functions.Notify('Tunerchip V1.05 heeft een error opgelopen!', 'error')
+            --setVehData(veh, data)
+            --RSCore.Functions.Notify('Tunerchip v1.10: Voertuig aangepast!', 'success')
+
+            --TriggerServerEvent('rs-tunerchip:server:TuneStatus', GetVehicleNumberPlateText(veh), true)
         end
     end)
 end)
@@ -120,7 +105,7 @@ AddEventHandler('rs-tunerchip:client:openChip', function()
     local inVehicle = IsPedInAnyVehicle(ped)
 
     if inVehicle then
-        RSCore.Functions.Progressbar("connect_laptop", "Tunerlaptop wordt aangesloten..", 2000, false, true, {
+        RSCore.Functions.Progressbar("connect_laptop", "Tuner laptop wordt aangesloten..", 2000, false, true, {
             disableMovement = true,
             disableCarMovement = true,
             disableMouse = false,
@@ -147,41 +132,148 @@ RegisterNUICallback('exit', function()
     inTuner = false
 end)
 
+local LastRainbowNeonColor = 0
+
+local RainbowNeonColors = {
+    [1] = {
+        r = 255,
+        g = 0,
+        b = 0
+    },
+    [2] = {
+        r = 255,
+        g = 165,
+        b = 0
+    },
+    [3] = {
+        r = 255,
+        g = 255,
+        b = 0
+    },
+    [4] = {
+        r = 0,
+        g = 0,
+        b = 255
+    },
+    [5] = {
+        r = 75,
+        g = 0,
+        b = 130
+    },
+    [6] = {
+        r = 238,
+        g = 130,
+        b = 238
+    },
+}
+
 RegisterNUICallback('saveNeon', function(data)
     RSCore.Functions.TriggerCallback('rs-tunerchip:server:HasChip', function(HasChip)
         if HasChip then
-            local ped = GetPlayerPed(-1)
-            local veh = GetVehiclePedIsIn(ped)
+            if not data.rainbowEnabled then
+                local ped = GetPlayerPed(-1)
+                local veh = GetVehiclePedIsIn(ped)
 
-            if tonumber(data.neonEnabled) == 1 then
-                SetVehicleNeonLightEnabled(veh, 0, true)
-                SetVehicleNeonLightEnabled(veh, 1, true)
-                SetVehicleNeonLightEnabled(veh, 2, true)
-                SetVehicleNeonLightEnabled(veh, 3, true)
-                if tonumber(data.r) ~= nil and tonumber(data.g) ~= nil and tonumber(data.b) ~= nil then
-                    SetVehicleNeonLightsColour(veh, tonumber(data.r), tonumber(data.g), tonumber(data.b))
+                if tonumber(data.neonEnabled) == 1 then
+                    SetVehicleNeonLightEnabled(veh, 0, true)
+                    SetVehicleNeonLightEnabled(veh, 1, true)
+                    SetVehicleNeonLightEnabled(veh, 2, true)
+                    SetVehicleNeonLightEnabled(veh, 3, true)
+                    if tonumber(data.r) ~= nil and tonumber(data.g) ~= nil and tonumber(data.b) ~= nil then
+                        SetVehicleNeonLightsColour(veh, tonumber(data.r), tonumber(data.g), tonumber(data.b))
+                    else
+                        SetVehicleNeonLightsColour(veh, 255, 255, 255)
+                    end
+                    RainbowNeon = false
                 else
-                    SetVehicleNeonLightsColour(veh, 255, 255, 255)
+                    SetVehicleNeonLightEnabled(veh, 0, false)
+                    SetVehicleNeonLightEnabled(veh, 1, false)
+                    SetVehicleNeonLightEnabled(veh, 2, false)
+                    SetVehicleNeonLightEnabled(veh, 3, false)
+                    RainbowNeon = false
                 end
             else
-                SetVehicleNeonLightEnabled(veh, 0, false)
-                SetVehicleNeonLightEnabled(veh, 1, false)
-                SetVehicleNeonLightEnabled(veh, 2, false)
-                SetVehicleNeonLightEnabled(veh, 3, false)
+                local ped = GetPlayerPed(-1)
+                local veh = GetVehiclePedIsIn(ped)
+
+                if tonumber(data.neonEnabled) == 1 then
+                    if not RainbowNeon then
+                        RainbowNeon = true
+                        SetVehicleNeonLightEnabled(veh, 0, true)
+                        SetVehicleNeonLightEnabled(veh, 1, true)
+                        SetVehicleNeonLightEnabled(veh, 2, true)
+                        SetVehicleNeonLightEnabled(veh, 3, true)
+                        Citizen.CreateThread(function()
+                            while true do
+                                if RainbowNeon then
+                                    if (LastRainbowNeonColor + 1) ~= 7 then
+                                        LastRainbowNeonColor = LastRainbowNeonColor + 1
+                                        SetVehicleNeonLightsColour(veh, RainbowNeonColors[LastRainbowNeonColor].r, RainbowNeonColors[LastRainbowNeonColor].g, RainbowNeonColors[LastRainbowNeonColor].b)
+                                    else
+                                        LastRainbowNeonColor = 1
+                                        SetVehicleNeonLightsColour(veh, RainbowNeonColors[LastRainbowNeonColor].r, RainbowNeonColors[LastRainbowNeonColor].g, RainbowNeonColors[LastRainbowNeonColor].b)
+                                    end
+                                else
+                                    break
+                                end
+
+                                Citizen.Wait(350)
+                            end
+                        end)
+                    end
+                else
+                    RainbowNeon = false
+                    SetVehicleNeonLightEnabled(veh, 0, false)
+                    SetVehicleNeonLightEnabled(veh, 1, false)
+                    SetVehicleNeonLightEnabled(veh, 2, false)
+                    SetVehicleNeonLightEnabled(veh, 3, false)
+                end
             end
         end
     end)
 end)
 
+local RainbowHeadlight = false
+local RainbowHeadlightValue = 0
+
 RegisterNUICallback('saveHeadlights', function(data)
     RSCore.Functions.TriggerCallback('rs-tunerchip:server:HasChip', function(HasChip)
         if HasChip then
-            local ped = GetPlayerPed(-1)
-            local veh = GetVehiclePedIsIn(ped)
-            local value = tonumber(data.value)
+            if data.rainbowEnabled then
+                RainbowHeadlight = true
+                local ped = GetPlayerPed(-1)
+                local veh = GetVehiclePedIsIn(ped)
+                local value = tonumber(data.value)
 
-            ToggleVehicleMod(veh, 22, true)
-            SetVehicleHeadlightsColour(veh, value)
+                Citizen.CreateThread(function()
+                    while true do
+                        if RainbowHeadlight then
+                            if (RainbowHeadlightValue + 1) ~= 12 then
+                                RainbowHeadlightValue = RainbowHeadlightValue + 1
+                                ToggleVehicleMod(veh, 22, true)
+                                SetVehicleHeadlightsColour(veh, RainbowHeadlightValue)
+                            else
+                                RainbowHeadlightValue = 1
+                                ToggleVehicleMod(veh, 22, true)
+                                SetVehicleHeadlightsColour(veh, RainbowHeadlightValue)
+                            end
+                        else
+                            break
+                        end
+                        Citizen.Wait(300)
+                    end
+                end)         
+                ToggleVehicleMod(veh, 22, true)
+                SetVehicleHeadlightsColour(veh, value)
+            else
+                RainbowHeadlight = false
+                local ped = GetPlayerPed(-1)
+                local veh = GetVehiclePedIsIn(ped)
+                local value = tonumber(data.value)
+
+                ToggleVehicleMod(veh, 22, true)
+                SetVehicleHeadlightsColour(veh, value)
+            end
         end
     end)
 end)
@@ -195,31 +287,20 @@ function openTunerLaptop(bool)
     inTuner = bool
 end
 
-RegisterNetEvent("lockpick:instapick")
-AddEventHandler('lockpick:instapick', function() 
-    if not HasKey then 
-        local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), true)
-        if vehicle ~= nil and vehicle ~= 0 then
-            if GetPedInVehicleSeat(vehicle, -1) == GetPlayerPed(-1) then
+RegisterNUICallback('SetStancer', function(data, cb)
+    local fOffset = data.fOffset * 100 / 1000
+    local fRotation = data.fRotation * 100 / 1000
+    local rOffset = data.rOffset * 100 / 1000
+    local rRotation = data.rRotation * 100 / 1000
 
-        TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle))
+    print(fOffset)
+    print(fRotation)
+    print(rOffset)
+    print(rRotation)
 
-        HasKey = false
-        SetVehicleEngineOn(vehicle, false, false, true)       
-    end
-
-    local vehicle = RSCore.Functions.GetClosestVehicle()
-    if vehicle ~= nil and vehicle ~= 0 then
-        local vehpos = GetEntityCoords(vehicle)
-        local pos = GetEntityCoords(GetPlayerPed(-1))
-        if GetDistanceBetweenCoords(pos.x, pos.y, pos.z, vehpos.x, vehpos.y, vehpos.z, true) < 1.5 then
-            local vehLockStatus = GetVehicleDoorLockStatus(vehicle)
-            if (vehLockStatus > 1) then
-                SetVehicleAlarm(vehicle, true)
-                SetVehicleAlarmTimeLeft(vehicle, lockpickTime)
-                SetVehicleDoorsLocked(vehicle, 0)
-                SetVehicleDoorsLockedForAllPlayers(vehicle, false)
-            end
-        end
-    end
+    local ped = GetPlayerPed(-1)
+    local veh = GetVehiclePedIsIn(ped)
+    
+    exports["vstancer"]:SetVstancerPreset(veh, -fOffset, -fRotation, -rOffset, -rRotation)
 end)
+
