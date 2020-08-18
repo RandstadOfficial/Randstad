@@ -28,7 +28,8 @@ client_scripts {
 	"client/discord.lua",
 	"client/point.lua",
 	'client/engine.lua',
-	"client/calmai.lua"
+	"client/calmai.lua",
+	"client/teleports.lua",
 }
 
 data_file 'FIVEM_LOVES_YOU_4B38E96CC036038F' 'events.meta'
@@ -38,4 +39,8 @@ files {
 	'events.meta',
 	'popgroups.ymt',
 	'relationships.dat',
+}
+
+exports {
+	'HasHarness'
 }

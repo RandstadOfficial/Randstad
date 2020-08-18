@@ -1,4 +1,7 @@
 local seatbeltOn = false
+local harnessOn = false
+local harnessHp = 20
+harnessData = {}
 local SpeedBuffer = {}
 local vehVelocity = {x = 0.0, y = 0.0, z = 0.0}
 local vehHealth = 0.0
@@ -7,16 +10,35 @@ Citizen.CreateThread(function()
         Citizen.Wait(1)
         if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
             seatbeltOn = false
+            TriggerEvent("seatbelt:client:ToggleSeatbelt", false)
         end
         
         if IsControlJustReleased(0, Keys["G"]) then 
-            if IsPedInAnyVehicle(GetPlayerPed(-1)) and GetVehicleClass(GetVehiclePedIsIn(GetPlayerPed(-1))) ~= 8 and GetVehicleClass(GetVehiclePedIsIn(GetPlayerPed(-1))) ~= 13 and GetVehicleClass(GetVehiclePedIsIn(GetPlayerPed(-1))) ~= 14 then
-                if seatbeltOn then
-                    TriggerServerEvent("InteractSound_SV:PlayOnSource", "carunbuckle", 0.25)
-                else
-                    TriggerServerEvent("InteractSound_SV:PlayOnSource", "carbuckle", 0.25)
+            if not harnessOn then
+                if IsPedInAnyVehicle(GetPlayerPed(-1)) and GetVehicleClass(GetVehiclePedIsIn(GetPlayerPed(-1))) ~= 8 and GetVehicleClass(GetVehiclePedIsIn(GetPlayerPed(-1))) ~= 13 and GetVehicleClass(GetVehiclePedIsIn(GetPlayerPed(-1))) ~= 14 then
+                    if seatbeltOn then
+                        TriggerServerEvent("InteractSound_SV:PlayOnSource", "carunbuckle", 0.25)
+                    else
+                        TriggerServerEvent("InteractSound_SV:PlayOnSource", "carbuckle", 0.25)
+                    end
+                    TriggerEvent("seatbelt:client:ToggleSeatbelt")
                 end
-                TriggerEvent("seatbelt:client:ToggleSeatbelt")
+            else
+                RSCore.Functions.Progressbar("harness_equip", "Race harnas af doen..", 5000, false, true, {
+                    disableMovement = false,
+                    disableCarMovement = false,
+                    disableMouse = false,
+                    disableCombat = true,
+                }, {}, {}, {}, function() -- Done
+                    ToggleHarness(false)
+                end)
+            end
+        end
+
+        if IsPedInAnyVehicle(GetPlayerPed(-1)) then
+            if harnessOn then
+                DisableControlAction(0, 75, true)
+                DisableControlAction(27, 75, true)
             end
         end
     end
@@ -75,24 +97,44 @@ Citizen.CreateThread(function()
                     if frameBodyChange > 18.0 then
                         if not seatbeltOn and not IsThisModelABike(currentVehicle) then
                             if math.random(math.ceil(lastFrameVehiclespeed)) > 60 then
-                                EjectFromVehicle()                           
+                                if not harnessOn then
+                                    EjectFromVehicle()
+                                else
+                                    harnessHp = harnessHp - 1
+                                    TriggerServerEvent('seatbelt:DoHarnessDamage', harnessHp, harnessData)
+                                end
                             end
-                        elseif seatbeltOn and not IsThisModelABike(currentVehicle) then
+                        elseif (seatbeltOn or harnessOn) and not IsThisModelABike(currentVehicle) then
                             if lastFrameVehiclespeed > 150 then
                                 if math.random(math.ceil(lastFrameVehiclespeed)) > 150 then
-                                    EjectFromVehicle()                           
-                                end
+                                    if not harnessOn then
+                                        EjectFromVehicle()
+                                    else
+                                        harnessHp = harnessHp - 1
+                                        TriggerServerEvent('seatbelt:DoHarnessDamage', harnessHp, harnessData)
+                                    end                     
+                                end 
                             end
                         end
                     else
                         if not seatbeltOn and not IsThisModelABike(currentVehicle) then
                             if math.random(math.ceil(lastFrameVehiclespeed)) > 60 then
-                                EjectFromVehicle()                           
+                                if not harnessOn then
+                                    EjectFromVehicle()
+                                else
+                                    harnessHp = harnessHp - 1
+                                    TriggerServerEvent('seatbelt:DoHarnessDamage', harnessHp, harnessData)
+                                end                        
                             end
-                        elseif seatbeltOn and not IsThisModelABike(currentVehicle) then
+                        elseif (seatbeltOn or harnessOn) and not IsThisModelABike(currentVehicle) then
                             if lastFrameVehiclespeed > 120 then
                                 if math.random(math.ceil(lastFrameVehiclespeed)) > 200 then
-                                    EjectFromVehicle()                           
+                                    if not harnessOn then
+                                        EjectFromVehicle()
+                                    else
+                                        harnessHp = harnessHp - 1
+                                        TriggerServerEvent('seatbelt:DoHarnessDamage', harnessHp, harnessData)
+                                    end                     
                                 end
                             end
                         end
@@ -185,6 +227,49 @@ function EjectFromVehicle()
 end
 
 RegisterNetEvent("seatbelt:client:ToggleSeatbelt")
-AddEventHandler("seatbelt:client:ToggleSeatbelt", function()
-    seatbeltOn = not seatbeltOn
+AddEventHandler("seatbelt:client:ToggleSeatbelt", function(toggle)
+    if toggle == nil then
+        seatbeltOn = not seatbeltOn
+    else
+        seatbeltOn = toggle
+    end
 end)
+
+function ToggleHarness(toggle)
+    harnessOn = toggle
+    seatbeltOn = false
+    if not toggle then
+        harnessHp = 10
+        TriggerEvent("seatbelt:client:ToggleSeatbelt", true)
+    else
+        TriggerEvent("seatbelt:client:ToggleSeatbelt", false)
+    end
+    TriggerEvent('rs-hud:client:ToggleHarness', toggle)
+end
+
+RegisterNetEvent('seatbelt:client:UseHarness')
+AddEventHandler('seatbelt:client:UseHarness', function(ItemData)
+    local ped = GetPlayerPed(-1)
+    local inveh = IsPedInAnyVehicle(GetPlayerPed(-1))
+    if inveh and not IsThisModelABike(GetEntityModel(GetVehiclePedIsIn(ped))) then
+        if not harnessOn then
+            RSCore.Functions.Progressbar("harness_equip", "Race harnas om doen..", 5000, false, true, {
+                disableMovement = false,
+                disableCarMovement = false,
+                disableMouse = false,
+                disableCombat = true,
+            }, {}, {}, {}, function() -- Done
+                ToggleHarness(true)
+                TriggerServerEvent('equip:harness', ItemData)
+            end)
+            harnessHp = ItemData.info.uses
+            harnessData = ItemData
+        end
+    else
+        RSCore.Functions.Notify('Je zit niet in een auto.', 'error', 3500)
+    end
+end)
+
+function HasHarness()
+    return harnessOn
+end
