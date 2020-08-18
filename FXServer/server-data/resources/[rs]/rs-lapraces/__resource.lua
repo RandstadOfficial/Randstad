@@ -9,3 +9,16 @@ server_scripts {
     'server/main.lua',
     'config.lua',
 }
+
+files {
+    'html/*.html',
+    'html/*.css',
+    'html/*.js',
+    'html/fonts/*.otf',
+    'html/img/*',
+}
+
+exports {
+    'IsInRace',
+    'IsInEditor',
+}
