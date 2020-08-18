@@ -126,6 +126,27 @@ function setupSubItems()
     end
 end
 
+function getVehicleInDirection(coordFrom, coordTo)
+    local offset = 0
+    local rayHandle
+    local vehicle
+
+    for i = 0, 100 do
+        rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z + offset, 10, PlayerPedId(), 0)   
+        a, b, c, d, vehicle = GetRaycastResult(rayHandle)
+        
+        offset = offset - 1
+
+        if vehicle ~= 0 then break end
+    end
+    
+    local distance = Vdist2(coordFrom, GetEntityCoords(vehicle))
+    
+    if distance > 3000 then vehicle = nil end
+
+    return vehicle ~= nil and vehicle or 0
+end
+
 function openRadial(bool)    
     setupSubItems()
 
@@ -291,6 +312,37 @@ local Seats = {
     ["1"] = "Achterbank Links",
     ["2"] = "Achterbank Rechts",
 }
+
+
+RegisterNetEvent('FlipVehicle')
+AddEventHandler('FlipVehicle', function()
+    local closestVehicle = getNearestVeh()
+    if closestVehicle ~= 0 then 
+        RSCore.Functions.Progressbar("vehicle_flip", "Voertuig flippen..", 10000, false, true, {
+            disableMovement = true,
+            disableCarMovement = true,
+            disableMouse = false,
+            disableCombat = true,
+        }, {
+            animDict = "missheistfbi3b_ig7",
+            anim = "lift_fibagent_loop",
+            flags = 16,
+        }, {}, {}, function() -- Done
+            StopAnimTask(GetPlayerPed(-1), "missheistfbi3b_ig7", "lift_fibagent_loop", 1.0)
+            local playerped = PlayerPedId()
+            local coordFrom = GetEntityCoords(playerped, 1)
+            local coordTo = GetOffsetFromEntityInWorldCoords(playerped, 0.0, 100.0, 0.0)
+            local targetVehicle = getVehicleInDirection(coordFrom, coordTo)
+            SetVehicleOnGroundProperly(targetVehicle)
+            --print(targetVehicle)
+        end, function() -- Cancel
+            StopAnimTask(GetPlayerPed(-1), "missheistfbi3b_ig7", "lift_fibagent_loop", 1.0)
+            RSCore.Functions.Notify('Flippen geannuleerd!', 'error')
+        end)
+    else
+        RSCore.Functions.Notify('Er is geen voertuig te bekennen...', 'error', 2500)
+    end
+end)
 
 RegisterNetEvent('rs-radialmenu:client:ChangeSeat')
 AddEventHandler('rs-radialmenu:client:ChangeSeat', function(data)
