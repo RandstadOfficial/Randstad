@@ -27,8 +27,6 @@ RSCore.Commands.Add("plaatsplant", "", {}, false, function(source, args)
 
     if RSWeed.Plants[type] ~= nil then
         TriggerClientEvent('rs-weed:client:placePlant', src, type)
-    else
-        print('Is geen plant man')
     end
 end)
 

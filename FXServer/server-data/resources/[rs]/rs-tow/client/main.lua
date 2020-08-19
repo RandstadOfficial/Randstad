@@ -10,7 +10,7 @@ Citizen.CreateThread(function()
     end
 end)
 
-isLoggedIn = true
+isLoggedIn = false
 local PlayerJob = {}
 local CurrentPlate = nil
 local JobsDone = 0

@@ -452,8 +452,8 @@ function LockpickIgnition(isAdvanced)
                                 RSCore.Functions.Notify("Je moet in het voertuig zitten", "error")
                                 IsHotwiring = false
                                 FailedAttemps = FailedAttemps + 1
-                                local c = math.random(3)
-                                local o = math.random(3)
+                                local c = math.random(2)
+                                local o = math.random(2)
                                 if c == o then
                                     TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 3))
                                 end
@@ -468,8 +468,8 @@ function LockpickIgnition(isAdvanced)
                         RSCore.Functions.Notify("Lockpicken mislukt!", "error")
                         IsHotwiring = false
                         FailedAttemps = FailedAttemps + 1
-                        local c = math.random(3)
-                        local o = math.random(3)
+                        local c = math.random(2)
+                        local o = math.random(2)
                         if c == o then
                             TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 3))
                         end
