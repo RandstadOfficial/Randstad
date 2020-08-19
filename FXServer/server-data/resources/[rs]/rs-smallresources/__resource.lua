@@ -20,7 +20,7 @@ client_scripts {
 	"client/hudcomponents.lua",
 	"client/seatbelt.lua",
 	"client/cruise.lua",
-	"client/recoil.lua",
+	--"client/recoil.lua",
 	"client/removeentities.lua",
 	"client/crouchprone.lua",
 	"client/tackle.lua",

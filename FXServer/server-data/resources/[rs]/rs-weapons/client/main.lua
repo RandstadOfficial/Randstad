@@ -33,7 +33,6 @@ end)
 Citizen.CreateThread(function()
     while true do
         Wait(5)
-
         SetPedSuffersCriticalHits(PlayerPedId(), false)
     end
 end) 
@@ -88,6 +87,7 @@ Citizen.CreateThread(function()
                         end
                     else
                         TriggerEvent('inventory:client:CheckWeapon')
+                        SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey("WEAPON_UNARMED"), true)
                         RSCore.Functions.Notify("Dit wapen is gebroken en kan niet gebruikt worden..", "error")
                         MultiplierAmount = 0
                     end
@@ -100,52 +100,62 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        local ped = GetPlayerPed(-1)
-        local player = PlayerId()
-        local weapon = GetSelectedPedWeapon(ped)
-        local ammo = GetAmmoInPedWeapon(ped, weapon)
+        Citizen.Wait(0)
+        local weapon = GetSelectedPedWeapon(GetPlayerPed(-1))
+        local ammo = GetAmmoInPedWeapon(GetPlayerPed(-1), weapon)
         if weapon ~= 911657153 and weapon ~= -1169823560 and weapon ~= 615608432 and weapon ~= 741814745 then
             if ammo == 1 then
                 DisableControlAction(0, 24, true) -- Attack
                 DisableControlAction(0, 257, true) -- Attack 2
-                if IsPedInAnyVehicle(ped, true) then
-                    SetPlayerCanDoDriveBy(player, false)
+                if IsPedInAnyVehicle(GetPlayerPed(-1), true) then
+                    SetPlayerCanDoDriveBy(PlayerId(), false)
                 end
-            else
+            elseif ammo > 1 then 
                 EnableControlAction(0, 24, true) -- Attack
                 EnableControlAction(0, 257, true) -- Attack 2
-                if IsPedInAnyVehicle(ped, true) then
-                    SetPlayerCanDoDriveBy(player, true)
+                if IsPedInAnyVehicle(GetPlayerPed(-1), true) then
+                    SetPlayerCanDoDriveBy(PlayerId(), true)
                 end
             end
-
-            if IsPedShooting(ped) then
-                --print('schiet')
+            if IsPedShooting(GetPlayerPed(-1)) then
+                print('schiet')
                 if ammo - 1 < 1 then
-                -- print('reset')
+                    print('reset')
                     SetAmmoInClip(GetPlayerPed(-1), GetHashKey(RSCore.Shared.Weapons[weapon]["name"]), 1)
                 end
             end
         end
-        Citizen.Wait(0)
     end
 end)
+
+local AmmoTypes = {
+    'AMMO_PISTOL',
+    'AMMO_SMG',
+    'AMMO_RIFLE',
+    'AMMO_MG',
+    'AMMO_SHOTGUN',
+    'AMMO_WATER',
+}
 
 Citizen.CreateThread(function()
     while true do
         if IsControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 24) then
             local weapon = GetSelectedPedWeapon(GetPlayerPed(-1))
             local ammo = GetAmmoInPedWeapon(GetPlayerPed(-1), weapon)
-            if ammo > 0 then
-                TriggerServerEvent("weapons:server:UpdateWeaponAmmo", CurrentWeaponData, tonumber(ammo))
-            else
-                TriggerEvent('inventory:client:CheckWeapon')
-                TriggerServerEvent("weapons:server:UpdateWeaponAmmo", CurrentWeaponData, 0)
-            end
+            for k,v in pairs(AmmoTypes) do
+                if RSCore.Shared.Weapons[weapon]["ammotype"] == v then
+                    if ammo > 0 then
+                        TriggerServerEvent("weapons:server:UpdateWeaponAmmo", CurrentWeaponData, tonumber(ammo))
+                    else
+                        TriggerEvent('inventory:client:CheckWeapon')
+                        TriggerServerEvent("weapons:server:UpdateWeaponAmmo", CurrentWeaponData, 0)
+                    end
 
-            if MultiplierAmount > 0 then
-                TriggerServerEvent("weapons:server:UpdateWeaponQuality", CurrentWeaponData, MultiplierAmount)
-                MultiplierAmount = 0
+                    if MultiplierAmount > 0 then
+                        TriggerServerEvent("weapons:server:UpdateWeaponQuality", CurrentWeaponData, MultiplierAmount)
+                        MultiplierAmount = 0
+                    end
+                end
             end
         end
         Citizen.Wait(1)
@@ -159,14 +169,14 @@ AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
     if CurrentWeaponData ~= nil then
         if RSCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and RSCore.Shared.Weapons[weapon]["ammotype"] == type:upper() then
             local total = (GetAmmoInPedWeapon(GetPlayerPed(-1), weapon))
-            local Skillbar = exports['rs-skillbar']:GetSkillbarObject()
+            --local Skillbar = exports['rs-skillbar']:GetSkillbarObject()
             local retval = GetMaxAmmoInClip(ped, weapon, 1)
             retval = tonumber(retval)
 
-            local WeaponData = RSCore.Shared.Weapons[GetHashKey(CurrentWeaponData.name)]
-            local WeaponClass = (RSCore.Shared.SplitStr(WeaponData.ammotype, "_")[2]):lower()
+            -- local WeaponData = RSCore.Shared.Weapons[GetHashKey(CurrentWeaponData.name)]
+            -- local WeaponClass = (RSCore.Shared.SplitStr(WeaponData.ammotype, "_")[2]):lower()
 
-            if (total + retval) <= Config.WeaponCapacity[WeaponClass] then
+            if (total + retval) <= (retval + 1) then
                 RSCore.Functions.Progressbar("taking_bullets", "Kogels inladen..", math.random(3000, 5000), false, true, {
                     disableMovement = false,
                     disableCarMovement = false,
@@ -175,11 +185,11 @@ AddEventHandler('weapon:client:AddAmmo', function(type, amount, itemData)
                 }, {}, {}, {}, function() -- Done
                     if RSCore.Shared.Weapons[weapon] ~= nil then
                         SetAmmoInClip(ped, weapon, 0)
-                        SetPedAmmo(ped, weapon, (total+retval))
-                        TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, (total+retval))
+                        SetPedAmmo(ped, weapon, retval+retval)
+                        TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, retval+retval)
                         TriggerServerEvent('RSCore:Server:RemoveItem', itemData.name, 1, itemData.slot)
                         TriggerEvent('inventory:client:ItemBox', RSCore.Shared.Items[itemData.name], "remove")
-                        TriggerEvent('RSCore:Notify', retval.." kogels ingeladen!", "success")
+                        TriggerEvent('RSCore:Notify', retval + retval.." kogels ingeladen!", "success")
                     end
                 end, function()
                     RSCore.Functions.Notify("Geannuleerd..", "error")
@@ -297,7 +307,6 @@ Citizen.CreateThread(function()
                     end
                 end
             end
-
             if not inRange then
                 Citizen.Wait(1000)
             end
