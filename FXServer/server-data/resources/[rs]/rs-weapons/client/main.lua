@@ -118,9 +118,9 @@ Citizen.CreateThread(function()
                 end
             end
             if IsPedShooting(GetPlayerPed(-1)) then
-                print('schiet')
+                --print('schiet')
                 if ammo - 1 < 1 then
-                    print('reset')
+                    --print('reset')
                     SetAmmoInClip(GetPlayerPed(-1), GetHashKey(RSCore.Shared.Weapons[weapon]["name"]), 1)
                 end
             end
