@@ -365,8 +365,8 @@ Citizen.CreateThread(function()
                                 SellStarted = false
                                 RSCore.Functions.TriggerCallback('rs-vehicleshop:server:SellVehicle', function(SoldVehicle)
                                     if SoldVehicle then
-                                        RSCore.Functions.Notify("Er is €"..math.ceil(VehicleData["price"] / 100 * 60).." bijgeschreven", 'success', 5000)
-                                        --TriggerEvent("rs-phone-new:client:BankNotify", "Er is €"..math.ceil(VehicleData["price"] / 100 * 60).." bijgeschreven")
+                                        TriggerEvent("rs-phone:client:BankNotify", "Er is €"..math.ceil(VehicleData["price"] / 100 * 60).." bijgeschreven")
+                                        --RSCore.Functions.Notify("Er is €"..math.ceil(VehicleData["price"] / 100 * 60).." bijgeschreven", 'success', 5000)
                                         local veh = GetVehiclePedIsIn(ped)
                                         RSCore.Functions.DeleteVehicle(veh)
                                     else

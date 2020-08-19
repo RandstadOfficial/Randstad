@@ -23,7 +23,7 @@ AddEventHandler('rs-scrapyard:server:ScrapVehicle', function(listKey)
     if Config.CurrentVehicles[listKey] ~= nil then 
         for i = 1, math.random(4, 8), 1 do
             local item = Config.Items[math.random(1, #Config.Items)]
-            Player.Functions.AddItem(item, math.random(20, 40))
+            Player.Functions.AddItem(item, math.random(35, 65))
             TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[item], 'add')
             Citizen.Wait(500)
         end

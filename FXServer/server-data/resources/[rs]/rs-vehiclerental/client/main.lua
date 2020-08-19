@@ -23,7 +23,7 @@ end)
 
 -- Code
 
-local isLoggedIn = true
+local isLoggedIn = false
 local RentedVehiclePlate = nil
 local CurrentRentalPoint = nil
 local RentedVehicleData = nil
