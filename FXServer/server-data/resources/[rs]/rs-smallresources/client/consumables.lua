@@ -146,7 +146,7 @@ AddEventHandler("consumables:client:UseHeavyArmor", function()
         else
             currentVest = GetPedDrawableVariation(ped, 30)
             currentVestTexture = GetPedTextureVariation(ped, 30)
-            SetPedComponentVariation(ped, 9, 30, 0, 2)
+            SetPedComponentVariation(ped, 9, 30, 9, 2)
         end
         TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["heavyarmor"], "remove")
         TriggerServerEvent("RSCore:Server:RemoveItem", "heavyarmor", 1)
