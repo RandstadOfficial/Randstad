@@ -209,7 +209,7 @@ function FormatAttachmentInfo(data) {
                 $(".weapon-attachments-title").html('<span style="font-weight: bold; letter-spacing: .1vh;">Attachments</span>');
                 $.each(data.AttachmentData, function(i, attachment){
                     var WeaponType = (data.WeaponData.ammotype).split("_")[1].toLowerCase();
-                    $(".weapon-attachments").append('<div class="weapon-attachment" id="weapon-attachment-'+i+'"> <div class="weapon-attachment-label"><p>' + attachment.label + '</p></div> <div class="weapon-attachment-img"><img src="./images/' + WeaponType + '_' + attachment.attachment + '.png"></div> </div>')
+                    $(".weapon-attachments").append('<div class="weapon-attachment" id="weapon-attachment-'+i+'"> <div class="weapon-attachment-label"><p>' + attachment.label + '</p></div> <div class="weapon-attachment-img"><img src="./images/' + attachment.attachment + '.png"></div> </div>')
                     attachment.id = i;
                     $("#weapon-attachment-"+i).data('AttachmentData', attachment)
                 });

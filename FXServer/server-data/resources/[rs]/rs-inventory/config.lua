@@ -156,9 +156,9 @@ Config.CraftingItems = {
         amount = 50,
         info = {},
         costs = {
-            ["metalscrap"] = 25,
-            ["steel"] = 23,
-            ["copper"] = 20,
+            ["metalscrap"] = 50,
+            ["steel"] = 37,
+            ["copper"] = 26,
         },
         type = "item",
         slot = 8,
@@ -221,6 +221,34 @@ Config.CraftingItems = {
         threshold = 1750,
         points = 12,
     },
+    [13] = {
+        name = "smg_ammo",
+        amount = 50,
+        info = {},
+        costs = {
+            ["metalscrap"] = 65,
+            ["steel"] = 56,
+            ["copper"] = 35,
+        },
+        type = "item",
+        slot = 13,
+        threshold = 1850,
+        points = 13,
+    },
+    [14] = {
+        name = "rifle_ammo",
+        amount = 50,
+        info = {},
+        costs = {
+            ["metalscrap"] = 68,
+            ["steel"] = 60,
+            ["copper"] = 42,
+        },
+        type = "item",
+        slot = 14,
+        threshold = 1950,
+        points = 14,
+    },
 }
 
 Config.AttachmentCrafting = {
@@ -251,40 +279,10 @@ Config.AttachmentCrafting = {
             },
             type = "item",
             slot = 2,
-            threshold = 10,
+            threshold = 50,
             points = 2,
         },
         [3] = {
-            name = "rifle_extendedclip",
-            amount = 50,
-            info = {},
-            costs = {
-                ["metalscrap"] = 190,
-                ["steel"] = 305,
-                ["rubber"] = 85,
-                ["smg_extendedclip"] = 1,
-            },
-            type = "item",
-            slot = 7,
-            threshold = 25,
-            points = 8,
-        },
-        [4] = {
-            name = "rifle_drummag",
-            amount = 50,
-            info = {},
-            costs = {
-                ["metalscrap"] = 205,
-                ["steel"] = 340,
-                ["rubber"] = 110,
-                ["smg_extendedclip"] = 2,
-            },
-            type = "item",
-            slot = 8,
-            threshold = 50,
-            points = 8,
-        },
-        [5] = {
             name = "smg_flashlight",
             amount = 50,
             info = {},
@@ -298,7 +296,7 @@ Config.AttachmentCrafting = {
             threshold = 75,
             points = 3,
         },
-        [6] = {
+        [4] = {
             name = "smg_extendedclip",
             amount = 50,
             info = {},
@@ -312,7 +310,7 @@ Config.AttachmentCrafting = {
             threshold = 100,
             points = 4,
         },
-        [7] = {
+        [5] = {
             name = "smg_suppressor",
             amount = 50,
             info = {},
@@ -326,7 +324,7 @@ Config.AttachmentCrafting = {
             threshold = 150,
             points = 5,
         },
-        [8] = {
+        [6] = {
             name = "smg_scope",
             amount = 50,
             info = {},
@@ -339,6 +337,36 @@ Config.AttachmentCrafting = {
             slot = 6,
             threshold = 200,
             points = 6,
+        },
+        [7] = {
+            name = "rifle_extendedclip",
+            amount = 50,
+            info = {},
+            costs = {
+                ["metalscrap"] = 190,
+                ["steel"] = 305,
+                ["rubber"] = 85,
+                ["smg_extendedclip"] = 1,
+            },
+            type = "item",
+            slot = 7,
+            threshold = 250,
+            points = 7,
+        },
+        [8] = {
+            name = "rifle_drummag",
+            amount = 50,
+            info = {},
+            costs = {
+                ["metalscrap"] = 205,
+                ["steel"] = 340,
+                ["rubber"] = 110,
+                ["smg_extendedclip"] = 2,
+            },
+            type = "item",
+            slot = 8,
+            threshold = 300,
+            points = 8,
         },
     }
 }

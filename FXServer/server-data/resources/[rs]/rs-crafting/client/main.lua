@@ -104,12 +104,12 @@ function SetupAttachmentItemsInfo()
 	itemInfos = {
 		[1] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 140x, " .. RSCore.Shared.Items["steel"]["label"] .. ": 250x, " .. RSCore.Shared.Items["rubber"]["label"] .. ": 60x"},
 		[2] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 165x, " .. RSCore.Shared.Items["steel"]["label"] .. ": 285x, " .. RSCore.Shared.Items["rubber"]["label"] .. ": 75x"},
-		[3] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 190x, " .. RSCore.Shared.Items["steel"]["label"] .. ": 305x, " .. RSCore.Shared.Items["rubber"]["label"] .. ": 85x, " .. RSCore.Shared.Items["smg_extendedclip"]["label"] .. ": 1x"},
-		[4] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 205x, " .. RSCore.Shared.Items["steel"]["label"] .. ": 340x, " .. RSCore.Shared.Items["rubber"]["label"] .. ": 110x, " .. RSCore.Shared.Items["smg_extendedclip"]["label"] .. ": 2x"},
-		[5] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 230x, " .. RSCore.Shared.Items["steel"]["label"] .. ": 365x, " .. RSCore.Shared.Items["rubber"]["label"] .. ": 130x"},
-		[6] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 255x, " .. RSCore.Shared.Items["steel"]["label"] .. ": 390x, " .. RSCore.Shared.Items["rubber"]["label"] .. ": 145x"},
-		[7] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 270x, " .. RSCore.Shared.Items["steel"]["label"] .. ": 435x, " .. RSCore.Shared.Items["rubber"]["label"] .. ": 155x"},
-		[8] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 300x, " .. RSCore.Shared.Items["steel"]["label"] .. ": 469x, " .. RSCore.Shared.Items["rubber"]["label"] .. ": 170x"},
+		[3] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 230x, " .. RSCore.Shared.Items["steel"]["label"] .. ": 365x, " .. RSCore.Shared.Items["rubber"]["label"] .. ": 130x"},
+		[4] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 255x, " .. RSCore.Shared.Items["steel"]["label"] .. ": 390x, " .. RSCore.Shared.Items["rubber"]["label"] .. ": 145x"},
+		[5] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 270x, " .. RSCore.Shared.Items["steel"]["label"] .. ": 435x, " .. RSCore.Shared.Items["rubber"]["label"] .. ": 155x"},
+		[6] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 300x, " .. RSCore.Shared.Items["steel"]["label"] .. ": 469x, " .. RSCore.Shared.Items["rubber"]["label"] .. ": 170x"},
+		[7] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 190x, " .. RSCore.Shared.Items["steel"]["label"] .. ": 305x, " .. RSCore.Shared.Items["rubber"]["label"] .. ": 85x, " .. RSCore.Shared.Items["smg_extendedclip"]["label"] .. ": 1x"},
+		[8] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 205x, " .. RSCore.Shared.Items["steel"]["label"] .. ": 340x, " .. RSCore.Shared.Items["rubber"]["label"] .. ": 110x, " .. RSCore.Shared.Items["smg_extendedclip"]["label"] .. ": 2x"},
 	}
 
 	local items = {}
@@ -160,6 +160,8 @@ function ItemsToItemInfo()
 		[10] = {costs = RSCore.Shared.Items["aluminum"]["label"] .. ": 60x, " ..RSCore.Shared.Items["glass"]["label"] .. ": 30x."},
 		[11] = {costs = RSCore.Shared.Items["iron"]["label"] .. ": 33x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 44x, "..RSCore.Shared.Items["plastic"]["label"] .. ": 55x, "..RSCore.Shared.Items["aluminum"]["label"] .. ": 22x."},
 		[12] = {costs = RSCore.Shared.Items["iron"]["label"] .. ": 50x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 50x, "..RSCore.Shared.Items["screwdriverset"]["label"] .. ": 3x, "..RSCore.Shared.Items["advancedlockpick"]["label"] .. ": 2x."},
+		[13] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 65x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 56x, "..RSCore.Shared.Items["copper"]["label"] .. ": 35x."},
+		[14] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 68x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 60x, "..RSCore.Shared.Items["copper"]["label"] .. ": 42x."},
 	}
 
 	local items = {}

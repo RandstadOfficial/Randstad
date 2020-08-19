@@ -123,70 +123,133 @@ Config.WeaponRepairCotsts = {
 
 Config.WeaponAttachments = {
     ["WEAPON_SNSPISTOL"] = {
-        ["extendedclip"] = {
+        ["pistol_extendedclip"] = {
             component = "COMPONENT_SNSPISTOL_CLIP_02",
             label = "Extended Clip",
             item = "pistol_extendedclip",
         },
     },
-    ["WEAPON_VINTAGEPISTOL"] = {
-        ["suppressor"] = {
+    ["WEAPON_APPISTOL"] = {
+        ["pistol_suppressor"] = {
             component = "COMPONENT_AT_PI_SUPP",
             label = "Demper",
             item = "pistol_suppressor",
         },
-        ["extendedclip"] = {
+        ["pistol_extendedclip"] = {
+            component = "COMPONENT_APPISTOL_CLIP_02",
+            label = "Extended Clip",
+            item = "pistol_extendedclip",
+        },
+    },
+    ["WEAPON_VINTAGEPISTOL"] = {
+        ["pistol_suppressor"] = {
+            component = "COMPONENT_AT_PI_SUPP",
+            label = "Demper",
+            item = "pistol_suppressor",
+        },
+        ["pistol_extendedclip"] = {
             component = "COMPONENT_VINTAGEPISTOL_CLIP_02",
             label = "Extended Clip",
             item = "pistol_extendedclip",
         },
     },
+    ["WEAPON_MACHINEPISTOL"] = {
+        ["pistol_suppressor"] = {
+            component = "COMPONENT_AT_PI_SUPP",
+            label = "Demper",
+            item = "pistol_suppressor",
+        },
+        ["pistol_extendedclip"] = {
+            component = "COMPONENT_MACHINEPISTOL_CLIP_02",
+            label = "Extended Clip",
+            item = "pistol_extendedclip",
+        },
+    },
     ["WEAPON_PISTOL"] = {
-        ["suppressor"] = {
+        ["pistol_suppressor"] = {
             component = "COMPONENT_AT_PI_SUPP_02",
             label = "Demper",
             item = "pistol_suppressor",
         },                                                     
     },
     ["WEAPON_MICROSMG"] = {
-        ["suppressor"] = {
+        ["smg_suppressor"] = {
             component = "COMPONENT_AT_AR_SUPP_02",
             label = "Demper",
             item = "smg_suppressor",
         },
-        ["extendedclip"] = {
+        ["smg_extendedclip"] = {
             component = "COMPONENT_MICROSMG_CLIP_02",
             label = "Extended Clip",
             item = "smg_extendedclip",
         },
-        ["flashlight"] = {
+        ["smg_flashlight"] = {
             component = "COMPONENT_AT_PI_FLSH",
             label = "Flashlight",
             item = "smg_flashlight",
         },
-        ["scope"] = {
+        ["smg_scope"] = {
+            component = "COMPONENT_AT_SCOPE_MACRO",
+            label = "Scope",
+            item = "smg_scope",
+        },
+    },
+    ["WEAPON_ASSAULTSMG"] = {
+        ["smg_suppressor"] = {
+            component = "COMPONENT_AT_AR_SUPP_02",
+            label = "Demper",
+            item = "smg_suppressor",
+        },
+        ["smg_extendedclip"] = {
+            component = "COMPONENT_ASSAULTSMG_CLIP_02",
+            label = "Extended Clip",
+            item = "smg_extendedclip",
+        },
+        ["smg_flashlight"] = {
+            component = "COMPONENT_AT_AR_FLSH",
+            label = "Flashlight",
+            item = "smg_flashlight",
+        },
+        ["smg_scope"] = {
             component = "COMPONENT_AT_SCOPE_MACRO",
             label = "Scope",
             item = "smg_scope",
         },
     },
     ["WEAPON_MINISMG"] = {
-        ["extendedclip"] = {
+        ["smg_extendedclip"] = {
             component = "COMPONENT_MINISMG_CLIP_02",
             label = "Extended Clip",
             item = "smg_extendedclip",
         },
     },
     ["WEAPON_COMPACTRIFLE"] = {
-        ["extendedclip"] = {
+        ["rifle_extendedclip"] = {
             component = "COMPONENT_COMPACTRIFLE_CLIP_02",
             label = "Extended Clip",
             item = "rifle_extendedclip",
         },
-        ["drummag"] = {
+        ["rifle_drummag"] = {
             component = "COMPONENT_COMPACTRIFLE_CLIP_03",
             label = "Drum Mag",
             item = "rifle_drummag",
+        },
+    },
+    ["WEAPON_ASSAULTRIFLE"] = {
+        ["rifle_suppressor"] = {
+            component = "COMPONENT_AT_AR_SUPP_02",
+            label = "Demper",
+            item = "rifle_suppressor",
+        },
+        ["rifle_extendedclip"] = {
+            component = "COMPONENT_ASSAULTRIFLE_CLIP_02",
+            label = "Extended Clip",
+            item = "rifle_extendedclip",
+        },
+        ["rifle_flashlight"] = {
+            component = "COMPONENT_AT_AR_FLSH",
+            label = "Flashlight",
+            item = "rifle_flashlight",
         },
     },
 }

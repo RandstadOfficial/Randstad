@@ -8,12 +8,17 @@ server_scripts {
 }
 
 client_scripts {
-	"config.lua",
+    "config.lua",
+    "client/recoil.lua",
 	"client/main.lua",
 }
 
 files {
     'weaponsnspistol.meta',
+    'weapons.meta',
+    'weaponvintagepistol.meta',
 }
 
 data_file 'WEAPONINFO_FILE_PATCH' 'weaponsnspistol.meta'
+data_file 'WEAPONINFO_FILE_PATCH' 'weapons.meta'
+data_file 'WEAPONINFO_FILE_PATCH' 'weaponvintagepistol.meta'
