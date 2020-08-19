@@ -30,6 +30,204 @@ local meterData = {
 
 local dutyPlate = nil
 
+local NpcData = {
+    Active = false,
+    CurrentNpc = nil,
+    LastNpc = nil,
+    CurrentDeliver = nil,
+    LastDeliver = nil,
+    Npc = nil,
+    NpcBlip = nil,
+    DeliveryBlip = nil,
+    NpcTaken = false,
+    NpcDelivered = false,
+    CountDown = 180
+}
+
+function TimeoutNpc()
+    Citizen.CreateThread(function()
+        while NpcData.CountDown ~= 0 do
+            NpcData.CountDown = NpcData.CountDown - 1
+            Citizen.Wait(1000)
+        end
+        NpcData.CountDown = 180
+    end)
+end
+
+RegisterNetEvent('rs-taxi:client:DoTaxiNpc')
+AddEventHandler('rs-taxi:client:DoTaxiNpc', function()
+    if whitelistedVehicle() then
+        if NpcData.CountDown == 180 then
+            if not NpcData.Active then
+                NpcData.CurrentNpc = math.random(1, #Config.NPCLocations.TakeLocations)
+                if NpcData.LastNpc ~= nil then
+                    while NpcData.LastNpc ~= NpcData.CurrentNpc do
+                        NpcData.CurrentNpc = math.random(1, #Config.NPCLocations.TakeLocations)
+                    end
+                end
+
+                local Gender = math.random(1, #Config.NpcSkins)
+                local PedSkin = math.random(1, #Config.NpcSkins[Gender])
+                local model = GetHashKey(Config.NpcSkins[Gender][PedSkin])
+                RequestModel(model)
+                while not HasModelLoaded(model) do
+                    Citizen.Wait(0)
+                end
+                NpcData.Npc = CreatePed(3, model, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].x, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].y, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].z - 0.98, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].h, false, true)
+                PlaceObjectOnGroundProperly(NpcData.Npc)
+                FreezeEntityPosition(NpcData.Npc, true)
+                if NpcData.NpcBlip ~= nil then
+                    RemoveBlip(NpcData.NpcBlip)
+                end
+                RSCore.Functions.Notify('De NPC staat aangegeven op uw navigatie!', 'success')
+                NpcData.NpcBlip = AddBlipForCoord(Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].x, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].y, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].z)
+                SetBlipColour(NpcData.NpcBlip, 3)
+                SetBlipRoute(NpcData.NpcBlip, true)
+                SetBlipRouteColour(NpcData.NpcBlip, 3)
+                NpcData.LastNpc = NpcData.CurrentNpc
+                NpcData.Active = true
+
+                Citizen.CreateThread(function()
+                    while not NpcData.NpcTaken do
+
+                        local ped = GetPlayerPed(-1)
+                        local pos = GetEntityCoords(ped)
+                        local dist = GetDistanceBetweenCoords(pos, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].x, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].y, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].z, true)
+
+                        if dist < 20 then
+                            DrawMarker(2, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].x, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].y, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.3, 255, 255, 255, 255, 0, 0, 0, 1, 0, 0, 0)
+                        
+                            if dist < 5 then
+                                local npccoords = GetEntityCoords(NpcData.Npc)
+                                DrawText3D(Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].x, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].y, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].z, '[E] NPC oproepen')
+                                if IsControlJustPressed(0, Keys["E"]) then
+                                    local veh = GetVehiclePedIsIn(ped, 0)
+                                    local maxSeats, freeSeat = GetVehicleMaxNumberOfPassengers(vehicle)
+
+                                    for i=maxSeats - 1, 0, -1 do
+                                        if IsVehicleSeatFree(vehicle, i) then
+                                            freeSeat = i
+                                            break
+                                        end
+                                    end
+
+                                    meterIsOpen = true
+                                    meterActive = true
+                                    lastLocation = GetEntityCoords(GetPlayerPed(-1))
+                                    SendNUIMessage({
+                                        action = "openMeter",
+                                        toggle = true,
+                                        meterData = Config.Meter
+                                    })
+                                    SendNUIMessage({
+                                        action = "toggleMeter"
+                                    })
+
+                                    ClearPedTasksImmediately(NpcData.Npc)
+                                    FreezeEntityPosition(NpcData.Npc, false)
+                                    TaskEnterVehicle(NpcData.Npc, veh, -1, freeSeat, 1.0, 0)
+                                    RSCore.Functions.Notify('Breng de NPC naar de opgegeven locatie toe.')
+                                    if NpcData.NpcBlip ~= nil then
+                                        RemoveBlip(NpcData.NpcBlip)
+                                    end
+                                    GetDeliveryLocation()
+                                    NpcData.NpcTaken = true
+                                end
+                            end
+                        end
+
+                        Citizen.Wait(1)
+                    end
+                end)
+            else
+                RSCore.Functions.Notify('Je bent al een NPC missie aan het doen..')
+            end
+        else
+            RSCore.Functions.Notify('Er zijn geen NPC\'s beschikbaar..')
+        end
+    else
+        RSCore.Functions.Notify('Je zit niet in een Taxi :(')
+    end
+end)
+
+function GetDeliveryLocation()
+    NpcData.CurrentDeliver = math.random(1, #Config.NPCLocations.DeliverLocations)
+    if NpcData.LastDeliver ~= nil then
+        while NpcData.LastDeliver ~= NpcData.CurrentDeliver do
+            NpcData.CurrentDeliver = math.random(1, #Config.NPCLocations.DeliverLocations)
+        end
+    end
+
+    if NpcData.DeliveryBlip ~= nil then
+        RemoveBlip(NpcData.DeliveryBlip)
+    end
+    NpcData.DeliveryBlip = AddBlipForCoord(Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].x, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].y, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].z)
+    SetBlipColour(NpcData.DeliveryBlip, 3)
+    SetBlipRoute(NpcData.DeliveryBlip, true)
+    SetBlipRouteColour(NpcData.DeliveryBlip, 3)
+    NpcData.LastDeliver = NpcData.CurrentDeliver
+
+    Citizen.CreateThread(function()
+        while true do
+
+            local ped = GetPlayerPed(-1)
+            local pos = GetEntityCoords(ped)
+            local dist = GetDistanceBetweenCoords(pos, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].x, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].y, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].z, true)
+
+            if dist < 20 then
+                DrawMarker(2, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].x, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].y, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.3, 255, 255, 255, 255, 0, 0, 0, 1, 0, 0, 0)
+            
+                if dist < 5 then
+                    local npccoords = GetEntityCoords(NpcData.Npc)
+                    DrawText3D(Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].x, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].y, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].z, '[E] NPC afleveren')
+                    if IsControlJustPressed(0, Keys["E"]) then
+                        local veh = GetVehiclePedIsIn(ped, 0)
+                        TaskLeaveVehicle(NpcData.Npc, veh, 0)
+                        SetEntityAsMissionEntity(NpcData.Npc, false, true)
+                        SetEntityAsNoLongerNeeded(NpcData.Npc)
+                        local targetCoords = Config.NPCLocations.TakeLocations[NpcData.LastNpc]
+                        TaskGoStraightToCoord(NpcData.Npc, targetCoords.x, targetCoords.y, targetCoords.z, 1.0, -1, 0.0, 0.0)
+                        SendNUIMessage({
+                            action = "toggleMeter"
+                        })
+                        TriggerServerEvent('rs-taxi:server:NpcPay', meterData.currentFare)
+                        RSCore.Functions.Notify('Persoon in top staat afgeleverd', 'success')
+                        if NpcData.DeliveryBlip ~= nil then
+                            RemoveBlip(NpcData.DeliveryBlip)
+                        end
+                        local RemovePed = function(ped)
+                            SetTimeout(60000, function()
+                                DeletePed(ped)
+                            end)
+                        end
+                        TimeoutNpc()
+                        RemovePed(NpcData.Npc)
+                        ResetNpcTask()
+                        break
+                    end
+                end
+            end
+
+            Citizen.Wait(1)
+        end
+    end)
+end
+
+function ResetNpcTask()
+    NpcData = {
+        Active = false,
+        CurrentNpc = nil,
+        LastNpc = nil,
+        CurrentDeliver = nil,
+        LastDeliver = nil,
+        Npc = nil,
+        NpcBlip = nil,
+        DeliveryBlip = nil,
+        NpcTaken = false,
+        NpcDelivered = false,
+    }
+end
+
 RegisterNetEvent('RSCore:Client:OnPlayerLoaded')
 AddEventHandler('RSCore:Client:OnPlayerLoaded', function()
     isLoggedIn = true
@@ -48,7 +246,6 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-  
         Citizen.Wait(2000)
         calculateFareAmount()
     end
