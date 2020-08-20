@@ -59,6 +59,14 @@
 				padding-inline-start: 27px;
 				margin-block-start: 6px;
 			}
+
+			#latency {
+			top: 80px;
+			position: absolute;
+			color: white;
+			font-size: 10px;
+			font-weight: 100;
+		}
 		</style>
 		<script src="nui://game/ui/jquery.js" type="text/javascript"></script>
 		<script src="script.js" type="text/javascript"></script>
@@ -67,7 +75,7 @@
 		<div id="pluginScreen" class="pluginScreen">
 			<div id="pluginScreenWindow" class="pluginScreenWindow">
 				<div style="font-size:25px;color:#03a2b5;text-align:center;margin-bottom:20px;">
-					TokoVOIP
+					TokoVOIP 1.5
 				</div>
 				Wij maken gebruik van <font color="#01b0f0">TokoVOIP</font> voor onze in-game communicatie.
 				<br><br>
@@ -91,7 +99,7 @@
 				<li id="Ts3State">Ts3 websocket: <font color="red">Not connected</font>
 				</li>
 				<br />
-				<li id="pluginVersion">Plugin version: <font color="red">Not found</font> (Required: 1.5.0+)</li>
+				<li id="pluginVersion">Plugin version: <font color="red">Not found</font> (Required: 1.5.0 of hoger)</li>
 			</ul>
 		</div>
 		</div>
@@ -100,6 +108,7 @@
 		</div>
 		<div id="tokovoipInfo" class="tokovoipInfo">
 		</div>
+		<div id="latency" style="display: none;"></div>
 	</body>
 
 </html>
