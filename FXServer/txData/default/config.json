@@ -1,0 +1,45 @@
+{
+  "global": {
+    "serverName": "Randstad",
+    "language": "nl"
+  },
+  "logger": {},
+  "monitor": {
+    "restarterSchedule": [
+      "06:00",
+      "18:00"
+    ],
+    "heartBeat": {
+      "failThreshold": 15,
+      "failLimit": 30
+    },
+    "healthCheck": {
+      "failThreshold": 15,
+      "failLimit": 300
+    }
+  },
+  "playerController": {
+    "onJoinCheckBan": true,
+    "onJoinCheckWhitelist": false,
+    "minSessionTime": 10,
+    "whitelistRejectionMessage": "Je bent niet Whitelisted.\nJoin: https://discord.gg/2DRbeFy.\n<strong>Your ID: <id></strong>",
+    "wipePendingWLOnStart": true
+  },
+  "authenticator": {},
+  "webServer": {},
+  "discordBot": {
+    "enabled": true,
+    "token": "NzE2NzY4ODgwMzExNDAyNDk4.Xv-Hlw.GvMUIaGu1tW6QTbmWKNe66lqFdY",
+    "announceChannel": "745986402369404968",
+    "prefix": "!",
+    "statusMessage": "**IP:** `game.randstadroleplay.nl`\n**Players:** <players>\n**Uptime:** <uptime>"
+  },
+  "fxRunner": {
+    "serverDataPath": "C:/Users/admin/Desktop/Randstad/FXServer/server-data/",
+    "cfgPath": "C:/Users/admin/Desktop/Randstad/FXServer/server-data/server.cfg",
+    "commandLine": "+set onesync legacy",
+    "onesync": true,
+    "autostart": true,
+    "quiet": false
+  }
+}

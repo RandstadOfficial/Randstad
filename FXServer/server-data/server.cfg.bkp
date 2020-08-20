@@ -1,0 +1,92 @@
+endpoint_add_tcp "0.0.0.0:30120"
+endpoint_add_udp "0.0.0.0:30120"
+
+exec mysql.cfg
+
+# FiveM Core Resources
+start mapmanager
+start spawnmanager
+start sessionmanager
+start fivem
+start hardcap
+start ghmattimysql
+start debug
+start baseevents
+start chat
+start discord_perms
+start DiscordWhitelist
+start rs-core
+start connectqueue
+#start blockVPN
+
+exec resources.cfg
+
+# Allows lambda
+#sv_scriptHookAllowed 1
+
+# Rcon (not used)
+#rcon_password changeme
+
+# tags
+sets tags "Randstad, custom, framework, nederlands, dutch, roleplay, RP, NL"
+
+sets locale "nl-NL" 
+sets Discord "https://discord.gg/2DRbeFy"
+
+# Banner
+#sets banner_detail "https://i.imgur.com/dVtXTy9.png"
+#sets banner_connecting "https://i.imgur.com/2joLbCa.png"
+
+# Set your server's hostname
+sv_hostname "[NL] ^5Randstad RP ^7| ^0Custom Framework ^7| ^5Realistische Economie ^7| ^0Serieuze RP ^7| ^5Whitelisted ^7| ^0NoPixel Based ^7| ^5discord.gg/2DRbeFy" 
+
+# Nested configs!
+#exec server_internal.cfg
+
+# Loading a server icon (96x96 PNG file)
+load_server_icon logo.png
+
+# convars which can be used in scripts
+set temp_convar "skrt"
+
+# Uncomment this line if you do not want your server to be listed in the server browser.
+#sv_master1 ""
+
+# Add system admins
+add_ace builtin.everyone qbcommands allow
+
+# Add moderator group
+add_principal group.moderator
+
+#rs-admin permissions
+add_ace group.admin rsadmin allow # admin can do everything
+add_ace group.admin fluidanticheat.bypass allow
+
+add_ace group.moderator rsadmin.join allow
+
+add_ace group.admin resource.els-plus command.add_ace allow
+
+add_ace group.admin command allow # allow all commands
+add_principal identifier.steam:1100001062640e8 group.admin # Maestro
+add_principal identifier.steam:11000010dff7a9f group.admin # MaBo
+add_principal identifier.steam:11000011a4f7fef group.admin # Ryan
+add_principal identifier.steam:11000010dc9f9bf group.admin # Jessee
+add_principal identifier.steam:1100001095d0f88 group.admin # Burakint
+
+
+# Hide player endpoints in external log output.
+sv_endpointprivacy true
+
+# License key for your server (https://keymaster.fivem.net)
+set sv_licenseKey "bpxkivy713kucapjwvlkkp3wllt09fem"
+
+# Steam web api
+set steam_webApiKey "EF704645D62F4348BC592E5F2711EC12"
+
+# enable/disable onesync
+set onesync_enabled 1
+
+# max clients
+sv_maxclients 64
+
+sv_useDirectListing true

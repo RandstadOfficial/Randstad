@@ -1,0 +1,99 @@
+[
+  {
+    "name": "Maestro27",
+    "master": true,
+    "password_hash": "$2a$11$zD21qmBaCeQwJZ33hFzgjucf0rmRtzwIKuCwMr5LmNAupF7w.8qHK",
+    "providers": {
+      "citizenfx": {
+        "id": "Maestro27",
+        "data": {
+          "nameid": "https://forum.cfx.re/internal/user/946934",
+          "name": "Maestro27",
+          "profile": "https://forum.cfx.re/u/Maestro27",
+          "picture": "https://forum.cfx.re/user_avatar/forum.cfx.re/maestro27/256/512493_2.png",
+          "sub": "c423f0f9c1dec8f086f97bf0349d7485b15e34471afd90fc5104e690ec6dd0d4"
+        }
+      }
+    },
+    "permissions": []
+  },
+  {
+    "name": "Mabo97",
+    "master": false,
+    "password_hash": "$2a$11$QRn5YhwvrcmRcp5rXpC8jueZcetqIUcqdTrJ3dVptDWnvFJWzma1m",
+    "providers": {
+      "discord": {
+        "id": "87156859080814592",
+        "data": {}
+      },
+      "citizenfx": {
+        "id": "MaBo",
+        "data": {}
+      }
+    },
+    "permissions": [
+      "all_permissions"
+    ]
+  },
+  {
+    "name": "Maestro",
+    "master": false,
+    "password_hash": "$2a$11$wkox46MRJThhHAAHPyxr3eHqIqGZJStOjH9vy5FXvmXOBIPIA08l2",
+    "providers": {
+      "discord": {
+        "id": "358567204213620758",
+        "data": {}
+      }
+    },
+    "permissions": [
+      "all_permissions"
+    ]
+  },
+  {
+    "name": "Jessee",
+    "master": false,
+    "password_hash": "$2a$11$hv9T4oXOxslP1w6OrG.iXO.0dTcziIsCGdAZNgDPskHnFr2j30JLO",
+    "password_temporary": true,
+    "providers": {},
+    "permissions": [
+      "players.ban",
+      "players.kick",
+      "players.message",
+      "players.warn",
+      "players.whitelist",
+      "console.view",
+      "control.server"
+    ]
+  },
+  {
+    "name": "Burakint",
+    "master": false,
+    "password_hash": "$2a$11$LauzvBTJ7H2LZxMIKMTxyuifs.ZCEs.EekmD2DE7ahwi.zUaVYsgi",
+    "password_temporary": true,
+    "providers": {},
+    "permissions": [
+      "players.ban",
+      "players.kick",
+      "players.message",
+      "players.warn",
+      "players.whitelist",
+      "console.view",
+      "control.server"
+    ]
+  },
+  {
+    "name": "RyanRS",
+    "master": false,
+    "password_hash": "$2a$11$B6Hr7sD9Rrayg.WyYL.1ZuG841sHnUVSi6/vZnP3ctmWO3EU7G9c6",
+    "providers": {},
+    "permissions": [
+      "players.ban",
+      "players.kick",
+      "players.message",
+      "players.warn",
+      "players.whitelist",
+      "console.view",
+      "control.server"
+    ]
+  }
+]
