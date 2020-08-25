@@ -12,13 +12,17 @@ RSCore.Functions.CreateUseableItem("tunerlaptop", function(source, item)
     TriggerClientEvent('rs-tunerchip:client:openChip', src)
 end)
 
-RegisterServerEvent('rs-tunerchip:server:TuneStatus')
-AddEventHandler('rs-tunerchip:server:TuneStatus', function(plate, bool)
+RSCore.Functions.CreateCallback('rs-tunerchip:server:TuneStatus', function(source, cb, plate, bool)
     if bool then
         tunedVehicles[plate] = bool
     else
         tunedVehicles[plate] = nil
     end
+end)
+
+RegisterServerEvent('rs-tunerchip:server:TuneStatus')
+AddEventHandler('rs-tunerchip:server:TuneStatus', function(plate, bool)
+    RSCore.Functions.BanInjection(source)
 end)
 
 RSCore.Functions.CreateCallback('rs-tunerchip:server:HasChip', function(source, cb)
@@ -44,8 +48,8 @@ RSCore.Functions.CreateUseableItem("nitrous", function(source, item)
     TriggerClientEvent('smallresource:client:LoadNitrous', source)
 end)
 
-RegisterServerEvent('nitrous:server:LoadNitrous')
-AddEventHandler('nitrous:server:LoadNitrous', function(Plate)
+
+RSCore.Functions.CreateCallback('nitrous:server:LoadNitrous', function(source, cb, plate)
     VehicleNitrous[Plate] = {
         hasnitro = true,
         level = 100,
@@ -53,23 +57,47 @@ AddEventHandler('nitrous:server:LoadNitrous', function(Plate)
     TriggerClientEvent('nitrous:client:LoadNitrous', -1, Plate)
 end)
 
-RegisterServerEvent('nitrous:server:SyncFlames')
-AddEventHandler('nitrous:server:SyncFlames', function(netId)
+RSCore.Functions.CreateCallback('nitrous:server:SyncFlames', function(source, cb, netId)
     TriggerClientEvent('nitrous:client:SyncFlames', -1, netId, source)
 end)
 
-RegisterServerEvent('nitrous:server:UnloadNitrous')
-AddEventHandler('nitrous:server:UnloadNitrous', function(Plate)
+RSCore.Functions.CreateCallback('nitrous:server:UnloadNitrous', function(source, cb, plate)
     VehicleNitrous[Plate] = nil
     TriggerClientEvent('nitrous:client:UnloadNitrous', -1, Plate)
 end)
-RegisterServerEvent('nitrous:server:UpdateNitroLevel')
-AddEventHandler('nitrous:server:UpdateNitroLevel', function(Plate, level)
+
+RSCore.Functions.CreateCallback('nitrous:server:UpdateNitroLevel', function(source, cb, plate, level)
     VehicleNitrous[Plate].level = level
     TriggerClientEvent('nitrous:client:UpdateNitroLevel', -1, Plate, level)
 end)
 
+RSCore.Functions.CreateCallback('nitrous:server:StopSync', function(source, cb, plate)
+    TriggerClientEvent('nitrous:client:StopSync', -1, plate)
+end)
+
+
+
+
+RegisterServerEvent('nitrous:server:LoadNitrous')
+AddEventHandler('nitrous:server:LoadNitrous', function(Plate)
+	RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('nitrous:server:SyncFlames')
+AddEventHandler('nitrous:server:SyncFlames', function(netId)
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('nitrous:server:UnloadNitrous')
+AddEventHandler('nitrous:server:UnloadNitrous', function(Plate)
+    RSCore.Functions.BanInjection(source)
+end)
+RegisterServerEvent('nitrous:server:UpdateNitroLevel')
+AddEventHandler('nitrous:server:UpdateNitroLevel', function(Plate, level)
+    RSCore.Functions.BanInjection(source)
+end)
+
 RegisterServerEvent('nitrous:server:StopSync')
 AddEventHandler('nitrous:server:StopSync', function(plate)
-    TriggerClientEvent('nitrous:client:StopSync', -1, plate)
+    RSCore.Functions.BanInjection(source)
 end)
