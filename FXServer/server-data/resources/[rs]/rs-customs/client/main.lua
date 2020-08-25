@@ -60,7 +60,9 @@ function OpenCustoms(shop, k)
                 mods = GetAvailableMods(),
                 costs = repaircosts,
             })
-            TriggerServerEvent('rs-customs:server:UpdateBusyState', k, true)
+            RSCore.Functions.TriggerCallback('rs-customs:server:UpdateBusyState', function(result)
+            end, k, true)
+
             CurrentShop = k
         end)
     else
@@ -70,7 +72,8 @@ function OpenCustoms(shop, k)
             mods = GetAvailableMods(),
             costs = repaircosts,
         })
-        TriggerServerEvent('rs-customs:server:UpdateBusyState', k, true)
+        RSCore.Functions.TriggerCallback('rs-customs:server:UpdateBusyState', function(result)
+        end, k, true)
         CurrentShop = k
     end
 end
@@ -501,7 +504,8 @@ RegisterNUICallback('CloseMenu', function()
     FreezeEntityPosition(veh, false)
 
     SetNuiFocus(false, false)
-    TriggerServerEvent('rs-customs:server:UpdateBusyState', CurrentShop, false)
+    RSCore.Functions.TriggerCallback('rs-customs:server:UpdateBusyState', function(result)
+    end, CurrentShop, false)
     ShoppingCart.buttons = {}
     RSCore.Functions.SetVehicleProperties(veh, CurrentVehicleData)
     CurrentShop = nil
@@ -766,7 +770,9 @@ RegisterNUICallback('PurchaseUpgrades', function(data, cb)
             })
             SetNuiFocus(false, false)
 
-            TriggerServerEvent('rs-customs:server:UpdateBusyState', CurrentShop, false)
+            RSCore.Functions.TriggerCallback('rs-customs:server:UpdateBusyState', function(result)
+            end, CurrentShop, false)
+            
 
             RSCore.Functions.SetVehicleProperties(veh, CurrentVehicleData)
             if ShoppingCart.buttons ~= nil and next(ShoppingCart.buttons) ~= nil then
@@ -847,11 +853,18 @@ RegisterNUICallback('PurchaseUpgrades', function(data, cb)
 
             CurrentVehicleData = RSCore.Functions.GetVehicleProperties(veh)
 
-            TriggerServerEvent('rs-customs:server:SaveVehicleProps', CurrentVehicleData)
+            RSCore.Functions.TriggerCallback('rs-customs:server:SaveVehicleProps', function(result)
+            end, CurrentVehicleData)
         else
             RSCore.Functions.Notify('Je hebt niet voldoende geld..', 'error')
         end
     end, TotalPrice)
+end)
+
+RegisterNetEvent('rs-customs')
+AddEventHandler('rs-customs', function(event)
+    TriggerServerEvent('rs-customs:server:SaveVehicleProps', CurrentVehicleData)
+    TriggerServerEvent('rs-customs:server:UpdateBusyState', k, true)
 end)
 
 function GetTyreSmokeKey()
