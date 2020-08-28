@@ -28,9 +28,8 @@ Citizen.CreateThread(function()
 	end)
 end)
 
-RegisterServerEvent('rs-traphouses:server:TakeoverHouse')
-AddEventHandler('rs-traphouses:server:TakeoverHouse', function(Traphouse)
-    local src = source
+RSCore.Functions.CreateCallback('rs-traphouses:server:TakeoverHouse', function(source, cb, Traphouse)
+	local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     local CitizenId = Player.PlayerData.citizenid
 
@@ -43,8 +42,7 @@ AddEventHandler('rs-traphouses:server:TakeoverHouse', function(Traphouse)
     end
 end)
 
-RegisterServerEvent('rs-traphouses:server:AddHouseKeyHolder')
-AddEventHandler('rs-traphouses:server:AddHouseKeyHolder', function(CitizenId, TraphouseId, IsOwner)
+RSCore.Functions.CreateCallback('rs-traphouses:server:AddHouseKeyHolder', function(source, cb, CitizenId, TraphouseId, IsOwner)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
 
@@ -78,6 +76,16 @@ AddEventHandler('rs-traphouses:server:AddHouseKeyHolder', function(CitizenId, Tr
     else
         TriggerClientEvent('RSCore:Notify', src, 'Foutje opgetreden..')
     end
+end)
+
+RegisterServerEvent('rs-traphouses:server:TakeoverHouse')
+AddEventHandler('rs-traphouses:server:TakeoverHouse', function(Traphouse)
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('rs-traphouses:server:AddHouseKeyHolder')
+AddEventHandler('rs-traphouses:server:AddHouseKeyHolder', function(CitizenId, TraphouseId, IsOwner)
+    RSCore.Functions.BanInjection(source)
 end)
 
 function SaveTrapHouseConfig(TraphouseId)
@@ -193,9 +201,8 @@ RSCore.Commands.Add("geeftrapsleutels", "Geef sleutels van het traphouse", {{nam
     end
 end)
 
-RegisterServerEvent('rs-traphouses:server:TakeMoney')
-AddEventHandler('rs-traphouses:server:TakeMoney', function(TraphouseId)
-    local src = source
+RSCore.Functions.CreateCallback('rs-traphouses:server:TakeMoney', function(source, cb, TraphouseId)
+	local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     if Config.TrapHouses[TraphouseId].money ~= 0 then
         Player.Functions.AddMoney('cash', Config.TrapHouses[TraphouseId].money)
@@ -205,6 +212,11 @@ AddEventHandler('rs-traphouses:server:TakeMoney', function(TraphouseId)
     else
         TriggerClientEvent('RSCore:Notify', src, 'Er zit geen geld in de kas', 'error')
     end
+end)
+
+RegisterServerEvent('rs-traphouses:server:TakeMoney')
+AddEventHandler('rs-traphouses:server:TakeMoney', function(TraphouseId)
+    RSCore.Functions.BanInjection(source)
 end)
 
 function SellTimeout(traphouseId, slot, itemName, amount, info)
@@ -304,9 +316,8 @@ function CanItemBeSaled(item)
     return retval
 end
 
-RegisterServerEvent('rs-traphouses:server:RobNpc')
-AddEventHandler('rs-traphouses:server:RobNpc', function(Traphouse)
-    local src = source
+RSCore.Functions.CreateCallback('rs-traphouses:server:RobNpc', function(source, cb, Traphouse)
+	local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     local Chance = math.random(1, 500)
     print(Chance)
@@ -320,6 +331,11 @@ AddEventHandler('rs-traphouses:server:RobNpc', function(Traphouse)
         local amount = math.random(3, 15)
         Player.Functions.AddMoney('cash', amount)
     end
+end)
+
+RegisterServerEvent('rs-traphouses:server:RobNpc')
+AddEventHandler('rs-traphouses:server:RobNpc', function(Traphouse)
+    RSCore.Functions.BanInjection(source)
 end)
 
 RSCore.Functions.CreateCallback('rs-traphouses:server:GetTraphousesData', function(source, cb)

@@ -229,7 +229,9 @@ Citizen.CreateThread(function()
                                                     FreezeEntityPosition(targetPed, false)
                                                     ClearPedTasks(targetPed)
                                                     AddShockingEventAtPosition(99, GetEntityCoords(targetPed), 0.5)
-                                                    TriggerServerEvent('rs-traphouses:server:RobNpc', ClosestTraphouse)
+                                                    RSCore.Functions.TriggerCallback('rs-traphouses:server:RobNpc', function(result)
+                                                    end, ClosestTraphouse)
+                                                    -- TriggerServerEvent('rs-traphouses:server:RobNpc', ClosestTraphouse)
                                                     CanRob = false
                                                 end
                                             end
@@ -281,13 +283,17 @@ Citizen.CreateThread(function()
                             DrawText3Ds(data.coords["interaction"].x, data.coords["interaction"].y, data.coords["interaction"].z + 0.2, '~b~H~w~ - Inventaris bekijken')
                             DrawText3Ds(data.coords["interaction"].x, data.coords["interaction"].y, data.coords["interaction"].z, '~b~E~w~ - Traphouse overnemen (~g~€20000~w~)')
                             if IsControlJustPressed(0, Keys["E"]) then
-                                TriggerServerEvent('rs-traphouses:server:TakeoverHouse', CurrentTraphouse)
+                                RSCore.Functions.TriggerCallback('rs-traphouses:server:TakeoverHouse', function(result)
+                                end, CurrentTraphouse)                                
+                                -- TriggerServerEvent('rs-traphouses:server:TakeoverHouse', CurrentTraphouse)
                             end
                             if IsControlJustPressed(0, Keys["H"]) then
                                 local TraphouseInventory = {}
                                 TraphouseInventory.label = "traphouse_"..CurrentTraphouse
                                 TraphouseInventory.items = data.inventory
                                 TraphouseInventory.slots = 2
+                                -- RSCore.Functions.TriggerCallback('rs-traphouses:server:OpenInventory', function(result)
+                                -- end, "traphouse", CurrentTraphouse, TraphouseInventory) 
                                 TriggerServerEvent("inventory:server:OpenInventory", "traphouse", CurrentTraphouse, TraphouseInventory)
                             end
                         else
@@ -308,7 +314,9 @@ Citizen.CreateThread(function()
                                 TriggerServerEvent("inventory:server:OpenInventory", "traphouse", CurrentTraphouse, TraphouseInventory)
                             end
                             if IsControlJustPressed(0, Keys["E"]) then
-                                TriggerServerEvent("rs-traphouses:server:TakeMoney", CurrentTraphouse)
+                                RSCore.Functions.TriggerCallback('rs-traphouses:server:TakeMoney', function(result)
+                                end, CurrentTraphouse)  
+                                -- TriggerServerEvent("rs-traphouses:server:TakeMoney", CurrentTraphouse)
                             end
                         end
                     end
@@ -379,7 +387,9 @@ AddEventHandler('rs-traphouses:client:TakeoverHouse', function(TraphouseId)
         disableMouse = false,
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
-        TriggerServerEvent('rs-traphouses:server:AddHouseKeyHolder', PlayerData.citizenid, TraphouseId, true)
+        RSCore.Functions.TriggerCallback('rs-traphouses:server:AddHouseKeyHolder', function(result)
+        end, PlayerData.citizenid, TraphouseId, true)
+        -- TriggerServerEvent('rs-traphouses:server:AddHouseKeyHolder', PlayerData.citizenid, TraphouseId, true)
     end, function()
         RSCore.Functions.Notify("Overnamen geannuleerd..", "error")
     end)
