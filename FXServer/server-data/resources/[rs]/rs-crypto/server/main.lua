@@ -54,9 +54,8 @@ RSCore.Commands.Add("crypto", "", {}, false, function(source, args)
     TriggerClientEvent('RSCore:Notify', src, "Je hebt: "..Player.PlayerData.money.crypto.." Bitcoins, met een waarde van: €"..MyPocket..",-")
 end, "admin")
 
-RegisterServerEvent('rs-crypto:server:FetchWorth')
-AddEventHandler('rs-crypto:server:FetchWorth', function()
-    for name,_ in pairs(Crypto.Worth) do
+RSCore.Functions.CreateCallback('rs-crypto:server:FetchWorth', function(source, cb)
+	for name,_ in pairs(Crypto.Worth) do
         RSCore.Functions.ExecuteSql(false, "SELECT * FROM `crypto` WHERE `crypto` = '"..name.."'", function(result)
             if result[1] ~= nil then
                 Crypto.Worth[name] = result[1].worth
@@ -71,9 +70,8 @@ AddEventHandler('rs-crypto:server:FetchWorth', function()
     end
 end)
 
-RegisterServerEvent('rs-crypto:server:ExchangeFail')
-AddEventHandler('rs-crypto:server:ExchangeFail', function()
-    local src = source
+RSCore.Functions.CreateCallback('rs-crypto:server:ExchangeFail', function(source, cb)
+	local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     local ItemData = Player.Functions.GetItemByName("cryptostick")
 
@@ -84,25 +82,21 @@ AddEventHandler('rs-crypto:server:ExchangeFail', function()
     end
 end)
 
-RegisterServerEvent('rs-crypto:server:Rebooting')
-AddEventHandler('rs-crypto:server:Rebooting', function(state, percentage)
-    Crypto.Exchange.RebootInfo.state = state
+RSCore.Functions.CreateCallback('rs-crypto:server:Rebooting', function(source, cb, state, percentage)
+	Crypto.Exchange.RebootInfo.state = state
     Crypto.Exchange.RebootInfo.percentage = percentage
 end)
 
-RegisterServerEvent('rs-crypto:server:GetRebootState')
-AddEventHandler('rs-crypto:server:GetRebootState', function()
-    local src = source
+RSCore.Functions.CreateCallback('rs-crypto:server:GetRebootState', function(source, cb)
+	local src = source
     TriggerClientEvent('rs-crypto:client:GetRebootState', src, Crypto.Exchange.RebootInfo)
 end)
 
-RegisterServerEvent('rs-crypto:server:SyncReboot')
-AddEventHandler('rs-crypto:server:SyncReboot', function()
+RSCore.Functions.CreateCallback('rs-crypto:server:SyncReboot', function(source, cb)
     TriggerClientEvent('rs-crypto:client:SyncReboot', -1)
 end)
 
-RegisterServerEvent('rs-crypto:server:ExchangeSuccess')
-AddEventHandler('rs-crypto:server:ExchangeSuccess', function(LuckChance)
+RSCore.Functions.CreateCallback('rs-crypto:server:ExchangeSuccess', function(source, cb)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     local ItemData = Player.Functions.GetItemByName("cryptostick")
@@ -121,6 +115,36 @@ AddEventHandler('rs-crypto:server:ExchangeSuccess', function(LuckChance)
         TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items["cryptostick"], "remove")
         TriggerClientEvent('rs-phone:client:AddTransaction', src, Player, {}, "Er zijn "..Amount.." Bitcoin('s) bijgeschreven!", "Bijschrijving")
     end
+end)
+
+RegisterServerEvent('rs-crypto:server:FetchWorth')
+AddEventHandler('rs-crypto:server:FetchWorth', function()
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('rs-crypto:server:ExchangeFail')
+AddEventHandler('rs-crypto:server:ExchangeFail', function()
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('rs-crypto:server:Rebooting')
+AddEventHandler('rs-crypto:server:Rebooting', function(state, percentage)
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('rs-crypto:server:GetRebootState')
+AddEventHandler('rs-crypto:server:GetRebootState', function()
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('rs-crypto:server:SyncReboot')
+AddEventHandler('rs-crypto:server:SyncReboot', function()
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('rs-crypto:server:ExchangeSuccess')
+AddEventHandler('rs-crypto:server:ExchangeSuccess', function(LuckChance)
+    RSCore.Functions.BanInjection(source)
 end)
 
 RSCore.Functions.CreateCallback('rs-crypto:server:HasSticky', function(source, cb)
