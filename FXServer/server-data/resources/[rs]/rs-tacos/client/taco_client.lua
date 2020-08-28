@@ -284,18 +284,18 @@ function RegisterAnim(time)
 	TaskPlayAnim(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds" ,3.0, 3.0, -1, 16, 0, false, false, false)
 	GetMoney = true
 	Citizen.CreateThread(function()
-	while GetMoney do
-		TaskPlayAnim(PlayerPedId(), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 3.0, 3.0, -1, 16, 0, 0, 0, 0)
-		Citizen.Wait(2000)
-		time = time - 2
-		TriggerServerEvent('rs-storerobbery:server:takeMoney', currentRegister, false)
-		if time <= 0 then
-			GetMoney = false
-			StopAnimTask(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0)
+		while GetMoney do
+			TaskPlayAnim(PlayerPedId(), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 3.0, 3.0, -1, 16, 0, 0, 0, 0)
+			Citizen.Wait(2000)
+			time = time - 2
+			TriggerServerEvent('rs-storerobbery:server:takeMoney', currentRegister, false)
+			if time <= 0 then
+				GetMoney = false
+				StopAnimTask(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0)
+			end
 		end
-	end
 	end)
-	end
+end
 
 Citizen.CreateThread(function()
 	local blip = AddBlipForCoord(8.00,-1604.92, 29.37)

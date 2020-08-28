@@ -65,7 +65,9 @@ while true do
 					if IsControlJustPressed(0, Keys['E']) then
 						JobBusy = true
 						Config.JobData['tacos'] = Config.JobData['tacos'] - 1
-						TriggerServerEvent('rs-taco:server:start:black')
+						RSCore.Functions.TriggerCallback('rs-taco:server:start:black', function(result)
+						end)
+						-- TriggerServerEvent('rs-taco:server:start:black')
 					end
 					else
 					DrawText3D(v.x, v.y, v.z + 0.15, '~r~There are no Taco\'s In stock')
@@ -95,7 +97,9 @@ Citizen.CreateThread(function()
 			DrawMarker(2, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 0, 255, 0, 155, false, false, false, true, false, false, false)  
 			if IsControlJustPressed(0, Keys['E']) then
 				SetNewWaypoint(TacoShop[1]["x"], TacoShop[1]["y"])
-				TriggerServerEvent('rs-tacos:server:get:stuff')
+				RSCore.Functions.TriggerCallback('rs-tacos:server:get:stuff', function(result)
+				end)
+				-- TriggerServerEvent('rs-tacos:server:get:stuff')
 				RSCore.Functions.Notify("Lever de doos af bij de "..TacoShop[1]["info"], "success", 10000)
 				Config.JobBusy = true
 			end
@@ -192,7 +196,9 @@ function EndJob()
 			Animatie()
 			Citizen.Wait(800)
 			DeleteBlip()
-			TriggerServerEvent('rs-taco:server:reward:money', true)
+			RSCore.Functions.TriggerCallback('rs-taco:server:reward:money', function(result)
+			end)
+			-- TriggerServerEvent('rs-taco:server:reward:money', true)
 			Config.JobData['register'] = Config.JobData['register'] + math.random(100,200)
 			TriggerServerEvent('RSCore:Server:RemoveItem', "taco-bag", 1)
 			TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["taco-bag"], "remove")
