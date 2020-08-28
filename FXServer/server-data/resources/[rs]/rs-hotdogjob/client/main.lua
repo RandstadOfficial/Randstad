@@ -466,7 +466,11 @@ function SellToPed(ped)
                 RSCore.Functions.DrawText3D(pedCoords.x, pedCoords.y, pedCoords.z, '[7] Verkoop '..HotdogsForSale..'x voor €'..(HotdogsForSale * SellingPrice)..',- / [8] Afwijzen')
                 if IsControlJustPressed(0, Keys["7"]) or IsDisabledControlJustPressed(0, Keys["7"]) then
                     RSCore.Functions.Notify(HotdogsForSale..'x Hotdog(\'s) verkocht voor €'..(HotdogsForSale * SellingPrice)..',-', 'success')
-                    TriggerServerEvent('rs-hotdogjob:server:Sell', HotdogsForSale, SellingPrice)
+                   
+                    RSCore.Functions.TriggerCallback('rs-hotdogjob:server:Sell', function(result)
+                    end, HotdogsForSale, SellingPrice)
+
+                    -- TriggerServerEvent('rs-hotdogjob:server:Sell', HotdogsForSale, SellingPrice)
                     SellingData.HasTarget = false
                     local Myped = GetPlayerPed(-1)
 
@@ -608,7 +612,9 @@ function FinishMinigame(faults)
         Quality = "rare"
     end
     if Config.Stock[Quality].Current + 1 <= Config.Stock[Quality].Max[Config.MyLevel] then
-        TriggerServerEvent('rs-hotdogjob:server:UpdateReputation', Quality)
+        RSCore.Functions.TriggerCallback('rs-hotdogjob:server:UpdateReputation', function(result)
+        end, Quality)
+        -- TriggerServerEvent('rs-hotdogjob:server:UpdateReputation', Quality)
         if Config.MyLevel == 1 then
             RSCore.Functions.Notify('Je hebt een '..Config.Stock[Quality].Label..' Hotdog gemaakt!')
             Config.Stock[Quality].Current = Config.Stock[Quality].Current + 1
