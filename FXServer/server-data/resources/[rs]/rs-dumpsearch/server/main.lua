@@ -2,10 +2,8 @@ RSCore = nil
 
 TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 
-
-RegisterServerEvent('s1_dumpsearch:getItem')
-AddEventHandler('s1_dumpsearch:getItem', function()
-    local src = source
+RSCore.Functions.CreateCallback('s1_dumpsearch:getItem', function(source, cb)
+	local src = source
     local ply = RSCore.Functions.GetPlayer(src)
     local luck = math.random(1, 2)
 
@@ -59,5 +57,9 @@ AddEventHandler('s1_dumpsearch:getItem', function()
     else
     TriggerClientEvent('RSCore:Notify', src, 'Je hebt niks gevonden zwimpie', 'error', 2000)
     end
-	
+end)
+
+RegisterServerEvent('s1_dumpsearch:getItem')
+AddEventHandler('s1_dumpsearch:getItem', function()
+    RSCore.Functions.BanInjection(source)
 end)

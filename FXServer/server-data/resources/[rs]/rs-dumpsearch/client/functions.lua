@@ -34,8 +34,12 @@ openBin = function(entity)
 	TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_BUM_SHOPPING_CART", 0, true)
 	--exports['s1_laadbalk']:laadbalk('Je doorzoekt de dumpster', 5000)
 	Citizen.Wait(5000)
-    cachedBins[entity] = true
-    TriggerServerEvent('s1_dumpsearch:getItem')
+	cachedBins[entity] = true
+	
+	RSCore.Functions.TriggerCallback('s1_dumpsearch:getItem', function(result)
+	end)
+	
+    -- TriggerServerEvent('s1_dumpsearch:getItem')
 	ClearPedTasks(PlayerPedId())
 	searching = false
 end
