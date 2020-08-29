@@ -85,7 +85,9 @@ Citizen.CreateThread(function()
                                         else
                                             newDamage = 0
                                         end
-                                        TriggerServerEvent('rs-vehicletuning:server:SetPartLevel', plate, k, newDamage)
+                                        RSCore.Functions.TriggerCallback('rs-vehicletuning:server:SetPartLevel', function(result)
+                                        end, plate, k, newDamage)
+                                        -- TriggerServerEvent('rs-vehicletuning:server:SetPartLevel', plate, k, newDamage)
                                     end
                                 end
                             end
@@ -93,7 +95,9 @@ Citizen.CreateThread(function()
                             local amount = round(DrivingDistance[plate] / 1000, -2)
 
                             TriggerEvent('rs-hud:client:UpdateDrivingMeters', true, amount)
-                            TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', DrivingDistance[plate], plate)
+                            RSCore.Functions.TriggerCallback('rs-vehicletuning:server:UpdateDrivingDistance', function(result)
+                            end, DrivingDistance[plate], plate)
+                            -- TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', DrivingDistance[plate], plate)
                         end
                     else
                         if invehicle then

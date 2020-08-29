@@ -8,9 +8,8 @@ RSCore.Functions.CreateCallback('rs-vehicletuning:server:GetDrivingDistances', f
     cb(VehicleDrivingDistance)
 end)
 
-RegisterServerEvent("vehiclemod:server:setupVehicleStatus")
-AddEventHandler("vehiclemod:server:setupVehicleStatus", function(plate, engineHealth, bodyHealth)
-    local src = source
+RSCore.Functions.CreateCallback('vehiclemod:server:setupVehicleStatus', function(source, cb, plate, engineHealth, bodyHealth)
+	local src = source
     local engineHealth = engineHealth ~= nil and engineHealth or 1000.0
     local bodyHealth = bodyHealth ~= nil and bodyHealth or 1000.0
     if VehicleStatus[plate] == nil then 
@@ -47,9 +46,8 @@ AddEventHandler("vehiclemod:server:setupVehicleStatus", function(plate, engineHe
     end
 end)
 
-RegisterServerEvent('rs-vehicletuning:server:UpdateDrivingDistance')
-AddEventHandler('rs-vehicletuning:server:UpdateDrivingDistance', function(amount, plate)
-    VehicleDrivingDistance[plate] = amount
+RSCore.Functions.CreateCallback('rs-vehicletuning:server:UpdateDrivingDistance', function(source, cb, amount, plate)
+	VehicleDrivingDistance[plate] = amount
 
     TriggerClientEvent('rs-vehicletuning:client:UpdateDrivingDistance', -1, VehicleDrivingDistance[plate], plate)
 
@@ -58,6 +56,16 @@ AddEventHandler('rs-vehicletuning:server:UpdateDrivingDistance', function(amount
             RSCore.Functions.ExecuteSql(false, "UPDATE `player_vehicles` SET `drivingdistance` = '"..amount.."' WHERE `plate` = '"..plate.."'")
         end
     end)
+end)
+
+RegisterServerEvent("vehiclemod:server:setupVehicleStatus")
+AddEventHandler("vehiclemod:server:setupVehicleStatus", function(plate, engineHealth, bodyHealth)
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('rs-vehicletuning:server:UpdateDrivingDistance')
+AddEventHandler('rs-vehicletuning:server:UpdateDrivingDistance', function(amount, plate)
+    RSCore.Functions.BanInjection(source)
 end)
 
 RSCore.Functions.CreateCallback('rs-vehicletuning:server:IsVehicleOwned', function(source, cb, plate)
@@ -70,15 +78,14 @@ RSCore.Functions.CreateCallback('rs-vehicletuning:server:IsVehicleOwned', functi
     end)
 end)
 
-RegisterServerEvent('rs-vehicletuning:server:LoadStatus')
-AddEventHandler('rs-vehicletuning:server:LoadStatus', function(veh, plate)
-    VehicleStatus[plate] = veh
+
+RSCore.Functions.CreateCallback('rs-vehicletuning:server:LoadStatus', function(source, cb, veh, plate)
+	VehicleStatus[plate] = veh
     TriggerClientEvent("vehiclemod:client:setVehicleStatus", -1, plate, veh)
 end)
 
-RegisterServerEvent("vehiclemod:server:updatePart")
-AddEventHandler("vehiclemod:server:updatePart", function(plate, part, level)
-    if VehicleStatus[plate] ~= nil then
+RSCore.Functions.CreateCallback('vehiclemod:server:updatePart', function(source, cb, plate, part, level)
+	if VehicleStatus[plate] ~= nil then
         if part == "engine" or part == "body" then
             VehicleStatus[plate][part] = level
             if VehicleStatus[plate][part] < 0 then
@@ -98,17 +105,15 @@ AddEventHandler("vehiclemod:server:updatePart", function(plate, part, level)
     end
 end)
 
-RegisterServerEvent('rs-vehicletuning:server:SetPartLevel')
-AddEventHandler('rs-vehicletuning:server:SetPartLevel', function(plate, part, level)
-    if VehicleStatus[plate] ~= nil then
+RSCore.Functions.CreateCallback('rs-vehicletuning:server:SetPartLevel', function(source, cb, plate, part, level)
+	if VehicleStatus[plate] ~= nil then
         VehicleStatus[plate][part] = level
         TriggerClientEvent("vehiclemod:client:setVehicleStatus", -1, plate, VehicleStatus[plate])
     end
 end)
 
-RegisterServerEvent("vehiclemod:server:fixEverything")
-AddEventHandler("vehiclemod:server:fixEverything", function(plate)
-    if VehicleStatus[plate] ~= nil then 
+RSCore.Functions.CreateCallback('vehiclemod:server:fixEverything', function(source, cb, plate)
+	if VehicleStatus[plate] ~= nil then 
         for k, v in pairs(Config.MaxStatusValues) do
             VehicleStatus[plate][k] = v
         end
@@ -116,11 +121,35 @@ AddEventHandler("vehiclemod:server:fixEverything", function(plate)
     end
 end)
 
-RegisterServerEvent("vehiclemod:server:saveStatus")
-AddEventHandler("vehiclemod:server:saveStatus", function(plate)
-    if VehicleStatus[plate] ~= nil then
+RSCore.Functions.CreateCallback('vehiclemod:server:saveStatus', function(source, cb, plate)
+	if VehicleStatus[plate] ~= nil then
         exports['ghmattimysql']:execute('UPDATE player_vehicles SET status = @status WHERE plate = @plate', {['@status'] = json.encode(VehicleStatus[plate]), ['@plate'] = plate})
     end
+end)
+
+RegisterServerEvent('rs-vehicletuning:server:LoadStatus')
+AddEventHandler('rs-vehicletuning:server:LoadStatus', function(veh, plate)
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent("vehiclemod:server:updatePart")
+AddEventHandler("vehiclemod:server:updatePart", function(plate, part, level)
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('rs-vehicletuning:server:SetPartLevel')
+AddEventHandler('rs-vehicletuning:server:SetPartLevel', function(plate, part, level)
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent("vehiclemod:server:fixEverything")
+AddEventHandler("vehiclemod:server:fixEverything", function(plate)
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent("vehiclemod:server:saveStatus")
+AddEventHandler("vehiclemod:server:saveStatus", function(plate)
+    RSCore.Functions.BanInjection(source)
 end)
 
 function IsVehicleOwned(plate)
@@ -166,9 +195,8 @@ RSCore.Functions.CreateCallback('rs-vehicletuning:server:IsMechanicAvailable', f
     cb(amount)
 end)
 
-RegisterServerEvent('rs-vehicletuning:server:SetAttachedVehicle')
-AddEventHandler('rs-vehicletuning:server:SetAttachedVehicle', function(veh, k)
-    if veh ~= false then
+RSCore.Functions.CreateCallback('rs-vehicletuning:server:SetAttachedVehicle', function(source, cb, veh, k)
+	if veh ~= false then
         Config.Plates[k].AttachedVehicle = veh
         TriggerClientEvent('rs-vehicletuning:client:SetAttachedVehicle', -1, veh, k)
     else
@@ -177,9 +205,8 @@ AddEventHandler('rs-vehicletuning:server:SetAttachedVehicle', function(veh, k)
     end
 end)
 
-RegisterServerEvent('rs-vehicletuning:server:CheckForItems')
-AddEventHandler('rs-vehicletuning:server:CheckForItems', function(part)
-    local src = source
+RSCore.Functions.CreateCallback('rs-vehicletuning:server:CheckForItems', function(source, cb, part)
+	local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     local RepairPart = Player.Functions.GetItemByName(Config.RepairCostAmount[part].item)
 
@@ -198,6 +225,16 @@ AddEventHandler('rs-vehicletuning:server:CheckForItems', function(part)
     else
         TriggerClientEvent('RSCore:Notify', src, "Je hebt geen "..RSCore.Shared.Items[Config.RepairCostAmount[part].item]["label"].." bij je!", "error")
     end
+end)
+
+RegisterServerEvent('rs-vehicletuning:server:SetAttachedVehicle')
+AddEventHandler('rs-vehicletuning:server:SetAttachedVehicle', function(veh, k)
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('rs-vehicletuning:server:CheckForItems')
+AddEventHandler('rs-vehicletuning:server:CheckForItems', function(part)
+    RSCore.Functions.BanInjection(source)
 end)
 
 function IsAuthorized(CitizenId)
