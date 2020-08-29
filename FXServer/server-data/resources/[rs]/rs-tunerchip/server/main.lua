@@ -22,7 +22,11 @@ end)
 
 RegisterServerEvent('rs-tunerchip:server:TuneStatus')
 AddEventHandler('rs-tunerchip:server:TuneStatus', function(plate, bool)
-    RSCore.Functions.BanInjection(source)
+    if bool then
+        tunedVehicles[plate] = bool
+    else
+        tunedVehicles[plate] = nil
+    end
 end)
 
 RSCore.Functions.CreateCallback('rs-tunerchip:server:HasChip', function(source, cb)
