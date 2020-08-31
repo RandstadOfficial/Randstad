@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="./css/meos.css">
     <link rel="stylesheet" href="./css/advertenties.css">
     <link rel="stylesheet" href="./css/twitter.css">
-
+    <link rel="stylesheet" href="./css/crypto.css">
     
     <!-- CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -641,6 +641,149 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="crypto-app">
+                    <div class="crypto-header">
+
+                        <img src="./img/qbit.png" class="crypto-header-picture">
+
+                        <div class="crypto-header-values">
+                            <div class="crypto-header-value crypto-portofolio">
+                                <span>Portefeuille</span>
+                                <p>0.2555</p>
+                            </div>
+                            <div class="crypto-header-value crypto-course">
+                                <span>Koers</span>
+                                <p>€9000</p>
+                            </div>
+                            <div class="crypto-header-value crypto-volume">
+                                <span>Volume</span>
+                                <p>€2299.5‬</p>
+                            </div>
+                        </div>
+
+                        <div class="crypto-header-footer">
+                            <div class="crypto-header-footer-item" data-cryptotab="general">
+                                Algemeen
+                            </div>
+                            <div class="crypto-header-footer-item" data-cryptotab="transactions">
+                                Transacties
+                            </div>
+                            <div class="crypto-header-footer-item" data-cryptotab="course">
+                                Koers
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="crypto-action-page">
+                        <div class="crypto-action-page-buy-crypto">
+
+                            <div class="crypto-action-page-header">Qbit Inkopen</div>
+
+                            <div class="crypto-action-page-wallet">Portefeuille: 1.000500 Qbit('s)</div>
+
+                            <i class="crypto-action-page-buy-crypto-input-coins-icon fas fa-coins"></i>
+                            <input type="number" class="crypto-action-page-buy-crypto-input-coins" required spellcheck="false" placeholder="1.000000" step="0.000001" min="0">
+
+                            <i class="crypto-action-page-buy-crypto-input-money-icon fas fa-euro-sign"></i>
+                            <input type="number" class="crypto-action-page-buy-crypto-input-money" required spellcheck="false" placeholder="1000" step="1.0" min="0">
+
+                            <div class="crypto-action-page-buy-crypto-footer">
+                                <div class="crypto-action-page-buy-crypto-footer-button" id="buy-crypto">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="crypto-action-page-buy-crypto-footer-button" id="cancel-crypto">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="crypto-action-page-sell-crypto">
+
+                            <div class="crypto-action-page-header">Qbit Verkopen</div>
+
+                            <div class="crypto-action-page-wallet">Portefeuille: 1.000500 Qbit('s)</div>
+
+                            <i class="crypto-action-page-sell-crypto-input-coins-icon fas fa-coins"></i>
+                            <input type="number" class="crypto-action-page-sell-crypto-input-coins" required spellcheck="false" placeholder="1.000000" step="0.000001" min="0">
+
+                            <i class="crypto-action-page-sell-crypto-input-money-icon fas fa-euro-sign"></i>
+                            <input type="number" class="crypto-action-page-sell-crypto-input-money" required spellcheck="false" placeholder="1000" step="1.0" min="0">
+
+                            <div class="crypto-action-page-buy-crypto-footer">
+                                <div class="crypto-action-page-buy-crypto-footer-button" id="sell-crypto">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="crypto-action-page-buy-crypto-footer-button" id="cancel-crypto">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="crypto-action-page-transfer-crypto">
+
+                            <div class="crypto-action-page-header">Qbit Overmaken</div>
+
+                            <div class="crypto-action-page-wallet">Portefeuille: 0 Qbit('s)</div>
+
+                            <i class="crypto-action-page-transfer-crypto-input-coins-icon fas fa-coins"></i>
+                            <input type="number" class="crypto-action-page-transfer-crypto-input-coins" required spellcheck="false" placeholder="1.000000" step="0.000001" min="0">
+
+                            <i class="crypto-action-page-transfer-crypto-input-money-icon fas fa-address-book"></i>
+                            <input type="texts" class="crypto-action-page-transfer-crypto-input-walletid" required spellcheck="false" placeholder="QB-12345678">
+
+                            <div class="crypto-action-page-buy-crypto-footer">
+                                <div class="crypto-action-page-buy-crypto-footer-button" id="transfer-crypto">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="crypto-action-page-buy-crypto-footer-button" id="cancel-crypto">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="crypto-page">
+                        <div class="cryptotab-general">
+                            <div class="cryptotab-general-actions">
+                                <div class="cryptotab-general-action" data-action="buy-crypto">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <span class="cryptotab-general-action-title">INKOPEN</span>
+                                    <span class="cryptotab-general-action-description">Hier kan je crypto inkopen.</span>
+                                </div>
+                                <div class="cryptotab-general-action" data-action="sell-crypto">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <span class="cryptotab-general-action-title">VERKOPEN</span>
+                                    <span class="cryptotab-general-action-description">Hier kan je crypto verkopen.</span>
+                                </div>
+                                <div class="cryptotab-general-action" data-action="transfer-crypto">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <span class="cryptotab-general-action-title">OVERMAKEN</span>
+                                    <span class="cryptotab-general-action-description">Hier kan je crypto overmaken.</span>
+                                </div>
+                            </div>
+                            <span class="crypto-walletid">Wallet ID: RS-12345678</span>
+                        </div>
+                    
+                        <div class="cryptotab-transactions">
+                            <div class="cryptotab-transactions-list">
+                                <!-- <div class="cryptotab-transactions-block">
+                                    <i class="fas fa-exchange-alt"></i>
+                                    <span class="cryptotab-transactions-block-title" style="color: green !important;">Bijschrijving</span>
+                                    <span class="cryptotab-transactions-block-happening">Er is &euro;1000,- bijgeschreven</span>
+                                </div> -->
+                            </div>
+                        </div>
+
+                        <div class="cryptotab-course">
+                            <div class="cryptotab-course-list">
+                                <!-- <div class="cryptotab-course-block">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span class="cryptotab-course-block-title">Koers verandering</span>
+                                    <span class="cryptotab-course-block-happening"><span style="font-size: 1.3vh;">€1000</span> naar <span style="font-size: 1.3vh;">€2000</span><span style="color: green;" class="crypto-percentage-change"><i style="color: green;" class="fas fa-arrow-right"></i> +(100%)</span></span>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- Phone Home Button -->
             <div class="phone-bottom">
@@ -673,6 +816,7 @@
     <script src="./js/meos.js"></script>
     <script src="./js/advertenties.js"></script>
     <script src="./js/twitter.js"></script>
+    <script src="./js/crypto.js"></script>
 
 </body>
 </html>
