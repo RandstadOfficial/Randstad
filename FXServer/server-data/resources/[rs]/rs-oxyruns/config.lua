@@ -19,7 +19,7 @@ Config.MaximumTime = 17
 
 Config.OxyChance = 400 -- Percentage chance of getting oxy on the run. Multiplied by 100. 10% = 100, 20% = 200, 50% = 500, etc. Default 55%.
 
-Config.BigRewarditemChance = 1 -- Percentage of getting rare item on oxy run. Multiplied by 100. 0.1% = 1, 1% = 10, 20% = 200, 50% = 500, etc. Default 0.1%.
+Config.BigRewarditemChance = 10 -- Percentage of getting rare item on oxy run. Multiplied by 100. 0.1% = 1, 1% = 10, 20% = 200, 50% = 500, etc. Default 0.1%.
 
 Config.OxyCars = "CHECK THE CODE" -- Cars
 
