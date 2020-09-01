@@ -198,44 +198,48 @@ function RepairVehicleFull(vehicle)
 end
 
 function RepairVehicle(vehicle)
-	if (IsBackEngine(GetEntityModel(vehicle))) then
-        SetVehicleDoorOpen(vehicle, 5, false, false)
-    else
-        SetVehicleDoorOpen(vehicle, 4, false, false)
-    end
-	RSCore.Functions.Progressbar("repair_vehicle", "Bezig met sleutelen..", math.random(10000, 20000), false, true, {
-		disableMovement = true,
-		disableCarMovement = true,
-		disableMouse = false,
-		disableCombat = true,
-	}, {
-		animDict = "mini@repair",
-		anim = "fixing_a_player",
-		flags = 16,
-	}, {}, {}, function() -- Done
-		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
-		RSCore.Functions.Notify("Voertuig gemaakt!")
-		SetVehicleEngineHealth(vehicle, 500.0)
-		SetVehicleTyreFixed(vehicle, 0)
-		SetVehicleTyreFixed(vehicle, 1)
-		SetVehicleTyreFixed(vehicle, 2)
-		SetVehicleTyreFixed(vehicle, 3)
-		SetVehicleTyreFixed(vehicle, 4)
+	if GetVehicleEngineHealth(vehicle) + 150 <= 1000.0 then
 		if (IsBackEngine(GetEntityModel(vehicle))) then
-			SetVehicleDoorShut(vehicle, 5, false)
+			SetVehicleDoorOpen(vehicle, 5, false, false)
 		else
-			SetVehicleDoorShut(vehicle, 4, false)
+			SetVehicleDoorOpen(vehicle, 4, false, false)
 		end
-		TriggerServerEvent('rs-vehiclefailure:removeItem', "repairkit")
-	end, function() -- Cancel
-		StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
-		RSCore.Functions.Notify("Mislukt!", "error")
-		if (IsBackEngine(GetEntityModel(vehicle))) then
-			SetVehicleDoorShut(vehicle, 5, false)
-		else
-			SetVehicleDoorShut(vehicle, 4, false)
-		end
-	end)
+		RSCore.Functions.Progressbar("repair_vehicle", "Bezig met sleutelen..", math.random(10000, 20000), false, true, {
+			disableMovement = true,
+			disableCarMovement = true,
+			disableMouse = false,
+			disableCombat = true,
+		}, {
+			animDict = "mini@repair",
+			anim = "fixing_a_player",
+			flags = 16,
+		}, {}, {}, function() -- Done
+			StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
+			RSCore.Functions.Notify("Voertuig gemaakt!")
+			SetVehicleEngineHealth(vehicle, GetVehicleEngineHealth(vehicle) + 100.0) 
+			SetVehicleTyreFixed(vehicle, 0)
+			SetVehicleTyreFixed(vehicle, 1)
+			SetVehicleTyreFixed(vehicle, 2)
+			SetVehicleTyreFixed(vehicle, 3)
+			SetVehicleTyreFixed(vehicle, 4)
+			if (IsBackEngine(GetEntityModel(vehicle))) then
+				SetVehicleDoorShut(vehicle, 5, false)
+			else
+				SetVehicleDoorShut(vehicle, 4, false)
+			end
+			TriggerServerEvent('rs-vehiclefailure:removeItem', "repairkit")
+		end, function() -- Cancel
+			StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
+			RSCore.Functions.Notify("Mislukt!", "error")
+			if (IsBackEngine(GetEntityModel(vehicle))) then
+				SetVehicleDoorShut(vehicle, 5, false)
+			else
+				SetVehicleDoorShut(vehicle, 4, false)
+			end
+		end)
+	else
+	RSCore.Functions.Notify("Voertuig kan niet nog meer worden gerepareerd..")
+  end 
 end
 
 function IsBackEngine(vehModel)
