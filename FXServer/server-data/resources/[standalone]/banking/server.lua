@@ -219,6 +219,6 @@ end)
 RSCore.Commands.Add("resetatm", "Reset alle geld in geldautomaten", {}, false, function(source, args)
   RSCore.Functions.ExecuteSql(false, "UPDATE `banking` SET `cashInside` = '100000'", function()
   TriggerClientEvent('chatMessage', source, "SYSTEM", "success", "Alle geldautomaten zijn gereset")
+  updateClient()
   end)
 end, "admin")
-
