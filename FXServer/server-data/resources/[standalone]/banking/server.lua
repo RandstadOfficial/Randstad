@@ -85,7 +85,7 @@ function GetAtmFromDB(pos) --LLG
   end
   for _,atm in pairs(atms) do
     local dist = GetDistanceBetweenCoords(pos, atm)
-    if dist <= 5.0 then
+    if dist <= 7.5 then
       return atm.id
     end
   end

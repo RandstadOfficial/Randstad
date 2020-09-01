@@ -29,7 +29,7 @@ local giveCashAnywhere = false -- Allows the player to give CASH to another play
 local withdrawAnywhere = false -- Allows the player to withdraw cash from bank account anywhere (Default: false)
 local depositAnywhere = false -- Allows the player to deposit cash into bank account anywhere (Default: false)
 local displayBankBlips = true -- Toggles Bank Blips on the map (Default: true)
-local displayAtmBlips = true -- Toggles ATM blips on the map (Default: false) // THIS IS UGLY. SOME ICONS OVERLAP BECAUSE SOME PLACES HAVE MULTIPLE ATM MACHINES. NOT RECOMMENDED
+local displayAtmBlips = false -- Toggles ATM blips on the map (Default: false) // THIS IS UGLY. SOME ICONS OVERLAP BECAUSE SOME PLACES HAVE MULTIPLE ATM MACHINES. NOT RECOMMENDED
 local enableBankingGui = true -- Enables the banking GUI (Default: true) // MAY HAVE SOME ISSUES
 
 -- ATMS
@@ -334,7 +334,7 @@ Citizen.CreateThread(function()
 
             if IsDisabledControlJustPressed(0, 140) and atms[atmId].hijackable == 1 then
               if atms[atmId].isHijacked == 0 then
-                if CurrentCops >= 0 then
+                if CurrentCops >= 3 then
                   RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
                     if result then 
                       RSCore.Functions.Progressbar("", "Gasbom plaatsen...", math.random(7500, 15000), false, true, {
