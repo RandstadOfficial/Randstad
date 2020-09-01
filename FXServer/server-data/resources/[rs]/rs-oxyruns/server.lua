@@ -35,8 +35,8 @@ RSCore.Functions.CreateCallback('oxydelivery:server:receiveBigRewarditem', funct
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
  
-	Player.Functions.AddItem('security_card_01', 1)
-    TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['security_card_01'], "add")
+	Player.Functions.AddItem('security_card_03', 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['security_card_03'], "add")
 end)
  
 RSCore.Functions.CreateCallback('oxydelivery:server:receiveOxey', function(source, cb)
