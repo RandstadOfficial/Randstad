@@ -80,7 +80,9 @@ Citizen.CreateThread(function()
                         if storeDist < 2 then
                             if not firstAlarm then
                                 if validWeapon() then
-                                    TriggerServerEvent('rs-jewellery:server:PoliceAlertMessage', "Verdachte situatie", pos, true)
+                                    RSCore.Functions.TriggerCallback('rs-jewellery:server:PoliceAlertMessage', function(result)
+                                    end, "Verdachte situatie", pos, true)
+                                    -- TriggerServerEvent('rs-jewellery:server:PoliceAlertMessage', "Verdachte situatie", pos, true)
                                     firstAlarm = true
                                 end
                             end
@@ -151,20 +153,32 @@ function smashVitrine(k)
         disableMouse = false,
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
-        TriggerServerEvent('rs-jewellery:server:setVitrineState', "isOpened", true, k)
-        TriggerServerEvent('rs-jewellery:server:setVitrineState', "isBusy", false, k)
+        RSCore.Functions.TriggerCallback('rs-jewellery:server:setVitrineState', function(result)
+        end, "isOpened", true, k)
+        RSCore.Functions.TriggerCallback('rs-jewellery:server:setVitrineState', function(result)
+        end, "isBusy", false, k)
+        -- TriggerServerEvent('rs-jewellery:server:setVitrineState', "isOpened", true, k)
+        -- TriggerServerEvent('rs-jewellery:server:setVitrineState', "isBusy", false, k)
         RSCore.Functions.TriggerCallback('rs-jewellery:vitrineReward', function()
         end)
-        TriggerServerEvent('rs-jewellery:server:setTimeout')
-        TriggerServerEvent('rs-jewellery:server:PoliceAlertMessage', "Juwelier overval", plyCoords, false)
+        RSCore.Functions.TriggerCallback('rs-jewellery:server:setTimeout', function(result)
+        end)
+        RSCore.Functions.TriggerCallback('rs-jewellery:server:PoliceAlertMessage', function(result)
+        end, "Juwelier overval", plyCoords, false)
+        -- TriggerServerEvent('rs-jewellery:server:setTimeout')
+        -- TriggerServerEvent('rs-jewellery:server:PoliceAlertMessage', "Juwelier overval", plyCoords, false)
         smashing = false
         TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
     end, function() -- Cancel
-        TriggerServerEvent('rs-jewellery:server:setVitrineState', "isBusy", false, k)
+        RSCore.Functions.TriggerCallback('rs-jewellery:server:setVitrineState', function(result)
+        end, "isBusy", false, k)
+        -- TriggerServerEvent('rs-jewellery:server:setVitrineState', "isBusy", false, k)
         TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
         smashing = false
     end)
-    TriggerServerEvent('rs-jewellery:server:setVitrineState', "isBusy", true, k)
+    RSCore.Functions.TriggerCallback('rs-jewellery:server:setVitrineState', function(result)
+    end, "isBusy", true, k)
+    -- TriggerServerEvent('rs-jewellery:server:setVitrineState', "isBusy", true, k)
 
     Citizen.CreateThread(function()
         while smashing do

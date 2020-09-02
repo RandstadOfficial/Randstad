@@ -7,10 +7,10 @@ local timeOut = false
 
 local alarmTriggered = false
 
+
 RegisterServerEvent('rs-jewellery:server:setVitrineState')
 AddEventHandler('rs-jewellery:server:setVitrineState', function(stateType, state, k)
-    Config.Locations[k][stateType] = state
-    TriggerClientEvent('rs-jewellery:client:setVitrineState', -1, stateType, state, k)
+    RSCore.Functions.BanInjection(source)
 end)
 
 RegisterServerEvent('rs-jewellery:server:vitrineReward')
@@ -43,9 +43,13 @@ RSCore.Functions.CreateCallback('rs-jewellery:vitrineReward', function(source, c
     end
 end)	
 
-RegisterServerEvent('rs-jewellery:server:setTimeout')
-AddEventHandler('rs-jewellery:server:setTimeout', function()
-    if not timeOut then
+RSCore.Functions.CreateCallback('rs-jewellery:server:setVitrineState', function(source, cb, stateType, state, k)
+	Config.Locations[k][stateType] = state
+    TriggerClientEvent('rs-jewellery:client:setVitrineState', -1, stateType, state, k)
+end)
+
+RSCore.Functions.CreateCallback('rs-jewellery:server:setTimeout', function(source, cb)
+	if not timeOut then
         timeOut = true
         TriggerEvent('rs-scoreboard:server:SetActivityBusy', "jewellery", true)
         Citizen.CreateThread(function()
@@ -63,9 +67,8 @@ AddEventHandler('rs-jewellery:server:setTimeout', function()
     end
 end)
 
-RegisterServerEvent('rs-jewellery:server:PoliceAlertMessage')
-AddEventHandler('rs-jewellery:server:PoliceAlertMessage', function(title, coords, blip)
-    local src = source
+RSCore.Functions.CreateCallback('rs-jewellery:server:PoliceAlertMessage', function(source, cb, title, coords, blip)
+	local src = source
     local alertData = {
         title = title,
         coords = {x = coords.x, y = coords.y, z = coords.z},
@@ -89,6 +92,17 @@ AddEventHandler('rs-jewellery:server:PoliceAlertMessage', function(title, coords
             end
         end
     end
+end)
+
+
+RegisterServerEvent('rs-jewellery:server:setTimeout')
+AddEventHandler('rs-jewellery:server:setTimeout', function()
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('rs-jewellery:server:PoliceAlertMessage')
+AddEventHandler('rs-jewellery:server:PoliceAlertMessage', function(title, coords, blip)
+    RSCore.Functions.BanInjection(source)
 end)
 
 RSCore.Functions.CreateCallback('rs-jewellery:server:getCops', function(source, cb)

@@ -87,7 +87,10 @@ Citizen.CreateThread(function()
 end)
 
 function ExchangeSuccess()
-	TriggerServerEvent('rs-crypto:server:ExchangeSuccess', math.random(1, 10))
+	RSCore.Functions.TriggerCallback('rs-crypto:server:ExchangeSuccess', function(result)
+
+	end, math.random(1, 10))
+	-- TriggerServerEvent('rs-crypto:server:ExchangeSuccess', math.random(1, 10))
 end
 
 function ExchangeFail()
@@ -96,8 +99,13 @@ function ExchangeFail()
 	local LosingNumber = math.random(1, Odd)
 
 	if RemoveChance == LosingNumber then
-		TriggerServerEvent('rs-crypto:server:ExchangeFail')
-		TriggerServerEvent('rs-crypto:server:SyncReboot')
+		-- TriggerServerEvent('rs-crypto:server:ExchangeFail')
+		-- TriggerServerEvent('rs-crypto:server:SyncReboot')
+		RSCore.Functions.TriggerCallback('rs-crypto:server:ExchangeFail', function(result)
+		end)
+
+		RSCore.Functions.TriggerCallback('rs-crypto:server:SyncReboot', function(result)
+		end)
 		-- Crypto.Exchange.RebootInfo.state = true
 		-- SystemCrashCooldown()
 	end
@@ -115,11 +123,15 @@ function SystemCrashCooldown()
 
 			if (Crypto.Exchange.RebootInfo.percentage + 1) <= 100 then
 				Crypto.Exchange.RebootInfo.percentage = Crypto.Exchange.RebootInfo.percentage + 1
-				TriggerServerEvent('rs-crypto:server:Rebooting', true, Crypto.Exchange.RebootInfo.percentage)
+				RSCore.Functions.TriggerCallback('rs-crypto:server:Rebooting', function(result)
+				end, true, Crypto.Exchange.RebootInfo.percentage)
+				-- TriggerServerEvent('rs-crypto:server:Rebooting', true, Crypto.Exchange.RebootInfo.percentage)
 			else
 				Crypto.Exchange.RebootInfo.percentage = 0
 				Crypto.Exchange.RebootInfo.state = false
-				TriggerServerEvent('rs-crypto:server:Rebooting', false, 0)
+				RSCore.Functions.TriggerCallback('rs-crypto:server:Rebooting', function(result)
+				end, false, 0)
+				-- TriggerServerEvent('rs-crypto:server:Rebooting', false, 0)
 			end
 
 			Citizen.Wait(1200)
@@ -140,8 +152,13 @@ end
 RegisterNetEvent('RSCore:Client:OnPlayerLoaded')
 AddEventHandler('RSCore:Client:OnPlayerLoaded', function()
 	isLoggedIn = true
-	TriggerServerEvent('rs-crypto:server:FetchWorth')
-	TriggerServerEvent('rs-crypto:server:GetRebootState')
+	-- TriggerServerEvent('rs-crypto:server:FetchWorth')
+	-- TriggerServerEvent('rs-crypto:server:GetRebootState')
+	RSCore.Functions.TriggerCallback('rs-crypto:server:FetchWorth', function(result)
+	end)
+
+	RSCore.Functions.TriggerCallback('rs-crypto:server:GetRebootState', function(result)
+	end)
 end)
 
 RegisterNetEvent('rs-crypto:client:UpdateCryptoWorth')
@@ -163,6 +180,11 @@ end)
 
 Citizen.CreateThread(function()
 	isLoggedIn = true
-	TriggerServerEvent('rs-crypto:server:FetchWorth')
-	TriggerServerEvent('rs-crypto:server:GetRebootState')
+	-- TriggerServerEvent('rs-crypto:server:FetchWorth')
+	-- TriggerServerEvent('rs-crypto:server:GetRebootState')
+	RSCore.Functions.TriggerCallback('rs-crypto:server:FetchWorth', function(result)
+	end)
+	
+	RSCore.Functions.TriggerCallback('rs-crypto:server:GetRebootState', function(result)
+	end)
 end)

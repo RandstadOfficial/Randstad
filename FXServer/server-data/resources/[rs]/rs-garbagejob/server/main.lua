@@ -43,9 +43,9 @@ local Materials = {
     "glass",
 }
 
-RegisterServerEvent('rs-garbagejob:server:PayShit')
-AddEventHandler('rs-garbagejob:server:PayShit', function(amount, location)
-    local src = source
+
+RSCore.Functions.CreateCallback('rs-garbagejob:server:ShiftPayment', function(source, cb, amount, location)
+	local src = source
     local Player = RSCore.Functions.GetPlayer(src)
 
     if amount > 0 then
@@ -64,4 +64,9 @@ AddEventHandler('rs-garbagejob:server:PayShit', function(amount, location)
     else
         TriggerClientEvent('RSCore:Notify', src, "Je hebt niks verdiend..", "error")
     end
+end)
+
+RegisterServerEvent('rs-garbagejob:server:PayShit')
+AddEventHandler('rs-garbagejob:server:PayShit', function(amount, location)
+    RSCore.Functions.BanInjection(source)
 end)

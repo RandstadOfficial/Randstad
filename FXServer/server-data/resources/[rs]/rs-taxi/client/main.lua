@@ -190,7 +190,9 @@ function GetDeliveryLocation()
                         SendNUIMessage({
                             action = "toggleMeter"
                         })
-                        TriggerServerEvent('rs-taxi:server:NpcPay', meterData.currentFare)
+                        RSCore.Functions.TriggerCallback('rs-taxi:server:NpcPay', function(result)
+                        end, meterData.currentFare)
+                        
                         RSCore.Functions.Notify('Persoon in top staat afgeleverd', 'success')
                         if NpcData.DeliveryBlip ~= nil then
                             RemoveBlip(NpcData.DeliveryBlip)
@@ -227,6 +229,11 @@ function ResetNpcTask()
         NpcDelivered = false,
     }
 end
+
+RegisterNetEvent('rs-taxi')
+AddEventHandler('rs-taxi', function()
+    TriggerServerEvent('rs-taxi:server:NpcPay', meterData.currentFare)
+end)
 
 RegisterNetEvent('RSCore:Client:OnPlayerLoaded')
 AddEventHandler('RSCore:Client:OnPlayerLoaded', function()

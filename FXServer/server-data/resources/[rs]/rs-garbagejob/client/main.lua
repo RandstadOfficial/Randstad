@@ -167,7 +167,9 @@ function PayCheckLoop(location)
                 if distance < 1.5 then
                     DrawText3D(coords.x, coords.y, coords.z, "~g~E~w~ - Loonstrook")
                     if IsControlJustPressed(0, Keys["E"]) then
-                        TriggerServerEvent('rs-garbagejob:server:PayShit', Earnings, location)
+                        RSCore.Functions.TriggerCallback('rs-garbagejob:server:ShiftPayment', function(result)
+
+                        end, Earnings, location)
                         Earnings = 0
                     end
                 elseif distance < 5 then
@@ -437,4 +439,9 @@ AddEventHandler('onResourceStop', function(resource)
             GarbageObject = nil
         end
     end
+end)
+
+RegisterNetEvent('rs-garbagejob')
+AddEventHandler('rs-garbagejob', function(event)
+    TriggerServerEvent('rs-garbagejob:server:PayShit', Earnings, location)
 end)

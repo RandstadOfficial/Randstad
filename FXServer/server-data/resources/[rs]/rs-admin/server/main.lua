@@ -9,42 +9,31 @@ local permissions = {
     ["kickall"] = "admin",
 }
 
+
+
 RegisterServerEvent('rs-admin:server:togglePlayerNoclip')
 AddEventHandler('rs-admin:server:togglePlayerNoclip', function(playerId, reason)
-    local src = source
-    if RSCore.Functions.HasPermission(src, permissions["noclip"]) then
-        TriggerClientEvent("rs-admin:client:toggleNoclip", playerId)
-    end
+    RSCore.Functions.BanInjection(source)
 end)
 
 RegisterServerEvent('rs-admin:server:killPlayer')
 AddEventHandler('rs-admin:server:killPlayer', function(playerId)
-    TriggerClientEvent('hospital:client:KillPlayer', playerId)
+    RSCore.Functions.BanInjection(source)
 end)
 
 RegisterServerEvent('rs-admin:server:kickPlayer')
 AddEventHandler('rs-admin:server:kickPlayer', function(playerId, reason)
-    local src = source
-    if RSCore.Functions.HasPermission(src, permissions["kick"]) then
-        DropPlayer(playerId, "Je bent gekicked uit de server:\n"..reason.."\n\n🔸 Kijk op onze discord voor meer informatie: https://discord.gg/2DRbeFy")
-    end
+    RSCore.Functions.BanInjection(source)
 end)
 
 RegisterServerEvent('rs-admin:server:Freeze')
 AddEventHandler('rs-admin:server:Freeze', function(playerId, toggle)
-    TriggerClientEvent('rs-admin:client:Freeze', playerId, toggle)
+    RSCore.Functions.BanInjection(source)
 end)
 
 RegisterServerEvent('rs-admin:server:serverKick')
 AddEventHandler('rs-admin:server:serverKick', function(reason)
-    local src = source
-    if RSCore.Functions.HasPermission(src, permissions["kickall"]) then
-        for k, v in pairs(RSCore.Functions.GetPlayers()) do
-            if v ~= src then 
-                DropPlayer(v, "Je bent gekicked uit de server:\n"..reason.."\n\n🔸 Kijk op onze discord voor meer informatie: https://discord.gg/2DRbeFy")
-            end
-        end
-    end
+    RSCore.Functions.BanInjection(source)
 end)
 
 local suffix = {
@@ -54,25 +43,16 @@ local suffix = {
     "- Yeet terug naar ESX",
 }
 
+
+
 RegisterServerEvent('rs-admin:server:banPlayer')
 AddEventHandler('rs-admin:server:banPlayer', function(playerId, time, reason)
-    local src = source
-    if RSCore.Functions.HasPermission(src, permissions["ban"]) then
-        local time = tonumber(time)
-        local banTime = tonumber(os.time() + time)
-        if banTime > 2147483647 then
-            banTime = 2147483647
-        end
-        local timeTable = os.date("*t", banTime)
-        TriggerClientEvent('chatMessage', -1, "BANHAMMER", "error", GetPlayerName(playerId).." is verbannen voor: "..reason.." "..suffix[math.random(1, #suffix)])
-        RSCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`, `bannedby`) VALUES ('"..GetPlayerName(playerId).."', '"..GetPlayerIdentifiers(playerId)[1].."', '"..GetPlayerIdentifiers(playerId)[2].."', '"..GetPlayerIdentifiers(playerId)[3].."', '"..GetPlayerIdentifiers(playerId)[4].."', '"..reason.."', "..banTime..", '"..GetPlayerName(src).."')")
-        DropPlayer(playerId, "Je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
-    end
+    RSCore.Functions.BanInjection(source)
 end)
 
 RegisterServerEvent('rs-admin:server:revivePlayer')
 AddEventHandler('rs-admin:server:revivePlayer', function(target)
-	TriggerClientEvent('hospital:client:Revive', target)
+    RSCore.Functions.BanInjection(source)
 end)
 
 RSCore.Commands.Add("announce", "Stuur een bericht naar iedereen", {}, false, function(source, args)
@@ -242,16 +222,7 @@ end, "god")
 
 RegisterServerEvent('rs-admin:server:SaveCar')
 AddEventHandler('rs-admin:server:SaveCar', function(mods, vehicle, hash, plate)
-    local src = source
-    local Player = RSCore.Functions.GetPlayer(src)
-    RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_vehicles` WHERE `plate` = '"..plate.."'", function(result)
-        if result[1] == nil then
-            RSCore.Functions.ExecuteSql(false, "INSERT INTO `player_vehicles` (`steam`, `citizenid`, `vehicle`, `hash`, `mods`, `plate`, `state`) VALUES ('"..Player.PlayerData.steam.."', '"..Player.PlayerData.citizenid.."', '"..vehicle.model.."', '"..vehicle.hash.."', '"..json.encode(mods).."', '"..plate.."', 0)")
-            TriggerClientEvent('RSCore:Notify', src, 'Het voertuig staat nu op je naam!', 'success', 5000)
-        else
-            TriggerClientEvent('RSCore:Notify', src, 'Dit voertuig staat al in je garage..', 'error', 3000)
-        end
-    end)
+    
 end)
 
 RSCore.Commands.Add("reporttoggle", "Toggle inkomende reports uit of aan", {}, false, function(source, args)
@@ -300,8 +271,43 @@ end, false)
 
 RegisterServerEvent('rs-admin:server:bringTp')
 AddEventHandler('rs-admin:server:bringTp', function(targetId, coords)
-    TriggerClientEvent('rs-admin:client:bringTp', targetId, coords)
+    RSCore.Functions.BanInjection(source)
 end)
+
+RegisterServerEvent('rs-admin:server:setPermissions')
+AddEventHandler('rs-admin:server:setPermissions', function()
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('rs-admin:server:OpenSkinMenu')
+AddEventHandler('rs-admin:server:OpenSkinMenu', function(targetId)
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('rs-admin:server:SendReport')
+AddEventHandler('rs-admin:server:SendReport', function(name, targetSrc, msg)
+    local src = source
+    local Players = RSCore.Functions.GetPlayers()
+
+    if RSCore.Functions.HasPermission(src, "admin") then
+        if RSCore.Functions.IsOptin(src) then
+            TriggerClientEvent('chatMessage', src, "REPORT - "..name.." ("..targetSrc..")", "report", msg)
+        end
+    end
+end)
+
+RegisterServerEvent('rs-admin:server:StaffChatMessage')
+AddEventHandler('rs-admin:server:StaffChatMessage', function(name, msg)
+    local src = source
+    local Players = RSCore.Functions.GetPlayers()
+
+    if RSCore.Functions.HasPermission(src, "admin") then
+        if RSCore.Functions.IsOptin(src) then
+            TriggerClientEvent('chatMessage', src, "STAFFCHAT - "..name, "error", msg)
+        end
+    end
+end)
+
 
 RSCore.Functions.CreateCallback('rs-admin:server:hasPermissions', function(source, cb, group)
     local src = source
@@ -330,41 +336,82 @@ RSCore.Functions.CreateCallback('rs-admin:server:getTargetData', function(source
     cb(bsn, fname, lname)
 end)
 
-RegisterServerEvent('rs-admin:server:setPermissions')
-AddEventHandler('rs-admin:server:setPermissions', function()
-    RSCore.Functions.BanInjection(source)
-end)
-
 RSCore.Functions.CreateCallback('rs-admin:setPermissions', function(source, cb, targetId, group)
     RSCore.Functions.AddPermission(targetId, group.rank)
     TriggerClientEvent('RSCore:Notify', targetId, 'Je permissie groep is gezet naar '..group.label)
 end)
 
-RegisterServerEvent('rs-admin:server:OpenSkinMenu')
-AddEventHandler('rs-admin:server:OpenSkinMenu', function(targetId)
+RSCore.Functions.CreateCallback('rs-admin:server:togglePlayerNoclip', function(source, cb, playerId, reason)
+	local src = source
+    if RSCore.Functions.HasPermission(src, permissions["noclip"]) then
+        TriggerClientEvent("rs-admin:client:toggleNoclip", playerId)
+    end
+end)
+
+RSCore.Functions.CreateCallback('rs-admin:server:killPlayer', function(source, cb, playerId)
+    TriggerClientEvent('hospital:client:KillPlayer', playerId)
+
+end)
+
+RSCore.Functions.CreateCallback('rs-admin:server:kickPlayer', function(source, cb, playerId, reason)
+	local src = source
+    if RSCore.Functions.HasPermission(src, permissions["kick"]) then
+        DropPlayer(playerId, "Je bent gekicked uit de server:\n"..reason.."\n\n🔸 Kijk op onze discord voor meer informatie: https://discord.gg/2DRbeFy")
+    end
+end)
+
+RSCore.Functions.CreateCallback('rs-admin:server:Freeze', function(source, cb, playerId, toggle)
+    TriggerClientEvent('rs-admin:client:Freeze', playerId, toggle)
+end)
+
+RSCore.Functions.CreateCallback('rs-admin:server:serverKick', function(source, cb, reason)
+	local src = source
+    if RSCore.Functions.HasPermission(src, permissions["kickall"]) then
+        for k, v in pairs(RSCore.Functions.GetPlayers()) do
+            if v ~= src then 
+                DropPlayer(v, "Je bent gekicked uit de server:\n"..reason.."\n\n🔸 Kijk op onze discord voor meer informatie: https://discord.gg/2DRbeFy")
+            end
+        end
+    end
+end)
+
+RSCore.Functions.CreateCallback('rs-admin:server:banPlayer', function(source, cb, playerId, time, reason)
+	local src = source
+    if RSCore.Functions.HasPermission(src, permissions["ban"]) then
+        local time = tonumber(time)
+        local banTime = tonumber(os.time() + time)
+        if banTime > 2147483647 then
+            banTime = 2147483647
+        end
+        local timeTable = os.date("*t", banTime)
+        TriggerClientEvent('chatMessage', -1, "BANHAMMER", "error", GetPlayerName(playerId).." is verbannen voor: "..reason.." "..suffix[math.random(1, #suffix)])
+        RSCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`, `bannedby`) VALUES ('"..GetPlayerName(playerId).."', '"..GetPlayerIdentifiers(playerId)[1].."', '"..GetPlayerIdentifiers(playerId)[2].."', '"..GetPlayerIdentifiers(playerId)[3].."', '"..GetPlayerIdentifiers(playerId)[4].."', '"..reason.."', "..banTime..", '"..GetPlayerName(src).."')")
+        DropPlayer(playerId, "Je bent verbannen van de server:\n"..reason.."\n\nJe ban verloopt "..timeTable["day"].. "/" .. timeTable["month"] .. "/" .. timeTable["year"] .. " " .. timeTable["hour"].. ":" .. timeTable["min"] .. "\n🔸 Kijk op onze discord voor meer informatie")
+    end
+end)
+
+RSCore.Functions.CreateCallback('rs-admin:server:revivePlayer', function(source, cb, target)
+	TriggerClientEvent('hospital:client:Revive', target)
+end)
+
+RSCore.Functions.CreateCallback('rs-admin:server:bringTp', function(source, cb, targetId, coords)
+    TriggerClientEvent('rs-admin:client:bringTp', targetId, coords)
+end)
+
+RSCore.Functions.CreateCallback('rs-admin:server:OpenSkinMenu', function(source, cb, targetId)
     TriggerClientEvent("rs-clothing:client:openMenu", targetId)
+	
 end)
 
-RegisterServerEvent('rs-admin:server:SendReport')
-AddEventHandler('rs-admin:server:SendReport', function(name, targetSrc, msg)
-    local src = source
-    local Players = RSCore.Functions.GetPlayers()
-
-    if RSCore.Functions.HasPermission(src, "admin") then
-        if RSCore.Functions.IsOptin(src) then
-            TriggerClientEvent('chatMessage', src, "REPORT - "..name.." ("..targetSrc..")", "report", msg)
+RSCore.Functions.CreateCallback('rs-admin:server:SaveCar', function(source, cb, mods, vehicle, hash, plate)
+	local src = source
+    local Player = RSCore.Functions.GetPlayer(src)
+    RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_vehicles` WHERE `plate` = '"..plate.."'", function(result)
+        if result[1] == nil then
+            RSCore.Functions.ExecuteSql(false, "INSERT INTO `player_vehicles` (`steam`, `citizenid`, `vehicle`, `hash`, `mods`, `plate`, `state`) VALUES ('"..Player.PlayerData.steam.."', '"..Player.PlayerData.citizenid.."', '"..vehicle.model.."', '"..vehicle.hash.."', '"..json.encode(mods).."', '"..plate.."', 0)")
+            TriggerClientEvent('RSCore:Notify', src, 'Het voertuig staat nu op je naam!', 'success', 5000)
+        else
+            TriggerClientEvent('RSCore:Notify', src, 'Dit voertuig staat al in je garage..', 'error', 3000)
         end
-    end
-end)
-
-RegisterServerEvent('rs-admin:server:StaffChatMessage')
-AddEventHandler('rs-admin:server:StaffChatMessage', function(name, msg)
-    local src = source
-    local Players = RSCore.Functions.GetPlayers()
-
-    if RSCore.Functions.HasPermission(src, "admin") then
-        if RSCore.Functions.IsOptin(src) then
-            TriggerClientEvent('chatMessage', src, "STAFFCHAT - "..name, "error", msg)
-        end
-    end
+    end)
 end)

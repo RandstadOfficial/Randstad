@@ -29,7 +29,8 @@ AddEventHandler('smallresource:client:LoadNitrous', function()
                 TriggerServerEvent("RSCore:Server:RemoveItem", 'nitrous', 1)
                 local CurrentVehicle = GetVehiclePedIsIn(GetPlayerPed(-1))
                 local Plate = GetVehicleNumberPlateText(CurrentVehicle)
-                TriggerServerEvent('nitrous:server:LoadNitrous', Plate)
+                RSCore.Functions.TriggerCallback('nitrous:server:LoadNitrous',function(result)
+                end, plate)
             end)
         else
             RSCore.Functions.Notify('Je zit niet in een auto.', 'error')
@@ -59,10 +60,14 @@ Citizen.CreateThread(function()
                         Citizen.CreateThread(function()
                             while NitrousActivated do
                                 if VehicleNitrous[Plate].level - 1 ~= 0 then
-                                    TriggerServerEvent('nitrous:server:UpdateNitroLevel', Plate, (VehicleNitrous[Plate].level - 1))
+                                    RSCore.Functions.TriggerCallback('nitrous:server:UpdateNitroLevel', function(result)
+                                    end, Plate, (VehicleNitrous[Plate].level - 1))
+                                    
                                     TriggerEvent('rs-hud:client:UpdateNitrous', VehicleNitrous[Plate].hasnitro,  VehicleNitrous[Plate].level, true)
                                 else
-                                    TriggerServerEvent('nitrous:server:UnloadNitrous', Plate)
+                                    RSCore.Functions.TriggerCallback('nitrous:server:UnloadNitrous', function(result)
+                                    end. Plate)
+                                    
                                     NitrousActivated = false
                                     SetVehicleBoostActive(CurrentVehicle, 0)
                                     SetVehicleEnginePowerMultiplier(CurrentVehicle, LastEngineMultiplier)
@@ -71,7 +76,8 @@ Citizen.CreateThread(function()
                                     ScreenEffect = false
                                     for index,_ in pairs(Fxs) do
                                         StopParticleFxLooped(Fxs[index], 1)
-                                        TriggerServerEvent('nitrous:server:StopSync', GetVehicleNumberPlateText(CurrentVehicle))
+                                        RSCore.Functions.TriggerCallback('nitrous:server:StopSync', function(result)
+                                        end, GetVehicleNumberPlateText(CurrentVehicle))
                                         Fxs[index] = nil
                                     end
                                 end
@@ -88,7 +94,8 @@ Citizen.CreateThread(function()
                             SetVehicleEngineTorqueMultiplier(veh, 1.0)
                             for index,_ in pairs(Fxs) do
                                 StopParticleFxLooped(Fxs[index], 1)
-                                TriggerServerEvent('nitrous:server:StopSync', GetVehicleNumberPlateText(veh))
+                                RSCore.Functions.TriggerCallback('nitrous:server:StopSync', function(result)
+                                end, GetVehicleNumberPlateText(veh))
                                 Fxs[index] = nil
                             end
                             StopScreenEffect("RaceTurbo")
@@ -183,7 +190,8 @@ Citizen.CreateThread(function()
     while true do
         if NitrousActivated then
             local veh = GetVehiclePedIsIn(GetPlayerPed(-1))
-            TriggerServerEvent('nitrous:server:SyncFlames', VehToNet(veh))
+            RSCore.Functions.TriggerCallback('nitrous:server:SyncFlames', function(result)
+            end, VehToNet(veh))
             SetVehicleBoostActive(veh, 1)
             StartScreenEffect("RaceTurbo", 0.0, 0)
 
@@ -271,4 +279,15 @@ AddEventHandler('nitrous:client:UnloadNitrous', function(Plate)
         NitrousActivated = false
         TriggerEvent('rs-hud:client:UpdateNitrous', false, nil, false)
     end
+end)
+
+RegisterNetEvent('rs-tunerchip')
+AddEventHandler('rs-tunerchip', function(Plate)
+    TriggerServerEvent('rs-tunerchip:server:TuneStatus', GetVehicleNumberPlateText(veh), true)
+    TriggerServerEvent('nitrous:server:SyncFlames', VehToNet(veh))
+    TriggerServerEvent('nitrous:server:StopSync', GetVehicleNumberPlateText(veh))
+    TriggerServerEvent('nitrous:server:StopSync', GetVehicleNumberPlateText(CurrentVehicle))
+    TriggerServerEvent('nitrous:server:UnloadNitrous', Plate)
+    TriggerServerEvent('nitrous:server:UpdateNitroLevel', Plate, (VehicleNitrous[Plate].level - 1))
+    TriggerServerEvent('nitrous:server:LoadNitrous', Plate)
 end)

@@ -55,11 +55,14 @@ RegisterNUICallback('save', function(data)
             local ped = GetPlayerPed(-1)
             local veh = GetVehiclePedIsUsing(ped)
 
-            RSCore.Functions.Notify('Tunerchip V1.05 heeft een error opgelopen!', 'error')
-            --setVehData(veh, data)
-            --RSCore.Functions.Notify('Tunerchip v1.10: Voertuig aangepast!', 'success')
+            setVehData(veh, data)
+            RSCore.Functions.Notify('Tunerchip v1.10: Voertuig aangepast!', 'success')
 
-            --TriggerServerEvent('rs-tunerchip:server:TuneStatus', GetVehicleNumberPlateText(veh), true)
+            RSCore.Functions.TriggerCallback('rs-tunerchip:server:TuneStatus', function(status)            
+            end, GetVehicleNumberPlateText(veh), true)
+            
+        else
+            RSCore.Functions.Notify('je hebt geen Tunerchip in je inventory', 'error')
         end
     end)
 end)

@@ -312,12 +312,17 @@ Citizen.CreateThread(function()
             if WarMenu.CheckBox("Noclip", isNoclip, function(checked) isNoclip = checked end) then
                 local target = PlayerId()
                 local targetId = GetPlayerServerId(target)
-                TriggerServerEvent("rs-admin:server:togglePlayerNoclip", targetId)
+                
+                RSCore.Functions.TriggerCallback('rs-admin:server:togglePlayerNoclip', function(result)
+                end, targetId)
+                -- TriggerServerEvent("rs-admin:server:togglePlayerNoclip", targetId)
             end
             if WarMenu.Button('Revive') then
                 local target = PlayerId()
                 local targetId = GetPlayerServerId(target)
-                TriggerServerEvent('rs-admin:server:revivePlayer', targetId)
+                RSCore.Functions.TriggerCallback('rs-admin:server:revivePlayer', function(result)
+                end, targetId)
+                -- TriggerServerEvent('rs-admin:server:revivePlayer', targetId)
             end
             if WarMenu.CheckBox("Invisible", isInvisible, function(checked) isInvisible = checked end) then
                 local myPed = GetPlayerPed(-1)
@@ -436,19 +441,27 @@ Citizen.CreateThread(function()
             -- end, target)
             
             if WarMenu.MenuButton('Kill', currentPlayer) then
-                TriggerServerEvent("rs-admin:server:killPlayer", GetPlayerServerId(currentPlayer))
+                RSCore.Functions.TriggerCallback('rs-admin:server:killPlayer', function(result)
+                end, GetPlayerServerId(currentPlayer))
+                -- TriggerServerEvent("rs-admin:server:killPlayer", GetPlayerServerId(currentPlayer))
             end
             if WarMenu.MenuButton('Revive', currentPlayer) then
                 local target = GetPlayerServerId(currentPlayer)
-                TriggerServerEvent('rs-admin:server:revivePlayer', target)
+                RSCore.Functions.TriggerCallback('rs-admin:server:revivePlayer', function(result)
+                end, target)
+                -- TriggerServerEvent('rs-admin:server:revivePlayer', target)
             end
             if WarMenu.CheckBox("Noclip", isNoclip, function(checked) isNoclip = checked end) then
                 local target = GetPlayerServerId(currentPlayer)
-                TriggerServerEvent("rs-admin:server:togglePlayerNoclip", target)
+                RSCore.Functions.TriggerCallback('rs-admin:server:togglePlayerNoclip', function(result)
+                end, target)
+                -- TriggerServerEvent("rs-admin:server:togglePlayerNoclip", target)
             end
             if WarMenu.CheckBox("Freeze", isFreeze, function(checked) isFreeze = checked end) then
                 local target = GetPlayerServerId(currentPlayer)
-                TriggerServerEvent("rs-admin:server:Freeze", target, isFreeze)
+                RSCore.Functions.TriggerCallback('rs-admin:server:Freeze', function(result)
+                end, target, isFreeze)
+                -- TriggerServerEvent("rs-admin:server:Freeze", target, isFreeze)
             end
             if WarMenu.CheckBox("Spectate", isSpectating, function(checked) isSpectating = checked end) then
                 local target = GetPlayerFromServerId(GetPlayerServerId(currentPlayer))
@@ -472,7 +485,10 @@ Citizen.CreateThread(function()
             if WarMenu.MenuButton("Give Clothing Menu", currentPlayer) then
                 local targetId = GetPlayerServerId(currentPlayer)
 
-                TriggerServerEvent('rs-admin:server:OpenSkinMenu', targetId) 
+                RSCore.Functions.TriggerCallback('rs-admin:server:OpenSkinMenu', function(result)
+                end, targetId)
+
+                -- TriggerServerEvent('rs-admin:server:OpenSkinMenu', targetId) 
             end
 
             WarMenu.Display()
@@ -491,8 +507,9 @@ Citizen.CreateThread(function()
             if WarMenu.MenuButton('Bring', currentPlayer) then
                 local target = GetPlayerPed(currentPlayer)
                 local plyCoords = GetEntityCoords(GetPlayerPed(-1))
-
-                TriggerServerEvent('rs-admin:server:bringTp', GetPlayerServerId(currentPlayer), plyCoords)
+                RSCore.Functions.TriggerCallback('rs-admin:server:bringTp', function(result)
+                end, GetPlayerServerId(currentPlayer), plyCoords)
+                -- TriggerServerEvent('rs-admin:server:bringTp', GetPlayerServerId(currentPlayer), plyCoords)
             end
             WarMenu.Display()
         elseif WarMenu.IsMenuOpened('permissionOptions') then
@@ -531,7 +548,9 @@ Citizen.CreateThread(function()
                 local reason = GetOnscreenKeyboardResult()
                 if reason ~= nil and reason ~= "" and time ~= 0 then
                     local target = GetPlayerServerId(currentPlayer)
-                    TriggerServerEvent("rs-admin:server:banPlayer", target, time, reason)
+                    RSCore.Functions.TriggerCallback('rs-admin:server:banPlayer', function(result)
+                    end, target, time, reason)
+                    -- TriggerServerEvent("rs-admin:server:banPlayer", target, time, reason)
                 end
             end
             if WarMenu.MenuButton('Kick', currentPlayer) then
@@ -542,7 +561,9 @@ Citizen.CreateThread(function()
                 local reason = GetOnscreenKeyboardResult()
                 if reason ~= nil and reason ~= "" then
                     local target = GetPlayerServerId(currentPlayer)
-                    TriggerServerEvent("rs-admin:server:kickPlayer", target, reason)
+                    RSCore.Functions.TriggerCallback('rs-admin:server:kickPlayer', function(result)
+                    end, target, reason)
+                    -- TriggerServerEvent("rs-admin:server:kickPlayer", target, reason)
                 end
             end
             WarMenu.Display()
@@ -922,7 +943,9 @@ AddEventHandler('rs-admin:client:SaveCar', function()
         local props = RSCore.Functions.GetVehicleProperties(veh)
         local hash = props.model
         if RSCore.Shared.VehicleModels[hash] ~= nil and next(RSCore.Shared.VehicleModels[hash]) ~= nil then
-            TriggerServerEvent('rs-admin:server:SaveCar', props, RSCore.Shared.VehicleModels[hash], GetHashKey(veh), plate)
+            RSCore.Functions.TriggerCallback('rs-admin:server:SaveCar', function(result)
+            end, props, RSCore.Shared.VehicleModels[hash], GetHashKey(veh), plate)
+            -- TriggerServerEvent('rs-admin:server:SaveCar', props, RSCore.Shared.VehicleModels[hash], GetHashKey(veh), plate)
         else
             RSCore.Functions.Notify('Je kan dit voertuig niet in je garage zetten..', 'error')
         end

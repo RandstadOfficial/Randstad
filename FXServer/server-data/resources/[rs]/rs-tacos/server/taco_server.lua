@@ -4,27 +4,40 @@ TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 
 RegisterServerEvent('rs-taco:server:start:black')
 AddEventHandler('rs-taco:server:start:black', function()
-    local src = source
-    
-    TriggerClientEvent('rs-taco:start:black:job', src)
+    RSCore.Functions.BanInjection(source)
 end)
 
 RegisterServerEvent('rs-taco:server:reward:money')
 AddEventHandler('rs-taco:server:reward:money', function()
-    local src = source
-    local Player = RSCore.Functions.GetPlayer(src)
-    
-    Player.Functions.AddMoney("cash", Config.PaymentTaco, "taco-reward-money")
-    TriggerClientEvent('RSCore:Notify', src, "Taco geleverd! Ga terug naar de Taco shop voor een nieuwe levering")
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('rs-tacos:server:get:stuff')
+AddEventHandler('rs-tacos:server:get:stuff', function()
+    RSCore.Functions.BanInjection(source)
 end)
 
 RSCore.Functions.CreateCallback('rs-tacos:server:GetConfig', function(source, cb)
     cb(Config)
 end)
 
-RegisterServerEvent('rs-tacos:server:get:stuff')
-AddEventHandler('rs-tacos:server:get:stuff', function()
-    local src = source
+
+RSCore.Functions.CreateCallback('rs-taco:server:start:black', function(source, cb)
+	local src = source
+    
+    TriggerClientEvent('rs-taco:start:black:job', src)
+end)
+
+RSCore.Functions.CreateCallback('rs-taco:server:reward:money', function(source, cb)
+	local src = source
+    local Player = RSCore.Functions.GetPlayer(src)
+    
+    Player.Functions.AddMoney("cash", Config.PaymentTaco, "taco-reward-money")
+    TriggerClientEvent('RSCore:Notify', src, "Taco geleverd! Ga terug naar de Taco shop voor een nieuwe levering")
+end)
+
+RSCore.Functions.CreateCallback('rs-tacos:server:get:stuff', function(source, cb)
+	local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     
     if Player ~= nil then

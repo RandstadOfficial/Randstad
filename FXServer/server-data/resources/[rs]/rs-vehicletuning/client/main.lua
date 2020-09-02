@@ -198,7 +198,9 @@ Citizen.CreateThread(function()
                                                 FreezeEntityPosition(veh, true)
                                                 Wait(500)
                                                 DoScreenFadeIn(250)
-                                                TriggerServerEvent('rs-vehicletuning:server:SetAttachedVehicle', veh, k)
+                                                RSCore.Functions.TriggerCallback('rs-vehicletuning:server:SetAttachedVehicle', function(result)
+                                                end, veh, k)
+                                                -- TriggerServerEvent('rs-vehicletuning:server:SetAttachedVehicle', veh, k)
                                             end
                                         else
                                             RSCore.Functions.Notify("Je kan geen fietsen op de plaat zetten!", "error")
@@ -378,13 +380,19 @@ AddEventHandler('rs-vehicletuning:client:RepaireeePart', function(part)
     local plate = GetVehicleNumberPlateText(veh)
     if part == "engine" then
         SetVehicleEngineHealth(veh, Config.MaxStatusValues[part])
-        TriggerServerEvent("vehiclemod:server:updatePart", plate, "engine", Config.MaxStatusValues[part])
+        RSCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
+        end, plate, "engine", Config.MaxStatusValues[part])
+        -- TriggerServerEvent("vehiclemod:server:updatePart", plate, "engine", Config.MaxStatusValues[part])
     elseif part == "body" then
         SetVehicleBodyHealth(veh, Config.MaxStatusValues[part])
-        TriggerServerEvent("vehiclemod:server:updatePart", plate, "body", Config.MaxStatusValues[part])
+        RSCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
+        end, plate, "body", Config.MaxStatusValues[part])
+        -- TriggerServerEvent("vehiclemod:server:updatePart", plate, "body", Config.MaxStatusValues[part])
         SetVehicleFixed(veh)
     else
-        TriggerServerEvent("vehiclemod:server:updatePart", plate, part, Config.MaxStatusValues[part])
+        RSCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
+        end, plate, part, Config.MaxStatusValues[part])
+        -- TriggerServerEvent("vehiclemod:server:updatePart", plate, part, Config.MaxStatusValues[part])
     end
     RSCore.Functions.Notify("De "..Config.ValuesLabels[part].." is gerepareerd!")
 end)
@@ -400,7 +408,9 @@ function UnattachVehicle()
     Wait(500)
     DoScreenFadeIn(250)
     Config.Plates[ClosestPlate].AttachedVehicle = nil
-    TriggerServerEvent('rs-vehicletuning:server:SetAttachedVehicle', false, ClosestPlate)
+    RSCore.Functions.TriggerCallback('rs-vehicletuning:server:SetAttachedVehicle', function(result)
+    end, false, ClosestPlate)
+    -- TriggerServerEvent('rs-vehicletuning:server:SetAttachedVehicle', false, ClosestPlate)
 end
 
 RegisterNetEvent('rs-vehicletuning:client:SetAttachedVehicle')
@@ -506,10 +516,16 @@ Citizen.CreateThread(function()
                 local bodyHealth = GetVehicleBodyHealth(veh)
                 local plate = GetVehicleNumberPlateText(veh)
                 if VehicleStatus[plate] == nil then 
-                    TriggerServerEvent("vehiclemod:server:setupVehicleStatus", plate, engineHealth, bodyHealth)
+                    RSCore.Functions.TriggerCallback('vehiclemod:server:setupVehicleStatus', function(result)
+                    end, plate, engineHealth, bodyHealth)
+                    -- TriggerServerEvent("vehiclemod:server:setupVehicleStatus", plate, engineHealth, bodyHealth)
                 else
-                    TriggerServerEvent("vehiclemod:server:updatePart", plate, "engine", engineHealth)
-                    TriggerServerEvent("vehiclemod:server:updatePart", plate, "body", bodyHealth)
+                    RSCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
+                    end, plate, "engine", engineHealth)
+                    RSCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
+                    end, plate, "body", bodyHealth)
+                    -- TriggerServerEvent("vehiclemod:server:updatePart", plate, "engine", engineHealth)
+                    -- TriggerServerEvent("vehiclemod:server:updatePart", plate, "body", bodyHealth)
                     effectTimer = effectTimer + 1
                     if effectTimer >= math.random(10, 15) then
                         ApplyEffects(veh)
@@ -567,7 +583,9 @@ AddEventHandler('vehiclemod:client:fixEverything', function()
         local veh = GetVehiclePedIsIn(GetPlayerPed(-1),false)
         if not IsThisModelABicycle(GetEntityModel(veh)) and GetPedInVehicleSeat(veh, -1) == GetPlayerPed(-1) then
             local plate = GetVehicleNumberPlateText(veh)
-            TriggerServerEvent("vehiclemod:server:fixEverything", plate)
+            RSCore.Functions.TriggerCallback('vehiclemod:server:fixEverything', function(result)
+            end, plate)
+            -- TriggerServerEvent("vehiclemod:server:fixEverything", plate)
         else
             RSCore.Functions.Notify("Je bent geen bestuurder of zit op een fiets..", "error")
         end
@@ -584,12 +602,18 @@ AddEventHandler('vehiclemod:client:setPartLevel', function(part, level)
             local plate = GetVehicleNumberPlateText(veh)
             if part == "engine" then
                 SetVehicleEngineHealth(veh, level)
-                TriggerServerEvent("vehiclemod:server:updatePart", plate, "engine", GetVehicleEngineHealth(veh))
+                RSCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
+                end, plate, "engine", GetVehicleEngineHealth(veh))
+                -- TriggerServerEvent("vehiclemod:server:updatePart", plate, "engine", GetVehicleEngineHealth(veh))
             elseif part == "body" then
                 SetVehicleBodyHealth(veh, level)
-                TriggerServerEvent("vehiclemod:server:updatePart", plate, "body", GetVehicleBodyHealth(veh))
+                RSCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
+                end, plate, "body", GetVehicleBodyHealth(veh))
+                -- TriggerServerEvent("vehiclemod:server:updatePart", plate, "body", GetVehicleBodyHealth(veh))
             else
-                TriggerServerEvent("vehiclemod:server:updatePart", plate, part, level)
+                RSCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
+                end, plate, part, level)
+                -- TriggerServerEvent("vehiclemod:server:updatePart", plate, part, level)
             end
         else
             RSCore.Functions.Notify("Je bent geen bestuurder of zit op een fiets..", "error")
@@ -632,11 +656,15 @@ AddEventHandler('vehiclemod:client:repairPart', function(part, level, needAmount
                                 if part == "body" then
                                     SetVehicleBodyHealth(veh, GetVehicleBodyHealth(veh) + level)
                                     SetVehicleFixed(veh)
-                                    TriggerServerEvent("vehiclemod:server:updatePart", plate, part, GetVehicleBodyHealth(veh))
+                                    RSCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
+                                    end, plate, part, GetVehicleBodyHealth(veh))
+                                    -- TriggerServerEvent("vehiclemod:server:updatePart", plate, part, GetVehicleBodyHealth(veh))
                                     TriggerServerEvent("RSCore:Server:RemoveItem", Config.RepairCost[part], needAmount)
                                     TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items[Config.RepairCost[part]], "remove")
                                 elseif part ~= "engine" then
-                                    TriggerServerEvent("vehiclemod:server:updatePart", plate, part, GetVehicleStatus(plate, part) + level)
+                                    RSCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
+                                    end, plate, part, GetVehicleStatus(plate, part) + level))
+                                    -- TriggerServerEvent("vehiclemod:server:updatePart", plate, part, GetVehicleStatus(plate, part) + level)
                                     TriggerServerEvent("RSCore:Server:RemoveItem", Config.RepairCost[part], level)
                                     TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items[Config.RepairCost[part]], "remove")
                                 end
@@ -873,7 +901,9 @@ function GetVehicleStatus(plate, part)
 end
 
 function SetVehicleStatus(plate, part, level)
-    TriggerServerEvent("vehiclemod:server:updatePart", plate, part, level)
+    RSCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
+    end, plate, part, level)
+    -- TriggerServerEvent("vehiclemod:server:updatePart", plate, part, level)
 end
 
 function SendStatusMessage(statusList)

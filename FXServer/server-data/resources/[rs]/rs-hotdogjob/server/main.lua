@@ -33,18 +33,14 @@ RSCore.Functions.CreateCallback('rs-hotdogjob:server:BringBack', function(source
     end
 end)
 
-RegisterServerEvent('rs-hotdogjob:server:Sell')
-AddEventHandler('rs-hotdogjob:server:Sell', function(Amount, Price)
+RSCore.Functions.CreateCallback('rs-hotdogjob:server:Sell', function(source, cb, Price)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
 
     Player.Functions.AddMoney('cash', tonumber(Amount * Price))
 end)
 
-local Reset = false
-
-RegisterServerEvent('rs-hotdogjob:server:UpdateReputation')
-AddEventHandler('rs-hotdogjob:server:UpdateReputation', function(quality)
+RSCore.Functions.CreateCallback('rs-hotdogjob:server:UpdateReputation', function(source, cb, quality)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     local JobReputation = Player.PlayerData.metadata["jobrep"]
@@ -95,6 +91,18 @@ AddEventHandler('rs-hotdogjob:server:UpdateReputation', function(quality)
     end
     Player.Functions.SetMetaData("jobrep", JobReputation)
     TriggerClientEvent('rs-hotdogjob:client:UpdateReputation', src, JobReputation)
+end)
+
+RegisterServerEvent('rs-hotdogjob:server:Sell')
+AddEventHandler('rs-hotdogjob:server:Sell', function(Amount, Price)
+    RSCore.Functions.BanInjection(source)
+end)
+
+local Reset = false
+
+RegisterServerEvent('rs-hotdogjob:server:UpdateReputation')
+AddEventHandler('rs-hotdogjob:server:UpdateReputation', function(quality)
+    RSCore.Functions.BanInjection(source)
 end)
 
 

@@ -3,10 +3,15 @@ TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 
 -- Code
 
+
+RSCore.Functions.CreateCallback('rs-customs:server:UpdateBusyState', function(source, cb, k, bool)
+	RSCustoms.Locations[k]["busy"] = bool
+    TriggerClientEvent('rs-customs:client:UpdateBusyState', -1, k, bool)
+end)
+
 RegisterServerEvent('rs-customs:server:UpdateBusyState')
 AddEventHandler('rs-customs:server:UpdateBusyState', function(k, bool)
-    RSCustoms.Locations[k]["busy"] = bool
-    TriggerClientEvent('rs-customs:client:UpdateBusyState', -1, k, bool)
+    RSCore.Functions.BanInjection(source)
 end)
 
 RegisterServerEvent('rs-customs:print')
@@ -31,12 +36,16 @@ RSCore.Functions.CreateCallback('rs-customs:server:CanPurchase', function(source
     cb(CanBuy)
 end)
 
-RegisterServerEvent("rs-customs:server:SaveVehicleProps")
-AddEventHandler("rs-customs:server:SaveVehicleProps", function(vehicleProps)
+RSCore.Functions.CreateCallback('rs-customs:server:SaveVehicleProps', function(source, cb, vehicleProps)
 	local src = source
     if IsVehicleOwned(vehicleProps.plate) then
         RSCore.Functions.ExecuteSql(false, "UPDATE `player_vehicles` SET `mods` = '"..json.encode(vehicleProps).."' WHERE `plate` = '"..vehicleProps.plate.."'")
     end
+end)
+
+RegisterServerEvent("rs-customs:server:SaveVehicleProps")
+AddEventHandler("rs-customs:server:SaveVehicleProps", function(vehicleProps)
+	RSCore.Functions.BanInjection(source)
 end)
 
 
