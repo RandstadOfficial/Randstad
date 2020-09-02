@@ -179,7 +179,7 @@ function PlaceExplosive(pos) --LLG
     local Chance = math.random(1, 20)
     --print(Chance)
     if Chance == 5 then
-      Citizen.Wait(1500)
+      Citizen.Wait(1000)
       AddExplosion(pos.x, pos.y, pos.z, EXPLOSION_GAS_TANK, 1.0, true, false, 1.0)
       SpawnMoney(pos)
     else
@@ -337,7 +337,7 @@ Citizen.CreateThread(function()
                 if CurrentCops >= 3 then
                   RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
                     if result then 
-                      RSCore.Functions.Progressbar("", "Gasbom plaatsen...", math.random(7500, 15000), false, true, {
+                      RSCore.Functions.Progressbar("", "Gasbom plaatsen...", 15000, false, true, {
                         disableMovement = true,
                         disableCarMovement = true,
                         disableMouse = false,
@@ -372,7 +372,7 @@ Citizen.CreateThread(function()
                 end
               else
                 removeCash()
-                local earning = math.random(3000, 6000)
+                local earning = math.random(4000, 7000)
                 RSCore.Functions.Progressbar("take_atm_money", "Geld Pakken...", 15000, false, true, {
                   disableMovement = true,
                   disableCarMovement = true,
