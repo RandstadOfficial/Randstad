@@ -58,7 +58,9 @@ AddEventHandler('rs-garages:client:takeOutDepot', function(vehicle)
                         end
 
                         if vehicle.status ~= nil and next(vehicle.status) ~= nil then
-                            TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
+                            RSCore.Functions.TriggerCallback('rs-vehicletuning:server:LoadStatus', function(result)
+                            end, vehicle.status, vehicle.plate)
+                            -- TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
                         end
                         
                         if vehicle.drivingdistance ~= nil then
@@ -104,7 +106,9 @@ AddEventHandler('rs-garages:client:takeOutDepot', function(vehicle)
                         end
 
                         if vehicle.status ~= nil and next(vehicle.status) ~= nil then
-                            TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
+                            RSCore.Functions.TriggerCallback('rs-vehicletuning:server:LoadStatus', function(result)
+                            end, vehicle.status, vehicle.plate)
+                            -- TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
                         end
                         
                         if vehicle.drivingdistance ~= nil then
@@ -147,7 +151,9 @@ AddEventHandler('rs-garages:client:takeOutDepot', function(vehicle)
                     end
 
                     if vehicle.status ~= nil and next(vehicle.status) ~= nil then
-                        TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
+                        RSCore.Functions.TriggerCallback('rs-vehicletuning:server:LoadStatus', function(result)
+                        end, vehicle.status, vehicle.plate)
+                        -- TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
                     end
 
                     SetVehicleNumberPlateText(veh, vehicle.plate)
@@ -178,7 +184,9 @@ AddEventHandler('rs-garages:client:takeOutDepot', function(vehicle)
                 end
 
                 if vehicle.status ~= nil and next(vehicle.status) ~= nil then
-                    TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
+                    RSCore.Functions.TriggerCallback('rs-vehicletuning:server:LoadStatus', function(result)
+                    end, vehicle.status, vehicle.plate)
+                    -- TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
                 end
                 
                 if vehicle.drivingdistance ~= nil then
@@ -443,7 +451,9 @@ function TakeOutVehicle(vehicle)
                 end
 
                 if vehicle.status ~= nil and next(vehicle.status) ~= nil then
-                    TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
+                    RSCore.Functions.TriggerCallback('rs-vehicletuning:server:LoadStatus', function(result)
+                    end, vehicle.status, vehicle.plate)
+                    -- TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
                 end
 
                 if vehicle.vehicle == "urus" then
@@ -516,7 +526,9 @@ function TakeOutGarageVehicle(vehicle)
                 end
 
                 if vehicle.status ~= nil and next(vehicle.status) ~= nil then
-                    TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
+                    RSCore.Functions.TriggerCallback('rs-vehicletuning:server:LoadStatus', function(result)
+                    end, vehicle.status, vehicle.plate)
+                    -- TriggerServerEvent('rs-vehicletuning:server:LoadStatus', vehicle.status, vehicle.plate)
                 end
 
                 SetVehicleNumberPlateText(veh, vehicle.plate)
