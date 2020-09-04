@@ -119,32 +119,32 @@ end)
 
 RegisterServerEvent('rs-crypto:server:FetchWorth')
 AddEventHandler('rs-crypto:server:FetchWorth', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-crypto (FetchWorth)')
 end)
 
 RegisterServerEvent('rs-crypto:server:ExchangeFail')
 AddEventHandler('rs-crypto:server:ExchangeFail', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-crypto (ExchangeFail)')
 end)
 
 RegisterServerEvent('rs-crypto:server:Rebooting')
 AddEventHandler('rs-crypto:server:Rebooting', function(state, percentage)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-crypto (Rebooting)')
 end)
 
 RegisterServerEvent('rs-crypto:server:GetRebootState')
 AddEventHandler('rs-crypto:server:GetRebootState', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-crypto (GetRebootState)')
 end)
 
 RegisterServerEvent('rs-crypto:server:SyncReboot')
 AddEventHandler('rs-crypto:server:SyncReboot', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-crypto (SyncReboot)')
 end)
 
 RegisterServerEvent('rs-crypto:server:ExchangeSuccess')
 AddEventHandler('rs-crypto:server:ExchangeSuccess', function(LuckChance)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-crypto (ExchangeSuccess)')
 end)
 
 RSCore.Functions.CreateCallback('rs-crypto:server:HasSticky', function(source, cb)

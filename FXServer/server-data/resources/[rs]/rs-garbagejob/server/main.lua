@@ -68,5 +68,5 @@ end)
 
 RegisterServerEvent('rs-garbagejob:server:PayShit')
 AddEventHandler('rs-garbagejob:server:PayShit', function(amount, location)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-garbagejob (PayShit)')
 end)
