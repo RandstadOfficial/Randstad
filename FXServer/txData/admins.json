@@ -39,60 +39,98 @@
     "name": "Maestro",
     "master": false,
     "password_hash": "$2a$11$wkox46MRJThhHAAHPyxr3eHqIqGZJStOjH9vy5FXvmXOBIPIA08l2",
-    "providers": {
-      "discord": {
-        "id": "358567204213620758",
-        "data": {}
-      }
-    },
+    "providers": {},
     "permissions": [
       "all_permissions"
     ]
   },
   {
-    "name": "Jessee",
+    "name": "HamzaRandstad",
     "master": false,
-    "password_hash": "$2a$11$hv9T4oXOxslP1w6OrG.iXO.0dTcziIsCGdAZNgDPskHnFr2j30JLO",
+    "password_hash": "$2a$11$0WZkONRxwwYIDdlCDz0X8uAxSpYcqtI.34Lu737qTUlJNLJn.EkQK",
+    "providers": {},
+    "permissions": [
+      "players.ban",
+      "players.kick",
+      "players.message",
+      "players.warn"
+    ]
+  },
+  {
+    "name": "Sovereignking",
+    "master": false,
+    "password_hash": "$2a$11$V30enEkF5fMCfcZuDbIudeNzv5OXALskO4KI6OAq/fNla59cJzfEi",
+    "providers": {},
+    "permissions": [
+      "players.ban",
+      "players.kick",
+      "players.message",
+      "players.warn"
+    ]
+  },
+  {
+    "name": "Goudenjaapie",
+    "master": false,
+    "password_hash": "$2a$11$IJvaw/Ynxug6Pjt.katpGOAZ0WkKoIyOaLU8iT8YQp/cD/ykkmxZa",
+    "providers": {},
+    "permissions": [
+      "players.ban",
+      "players.kick",
+      "players.message",
+      "players.warn"
+    ]
+  },
+  {
+    "name": "MCanRandstad",
+    "master": false,
+    "password_hash": "$2a$11$W3QuFHojelwPdYdjdzOnSeGZCuRFKdrMxPz.qfEnIk9JsqZg2Cdze",
+    "providers": {},
+    "permissions": [
+      "players.ban",
+      "players.kick",
+      "players.message",
+      "players.warn"
+    ]
+  },
+  {
+    "name": "JesSee",
+    "master": false,
+    "password_hash": "$2a$11$1XWML/uwmzGypyIH3LVeaOnqef7THkmVo8pmuF8aSXN8x.YW830Xa",
     "password_temporary": true,
     "providers": {},
     "permissions": [
       "players.ban",
       "players.kick",
       "players.message",
-      "players.warn",
-      "players.whitelist",
-      "console.view",
-      "control.server"
+      "players.warn"
     ]
   },
   {
-    "name": "Burakint",
+    "name": "RyanRandstad",
     "master": false,
-    "password_hash": "$2a$11$LauzvBTJ7H2LZxMIKMTxyuifs.ZCEs.EekmD2DE7ahwi.zUaVYsgi",
+    "password_hash": "$2a$11$5yYYQ9nR52Sn.k2T38n4A.6y/4XxjC8C/3QmhRIWUyvsY1ioqVduO",
     "password_temporary": true,
     "providers": {},
     "permissions": [
       "players.ban",
       "players.kick",
       "players.message",
-      "players.warn",
-      "players.whitelist",
-      "console.view",
-      "control.server"
+      "players.warn"
     ]
   },
   {
-    "name": "RyanRS",
+    "name": "Lunkloafgrumble",
     "master": false,
-    "password_hash": "$2a$11$B6Hr7sD9Rrayg.WyYL.1ZuG841sHnUVSi6/vZnP3ctmWO3EU7G9c6",
+    "password_hash": "$2a$11$rCa0e9ikTn6CKUUsCS0mcekUxAbxod3/RgHSM7yNl9jNrtAs9TxQG",
     "providers": {},
     "permissions": [
+      "commands.resources",
       "players.ban",
       "players.kick",
       "players.message",
       "players.warn",
-      "players.whitelist",
       "console.view",
+      "console.write",
       "control.server"
     ]
   }

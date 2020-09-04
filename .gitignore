@@ -48,3 +48,10 @@ FXServer/server/citizen/clr2/lib/mono/4.5/ref/CitizenFX.Core.Server.pdb
 FXServer/server/citizen/clr2/lib/mono/4.5/ref/CitizenFX.Core.Server.xml
 FXServer/server/citizen/scripting/lua/scheduler.lua
 FXServer/server/citizen/scripting/v8/natives_blob.bin
+FXServer/txData/admins.json
+FXServer/txData/default/data/players.json
+FXServer/txData/default/data/playersDB.json
+FXServer/txData/default/logs/admin.log
+FXServer/txData/default/logs/fxserver.log
+
+
