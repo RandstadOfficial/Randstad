@@ -64,7 +64,9 @@ AddEventHandler('rs-garages:client:takeOutDepot', function(vehicle)
                         if vehicle.drivingdistance ~= nil then
                             local amount = round(vehicle.drivingdistance / 1000, -2)
                             TriggerEvent('rs-hud:client:UpdateDrivingMeters', true, amount)
-                            TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
+                            RSCore.Functions.TriggerCallback('rs-vehicletuning:server:UpdateDrivingDistance', function(result)
+                            end, vehicle.drivingdistance, vehicle.plate)
+                            -- TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
                         end
 
                         if vehicle.vehicle == "urus" then
@@ -108,7 +110,9 @@ AddEventHandler('rs-garages:client:takeOutDepot', function(vehicle)
                         if vehicle.drivingdistance ~= nil then
                             local amount = round(vehicle.drivingdistance / 1000, -2)
                             TriggerEvent('rs-hud:client:UpdateDrivingMeters', true, amount)
-                            TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
+                            RSCore.Functions.TriggerCallback('rs-vehicletuning:server:UpdateDrivingDistance', function(result)
+                            end, vehicle.drivingdistance, vehicle.plate)
+                            -- TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
                         end
 
                         SetVehicleNumberPlateText(veh, vehicle.plate)
@@ -180,7 +184,9 @@ AddEventHandler('rs-garages:client:takeOutDepot', function(vehicle)
                 if vehicle.drivingdistance ~= nil then
                     local amount = round(vehicle.drivingdistance / 1000, -2)
                     TriggerEvent('rs-hud:client:UpdateDrivingMeters', true, amount)
-                    TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
+                    RSCore.Functions.TriggerCallback('rs-vehicletuning:server:UpdateDrivingDistance', function(result)
+                    end, vehicle.drivingdistance, vehicle.plate)
+                    -- TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
                 end
 
                 SetVehicleNumberPlateText(veh, vehicle.plate)
@@ -448,7 +454,9 @@ function TakeOutVehicle(vehicle)
                 if vehicle.drivingdistance ~= nil then
                     local amount = round(vehicle.drivingdistance / 1000, -2)
                     TriggerEvent('rs-hud:client:UpdateDrivingMeters', true, amount)
-                    TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
+                    RSCore.Functions.TriggerCallback('rs-vehicletuning:server:UpdateDrivingDistance', function(result)
+                    end, vehicle.drivingdistance, vehicle.plate)
+                    -- TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
                 end
 
                 RSCore.Functions.SetVehicleProperties(veh, properties)
@@ -497,7 +505,9 @@ function TakeOutGarageVehicle(vehicle)
                 if vehicle.drivingdistance ~= nil then
                     local amount = round(vehicle.drivingdistance / 1000, -2)
                     TriggerEvent('rs-hud:client:UpdateDrivingMeters', true, amount)
-                    TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
+                    RSCore.Functions.TriggerCallback('rs-vehicletuning:server:UpdateDrivingDistance', function(result)
+                    end, vehicle.drivingdistance, vehicle.plate)
+                    -- TriggerServerEvent('rs-vehicletuning:server:UpdateDrivingDistance', vehicle.drivingdistance, vehicle.plate)
                 end
 
                 if vehicle.vehicle == "urus" then
