@@ -115,10 +115,10 @@ end)
 
 RegisterServerEvent('rs-moneysafe:server:DepositMoney')
 AddEventHandler('rs-moneysafe:server:DepositMoney', function(safe, amount, sender)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-moneysafe (DepositMoney)')
 end)
 
 RegisterServerEvent('rs-moneysafe:server:WithdrawMoney')
 AddEventHandler('rs-moneysafe:server:WithdrawMoney', function(safe, amount)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-moneysafe (WithdrawMoney)')
 end) 

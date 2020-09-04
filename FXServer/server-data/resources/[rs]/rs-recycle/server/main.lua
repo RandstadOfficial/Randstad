@@ -13,7 +13,7 @@ local ItemTable = {
 
 RegisterServerEvent("rs-recycle:server:getItem")
 AddEventHandler("rs-recycle:server:getItem", function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-recycle (getItem)')
 end)
 
 RSCore.Functions.CreateCallback('rs-recycle:getItem', function(source, cb)

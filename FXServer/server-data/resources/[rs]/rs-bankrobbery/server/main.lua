@@ -68,7 +68,7 @@ end)
 
 RegisterServerEvent('rs-bankrobbery:server:recieveItem')
 AddEventHandler('rs-bankrobbery:server:recieveItem', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-bankrobbery (recieveItem)')
 end)
 
 RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, cb, type)

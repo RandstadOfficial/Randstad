@@ -10,7 +10,7 @@ end)
 
 RegisterServerEvent('vehiclekeys:server:SetVehicleOwner')
 AddEventHandler('vehiclekeys:server:SetVehicleOwner', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-vehiclekeys (SetVehicleOwner)')
 end)
 
 RSCore.Functions.CreateCallback('vehiclekeys:SetVehicleOwner', function(source, cb, plate)

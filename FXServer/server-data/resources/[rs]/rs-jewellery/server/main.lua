@@ -10,12 +10,12 @@ local alarmTriggered = false
 
 RegisterServerEvent('rs-jewellery:server:setVitrineState')
 AddEventHandler('rs-jewellery:server:setVitrineState', function(stateType, state, k)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-jewellery (setVitrineState)')
 end)
 
 RegisterServerEvent('rs-jewellery:server:vitrineReward')
 AddEventHandler('rs-jewellery:server:vitrineReward', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-jewellery (vitrineReward)')
 end)
 
 
@@ -97,12 +97,12 @@ end)
 
 RegisterServerEvent('rs-jewellery:server:setTimeout')
 AddEventHandler('rs-jewellery:server:setTimeout', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-jewellery (setTimeout)')
 end)
 
 RegisterServerEvent('rs-jewellery:server:PoliceAlertMessage')
 AddEventHandler('rs-jewellery:server:PoliceAlertMessage', function(title, coords, blip)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-jewellery (PoliceAlertMessage)')
 end)
 
 RSCore.Functions.CreateCallback('rs-jewellery:server:getCops', function(source, cb)

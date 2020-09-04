@@ -241,7 +241,7 @@ end)
 
 RegisterServerEvent('RSCore:Server:AddItem')
 AddEventHandler('RSCore:Server:AddItem', function()
-	RSCore.Functions.BanInjection(source)
+	RSCore.Functions.BanInjection(source, "rs-core")
 end)
 
 RSCore.Functions.CreateCallback('RSCore:AddItem', function(source, cb, itemName, amount, slot, info)

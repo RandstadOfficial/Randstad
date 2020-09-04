@@ -651,7 +651,8 @@ Citizen.CreateThread(function()
         
                                 TriggerServerEvent('rs-garage:server:updateVehicleStatus', totalFuel, engineDamage, bodyDamage, plate, k)
                                 TriggerServerEvent('rs-garage:server:updateVehicleState', 1, plate, k)
-                                TriggerServerEvent('vehiclemod:server:saveStatus', plate)
+                                RSCore.Functions.TriggerCallback('vehiclemod:server:saveStatus', function(result)
+                                end, plate)
                                 RSCore.Functions.DeleteVehicle(curVeh)
                                 if plate ~= nil then
                                     OutsideVehicles[plate] = veh

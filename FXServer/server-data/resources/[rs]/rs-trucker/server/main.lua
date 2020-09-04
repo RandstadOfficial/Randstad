@@ -35,7 +35,7 @@ end)
 
 RegisterNetEvent('rs-trucker:server:01101110')
 AddEventHandler('rs-trucker:server:01101110', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-trucker (01101110)')
 end)
 
 RSCore.Functions.CreateCallback('rs-trucker:01101110', function(source, cb, drops)
