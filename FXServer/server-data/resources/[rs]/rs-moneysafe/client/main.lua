@@ -133,7 +133,7 @@ AddEventHandler('rs-moneysafe:client:WithdrawMoney', function(amount)
 end)
 
 RegisterNetEvent('rs-moneysafe:client:executeEvents')
-AddEventHandler('RSCore:Client:OnJobUpdate', function(JobInfo)
+AddEventHandler('rs-moneysafe:client:executeEvents', function()
     TriggerServerEvent('rs-moneysafe:server:WithdrawMoney', ClosestSafe, amount)
     TriggerServerEvent('rs-moneysafe:server:DepositMoney', ClosestSafe, amount)
 end)
