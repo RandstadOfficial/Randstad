@@ -5797,7 +5797,7 @@ RSShared.Jobs = {
 		grades = {
 			[1] = {
 				label = "Aspirant",
-				payment = 300,
+				payment = 275,
 			},
 			[2] = {
 				label = "Surveillant",
@@ -5805,31 +5805,31 @@ RSShared.Jobs = {
 			},
 			[3] = {
 				label = "Agent",
-				payment = 300,
+				payment = 350,
 			},
 			[4] = {
 				label = "Hoofdagent",
-				payment = 300,
+				payment = 400,
 			},
 			[5] = {
 				label = "Brigadier",
-				payment = 350,
+				payment = 425,
 			},
 			[6] = {
 				label = "Inspecteur",
-				payment = 400,
+				payment = 425,
 			},
 			[7] = {
 				label = "Hoofdinspecteur",
-				payment = 400,
+				payment = 475,
 			},
 			[8] = {
 				label = "Commissaris",
-				payment = 400,
+				payment = 500,
 			},
 			[9] = {
 				label = "Hoofdcommissaris",
-				payment = 400,
+				payment = 525,
 			},
 		}
 	},
