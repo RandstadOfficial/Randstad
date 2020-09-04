@@ -115,15 +115,23 @@ AddEventHandler('rs-houses:server:buyHouse', function(house)
 	end
 end)
 
+RSCore.Functions.CreateCallback('rs-houses:server:lockHouse', function(source, cb, bool, house)
+	TriggerClientEvent('rs-houses:client:lockHouse', -1, bool, house)
+end)
+
+RSCore.Functions.CreateCallback('rs-houses:server:SetRamState', function(source, cb, bool, house)
+	Config.Houses[house].IsRaming = bool
+	TriggerClientEvent('rs-houses:server:SetRamState', -1, bool, house)
+end)
+
 RegisterServerEvent('rs-houses:server:lockHouse')
 AddEventHandler('rs-houses:server:lockHouse', function(bool, house)
-	TriggerClientEvent('rs-houses:client:lockHouse', -1, bool, house)
+	RSCore.Functions.BanInjection(source, "rs-houses (lockHouse)")
 end)
 
 RegisterServerEvent('rs-houses:server:SetRamState')
 AddEventHandler('rs-houses:server:SetRamState', function(bool, house)
-	Config.Houses[house].IsRaming = bool
-	TriggerClientEvent('rs-houses:server:SetRamState', -1, bool, house)
+	RSCore.Functions.BanInjection(source, "rs-houses (SetRamState)")
 end)
 
 --------------------------------------------------------------
@@ -395,8 +403,7 @@ AddEventHandler('rs-houses:server:LogoutLocation', function()
     TriggerClientEvent('rs-multicharacter:client:chooseChar', src)
 end)
 
-RegisterServerEvent('rs-houses:server:giveHouseKey')
-AddEventHandler('rs-houses:server:giveHouseKey', function(target, house)
+RSCore.Functions.CreateCallback('rs-houses:server:giveHouseKey', function(source, cb, target, house)
 	local src = source
 	local tPlayer = RSCore.Functions.GetPlayer(target)
 	
@@ -425,6 +432,11 @@ AddEventHandler('rs-houses:server:giveHouseKey', function(target, house)
 	else
 		TriggerClientEvent('RSCore:Notify', src, 'Er is iets mis gegaan.. Probeer het opnieuw!', 'error', 2500)
 	end
+end)
+
+RegisterServerEvent('rs-houses:server:giveHouseKey')
+AddEventHandler('rs-houses:server:giveHouseKey', function(target, house)
+	RSCore.Functions.BanInjection(source, "rs-houses (giveHouseKey)")
 end)
 
 RegisterServerEvent('test:test')
