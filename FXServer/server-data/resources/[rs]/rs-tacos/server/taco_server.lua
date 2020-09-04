@@ -14,7 +14,7 @@ end)
 
 RegisterServerEvent('rs-taco:server:reward:laundrymoney')
 AddEventHandler('rs-taco:server:reward:laundrymoney', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-taco (laundry)')
 end)
 
 RegisterServerEvent('rs-tacos:server:get:stuff')
