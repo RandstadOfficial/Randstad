@@ -118,7 +118,6 @@ function FinishTaco()
 		TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["taco"], "add")
 		RSCore.Functions.TriggerCallback('RSCore:AddItem', function()                        
         end, "taco", 1)
-		--TriggerServerEvent('RSCore:Server:AddItem', "taco", 1) -- Deze zorgt ervoor dat je banned raakt
 		TriggerServerEvent("InteractSound_SV:PlayOnSource", "micro", 0.2)
 	end, function()
 		TriggerEvent('inventory:client:busy:status', false)
@@ -148,7 +147,6 @@ function BakeMeat()
 	}, {}, function() -- Done
 		RSCore.Functions.TriggerCallback('RSCore:AddItem', function()                        
         end, "meat", 1)
-		--TriggerServerEvent('RSCore:Server:AddItem', "meat", 1) --Deze zorgt ervoor dat je banned raakt
 		Config.JobData['stock-meat']= Config.JobData['stock-meat'] - 1
 		TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["meat"], "add")
 		Bezig = false
@@ -178,7 +176,6 @@ function GetLettuce()
 		StopAnimTask(GetPlayerPed(-1), "amb@prop_human_bum_bin@idle_b", "idle_d", 1.0)
 		RSCore.Functions.TriggerCallback('RSCore:AddItem', function()                        
         end, "lettuce", 1)
-		--TriggerServerEvent('RSCore:Server:AddItem', "lettuce", 1) --Deze zorgt ervoor dat je banned raakt
 		Config.JobData['stock-lettuce']= Config.JobData['stock-lettuce'] - 1
 		TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["lettuce"], "add")
 		Bezig = false

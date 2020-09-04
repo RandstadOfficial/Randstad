@@ -12,10 +12,10 @@ Config.PickUpStuff = {
 	{ ["x"] = 650.68, ["y"] = 2727.25, ["z"] = 41.99, ["h"] = 0 },
 }
 
-Config.PaymentTaco = math.random(100, 200)
+Config.PaymentTaco = math.random(225, 275)
 
-Config.LaundryChance = 999 -- Percentage chance of getting laundry money on the run. Multiplied by 100. 10% = 100, 20% = 200, 50% = 500, etc. Default 55%.
-Config.PaymentLaundry = math.random(200, 300)
+Config.LaundryChance = 500 -- Percentage chance of getting laundry money on the run. Multiplied by 100. 10% = 100, 20% = 200, 50% = 500, etc. Default 55%.
+Config.PaymentLaundry = math.random(275, 325)
 
 Config.JobBusy = false
 
