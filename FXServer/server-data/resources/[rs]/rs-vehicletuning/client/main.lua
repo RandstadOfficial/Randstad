@@ -663,7 +663,7 @@ AddEventHandler('vehiclemod:client:repairPart', function(part, level, needAmount
                                     TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items[Config.RepairCost[part]], "remove")
                                 elseif part ~= "engine" then
                                     RSCore.Functions.TriggerCallback('vehiclemod:server:updatePart', function(result)
-                                    end, plate, part, GetVehicleStatus(plate, part) + level))
+                                    end, plate, part, GetVehicleStatus(plate, part) + level)
                                     -- TriggerServerEvent("vehiclemod:server:updatePart", plate, part, GetVehicleStatus(plate, part) + level)
                                     TriggerServerEvent("RSCore:Server:RemoveItem", Config.RepairCost[part], level)
                                     TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items[Config.RepairCost[part]], "remove")

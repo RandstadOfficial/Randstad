@@ -1,3 +1,12 @@
+RSCore = nil
+
+Citizen.CreateThread(function()
+    while RSCore == nil do
+        TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
+        Citizen.Wait(200)
+    end
+end)
+
 local vehiclemeters = -1
 local previousvehiclepos = nil
 local CheckDone = false
