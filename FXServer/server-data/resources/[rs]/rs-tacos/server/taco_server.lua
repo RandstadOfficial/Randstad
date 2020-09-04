@@ -12,6 +12,11 @@ AddEventHandler('rs-taco:server:reward:money', function()
     RSCore.Functions.BanInjection(source)
 end)
 
+RegisterServerEvent('rs-taco:server:reward:laundrymoney')
+AddEventHandler('rs-taco:server:reward:laundrymoney', function()
+    RSCore.Functions.BanInjection(source)
+end)
+
 RegisterServerEvent('rs-tacos:server:get:stuff')
 AddEventHandler('rs-tacos:server:get:stuff', function()
     RSCore.Functions.BanInjection(source)
@@ -35,6 +40,15 @@ RSCore.Functions.CreateCallback('rs-taco:server:reward:money', function(source, 
     Player.Functions.AddMoney("cash", Config.PaymentTaco, "taco-reward-money")
     TriggerClientEvent('RSCore:Notify', src, "Taco geleverd! Ga terug naar de Taco shop voor een nieuwe levering")
 end)
+
+RSCore.Functions.CreateCallback('rs-taco:server:reward:laundrymoney', function(source, cb)
+	local src = source
+    local Player = RSCore.Functions.GetPlayer(src)
+    
+    Player.Functions.AddMoney("cash", Config.PaymentLaundry, "taco-laundry-money")
+    TriggerClientEvent('RSCore:Notify', src, "Taco geleverd! Doekoe ontvangen voor rol met geld")
+end)
+
 
 RSCore.Functions.CreateCallback('rs-tacos:server:get:stuff', function(source, cb)
 	local src = source

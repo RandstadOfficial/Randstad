@@ -24,7 +24,7 @@ Config.IllegalActions = {
         busy = false,
     },
     ["bankrobbery"] = {
-        minimum = 5,
+        minimum = 4,
         busy = false,
     },
     ["jewellery"] = {

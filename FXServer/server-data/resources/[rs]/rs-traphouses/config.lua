@@ -59,32 +59,32 @@ Config.AllowedItems = {
     ["electronickit"] = {
         name = "electronickit",
         wait = 10000,
-        reward = 275,
+        reward = 300,
     },
     ["radioscanner"] = {
         name = "radioscanner",
         wait = 10000,
-        reward = 250,
+        reward = 350,
     },
     ["gatecrack"] = {
         name = "gatecrack",
         wait = 10000,
-        reward = 275,
+        reward = 400,
     },
     ["trojan_usb"] = {
         name = "trojan_usb",
         wait = 10000,
-        reward = 250,
+        reward = 450,
     },
     ["weed_brick"] = {
         name = "weed_brick",
         wait = 10000,
-        reward = 200,
+        reward = 250,
     },
     ["phone"] = {
         name = "phone",
         wait = 10000,
-        reward = 425,
+        reward = 450,
     },
     ["radio"] = {
         name = "radio",
@@ -99,11 +99,11 @@ Config.AllowedItems = {
     ["10kgoldchain"] = {
         name = "10kgoldchain",
         wait = 20000,
-        reward = math.random(1500, 2500),
+        reward = 3000,
     },
     ["goldbar"] = {
         name = "goldbar",
         wait = 30000,
-        reward = math.random(3500, 4000),
+        reward = math.random(3000, 6000),
     },
 }

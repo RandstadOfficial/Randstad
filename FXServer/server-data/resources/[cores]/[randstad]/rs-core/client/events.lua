@@ -128,7 +128,7 @@ AddEventHandler('RSCore:Client:LocalOutOfCharacter', function(playerId, playerNa
 	local sourcePos = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(playerId)), false)
     local pos = GetEntityCoords(GetPlayerPed(-1), false)
     if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, sourcePos.x, sourcePos.y, sourcePos.z, true) < 20.0) then
-		TriggerEvent("chatMessage", "OOC | " .. playerName, "normal", message)
+		TriggerEvent("chatMessage", "OOC " .. playerName, "normal", message)
     end
 end)
 

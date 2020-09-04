@@ -101,7 +101,7 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
                 TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[item.item], "add")
             elseif Config.RewardTypes[itemType].type == "money" then
                 local info = {
-                    worth = math.random(2500, 5000)
+                    worth = math.random(4000, 6000)
                 }
                 ply.Functions.AddItem('markedbills', 1, false, info)
                 TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['markedbills'], "add")
@@ -140,7 +140,7 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
                 TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[item.item], "add")
             elseif Config.RewardTypes[itemType].type == "money" then
                 local info = {
-                    worth = math.random(5000, 7500)
+                    worth = math.random(11000, 13000)
                 }
                 ply.Functions.AddItem('markedbills', 1, false, info)
                 TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['markedbills'], "add")
@@ -155,6 +155,9 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
     end
     elseif type == "pacific" then
         local itemType = math.random(#Config.RewardTypes)
+        local WeaponChance = math.random(1, 100)
+        local odd1 = math.random(1, 100)
+        local odd2 = math.random(1, 100)
         local tierChance = math.random(1, 100)
         local tier = 1
         if tierChance < 10 then 
@@ -166,27 +169,38 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
         else 
             tier = 4 
         end
-        
-        if tier ~= 4 then
-            if Config.RewardTypes[itemType].type == "item" then
-                local item = Config.LockerRewardsPacific["tier"..tier][math.random(#Config.LockerRewardsPacific["tier"..tier])]
-                local itemAmount = math.random(item.minAmount, item.maxAmount)
+        if WeaponChance ~= odd1 or WeaponChance ~= odd2 then
+            if tier ~= 4 then
+                if Config.RewardTypes[itemType].type == "item" then
+                    local item = Config.LockerRewardsPacific["tier"..tier][math.random(#Config.LockerRewardsPacific["tier"..tier])]
+                    local itemAmount = math.random(item.minAmount, item.maxAmount)
 
-                ply.Functions.AddItem(item.item, itemAmount)
-                TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[item.item], "add")
-            elseif Config.RewardTypes[itemType].type == "money" then
+                    ply.Functions.AddItem(item.item, itemAmount)
+                    TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[item.item], "add")
+                elseif Config.RewardTypes[itemType].type == "money" then
+                    local info = {
+                        worth = math.random(19000, 21000)
+                    }
+                    ply.Functions.AddItem('markedbills', 1, false, info)
+                    TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['markedbills'], "add")
+                end
+            else
                 local info = {
-                    worth = math.random(7500, 10000)
+                    crypto = math.random(1, 3)
                 }
-                ply.Functions.AddItem('markedbills', 1, false, info)
-                TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['markedbills'], "add")
+                ply.Functions.AddItem("cryptostick", 1, false, info)
+                TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['cryptostick'], "add")
             end
         else
-            local info = {
-                crypto = math.random(1, 3)
-            }
-            ply.Functions.AddItem("cryptostick", 1, false, info)
-            TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['cryptostick'], "add")
+            local chance = math.random(1, 2)
+            local odd = math.random(1, 2)
+            if chance == odd then
+                ply.Functions.AddItem('weapon_microsmg', 1)
+                TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['weapon_microsmg'], "add")
+            else
+                ply.Functions.AddItem('weapon_minismg', 1)
+                TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['weapon_minismg'], "add")
+            end
         end
     end
 end)

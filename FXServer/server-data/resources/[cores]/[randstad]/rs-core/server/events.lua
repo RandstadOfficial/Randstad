@@ -35,6 +35,12 @@ local vpnWhitelist = {
 	[13]="steam:11000013be4a271"
 }
 
+-- Citizen.CreateThread(function()
+-- 	RSCore.Functions.ExecuteSql(true, "SELECT * FROM `vpnwhitelist`", function(result)
+-- 		vpnWhitelist = result[1]
+-- 	end)
+-- end)
+
 -- Player joined
 RegisterServerEvent("RSCore:PlayerJoined")
 AddEventHandler('RSCore:PlayerJoined', function()
