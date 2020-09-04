@@ -552,7 +552,7 @@ Config.Outfits = {
                     ["shoes"]       = { item = 24, texture = 0},  -- Schoenen
                     ["decals"]      = { item = 7, texture = 0},  -- Decals
                     ["accessory"]   = { item = 8, texture = 0},  -- Nek / Das
-            --      ["bag"]         = { item = 0, texture = 0},  -- Tas
+                    ["bag"]         = { item = -1, texture = 0},  -- Tas
                     ["hat"]         = { item = -1, texture = -1},  -- Pet
             --      ["glass"]       = { item = 0, texture = 0},  -- Bril
             --      ["ear"]         = { item = 0, texture = 0},  -- Oor accessoires
@@ -570,7 +570,7 @@ Config.Outfits = {
                     ["shoes"]       = { item = 24, texture = 0},  -- Schoenen
                     ["decals"]      = { item = 7, texture = 0},  -- Decals
                     ["accessory"]   = { item = 8, texture = 0},  -- Nek / Das
-            --      ["bag"]         = { item = 0, texture = 0},  -- Tas
+                    ["bag"]         = { item = -1, texture = 0},  -- Tas
                     ["hat"]         = { item = -1, texture = -1},  -- Pet
             --      ["glass"]       = { item = 0, texture = 0},  -- Bril
             --      ["ear"]         = { item = 0, texture = 0},  -- Oor accessoires
@@ -588,7 +588,7 @@ Config.Outfits = {
                     ["shoes"]       = { item = 24, texture = 0},  -- Schoenen
                     ["decals"]      = { item = 7, texture = 0},  -- Decals
                     ["accessory"]   = { item = 8, texture = 0},  -- Nek / Das
-            --      ["bag"]         = { item = 0, texture = 0},  -- Tas
+                    ["bag"]         = { item = -1, texture = 0},  -- Tas
                     ["hat"]         = { item = -1, texture = -1},  -- Pet
             --      ["glass"]       = { item = 0, texture = 0},  -- Bril
             --      ["ear"]         = { item = 0, texture = 0},  -- Oor accessoires
@@ -606,7 +606,7 @@ Config.Outfits = {
                     ["shoes"]       = { item = 24, texture = 0},  -- Schoenen
                     ["decals"]      = { item = 7, texture = 0},  -- Decals
                     ["accessory"]   = { item = 8, texture = 0},  -- Nek / Das
-            --      ["bag"]         = { item = 0, texture = 0},  -- Tas
+                    ["bag"]         = { item = -1, texture = 0},  -- Tas
                     ["hat"]         = { item = -1, texture = -1},  -- Pet
             --      ["glass"]       = { item = 0, texture = 0},  -- Bril
             --      ["ear"]         = { item = 0, texture = 0},  -- Oor accessoires
@@ -624,7 +624,7 @@ Config.Outfits = {
                     ["shoes"]       = { item = 24, texture = 0},  -- Schoenen
                     ["decals"]      = { item = 7, texture = 0},  -- Decals
                     ["accessory"]   = { item = 8, texture = 0},  -- Nek / Das
-            --      ["bag"]         = { item = 0, texture = 0},  -- Tas
+                    ["bag"]         = { item = -1, texture = 0},  -- Tas
                     ["hat"]         = { item = -1, texture = -1},  -- Pet
             --      ["glass"]       = { item = 0, texture = 0},  -- Bril
             --      ["ear"]         = { item = 0, texture = 0},  -- Oor accessoires
@@ -642,7 +642,7 @@ Config.Outfits = {
                     ["shoes"]       = { item = 24, texture = 0},  -- Schoenen
                     ["decals"]      = { item = 7, texture = 0},  -- Decals
                     ["accessory"]   = { item = 8, texture = 0},  -- Nek / Das
-            --      ["bag"]         = { item = 0, texture = 0},  -- Tas
+                    ["bag"]         = { item = -1, texture = 0},  -- Tas
                     ["hat"]         = { item = -1, texture = -1},  -- Pet
             --      ["glass"]       = { item = 0, texture = 0},  -- Bril
             --      ["ear"]         = { item = 0, texture = 0},  -- Oor accessoires
@@ -659,8 +659,8 @@ Config.Outfits = {
                     ["torso2"]      = { item = 53, texture = 0},  -- Jas / Vesten
                     ["shoes"]       = { item = 8, texture = 0},  -- Schoenen
                     ["decals"]      = { item = 7, texture = 0},  -- Decals
-                    ["accessory"]   = { item = 1, texture = 0},  -- Nek / Das
-                    ["bag"]         = { item = 2, texture = 0},  -- Tas
+                    ["accessory"]   = { item = -1, texture = 0},  -- Nek / Das
+                    ["bag"]         = { item = -1, texture = 0},  -- Tas
                     ["hat"]         = { item = 119, texture = 0},  -- Pet
             --      ["glass"]       = { item = 0, texture = 0},  -- Bril
             --      ["ear"]         = { item = 0, texture = 0},  -- Oor accessoires
