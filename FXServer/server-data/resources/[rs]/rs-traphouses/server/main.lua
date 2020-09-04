@@ -319,7 +319,7 @@ end
 RSCore.Functions.CreateCallback('rs-traphouses:server:RobNpc', function(source, cb, Traphouse)
 	local src = source
     local Player = RSCore.Functions.GetPlayer(src)
-    local Chance = math.random(1, 500)
+    local Chance = math.random(1, 400)
     print(Chance)
     if Chance == 17 then
         local info = {

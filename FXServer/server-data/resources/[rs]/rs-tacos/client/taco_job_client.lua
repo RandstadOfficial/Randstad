@@ -70,7 +70,7 @@ while true do
 						-- TriggerServerEvent('rs-taco:server:start:black')
 					end
 					else
-					DrawText3D(v.x, v.y, v.z + 0.15, '~r~There are no Taco\'s In stock')
+					DrawText3D(v.x, v.y, v.z + 0.15, '~r~Er zijn geen Taco\'s op voorraad')
 					DrawMarker(2, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 0, 0, 155, false, false, false, true, false, false, false)
 					end
 				elseif Gebied <= 3.0 and JobBusy == true then
@@ -187,19 +187,32 @@ function CreateBlip()
 end
 
 function EndJob()
+	local laundryChance = math.random(1,1000)
+
 	RSCore.Functions.TriggerCallback('RSCore:HasItem', function(HasItem)
 		if JobBusy == true and HasItem then
 			Tasks = false
 			JobBusy = false
+			HasLaundryItem = false
+			RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
+				HasLaundryItem = result
+			end, 'cash_roll')
 			TriggerServerEvent("InteractSound_SV:PlayOnSource", "doorbell", 0.15)
 			Citizen.Wait(1000)
 			Animatie()
 			Citizen.Wait(800)
 			DeleteBlip()
-			RSCore.Functions.TriggerCallback('rs-taco:server:reward:money', function(result)
-			end)
+			if laundryChance <= Config.LaundryChance and HasLaundryItem then
+				TriggerServerEvent('RSCore:Server:RemoveItem', "cash_roll", 1)
+				TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["cash_roll"], "remove")
+				RSCore.Functions.TriggerCallback('rs-taco:server:reward:laundrymoney', function()
+				end)
+			else
+				RSCore.Functions.TriggerCallback('rs-taco:server:reward:money', function(result)
+				end)
+				Config.JobData['register'] = Config.JobData['register'] + math.random(100,200)
+			end
 			-- TriggerServerEvent('rs-taco:server:reward:money', true)
-			Config.JobData['register'] = Config.JobData['register'] + math.random(100,200)
 			TriggerServerEvent('RSCore:Server:RemoveItem', "taco-bag", 1)
 			TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["taco-bag"], "remove")
 		else

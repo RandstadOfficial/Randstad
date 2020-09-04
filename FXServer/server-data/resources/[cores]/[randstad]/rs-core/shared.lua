@@ -145,8 +145,8 @@ RSShared.Items = {
 	["copper"] 					 	 = {["name"] = "copper", 			  	  		["label"] = "Koper", 					["weight"] = 100, 		["type"] = "item", 		["image"] = "copper.png", 				["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Handig stukje metaal wat je vast wel kunt gebruiken."},
 	["aluminum"] 					 = {["name"] = "aluminum", 			  	  		["label"] = "Aluminium", 				["weight"] = 100, 		["type"] = "item", 		["image"] = "aluminum.png", 			["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Handig stukje metaal wat je vast wel kunt gebruiken."},
 	["aluminumoxide"] 				 = {["name"] = "aluminumoxide", 			  	["label"] = "Aluminium Poeder", 		["weight"] = 100, 		["type"] = "item", 		["image"] = "aluminumoxide.png", 		["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Wat poeder om mee te mixen."},
-	["iron"] 				 	     = {["name"] = "iron", 			  				["label"] = "Ijzer", 					["weight"] = 100, 		["type"] = "item", 		["image"] = "ironplate.png", 			["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Handig stukje metaal wat je vast wel kunt gebruiken."},
-	["ironoxide"] 				 	 = {["name"] = "ironoxide", 			  		["label"] = "Ijzer Poeder", 			["weight"] = 100, 		["type"] = "item", 		["image"] = "ironoxide.png", 			["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = {accept = {"aluminumoxide"}, reward = "thermite", anim = {["dict"] = "anim@amb@business@weed@weed_inspecting_high_dry@", ["lib"] = "weed_inspecting_high_base_inspector", ["text"] = "Poeders mixen..", ["timeOut"] = 10000}},   ["description"] = "Wat poeder om mee te mixen."},
+	["iron"] 				 	     = {["name"] = "iron", 			  				["label"] = "IJzer", 					["weight"] = 100, 		["type"] = "item", 		["image"] = "ironplate.png", 			["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Handig stukje metaal wat je vast wel kunt gebruiken."},
+	["ironoxide"] 				 	 = {["name"] = "ironoxide", 			  		["label"] = "IJzer Poeder", 			["weight"] = 100, 		["type"] = "item", 		["image"] = "ironoxide.png", 			["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = {accept = {"aluminumoxide"}, reward = "thermite", anim = {["dict"] = "anim@amb@business@weed@weed_inspecting_high_dry@", ["lib"] = "weed_inspecting_high_base_inspector", ["text"] = "Poeders mixen..", ["timeOut"] = 10000}},   ["description"] = "Wat poeder om mee te mixen."},
 	["steel"] 				 	 	 = {["name"] = "steel", 			  			["label"] = "Staal", 					["weight"] = 100, 		["type"] = "item", 		["image"] = "steel.png", 				["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Handig stukje metaal wat je vast wel kunt gebruiken."},
 	["rubber"] 				 	 	 = {["name"] = "rubber", 			  			["label"] = "Rubber", 					["weight"] = 100, 		["type"] = "item", 		["image"] = "rubber.png", 				["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Dit word duurste materiaal"},
 	["glass"] 				 	 	 = {["name"] = "glass", 			  			["label"] = "Glasplaat", 				["weight"] = 100, 		["type"] = "item", 		["image"] = "glassplate.png", 			["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Het is nogal breekbaar.. Kijk uit."},
@@ -210,6 +210,8 @@ RSShared.Items = {
     ["antipatharia_coral"] 			 = {["name"] = "antipatharia_coral", 			["label"] = "Antipatharia", 			["weight"] = 1000, 		["type"] = "item", 		["image"] = "antipatharia_coral.png", 	["unique"] = false, 	["useable"] = false, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "#Koraal yow"},
     ["jerry_can"] 			 		 = {["name"] = "jerry_can", 					["label"] = "Jerrycan 20L", 			["weight"] = 20000, 	["type"] = "item", 		["image"] = "jerry_can.png", 			["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "#Fuel like #YOLO"},
 	["moneybag"] 			 		 = {["name"] = "moneybag", 						["label"] = "Zak met geld", 			["weight"] = 0, 		["type"] = "item", 		["image"] = "moneybag.png", 			["unique"] = true, 	    ["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Een zak waar contant geld in zit."},
+	["cash_roll"] 			 		 = {["name"] = "cash_roll", 					["label"] = "Rol met geld", 			["weight"] = 0, 		["type"] = "item", 		["image"] = "cash_roll.png", 			["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "rol met bankbiljetten"},
+	["cash_stack"] 			 		 = {["name"] = "cash_stack", 					["label"] = "Stack met geld", 			["weight"] = 0, 		["type"] = "item", 		["image"] = "cash_stack.png", 			["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Stack met bankbiljetten"},
 	["diving_gear"] 			     = {["name"] = "diving_gear", 					["label"] = "Duikgear", 				["weight"] = 30000, 	["type"] = "item", 		["image"] = "diving_gear.png", 			["unique"] = true, 	    ["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Hmm lekker duiken lol uhm lol yeey."},
 	["parachute"] 			   		 = {["name"] = "parachute", 					["label"] = "Parachute", 				["weight"] = 30000, 	["type"] = "item", 		["image"] = "parachute.png", 			["unique"] = true, 	    ["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "The sky is the limit! Woehoeee!"},
 	-- ["smoketrailred"] 			   	 = {["name"] = "smoketrailred", 				["label"] = "Rookpatroon Rood", 		["weight"] = 50,	 	["type"] = "item", 		["image"] = "smoketrailred.png",		["unique"] = true, 	    ["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Laat een rood rookspoor achter tijdens het vliegen. Woot!"},
@@ -5785,7 +5787,7 @@ RSShared.Jobs = {
 		grades = {
 			[1] = {
 				label = "Uitkering",
-				payment = 10
+				payment = 25,
 			},
 		}
 	},
@@ -5811,7 +5813,7 @@ RSShared.Jobs = {
 			},
 			[5] = {
 				label = "Brigadier",
-				payment = 300,
+				payment = 350,
 			},
 			[6] = {
 				label = "Inspecteur",
@@ -5831,11 +5833,6 @@ RSShared.Jobs = {
 			},
 		}
 	},
-	-- ["doctor"] = {
-	-- 	label = "Dokter",
-	-- 	payment = 400,
-	-- 	defaultDuty = false,
-	-- },
 	["ambulance"] = {
 		label = "Ambulance",
 		defaultDuty = true,
@@ -5864,7 +5861,7 @@ RSShared.Jobs = {
 		grades = {
 			[1] = {
 				label = "Bezorger",
-				payment = 10,
+				payment = 30,
 			},
 		}
 	},
@@ -5874,7 +5871,7 @@ RSShared.Jobs = {
 		grades = {
 			[1] = {
 				label = "Chauffeur",
-				payment = 10,
+				payment = 30,
 			},
 		}
 	},
@@ -5884,8 +5881,8 @@ RSShared.Jobs = {
 		defaultDuty = true,
 		grades = {
 			[1] = {
-				label = "",
-				payment = 10,
+				label = "Verkoper",
+				payment = 150,
 			},
 		}
 	},
@@ -5896,12 +5893,12 @@ RSShared.Jobs = {
 		grades = {
 			[1] = {
 				label = "Chauffeur",
-				payment = 10,
+				payment = 30,
 			},
 		}
 	},
 	["reporter"] = {
-		label = "Randstad Nieuws",
+		label = "Nieuws",
 		defaultDuty = true,
 		grades = {
 			[1] = {
@@ -5952,19 +5949,19 @@ RSShared.Jobs = {
 		}
 	},
 	["cardealer"] = {
-		label = "Voertuig Dealer",
+		label = "Voertuig",
 		-- payment = 150,
 		defaultDuty = true,
 		grades = {
 			[1] = {
-				label = "",
+				label = "Dealer",
 				payment = 150,
 			},
 		}
 	},
 	["mechanic"] = {
 		label = "Autocare",
-		payment = 150,
+		--payment = 150,
 		defaultDuty = true,
 		grades = {
 			[1] = {
@@ -5974,46 +5971,35 @@ RSShared.Jobs = {
 		}
 	},
 	["rental"] = {
-		label = "Auto Verhuur",
-		payment = 50,
+		label = "Voertuig",
+		--payment = 50,
 		defaultDuty = true,
 		grades = {
 			[1] = {
-				label = "",
-				payment = 50,
+				label = "Verhuuder",
+				payment = 150,
 			},
 		}
 	},
 	["garbage"] = {
 		label = "Vuilnisman",
-		payment = 12,
+		--payment = 12,
 		defaultDuty = true,
 		grades = {
 			[1] = {
-				label = "",
-				payment = 12,
+				label = "Chauffeur",
+				payment = 30,
 			},
 		}
 	},
 	["hotdog"] = {
-		label = "Hotdog Verkoper",
-		payment = 12,
+		label = "Hotdog",
+		--payment = 12,
 		defaultDuty = true,
 		grades = {
 			[1] = {
-				label = "",
-				payment = 12,
-			},
-		}
-	},
-	['taquila'] = {
-		label = "Tequi-la-la",
-		payment = 10,
-		defaultDuty = true,
-		grades = {
-			[1] = {
-				label = "",
-				payment = 10,
+				label = "Verkoper",
+				payment = 30,
 			},
 		}
 	},

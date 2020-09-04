@@ -32,15 +32,14 @@ AddEventHandler('rs-drugs:server:succesDelivery', function(deliveryData, inTime)
         if Player.Functions.GetItemByName('weed_brick') ~= nil and Player.Functions.GetItemByName('weed_brick').amount >= deliveryData["amount"] then
             Player.Functions.RemoveItem('weed_brick', deliveryData["amount"])
             local cops = GetCurrentCops()
-            local price = 2000
+            local price = 3000
             if cops == 1 then
-                price = 3000
-            elseif cops == 2 then
                 price = 4000
-            elseif cops >= 3 then
+            elseif cops == 2 then
                 price = 5000
+            elseif cops >= 3 then
+                price = 6000
             end
-            print("Drugs PRICE BRO: " .. price)
             if curRep < 10 then
                 Player.Functions.AddMoney('cash', (deliveryData["amount"] * price / 100 * 8), "dilvery-drugs")
             elseif curRep >= 10 then
