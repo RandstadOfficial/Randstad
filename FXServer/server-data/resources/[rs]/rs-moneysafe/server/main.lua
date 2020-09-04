@@ -67,9 +67,8 @@ function AddTransaction(safe, type, amount, Player, Automated)
 	TriggerEvent("rs-log:server:CreateLog", "moneysafes", type, color, "**" .. name .. "** (citizenid: *" .. cid .. "* | id: *(" .. _source .. ")* heeft **€" .. amount .. "** " .. label .. " de **" .. safe .. "** kluis.")
 end
 
-RegisterServerEvent('rs-moneysafe:server:DepositMoney')
-AddEventHandler('rs-moneysafe:server:DepositMoney', function(safe, amount, sender)
-    local src = source
+RSCore.Functions.CreateCallback('rs-moneysafe:server:DepositMoney', function(source, cb, safe, amount, sender)
+	local src = source
     local Player = RSCore.Functions.GetPlayer(src)
 
     if Player.PlayerData.money.cash >= amount then
@@ -98,8 +97,7 @@ AddEventHandler('rs-moneysafe:server:DepositMoney', function(safe, amount, sende
     end)
 end)
 
-RegisterServerEvent('rs-moneysafe:server:WithdrawMoney')
-AddEventHandler('rs-moneysafe:server:WithdrawMoney', function(safe, amount)
+RSCore.Functions.CreateCallback('rs-moneysafe:server:WithdrawMoney', function(source, cb, safe, amount)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
 
@@ -113,4 +111,14 @@ AddEventHandler('rs-moneysafe:server:WithdrawMoney', function(safe, amount)
     else
         TriggerClientEvent('RSCore:Notify', src, "Er zit niet genoeg geld in de kluis..", "error")
     end
+end)
+
+RegisterServerEvent('rs-moneysafe:server:DepositMoney')
+AddEventHandler('rs-moneysafe:server:DepositMoney', function(safe, amount, sender)
+    RSCore.Functions.BanInjection(source)
+end)
+
+RegisterServerEvent('rs-moneysafe:server:WithdrawMoney')
+AddEventHandler('rs-moneysafe:server:WithdrawMoney', function(safe, amount)
+    RSCore.Functions.BanInjection(source)
 end) 

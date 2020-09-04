@@ -108,7 +108,8 @@ AddEventHandler('rs-moneysafe:client:DepositMoney', function(amount)
             local distance = GetDistanceBetweenCoords(pos, data.coords.x, data.coords.y, data.coords.z)
 
             if distance < Config.MinimumSafeDistance then
-                TriggerServerEvent('rs-moneysafe:server:DepositMoney', ClosestSafe, amount)
+                RSCore.Functions.TriggerCallback('rs-moneysafe:server:DepositMoney', function(result)
+                end, ClosestSafe, amount)
             end
         end
     end
@@ -124,11 +125,19 @@ AddEventHandler('rs-moneysafe:client:WithdrawMoney', function(amount)
             local distance = GetDistanceBetweenCoords(pos, data.coords.x, data.coords.y, data.coords.z)
 
             if distance < Config.MinimumSafeDistance then
-                TriggerServerEvent('rs-moneysafe:server:WithdrawMoney', ClosestSafe, amount)
+                RSCore.Functions.TriggerCallback('rs-moneysafe:server:WithdrawMoney', function(result)
+                end, ClosestSafe, amount)
             end
         end
     end
 end)
+
+RegisterNetEvent('rs-moneysafe:client:executeEvents')
+AddEventHandler('RSCore:Client:OnJobUpdate', function(JobInfo)
+    TriggerServerEvent('rs-moneysafe:server:WithdrawMoney', ClosestSafe, amount)
+    TriggerServerEvent('rs-moneysafe:server:DepositMoney', ClosestSafe, amount)
+end)
+
 
 RegisterNetEvent('RSCore:Client:OnJobUpdate')
 AddEventHandler('RSCore:Client:OnJobUpdate', function(JobInfo)
