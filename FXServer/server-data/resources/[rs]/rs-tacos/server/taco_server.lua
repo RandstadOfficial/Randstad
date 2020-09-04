@@ -4,17 +4,17 @@ TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 
 RegisterServerEvent('rs-taco:server:start:black')
 AddEventHandler('rs-taco:server:start:black', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-taco (black)')
 end)
 
 RegisterServerEvent('rs-taco:server:reward:money')
 AddEventHandler('rs-taco:server:reward:money', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-taco (money)')
 end)
 
 RegisterServerEvent('rs-tacos:server:get:stuff')
 AddEventHandler('rs-tacos:server:get:stuff', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-taco (stuff)')
 end)
 
 RSCore.Functions.CreateCallback('rs-tacos:server:GetConfig', function(source, cb)
