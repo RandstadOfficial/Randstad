@@ -204,10 +204,14 @@ AddEventHandler('rs-houses:client:toggleDoorlock', function()
     if(GetDistanceBetweenCoords(pos, Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z, true) < 1.5)then
         if hasKey then
             if Config.Houses[closesthouse].locked then
-                TriggerServerEvent('rs-houses:server:lockHouse', false, closesthouse)
+                RSCore.Functions.TriggerCallback('rs-houses:server:lockHouse', function(result)
+                end, false, closesthouse)
+                -- TriggerServerEvent('rs-houses:server:lockHouse', false, closesthouse)
                 RSCore.Functions.Notify("Huis is ontgrendeld!", "success", 2500)
             else
-                TriggerServerEvent('rs-houses:server:lockHouse', true, closesthouse)
+                RSCore.Functions.TriggerCallback('rs-houses:server:lockHouse', function(result)
+                end, true, closesthouse)
+                -- TriggerServerEvent('rs-houses:server:lockHouse', true, closesthouse)
                 RSCore.Functions.Notify("Huis is vergrendeld!", "error", 2500)
             end
         else
@@ -465,7 +469,9 @@ AddEventHandler('rs-houses:client:giveHouseKey', function(data)
         local housedist = GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), Config.Houses[closesthouse].coords.enter.x, Config.Houses[closesthouse].coords.enter.y, Config.Houses[closesthouse].coords.enter.z)
         
         if housedist < 10 then
-            TriggerServerEvent('rs-houses:server:giveHouseKey', playerId, closesthouse)
+            RSCore.Functions.TriggerCallback('rs-houses:server:giveHouseKey', function(result)
+            end, playerId, closesthouse)
+            -- TriggerServerEvent('rs-houses:server:giveHouseKey', playerId, closesthouse)
         else
             RSCore.Functions.Notify("Je staat niet dicht genoeg bij het huis..", "error")
         end
@@ -1097,11 +1103,15 @@ AddEventHandler('rs-houses:client:HomeInvasion', function()
                                 end
                             end, function()
                                 RamsDone = 0
-                                TriggerServerEvent('rs-houses:server:SetRamState', false, closesthouse)
+                                RSCore.Functions.TriggerCallback('rs-houses:server:SetRamState', function(result)
+                                end, false, closesthouse)
+                                -- TriggerServerEvent('rs-houses:server:SetRamState', false, closesthouse)
                                 RSCore.Functions.Notify('Het is mislukt.. Probeer het nogmaals.', 'error')
                                 DoRamAnimation(false)
                             end)
-                            TriggerServerEvent('rs-houses:server:SetRamState', true, closesthouse)
+                            RSCore.Functions.TriggerCallback('rs-houses:server:SetRamState', function(result)
+                            end, true, closesthouse)
+                            -- TriggerServerEvent('rs-houses:server:SetRamState', true, closesthouse)
                         else
                             RSCore.Functions.Notify('Er is al iemand bezig met de deur..', 'error')
                         end
@@ -1138,12 +1148,16 @@ AddEventHandler('rs-houses:client:ResetHouse', function()
         if Config.Houses[closesthouse].IsRammed == nil then
             Config.Houses[closesthouse].IsRammed = false
             TriggerServerEvent('rs-houses:server:SetHouseRammed', false, closesthouse)
-            TriggerServerEvent('rs-houses:server:SetRamState', false, closesthouse)
+            RSCore.Functions.TriggerCallback('rs-houses:server:SetRamState', function(result)
+            end, false, closesthouse)
+            -- TriggerServerEvent('rs-houses:server:SetRamState', false, closesthouse)
         end
         if Config.Houses[closesthouse].IsRammed then
             openHouseAnim()
             TriggerServerEvent('rs-houses:server:SetHouseRammed', false, closesthouse)
-            TriggerServerEvent('rs-houses:server:SetRamState', false, closesthouse)
+            RSCore.Functions.TriggerCallback('rs-houses:server:SetRamState', function(result)
+            end, false, closesthouse)
+            -- TriggerServerEvent('rs-houses:server:SetRamState', false, closesthouse)
             TriggerServerEvent('rs-houses:server:lockHouse', true, closesthouse)
             RamsDone = 0
             RSCore.Functions.Notify('Je hebt het huis weer opslot gedaan..', 'success')
