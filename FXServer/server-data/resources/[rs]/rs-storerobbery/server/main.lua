@@ -33,7 +33,7 @@ end)
 
 RegisterServerEvent('rs-storerobbery:server:takeMoney')
 AddEventHandler('rs-storerobbery:server:takeMoney', function(register, isDone)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-storerobbery (takeMoney)')
 end)
 
 RSCore.Functions.CreateCallback('rs-storerobbery:takeMoney', function(source, cb, register, isDone)

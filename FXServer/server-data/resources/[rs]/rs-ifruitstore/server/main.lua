@@ -33,7 +33,7 @@ end)
 
 RegisterServerEvent('rs-ifruitstore:server:SafeReward')
 AddEventHandler('rs-ifruitstore:server:SafeReward', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-ifruitstore (SafeReward)')
 end)
 
 RSCore.Functions.CreateCallback('rs-ifruitstore:SafeReward', function(source, cb)
@@ -74,7 +74,7 @@ end)
 
 RegisterServerEvent('rs-ifruitstore:server:itemReward')
 AddEventHandler('rs-ifruitstore:server:itemReward', function(spot)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-ifruitstore (itemReward)')
 end)
 
 RegisterServerEvent('rs-ifruitstore:server:PoliceAlertMessage')

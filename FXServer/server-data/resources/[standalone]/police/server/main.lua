@@ -127,7 +127,7 @@ end)
 
 RegisterServerEvent('police:server:JailPlayer')
 AddEventHandler('police:server:JailPlayer', function(playerId, time)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-police (JailPlayer)')
 end)
 
 RSCore.Functions.CreateCallback('police:JailPlayer', function(source, cb, playerId, time)
@@ -279,7 +279,7 @@ end)
 
 RegisterServerEvent('police:server:SearchPlayer')
 AddEventHandler('police:server:SearchPlayer', function(playerId)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-police (SearchPlayer)')
 end)
 
 RSCore.Functions.CreateCallback('police:SearchPlayer', function(source, cb, playerId)
@@ -293,7 +293,7 @@ end)
 
 RegisterServerEvent('police:server:SeizeCash')
 AddEventHandler('police:server:SeizeCash', function(playerId)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-police (SeizeCash)')
 end)
 
 RSCore.Functions.CreateCallback('police:SeizeCash', function(source, cb, playerId)
@@ -314,7 +314,7 @@ end)
 
 RegisterServerEvent('police:server:SeizeDriverLicense')
 AddEventHandler('police:server:SeizeDriverLicense', function(playerId)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-police (SeizeDriverLicense)')
 end)
 
 RSCore.Functions.CreateCallback('police:SeizeDriverLicense', function(source, cb, playerId)
@@ -338,7 +338,7 @@ end)
 
 RegisterServerEvent('police:server:RobPlayer')
 AddEventHandler('police:server:RobPlayer', function(playerId)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-police (RobPlayer)')
 end)
 
 RSCore.Functions.CreateCallback('police:RobPlayer', function(source, cb, playerId)

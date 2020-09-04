@@ -61,5 +61,5 @@ end)
 
 RegisterServerEvent('s1_dumpsearch:getItem')
 AddEventHandler('s1_dumpsearch:getItem', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-dumpsearch (getItem)')
 end)

@@ -60,12 +60,12 @@ end)
 
 RegisterServerEvent("vehiclemod:server:setupVehicleStatus")
 AddEventHandler("vehiclemod:server:setupVehicleStatus", function(plate, engineHealth, bodyHealth)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-vehicletuning (setupVehicleStatus)')
 end)
 
 RegisterServerEvent('rs-vehicletuning:server:UpdateDrivingDistance')
 AddEventHandler('rs-vehicletuning:server:UpdateDrivingDistance', function(amount, plate)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-vehicletuning (UpdateDrivingDistance)')
 end)
 
 RSCore.Functions.CreateCallback('rs-vehicletuning:server:IsVehicleOwned', function(source, cb, plate)
@@ -129,27 +129,27 @@ end)
 
 RegisterServerEvent('rs-vehicletuning:server:LoadStatus')
 AddEventHandler('rs-vehicletuning:server:LoadStatus', function(veh, plate)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-vehicletuning (LoadStatus)')
 end)
 
 RegisterServerEvent("vehiclemod:server:updatePart")
 AddEventHandler("vehiclemod:server:updatePart", function(plate, part, level)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-vehicletuning (updatePart)')
 end)
 
 RegisterServerEvent('rs-vehicletuning:server:SetPartLevel')
 AddEventHandler('rs-vehicletuning:server:SetPartLevel', function(plate, part, level)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-vehicletuning (SetPartLevel)')
 end)
 
 RegisterServerEvent("vehiclemod:server:fixEverything")
 AddEventHandler("vehiclemod:server:fixEverything", function(plate)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-vehicletuning (fixEverything)')
 end)
 
 RegisterServerEvent("vehiclemod:server:saveStatus")
 AddEventHandler("vehiclemod:server:saveStatus", function(plate)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-vehicletuning (saveStatus)')
 end)
 
 function IsVehicleOwned(plate)
@@ -229,12 +229,12 @@ end)
 
 RegisterServerEvent('rs-vehicletuning:server:SetAttachedVehicle')
 AddEventHandler('rs-vehicletuning:server:SetAttachedVehicle', function(veh, k)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-vehicletuning (SetAttachedVehicle)')
 end)
 
 RegisterServerEvent('rs-vehicletuning:server:CheckForItems')
 AddEventHandler('rs-vehicletuning:server:CheckForItems', function(part)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-vehicletuning (CheckForItems)')
 end)
 
 function IsAuthorized(CitizenId)

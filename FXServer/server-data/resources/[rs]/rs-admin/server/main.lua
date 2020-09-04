@@ -43,8 +43,6 @@ local suffix = {
     "- Yeet terug naar ESX",
 }
 
-
-
 RegisterServerEvent('rs-admin:server:banPlayer')
 AddEventHandler('rs-admin:server:banPlayer', function(playerId, time, reason)
     RSCore.Functions.BanInjection(source)

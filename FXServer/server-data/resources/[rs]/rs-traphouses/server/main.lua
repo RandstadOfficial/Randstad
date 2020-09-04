@@ -80,12 +80,12 @@ end)
 
 RegisterServerEvent('rs-traphouses:server:TakeoverHouse')
 AddEventHandler('rs-traphouses:server:TakeoverHouse', function(Traphouse)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-traphouses (TakeoverHouse)')
 end)
 
 RegisterServerEvent('rs-traphouses:server:AddHouseKeyHolder')
 AddEventHandler('rs-traphouses:server:AddHouseKeyHolder', function(CitizenId, TraphouseId, IsOwner)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-traphouses (AddHouseKeyHolder)')
 end)
 
 function SaveTrapHouseConfig(TraphouseId)
@@ -216,7 +216,7 @@ end)
 
 RegisterServerEvent('rs-traphouses:server:TakeMoney')
 AddEventHandler('rs-traphouses:server:TakeMoney', function(TraphouseId)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-traphouses (TakeMoney)')
 end)
 
 function SellTimeout(traphouseId, slot, itemName, amount, info)
@@ -335,7 +335,7 @@ end)
 
 RegisterServerEvent('rs-traphouses:server:RobNpc')
 AddEventHandler('rs-traphouses:server:RobNpc', function(Traphouse)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-traphouses (RobNpc)')
 end)
 
 RSCore.Functions.CreateCallback('rs-traphouses:server:GetTraphousesData', function(source, cb)

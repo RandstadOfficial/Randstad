@@ -7,7 +7,7 @@ end)
 
 RegisterServerEvent('rs-drugs:server:giveDeliveryItems')
 AddEventHandler('rs-drugs:server:giveDeliveryItems', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-drugs (giveDeliveryItems)')
 end)
 
 RSCore.Functions.CreateCallback('rs-drugs:giveDeliveryItems', function(source, cb, amount)

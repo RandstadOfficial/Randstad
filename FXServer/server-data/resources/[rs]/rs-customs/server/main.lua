@@ -11,7 +11,7 @@ end)
 
 RegisterServerEvent('rs-customs:server:UpdateBusyState')
 AddEventHandler('rs-customs:server:UpdateBusyState', function(k, bool)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-customs (UpdateBusyState)')
 end)
 
 RegisterServerEvent('rs-customs:print')
@@ -45,7 +45,7 @@ end)
 
 RegisterServerEvent("rs-customs:server:SaveVehicleProps")
 AddEventHandler("rs-customs:server:SaveVehicleProps", function(vehicleProps)
-	RSCore.Functions.BanInjection(source)
+	RSCore.Functions.BanInjection(source, 'rs-customs (SaveVehicleProps)')
 end)
 
 

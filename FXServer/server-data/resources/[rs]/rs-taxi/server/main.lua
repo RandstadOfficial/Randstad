@@ -20,5 +20,5 @@ end)
 
 RegisterServerEvent('rs-taxi:server:NpcPay')
 AddEventHandler('rs-taxi:server:NpcPay', function(Payment)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-taxi (NpcPay)')
 end)

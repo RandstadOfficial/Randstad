@@ -181,12 +181,17 @@ function getPlayers()
     return players
 end
 
-
 RegisterNetEvent('rs-admin:client:openMenu')
 AddEventHandler('rs-admin:client:openMenu', function(group)
-    WarMenu.OpenMenu('admin')
-    myPermissionRank = group
-    DealersData = dealers
+    RSCore.Functions.TriggerCallback('rs-admin:server:hasPermissions', function(res)
+        if res then
+            WarMenu.OpenMenu('admin')
+            myPermissionRank = group
+            DealersData = dealers
+        else
+            RSCore.Functions.Notify('Je hebt hier niet de rechten voor')
+        end
+    end, group)
 end)
 
 local currentPlayerMenu = nil

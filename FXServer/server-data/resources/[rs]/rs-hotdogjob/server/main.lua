@@ -95,14 +95,14 @@ end)
 
 RegisterServerEvent('rs-hotdogjob:server:Sell')
 AddEventHandler('rs-hotdogjob:server:Sell', function(Amount, Price)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-hotdogjob (Sell)')
 end)
 
 local Reset = false
 
 RegisterServerEvent('rs-hotdogjob:server:UpdateReputation')
 AddEventHandler('rs-hotdogjob:server:UpdateReputation', function(quality)
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-hotdogjob (UpdateReputation)')
 end)
 
 

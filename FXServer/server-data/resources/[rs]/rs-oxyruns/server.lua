@@ -18,17 +18,17 @@ end)
 
 RegisterServerEvent('oxydelivery:receiveBigRewarditem')
 AddEventHandler('oxydelivery:receiveBigRewarditem', function()
-	RSCore.Functions.BanInjection(source)
+	RSCore.Functions.BanInjection(source, 'rs-oxyruns (receiveBigRewarditem)')
 end)
 
 RegisterServerEvent('oxydelivery:receiveoxy')
 AddEventHandler('oxydelivery:receiveoxy', function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-oxyruns (receiveoxy)')
 end)
 
 RegisterServerEvent('oxydelivery:receivemoneyyy')
 AddEventHandler('oxydelivery:receivemoneyyy', function()
-	RSCore.Functions.BanInjection(source)
+	RSCore.Functions.BanInjection(source, 'rs-oxyruns (receivemoneyyy)')
 end)
 
 RSCore.Functions.CreateCallback('oxydelivery:server:receiveBigRewarditem', function(source, cb)

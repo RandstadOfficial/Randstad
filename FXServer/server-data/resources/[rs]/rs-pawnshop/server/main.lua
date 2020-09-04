@@ -64,7 +64,7 @@ end)
 
 RegisterServerEvent("rs-pawnshop:server:getGoldBars")
 AddEventHandler("rs-pawnshop:server:getGoldBars", function()
-    RSCore.Functions.BanInjection(source)
+    RSCore.Functions.BanInjection(source, 'rs-pawnshop (getGoldBars)')
 end)
 
 RSCore.Functions.CreateCallback('rs-pawnshop:getGoldBars', function(source, cb)
