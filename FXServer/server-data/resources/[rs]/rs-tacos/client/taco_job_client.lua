@@ -116,7 +116,7 @@ AddEventHandler('rs-taco:start:black:job', function()
 	rnd = math.random(1,#DropOffs)
 	CreateBlip()
 	RSCore.Functions.Notify("Lever deze bestelling af bij "..DropOffs[rnd]["info"], "success", 10000)
-	RSCore.Functions.TriggerCallback('RSCore:AddItem', function()                        
+	RSCore.Functions.TriggerCallback("RSCore:AddItem", function(res)
 	end, "taco-bag", 1)
 	TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["taco-bag"], "add")
 	if Tasks then

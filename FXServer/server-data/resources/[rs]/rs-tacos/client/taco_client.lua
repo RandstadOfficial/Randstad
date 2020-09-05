@@ -116,7 +116,7 @@ function FinishTaco()
 		TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["meat"], "remove")
 		TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["lettuce"], "remove")
 		TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["taco"], "add")
-		RSCore.Functions.TriggerCallback('RSCore:AddItem', function()                        
+		RSCore.Functions.TriggerCallback("RSCore:AddItem", function(res)
         end, "taco", 1)
 		TriggerServerEvent("InteractSound_SV:PlayOnSource", "micro", 0.2)
 	end, function()
@@ -145,7 +145,7 @@ function BakeMeat()
         coords = { x = -0.005, y = 0.00, z = 0.00 },
         rotation = { x = 175.0, y = 160.0, z = 0.0 },
 	}, {}, function() -- Done
-		RSCore.Functions.TriggerCallback('RSCore:AddItem', function()                        
+		RSCore.Functions.TriggerCallback("RSCore:AddItem", function(res)
         end, "meat", 1)
 		Config.JobData['stock-meat']= Config.JobData['stock-meat'] - 1
 		TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["meat"], "add")
@@ -174,7 +174,7 @@ function GetLettuce()
 		flags = 8,
 	}, {}, {}, function() -- Done
 		StopAnimTask(GetPlayerPed(-1), "amb@prop_human_bum_bin@idle_b", "idle_d", 1.0)
-		RSCore.Functions.TriggerCallback('RSCore:AddItem', function()                        
+		RSCore.Functions.TriggerCallback("RSCore:AddItem", function(res)
         end, "lettuce", 1)
 		Config.JobData['stock-lettuce']= Config.JobData['stock-lettuce'] - 1
 		TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["lettuce"], "add")
