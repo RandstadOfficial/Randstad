@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="./css/advertenties.css">
     <link rel="stylesheet" href="./css/twitter.css">
     <link rel="stylesheet" href="./css/crypto.css">
+    <link rel="stylesheet" href="./css/houses.css">
+    <link rel="stylesheet" href="./css/garage.css">
     
     <!-- CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -784,6 +786,95 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="houses-app">
+                    <div class="houses-app-header">
+                        <div class="houses-app-header-tab houses-app-header-tab-selected" data-housetab="myhouses"><p>Mijn Huizen</p></div>
+                        <div class="houses-app-header-tab" data-housetab="mykeys"><p>Mijn Sleutels</p></div>
+                    </div>
+
+                    <div class="house-app-myhouses-container">
+                        <div class="myhouses-house">
+                            <div class="myhouse-house-icon"><i class="fas fa-home"></i></div>
+                            <div class="myhouse-house-titel">Grove St. 1 | Tier 1</div>
+                            <div class="myhouse-house-details"><i class="fas fa-key"></i>&nbsp;&nbsp;5</div>
+                        </div>
+                    </div>
+
+                    <div class="house-app-mykeys-container">
+                        <!-- <div class="mykeys-key"> <span class="mykeys-key-label">Test</span> <span class="mykeys-key-sub">Klik om GPS in te stellen</span> </div> -->
+                       <!-- <div class="mykeys-key">
+                            <span class="mykeys-key-label">Test</span>
+                            <span class="mykeys-key-sub">Klik om GPS in te stellen</span>
+                       </div> -->
+                    </div>
+
+                    <div class="myhouses-options-container">
+                        <div class="myhouses-options">
+                            <div class="myhouses-options-header">Grove St. 1</div>
+                            <div class="myhouses-option" id="myhouse-option-transfer">TRANSFER</div>
+                            <div class="myhouses-option" id="myhouse-option-keys">SLEUTELS</div>
+                            <br>
+                            <br>
+                            <div class="myhouses-option" id="myhouse-option-close">SLUIT</div>
+                        </div>
+
+                        <div class="myhouse-option-transfer-container">
+                            <div class="myhouse-option-transfer-container-header">Transfer Huis</div>
+                            <input class="myhouse-option-transfer-container-citizenid" type="text" spellcheck="false" placeholder="BSN" required>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <div class="myhouses-option" id="myhouse-option-transfer-confirm">BEVESTIG</div>
+                            <div class="myhouses-option" id="myhouse-option-transfer-back">TERUG</div>
+                        </div>
+
+                        <div class="myhouse-option-keys-container">
+                            <div class="keys-container">
+                                <!-- <div class="house-key"> <span class="house-key-holder">Test Test</span> <div class="house-key-delete"><i class="fas fa-trash"></i></div> </div> -->
+                                <!-- <div class="house-key">
+                                    <span class="house-key-holder">Test Test</span>
+                                    <div class="house-key-delete"><i class="fas fa-trash"></i></div>
+                                </div> -->
+                            </div>
+                            <div class="myhouses-option" id="myhouse-option-keys-back">TERUG</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="garage-app">
+                    <div class="garage-app-header">
+                        Mijn Garage
+                    </div>
+                    <div class="garage-homescreen">
+                        <div class="garage-vehicles">
+                            <!-- <div class="garage-vehicle">
+                                <span class="garage-vehicle-firstletter">B</span>
+                                <span class="garage-vehicle-name">BMW M5</span>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="garage-detailscreen">
+                        <div class="garage-cardetails">
+                            <div class="vehicle-brand"><span class="vehicle-detail">Merk</span><span class="vehicle-answer">BMW M5</span></div>
+                            <div class="vehicle-model"><span class="vehicle-detail">Model</span><span class="vehicle-answer">BMW M5</span></div>
+                            <div class="vehicle-plate"><span class="vehicle-detail">Kenteken</span><span class="vehicle-answer">BMW M5</span></div>
+                            <div class="vehicle-garage"><span class="vehicle-detail">Garage</span><span class="vehicle-answer">BMW M5</span></div>
+                            <div class="vehicle-status"><span class="vehicle-detail">Status</span><span class="vehicle-answer">BMW M5</span></div>
+                            &nbsp;
+                            <div class="vehicle-fuel"><span class="vehicle-detail">Brandstof</span><span class="vehicle-answer">BMW M5</span></div>
+                            <div class="vehicle-engine"><span class="vehicle-detail">Motor</span><span class="vehicle-answer">BMW M5</span></div>
+                            <div class="vehicle-body"><span class="vehicle-detail">Carrosserie</span><span class="vehicle-answer">BMW M5</span></div>
+
+                            <div class="garage-cardetails-footer">
+                                TERUG
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- Phone Home Button -->
             <div class="phone-bottom">
@@ -817,6 +908,8 @@
     <script src="./js/advertenties.js"></script>
     <script src="./js/twitter.js"></script>
     <script src="./js/crypto.js"></script>
+    <script src="./js/garage.js"></script>
+    <script src="./js/houses.js"></script>
 
 </body>
 </html>
