@@ -160,7 +160,7 @@ CopyMentionTag = (elem) => {
 RS.Phone.Functions.LoadHashtags = (hashtags) => {
     if (hashtags !== null) {
         $(".twitter-trending-hashtags").html("");
-        console.log(JSON.stringify(hashtags));
+        //console.log(JSON.stringify(hashtags));
         $.each(hashtags, function(i, hashtag){
             var Elem = '';
             var TweetHandle = "Tweet";

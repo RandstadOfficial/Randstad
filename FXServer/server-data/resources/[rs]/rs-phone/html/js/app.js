@@ -265,7 +265,7 @@ $(document).ready(function() {
     window.addEventListener('message', function(event) {
         switch(event.data.action) {
             case "open":
-                console.log("event triggered :)");
+                //console.log("event triggered :)");
                 RS.Phone.Functions.OpenPhone(event.data);
                 RS.Phone.Functions.SetupAppWarnings(event.data.AppData);
                 RS.Phone.Functions.SetupCurrentCall(event.data.CallData);
@@ -273,7 +273,7 @@ $(document).ready(function() {
                 RS.Phone.Data.PlayerData = event.data.PlayerData;
                 break;
             case "LoadPhoneData":
-                console.log("load phone triggered");
+                // console.log("load phone triggered");
                 RS.Phone.Functions.LoadPhoneData(event.data);
                 break;
             case "UpdateTime":
@@ -298,10 +298,10 @@ $(document).ready(function() {
             case "UpdateChat":
                 if (RS.Phone.Data.currentApplication == "whatsapp") {
                     if (OpenedChatData.number !== null && OpenedChatData.number == event.data.chatNumber) {
-                        console.log('Chat reloaded 0')
+                        //console.log('Chat reloaded 0')
                         RS.Phone.Functions.SetupChatMessages(event.data.chatData);
                     } else {
-                        console.log('Chats reloaded 1')
+                        //console.log('Chats reloaded 1')
                         RS.Phone.Functions.LoadWhatsappChats(event.data.Chats);
                     }
                 }
@@ -490,9 +490,9 @@ RS.Phone.Functions.LoadPhoneData = function(data) {
     RS.Phone.Data.MetaData = data.PhoneData.MetaData;
     RS.Phone.Functions.LoadMetaData(data.PhoneData.MetaData);
     RS.Phone.Functions.LoadContacts(data.PhoneData.Contacts);
-    console.log(data.PhoneData.Contacts);
+    //console.log(data.PhoneData.Contacts);
     RS.Phone.Functions.SetupApplications(data);
-    console.log("Phone succesfully loaded!");
+    //console.log("Phone succesfully loaded!");
 }
 
 RS.Phone.Functions.UpdateTime = function(data) {    

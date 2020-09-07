@@ -12,15 +12,15 @@ Keys = {
 }
 
 Crypto.History = {
-    ["bitcoin"] = {}
+    ["dogecoin"] = {}
 }
 
 Crypto.Worth = {
-    ["bitcoin"] = 0
+    ["dogecoin"] = 0
 }
 
 Crypto.Labels = {
-    ["bitcoin"] = "Bitcoin"
+    ["dogecoin"] = "DogeCoin"
 }
 
 Crypto.Exchange = {
