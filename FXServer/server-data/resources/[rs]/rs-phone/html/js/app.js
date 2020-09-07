@@ -224,6 +224,35 @@ $(document).on('click', '.phone-application', function(e){
                             RS.Phone.Functions.LoadTweets(Tweets);
                         });
                     }
+                } else if (PressedApplication == "garage") {
+                    $.post('http://rs-phone/SetupGarageVehicles', JSON.stringify({}), function(Vehicles){
+                        SetupGarageVehicles(Vehicles);
+                    })
+                } else if (PressedApplication == "crypto") {
+                    $.post('http://rs-phone/GetCryptoData', JSON.stringify({
+                        crypto: "bitcoin",
+                    }), function(CryptoData){
+                        SetupCryptoData(CryptoData);
+                    })
+
+                    $.post('http://rs-phone/GetCryptoTransactions', JSON.stringify({}), function(data){
+                        RefreshCryptoTransactions(data);
+                    })
+                } else if (PressedApplication == "houses") {
+                    $.post('http://rs-phone/GetPlayerHouses', JSON.stringify({}), function(Houses){
+                        SetupPlayerHouses(Houses);
+                    });
+                    $.post('http://rs-phone/GetPlayerKeys', JSON.stringify({}), function(Keys){
+                        $(".house-app-mykeys-container").html("");
+                        if (Keys.length > 0) {
+                            $.each(Keys, function(i, key){
+                                var elem = '<div class="mykeys-key" id="keyid-'+i+'"> <span class="mykeys-key-label">' + key.HouseData.adress + '</span> <span class="mykeys-key-sub">Klik om GPS in te stellen</span> </div>';
+
+                                $(".house-app-mykeys-container").append(elem);
+                                $("#keyid-"+i).data('KeyData', key);
+                            });
+                        }
+                    });
                 }
             }
         }

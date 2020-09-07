@@ -19,7 +19,10 @@ Config.HeaderDisabledApps = [
     "meos",
     "whatsapp",
     "advertentie",
-    "twitter"
+    "twitter",
+    "garage",
+    "houses",
+    "crypto"
 ]
 
 Config.DefaultCryptoPage = "general";
