@@ -112,7 +112,7 @@ $(document).on('click', '.phone-recent-call', function(e){
         name: RecentData.name
     }
 
-    console.log(RS.Phone.Data.AnonymousCall)
+    //console.log(RS.Phone.Data.AnonymousCall)
 
     if (RecentData.name == "Anoniem") {
         RS.Phone.Notifications.Add("fas fa-phone", "Telefoon", "Je kan een anoniem nummer niet terug bellen!");

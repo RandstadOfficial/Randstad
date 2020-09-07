@@ -173,11 +173,11 @@
 
 .crypto-header-picture {
     position: absolute;
-    width: 14vh;
+    width: 20vh;
     margin: 0 auto;
     left: 0;
     right: 0;
-    top: 2vh;
+    top: 1vh;
 }
 
 .cryptotab-general {

@@ -158,7 +158,7 @@ $(document).on('click', '#accept-profilepicture', function(e){
     } else {
         RS.Phone.Notifications.Add("fas fa-paint-brush", "Instellingen", "Eigen profielfoto ingesteld!")
         RS.Phone.Animations.TopSlideUp(".settings-"+RS.Phone.Settings.OpenedTab+"-tab", 200, -100);
-        console.log(ProfilePicture)
+        //console.log(ProfilePicture)
         $("[data-settingstab='profilepicture']").find('.settings-tab-icon').html('<img src="'+ProfilePicture+'">');
     }
     $.post('http://rs-phone/UpdateProfilePicture', JSON.stringify({

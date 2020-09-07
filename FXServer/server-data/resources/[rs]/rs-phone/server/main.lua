@@ -950,11 +950,11 @@ RSCore.Functions.CreateCallback('rs-phone:server:GetGarageVehicles', function(so
                 local VehicleData = RSCore.Shared.Vehicles[v.vehicle]
 
                 local VehicleGarage = "Geen"
-                -- if v.garage ~= nil then
-                --     if Garages[v.garage] ~= nil then
-                --         VehicleGarage = Garages[v.garage]["label"]
-                --     end
-                -- end
+                if v.garage ~= nil then
+                    if Garages[v.garage] ~= nil then
+                        VehicleGarage = Garages[v.garage]["label"]
+                    end
+                end
 
                 local VehicleState = "In"
                 if v.state == 0 then
