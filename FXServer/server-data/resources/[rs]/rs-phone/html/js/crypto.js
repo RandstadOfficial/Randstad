@@ -15,7 +15,7 @@ function SetupCryptoData(Crypto) {
     CryptoData.Worth = Crypto.Worth;
     CryptoData.WalletId = Crypto.WalletId;
 
-    $(".crypto-action-page-wallet").html("Portefeuille: "+CryptoData.Portfolio+" Qbit('s)");
+    $(".crypto-action-page-wallet").html("Portefeuille: "+CryptoData.Portfolio+" Dogecoin('s)");
     $(".crypto-walletid").html(CryptoData.WalletId);
     $(".cryptotab-course-list").html("");
     if (CryptoData.History.length > 0) {
@@ -48,7 +48,7 @@ function UpdateCryptoData(Crypto) {
     CryptoData.Worth = Crypto.Worth;
     CryptoData.WalletId = Crypto.WalletId;
 
-    $(".crypto-action-page-wallet").html("Portefeuille: "+CryptoData.Portfolio+" Qbit('s)");
+    $(".crypto-action-page-wallet").html("Portefeuille: "+CryptoData.Portfolio+" Dogecoin('s)");
     $(".crypto-walletid").html(CryptoData.WalletId);
     $(".cryptotab-course-list").html("");
     if (CryptoData.History.length > 0) {
@@ -192,11 +192,11 @@ $(document).on('click', '#sell-crypto', function(e){
                     RS.Phone.Data.PlayerData.money.bank = parseInt(RS.Phone.Data.PlayerData.money.bank) + parseInt(Price);
                     RS.Phone.Notifications.Add("fas fa-university", "QBank", "Er is &euro; "+Price+",- bijgeschreven!", "#badc58", 2500);
                 } else {
-                    RS.Phone.Notifications.Add("fas fa-chart-pie", "Crypto", "Je hebt niet genoeg Qbits..", "#badc58", 1500);
+                    RS.Phone.Notifications.Add("fas fa-chart-pie", "Crypto", "Je hebt niet genoeg Dogecoin('s)..", "#badc58", 1500);
                 }
             });
         } else {
-            RS.Phone.Notifications.Add("fas fa-chart-pie", "Crypto", "Je hebt niet genoeg Qbits..", "#badc58", 1500);
+            RS.Phone.Notifications.Add("fas fa-chart-pie", "Crypto", "Je hebt niet genoeg Dogecoin('s)..", "#badc58", 1500);
         }
     } else {
         RS.Phone.Notifications.Add("fas fa-chart-pie", "Crypto", "Vul alles in!", "#badc58", 1500);
@@ -217,7 +217,7 @@ $(document).on('click', '#transfer-crypto', function(e){
                     WalletId: WalletId,
                 }), function(CryptoData){
                     if (CryptoData == "notenough") {
-                        RS.Phone.Notifications.Add("fas fa-chart-pie", "Crypto", "Je hebt niet genoeg Qbits..", "#badc58", 1500);
+                        RS.Phone.Notifications.Add("fas fa-chart-pie", "Crypto", "Je hebt niet genoeg Dogecoin('s)..", "#badc58", 1500);
                     } else if (CryptoData == "notvalid") {
                         RS.Phone.Notifications.Add("fas fa-university", "Crypto", "Dit Wallet-ID bestaat niet!", "#badc58", 2500);
                     } else {
@@ -230,7 +230,7 @@ $(document).on('click', '#transfer-crypto', function(e){
                 RS.Phone.Notifications.Add("fas fa-university", "Crypto", "Je kan niet naar jezelf overmaken..", "#badc58", 2500);
             }
         } else {
-            RS.Phone.Notifications.Add("fas fa-chart-pie", "Crypto", "Je hebt niet genoeg Qbits..", "#badc58", 1500);
+            RS.Phone.Notifications.Add("fas fa-chart-pie", "Crypto", "Je hebt niet genoeg Dogecoin('s)..", "#badc58", 1500);
         }
     } else {
         RS.Phone.Notifications.Add("fas fa-chart-pie", "Crypto", "Vul alles in!", "#badc58", 1500);
