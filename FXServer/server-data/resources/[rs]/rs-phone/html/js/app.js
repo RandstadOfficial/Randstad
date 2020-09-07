@@ -230,7 +230,7 @@ $(document).on('click', '.phone-application', function(e){
                     })
                 } else if (PressedApplication == "crypto") {
                     $.post('http://rs-phone/GetCryptoData', JSON.stringify({
-                        crypto: "bitcoin",
+                        crypto: "dogecoin",
                     }), function(CryptoData){
                         SetupCryptoData(CryptoData);
                     })
