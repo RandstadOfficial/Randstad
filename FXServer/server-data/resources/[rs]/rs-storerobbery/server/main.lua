@@ -40,7 +40,7 @@ RSCore.Functions.CreateCallback('rs-storerobbery:takeMoney', function(source, cb
     local src   = source
     local Player = RSCore.Functions.GetPlayer(src)
 
-    Player.Functions.AddMoney('cash', math.random(25, 50), "robbery-store")
+    Player.Functions.AddMoney('cash', math.random(25, 60), "robbery-store")
     if isDone then
         if math.random(1, 100) <= 10 then
             local code = SafeCodes[Config.Registers[register].safeKey]

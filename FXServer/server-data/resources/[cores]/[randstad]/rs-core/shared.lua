@@ -5843,7 +5843,7 @@ RSShared.Jobs = {
 			},
 			[2] = {
 				label = "Verpleegkundige",
-				payment = 300,
+				payment = 350,
 			},
 			[3] = {
 				label = "Doctor",
@@ -5851,7 +5851,7 @@ RSShared.Jobs = {
 			},
 			[4] = {
 				label = "Hoofd Geneeskunde",
-				payment = 400,
+				payment = 450,
 			},
 		}
 	},
