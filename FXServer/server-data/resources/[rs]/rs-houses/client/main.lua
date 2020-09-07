@@ -1088,7 +1088,10 @@ AddEventHandler('rs-houses:client:HomeInvasion', function()
                                 width = math.random(10, 20),
                             }, function()
                                 if RamsDone + 1 >= Config.RamsNeeded then
-                                    TriggerServerEvent('rs-houses:server:lockHouse', false, closesthouse)
+                                    RSCore.Functions.TriggerCallback("rs-houses:server:lockHouse", function(result)
+                                        
+                                    end, false, closesthouse)
+                                    -- TriggerServerEvent('rs-houses:server:lockHouse', false, closesthouse)
                                     RSCore.Functions.Notify('Het is gelukt, de deur ligt er nu uit.', 'success')
                                     TriggerServerEvent('rs-houses:server:SetHouseRammed', true, closesthouse)
                                     DoRamAnimation(false)
@@ -1158,7 +1161,9 @@ AddEventHandler('rs-houses:client:ResetHouse', function()
             RSCore.Functions.TriggerCallback('rs-houses:server:SetRamState', function(result)
             end, false, closesthouse)
             -- TriggerServerEvent('rs-houses:server:SetRamState', false, closesthouse)
-            TriggerServerEvent('rs-houses:server:lockHouse', true, closesthouse)
+            RSCore.Functions.TriggerCallback("rs-houses:server:lockHouse", function(result)                 
+            end, true, closesthouse)
+            -- TriggerServerEvent('rs-houses:server:lockHouse', true, closesthouse)
             RamsDone = 0
             RSCore.Functions.Notify('Je hebt het huis weer opslot gedaan..', 'success')
         else
