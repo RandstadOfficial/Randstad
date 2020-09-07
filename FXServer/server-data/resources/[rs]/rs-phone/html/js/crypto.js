@@ -161,7 +161,7 @@ $(document).on('click', '#buy-crypto', function(e){
                     UpdateCryptoData(CryptoData)
                     CloseCryptoPage()
                     RS.Phone.Data.PlayerData.money.bank = parseInt(RS.Phone.Data.PlayerData.money.bank) - parseInt(Price);
-                    RS.Phone.Notifications.Add("fas fa-university", "QBank", "Er is &euro; "+Price+",- afgeschreven!", "#badc58", 2500);
+                    RS.Phone.Notifications.Add("fas fa-university", "RSBank", "Er is &euro; "+Price+",- afgeschreven!", "#badc58", 2500);
                 } else {
                     RS.Phone.Notifications.Add("fas fa-chart-pie", "Crypto", "Je hebt niet genoeg geld..", "#badc58", 1500);
                 }
@@ -190,7 +190,7 @@ $(document).on('click', '#sell-crypto', function(e){
                     UpdateCryptoData(CryptoData)
                     CloseCryptoPage()
                     RS.Phone.Data.PlayerData.money.bank = parseInt(RS.Phone.Data.PlayerData.money.bank) + parseInt(Price);
-                    RS.Phone.Notifications.Add("fas fa-university", "QBank", "Er is &euro; "+Price+",- bijgeschreven!", "#badc58", 2500);
+                    RS.Phone.Notifications.Add("fas fa-university", "RSBank", "Er is &euro; "+Price+",- bijgeschreven!", "#badc58", 2500);
                 } else {
                     RS.Phone.Notifications.Add("fas fa-chart-pie", "Crypto", "Je hebt niet genoeg Dogecoin('s)..", "#badc58", 1500);
                 }
