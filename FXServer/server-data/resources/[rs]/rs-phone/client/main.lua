@@ -1950,7 +1950,7 @@ end)
 
 RegisterNUICallback('GetPlayerHouses', function(data, cb)
     RSCore.Functions.TriggerCallback('rs-phone:server:GetPlayerHouses', function(Houses)
-        cb(Houses)
+        cb(json.encode(Houses))
     end)
 end)
 

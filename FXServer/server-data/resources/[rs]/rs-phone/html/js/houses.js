@@ -144,7 +144,7 @@ $(document).on('click', '#myhouse-option-transfer-confirm', function(e){
 
             setTimeout(function(){
                 $.post('http://rs-phone/GetPlayerHouses', JSON.stringify({}), function(Houses){
-                    SetupPlayerHouses(Houses);
+                    SetupPlayerHouses(JSON.stringify(Houses));
                     $(".myhouses-options-container").fadeOut(150);
                 });
             }, 100);
