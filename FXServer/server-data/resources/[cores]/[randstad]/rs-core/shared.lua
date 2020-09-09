@@ -2941,7 +2941,7 @@ RSShared.Vehicles = {
 		["image"] = "https://vignette.wikia.nocookie.net/gtawiki/images/0/07/FaggioMod-GTAO-front.png",
 		["trunkspace"] = 100000,
 		["trunkslots"] = 60,
-		["shop"] = "custom",
+		["shop"] = "nfs",
 	},
 	["schwarzer2"] = {
 		["name"] = "Schwarzer Wide Body",
