@@ -348,6 +348,12 @@ AddEventHandler('rs-vehicleshop:client:ConfirmVehicle', function(Showroom, plate
         SetEntityHeading(veh, RSCustom.VehicleBuyLocation.h)
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
         TriggerServerEvent("vehicletuning:server:SaveVehicleProps", RSCore.Functions.GetVehicleProperties(veh))
+
+        if Showroom.vehicle == "urus" then
+            SetVehicleExtra(veh, 1, false)
+            SetVehicleExtra(veh, 2, true)
+        end
+
     end, RSCustom.VehicleBuyLocation, false)
 end)
 
@@ -363,6 +369,11 @@ AddEventHandler('rs-vehicleshop:client:DoTestrit', function(plate)
             TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
             TriggerServerEvent("vehicletuning:server:SaveVehicleProps", RSCore.Functions.GetVehicleProperties(veh))
             testritveh = veh
+            
+            if RSCustom.ShowroomPositions[ClosestCustomVehicle].vehicle == "urus" then
+                SetVehicleExtra(veh, 1, false)
+                SetVehicleExtra(veh, 2, true)
+            end
         end, RSCustom.VehicleBuyLocation, false)
     end
 end)

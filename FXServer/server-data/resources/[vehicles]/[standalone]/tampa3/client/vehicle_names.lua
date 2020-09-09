@@ -1,0 +1,7 @@
+Citizen.CreateThread(function()
+	AddTextEntry('0xA617546C', 'Six Star Drift Tampa V2')
+	AddTextEntry('0xAC6DC3DE', 'Jiffy Gurun by aartistraw')
+	AddTextEntry('0xAFE14AE1', 'Bennysworks by aartistraw')
+	AddTextEntry('0xB7D9F7F1', 'Drift Tampa V2')
+	AddTextEntry('0xBD27656D', '420GT by aartistraw')
+end)
