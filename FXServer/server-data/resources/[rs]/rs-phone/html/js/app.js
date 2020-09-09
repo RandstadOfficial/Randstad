@@ -240,7 +240,7 @@ $(document).on('click', '.phone-application', function(e){
                     })
                 } else if (PressedApplication == "houses") {
                     $.post('http://rs-phone/GetPlayerHouses', JSON.stringify({}), function(Houses){
-                        SetupPlayerHouses(Houses);
+                        SetupPlayerHouses(JSON.parse(Houses));
                     });
                     $.post('http://rs-phone/GetPlayerKeys', JSON.stringify({}), function(Keys){
                         $(".house-app-mykeys-container").html("");
