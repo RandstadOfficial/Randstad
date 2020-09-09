@@ -103,18 +103,25 @@ AddEventHandler('bank:withdraw', function(amount)
     local atmId = GetAtmFromDB(pos)
 
     if bankamount >= amount and amount > 0 then
+      if atmId ~= nil then
         if amount > atms[atmId].cashInside then
           TriggerClientEvent('RSCore:Notify', src, 'Niet voldoende geld in de atm. ('.. atms[atmId].cashInside ..') euro beschikbaar..', 'error')
         else
           local data = {}
           data.cashInside = atms[atmId].cashInside - amount
           TriggerEvent('rs-banking:server:UpdateATM', atmId, data)
+
           ply.Functions.RemoveMoney('bank', amount, "Bank withdraw")
           TriggerEvent("rs-log:server:CreateLog", "banking", "Withdraw", "red", "**"..GetPlayerName(src) .. "** heeft €"..amount.." opgenomen van zijn bank.")
           ply.Functions.AddMoney('cash', amount, "Bank withdraw")
         end
+      else
+        ply.Functions.RemoveMoney('bank', amount, "Bank withdraw")
+        TriggerEvent("rs-log:server:CreateLog", "banking", "Withdraw", "red", "**"..GetPlayerName(src) .. "** heeft €"..amount.." opgenomen van zijn bank.")
+        ply.Functions.AddMoney('cash', amount, "Bank withdraw")
+      end
     else
-      TriggerClientEvent('RSCore:Notify', src, 'Je hebt niet voldoende geld op je bank..', 'error')
+    TriggerClientEvent('RSCore:Notify', src, 'Je hebt niet voldoende geld op je bank..', 'error')
     end
 end)
 
@@ -129,9 +136,11 @@ AddEventHandler('bank:deposit', function(amount)
     local atmId = GetAtmFromDB(pos)
 
     if cashamount >= amount and amount > 0 then
-      local data = {}
-      data.cashInside = atms[atmId].cashInside + amount
-      TriggerEvent('rs-banking:server:UpdateATM', atmId, data)
+      if atmId ~= nil then
+        local data = {}
+        data.cashInside = atms[atmId].cashInside + amount
+        TriggerEvent('rs-banking:server:UpdateATM', atmId, data)
+      end
       ply.Functions.RemoveMoney('cash', amount, "Bank depost")
       TriggerEvent("rs-log:server:CreateLog", "banking", "Deposit", "green", "**"..GetPlayerName(src) .. "** heeft €"..amount.." op zijn bank gezet.")
       ply.Functions.AddMoney('bank', amount, "Bank depost")
