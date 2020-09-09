@@ -151,10 +151,8 @@ RegisterNUICallback('spawnplayer', function(data)
     local PlayerData = RSCore.Functions.GetPlayerData()
     local insideMeta = PlayerData.metadata["inside"]
 
-    print(type)
 
     if type == "current" then
-        print('current')
         SetDisplay(false)
         DoScreenFadeOut(500)
         Citizen.Wait(2000)
@@ -163,7 +161,6 @@ RegisterNUICallback('spawnplayer', function(data)
             SetEntityHeading(GetPlayerPed(-1), PlayerData.position.a)
             FreezeEntityPosition(GetPlayerPed(-1), false)
         end)
-        print(insideMeta.apartment.apartmentType)
         if insideMeta.house ~= nil then
             local houseId = insideMeta.house
             TriggerEvent('rs-houses:client:LastLocationHouse', houseId)
@@ -201,9 +198,7 @@ RegisterNUICallback('spawnplayer', function(data)
         SetEntityVisible(GetPlayerPed(-1), true)
         Citizen.Wait(500)
         DoScreenFadeIn(250)
-        print('house')
     elseif type == "normal" then
-        print('normal')
         local pos = RS.Spawns[location].coords
         SetDisplay(false)
         DoScreenFadeOut(500)

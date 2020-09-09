@@ -239,7 +239,7 @@ RSCore.Player.CreatePlayer = function(PlayerData)
 			self.PlayerData.money[moneytype] = amount
 			self.Functions.UpdatePlayerData()
 			TriggerEvent("rs-log:server:sendLog", self.PlayerData.citizenid, "moneyset", {amount=amount, moneytype=moneytype, newbalance=self.PlayerData.money[moneytype], reason=reason})
-			TriggerEvent("rs-log:server:CreateLog", "playermoney", "SetMoney", "green", "**"..GetPlayerName(self.PlayerData.source) .. " (citizenid: "..self.PlayerData.citizenid.." | id: "..self.PlayerData.source..")** €"..amount .. " ("..moneytype..") gezet, nieuw "..moneytype.." balans: "..self.PlayerData.money[moneytype])
+			TriggerEvent("rs-log:server:CreateLog", "playermoney", "SetMoney", "yellow", "**"..GetPlayerName(self.PlayerData.source) .. " (citizenid: "..self.PlayerData.citizenid.." | id: "..self.PlayerData.source..")** €"..amount .. " ("..moneytype..") gezet, nieuw "..moneytype.." balans: "..self.PlayerData.money[moneytype])
 			return true
 		end
 		return false

@@ -17,6 +17,24 @@ RSCore.Commands.Add("id", "Wat is mijn id?", {}, false, function(source, args)
     TriggerClientEvent('chatMessage', source, "SYSTEM", "warning", "ID: "..source)
 end)
 
+RSCore.Commands.Add("rep", "Wat is mijn Reputatie?", {}, false, function(source, args)
+    local src = source
+    local Player = RSCore.Functions.GetPlayer(src)
+
+    local DealerRep = Player.PlayerData.metadata["dealerrep"]
+    local JobRep = Player.PlayerData.metadata["jobrep"]
+    TriggerClientEvent('chatMessage', source, "SYSTEM", "warning", "Dealer Reputatie: "..DealerRep)
+end)
+
+RSCore.Commands.Add("xp", "Wat is mijn Ervaring?", {}, false, function(source, args)
+    local src = source
+    local Player = RSCore.Functions.GetPlayer(src)
+
+    local CraftingRep = Player.PlayerData.metadata["craftingrep"]
+    local AttachmentRep = Player.PlayerData.metadata["attachmentcraftingrep"]
+    TriggerClientEvent('chatMessage', source, "SYSTEM", "warning", "Crafting Ervaring: "..CraftingRep)
+    TriggerClientEvent('chatMessage', source, "SYSTEM", "warning", "Attachments Ervaring: "..AttachmentRep)
+end)
 
 RSCore.Functions.CreateUseableItem("harness", function(source, item)
     local Player = RSCore.Functions.GetPlayer(source)

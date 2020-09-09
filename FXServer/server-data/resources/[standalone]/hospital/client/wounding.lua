@@ -434,6 +434,7 @@ AddEventHandler('hospital:client:UsePainkillers', function()
         StopAnimTask(GetPlayerPed(-1), "mp_suicide", "pill", 1.0)
         TriggerServerEvent("RSCore:Server:RemoveItem", "painkillers", 1)
         TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["painkillers"], "remove")
+        SetEntityHealth(GetPlayerPed(-1), GetEntityHealth(GetPlayerPed(-1)) + 10)
         onPainKillers = true
         if painkillerAmount < 3 then
             painkillerAmount = painkillerAmount + 1
