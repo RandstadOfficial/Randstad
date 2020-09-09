@@ -29,7 +29,7 @@ local giveCashAnywhere = false -- Allows the player to give CASH to another play
 local withdrawAnywhere = false -- Allows the player to withdraw cash from bank account anywhere (Default: false)
 local depositAnywhere = false -- Allows the player to deposit cash into bank account anywhere (Default: false)
 local displayBankBlips = true -- Toggles Bank Blips on the map (Default: true)
-local displayAtmBlips = false -- Toggles ATM blips on the map (Default: false) // THIS IS UGLY. SOME ICONS OVERLAP BECAUSE SOME PLACES HAVE MULTIPLE ATM MACHINES. NOT RECOMMENDED
+local displayAtmBlips = true -- Toggles ATM blips on the map (Default: false) // THIS IS UGLY. SOME ICONS OVERLAP BECAUSE SOME PLACES HAVE MULTIPLE ATM MACHINES. NOT RECOMMENDED
 local enableBankingGui = true -- Enables the banking GUI (Default: true) // MAY HAVE SOME ISSUES
 
 -- ATMS
@@ -51,7 +51,7 @@ local banks = {
   [4] = {name="Bank", Closed = false, id=108, x = -1212.980, y = -330.841,  z = 37.787},
   [5] = {name="Bank", Closed = false, id=108, x = -2962.582, y = 482.627,   z = 15.703},
   [6] = {name="Bank", Closed = false, id=108, x = -112.202,  y = 6469.295,  z = 31.626},
-  [7] = {name="Bank", Closed = false, id=108, x = 241.727,   y = 220.706,   z = 106.286},
+  [7] = {name="Bank", Closed = false, id=108, x = 243.191,   y = 224.812,   z = 106.286},
   [8] = {name="Bank", Closed = false, id=108, x = -1310.45, y = -824.98, z = 17.14},
   [9] = {name="Bank", Closed = false, id=108, x = 1175.21,  y = 2706.517, z = 38.09},
 }
@@ -334,7 +334,7 @@ Citizen.CreateThread(function()
 
             if IsDisabledControlJustPressed(0, 140) and atms[atmId].hijackable == 1 then
               if atms[atmId].isHijacked == 0 then
-                if CurrentCops >= 3 then
+                if CurrentCops >= 0 then
                   RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
                     if result then 
                       RSCore.Functions.Progressbar("", "Gasbom plaatsen...", 15000, false, true, {
@@ -358,6 +358,9 @@ Citizen.CreateThread(function()
                         RSCore.Functions.Notify("Gasbom geplaatst, wacht tot die afgaat...", "success")
                         ClearPedTasksImmediately(ped)
                       end, function() -- Cancel
+                        -- local data = {}
+                        -- data.isHijacked = 0
+                        -- TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
                         ClearPedTasksImmediately(ped)
                         StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
                         RSCore.Functions.Notify("Geannuleerd..", "error")
@@ -372,7 +375,11 @@ Citizen.CreateThread(function()
                 end
               else
                 removeCash()
-                local earning = math.random(4000, 7000)
+                local earning = math.random(3000, 6000)
+                local data = {}
+                data.isHijacked = 0
+                data.blocked = 1 -- Set to 1
+                TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
                 RSCore.Functions.Progressbar("take_atm_money", "Geld Pakken...", 15000, false, true, {
                   disableMovement = true,
                   disableCarMovement = true,
@@ -383,18 +390,19 @@ Citizen.CreateThread(function()
                   anim = "stand_cash_in_bag_loop",
                   flags = 49,
                 }, {}, {}, function() -- Done
-                  local data = {}
-                  data.isHijacked = 0
-                  data.blocked = 1 -- Set to 1
                   if atms[atmId].cashInside < earning then
                     earning = atms[atmId].cashInside
                   end
                   data.cashInside = atms[atmId].cashInside - earning
                   TriggerServerEvent('banking:server:GiveHijackCash', earning)
-                  TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
+
                   TriggerServerEvent('rs-banking:server:HijackTimer', atmId)
                   StopAnimTask(GetPlayerPed(-1), "mp_take_money_mg", "stand_cash_in_bag_loop", 1.0)
                 end, function() -- Cancel
+                  local data = {}
+                  data.isHijacked = 1
+                  data.blocked = 0
+                  TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
                   ClearPedTasksImmediately(ped)
                   StopAnimTask(GetPlayerPed(-1), "mp_take_money_mg", "stand_cash_in_bag_loop", 1.0)
                   RSCore.Functions.Notify("Geannuleerd..", "error")
