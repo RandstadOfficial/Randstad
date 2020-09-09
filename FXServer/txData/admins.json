@@ -108,8 +108,7 @@
   {
     "name": "RyanRandstad",
     "master": false,
-    "password_hash": "$2a$11$5yYYQ9nR52Sn.k2T38n4A.6y/4XxjC8C/3QmhRIWUyvsY1ioqVduO",
-    "password_temporary": true,
+    "password_hash": "$2a$11$z/LHBfdH6V391m4cBaApY./cWQpX9dZSr80Jx125Z8tvA9I5111Cu",
     "providers": {},
     "permissions": [
       "players.ban",

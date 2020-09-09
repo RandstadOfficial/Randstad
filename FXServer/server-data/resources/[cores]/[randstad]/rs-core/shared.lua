@@ -3208,7 +3208,7 @@ RSShared.Vehicles = {
 		["shop"] = "custom",
 	},
 	["m3e46"] = {
-		["name"] = "BMW",
+		["name"] = "BMW M3",
 		["brand"] = "M3 E46",
 		["model"] = "m3e46",
 		["price"] = 160000,
@@ -3220,8 +3220,8 @@ RSShared.Vehicles = {
 		["shop"] = "custom",
 	},
 	["mgt"] = {
-		["name"] = "Ford",
-		["brand"] = "Mustang GT",
+		["name"] = "Mustang GT",
+		["brand"] = "Ford",
 		["model"] = "mgt",
 		["price"] = 210000,
 		["category"] = "coupes",
@@ -3256,7 +3256,7 @@ RSShared.Vehicles = {
 		["shop"] = "custom",
 	},
 	["skyline"] = {
-		["name"] = "Nissan",
+		["name"] = "Nissan Skyline",
 		["brand"] = "Skyline R34",
 		["model"] = "skyline",
 		["price"] = 230000,
@@ -3307,8 +3307,8 @@ RSShared.VehicleModels = {
 		["shop"] = "custom",
 	},
 	[GetHashKey("m3e46")] = {
-		["name"] = "BMW",
-		["brand"] = "M3 E46",
+		["name"] = "M3 E46",
+		["brand"] = "BMW",
 		["model"] = "m3e46",
 		["price"] = 160000,
 		["category"] = "coupes",
