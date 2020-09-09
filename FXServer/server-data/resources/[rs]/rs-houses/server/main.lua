@@ -101,12 +101,13 @@ AddEventHandler('rs-houses:server:buyHouse', function(house)
 	local bankBalance = pData.PlayerData.money["bank"]
 
 	if (bankBalance >= HousePrice) then
-		RSCore.Functions.ExecuteSql(false, "INSERT INTO `player_houses` (`house`, `identifier`, `citizenid`, `keyholders`) VALUES ('"..house.."', '"..pData.PlayerData.steam.."', '"..pData.PlayerData.citizenid.."', '"..json.encode(keyyeet).."')")
 		houseowneridentifier[house] = pData.PlayerData.steam
 		houseownercid[house] = pData.PlayerData.citizenid
-		housekeyholders[house] = {
-			[1] = pData.PlayerData.citizenid
-		}
+		housekeyholders[house] = {}
+		housekeyholders[house][1] = pData.PlayerData.citizenid
+
+		RSCore.Functions.ExecuteSql(false, "INSERT INTO `player_houses` (`house`, `identifier`, `citizenid`, `keyholders`) VALUES ('"..house.."', '"..pData.PlayerData.steam.."', '"..pData.PlayerData.citizenid.."', '"..json.encode(housekeyholders[house]).."')")
+
 		RSCore.Functions.ExecuteSql(true, "UPDATE `houselocations` SET `owned` = 1 WHERE `name` = '"..house.."'")
 		TriggerClientEvent('rs-houses:client:SetClosestHouse', src)
 		pData.Functions.RemoveMoney('bank', HousePrice, "bought-house") -- 21% Extra house costs
@@ -244,6 +245,23 @@ AddEventHandler('rs-houses:server:removeHouseKey', function(house, citizenData)
 	housekeyholders[house] = newHolders
 	TriggerClientEvent('RSCore:Notify', src, citizenData.firstname .. " " .. citizenData.lastname .. "'s sleutels zijn verwijderd..", 'error', 3500)
 	RSCore.Functions.ExecuteSql(false, "UPDATE `player_houses` SET `keyholders` = '"..json.encode(housekeyholders[house]).."' WHERE `house` = '"..house.."'")
+end)
+
+RSCore.Functions.CreateCallback('rs-phone_new:server:TransferCid', function(source, cb, NewCid, house)
+	RSCore.Functions.ExecuteSql(false, "SELECT * FROM `players` WHERE `citizenid` = '"..NewCid.."'", function(result)
+		if result[1] ~= nil then
+			local HouseName = house.name
+			housekeyholders[HouseName] = {}
+			housekeyholders[HouseName][1] = NewCid
+			houseownercid[HouseName] = NewCid
+			houseowneridentifier[HouseName] = result[1].steam
+
+			RSCore.Functions.ExecuteSql(false, "UPDATE `player_houses` SET citizenid='"..NewCid.."', keyholders='"..json.encode(housekeyholders[HouseName]).."', identifier='"..result[1].steam.."' WHERE `house` = '"..HouseName.."'")
+			cb(true)
+		else
+			cb(false)
+		end
+	end)
 end)
 
 function typeof(var)
@@ -501,37 +519,74 @@ RSCore.Functions.CreateCallback('rs-phone:server:GetPlayerHouses', function(sour
 	local src = source
 	local Player = RSCore.Functions.GetPlayer(src)
 	local MyHouses = {}
-	local keyholders = {}
 
 	RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_houses` WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(result)
 		if result[1] ~= nil then
 			for k, v in pairs(result) do
-				v.keyholders = json.decode(v.keyholders)
-				if v.keyholders ~= nil and next(v.keyholders) then
-					for f, data in pairs(v.keyholders) do
-						RSCore.Functions.ExecuteSql(false, "SELECT * FROM `players` WHERE `citizenid` = '"..data.."'", function(keyholderdata)
-							if keyholderdata[1] ~= nil then
-								keyholders[f] = keyholderdata[1]
-							end
-						end)
-					end
-				else
-					keyholders[1] = Player.PlayerData
-				end
-
 				table.insert(MyHouses, {
 					name = v.house,
-					keyholders = keyholders,
-					owner = v.citizenid,
+					keyholders = {},
+					owner = Player.PlayerData.citizenid,
 					price = Config.Houses[v.house].price,
 					label = Config.Houses[v.house].adress,
 					tier = Config.Houses[v.house].tier,
 					garage = Config.Houses[v.house].garage,
 				})
+
+				if v.keyholders ~= "null" then
+					v.keyholders = json.decode(v.keyholders)
+					if v.keyholders ~= nil then
+						for f, data in pairs(v.keyholders) do
+							RSCore.Functions.ExecuteSql(false, "SELECT * FROM `players` WHERE `citizenid` = '"..data.."'", function(keyholderdata)
+								if keyholderdata[1] ~= nil then
+									keyholderdata[1].charinfo = json.decode(keyholderdata[1].charinfo)
+									table.insert(MyHouses[k].keyholders, keyholderdata[1])
+								end
+							end)
+						end
+					else
+						MyHouses[k].keyholders[1] = Player.PlayerData
+					end
+				else
+					MyHouses[k].keyholders[1] = Player.PlayerData
+				end
 			end
 				
-			cb(MyHouses)
+			SetTimeout(100, function()
+				cb(MyHouses)
+			end)
+		else
+			cb({})
 		end
+	end)
+end)
+
+RSCore.Functions.CreateCallback('rs-phone:server:GetHouseKeys', function(source, cb)
+	local src = source
+	local Player = RSCore.Functions.GetPlayer(src)
+	local MyKeys = {}
+
+	RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_houses`", function(result)
+		for k, v in pairs(result) do
+			if v.keyholders ~= "null" then
+				v.keyholders = json.decode(v.keyholders)
+				for s, p in pairs(v.keyholders) do
+					if p == Player.PlayerData.citizenid and (v.citizenid ~= Player.PlayerData.citizenid) then
+						table.insert(MyKeys, {
+							HouseData = Config.Houses[v.house]
+						})
+					end
+				end
+			end
+
+			if v.citizenid == Player.PlayerData.citizenid then
+				table.insert(MyKeys, {
+					HouseData = Config.Houses[v.house]
+				})
+			end
+		end
+
+		cb(MyKeys)
 	end)
 end)
 
@@ -545,36 +600,39 @@ RSCore.Functions.CreateCallback('rs-phone:server:MeosGetPlayerHouses', function(
 	if input ~= nil then
 		local search = escape_sqli(input)
 		local searchData = {}
-
-		RSCore.Functions.ExecuteSql(false, 'SELECT * FROM `players` WHERE `citizenid` = "'..search..'" OR `charinfo` LIKE "%'..search..'%"', function(result)
-			if result[1] ~= nil then
-				RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_houses` WHERE `citizenid` = '"..result[1].citizenid.."'", function(houses)
-					if houses[1] ~= nil then
-						for k, v in pairs(houses) do
-							table.insert(searchData, {
-								name = v.house,
-								keyholders = keyholders,
-								owner = v.citizenid,
-								price = Config.Houses[v.house].price,
-								label = Config.Houses[v.house].adress,
-								tier = Config.Houses[v.house].tier,
-								garage = Config.Houses[v.house].garage,
-								charinfo = json.decode(result[1].charinfo),
-								coords = {
-									x = Config.Houses[v.house].coords.enter.x,
-									y = Config.Houses[v.house].coords.enter.y,
-									z = Config.Houses[v.house].coords.enter.z,
-								}
-							})
+		
+			RSCore.Functions.ExecuteSql(false, 'SELECT * FROM `players` WHERE `citizenid` = "'..search..'" OR `charinfo` LIKE "%'..search..'%"', function(result)
+				if result[1] ~= nil then
+					RSCore.Functions.ExecuteSql(false, "SELECT * FROM `player_houses` WHERE `citizenid` = '"..result[1].citizenid.."'", function(houses)
+						if houses[1] ~= nil then
+								for k, v in pairs(houses) do
+									if Config.Houses[v.house].tier ~= 8 then
+										table.insert(searchData, {
+											name = v.house,
+											keyholders = keyholders,
+											owner = v.citizenid,
+											price = Config.Houses[v.house].price,
+											label = Config.Houses[v.house].adress,
+											tier = Config.Houses[v.house].tier,
+											garage = Config.Houses[v.house].garage,
+											charinfo = json.decode(result[1].charinfo),
+											coords = {
+												x = Config.Houses[v.house].coords.enter.x,
+												y = Config.Houses[v.house].coords.enter.y,
+												z = Config.Houses[v.house].coords.enter.z,
+											}
+										})
+									end
+								end
+							
+							cb(searchData)
 						end
-
-						cb(searchData)
-					end
-				end)
-			else
-				cb(nil)
-			end
-		end)
+					end)
+				else
+					cb(nil)
+				end
+			end)
+		
 	else
 		cb(nil)
 	end
