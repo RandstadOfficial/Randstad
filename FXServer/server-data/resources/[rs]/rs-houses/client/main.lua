@@ -684,10 +684,10 @@ function leaveOwnedHouse(house)
             Citizen.Wait(250)
             DoScreenFadeIn(250)
             SetEntityCoords(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.x, Config.Houses[CurrentHouse].coords.enter.y, Config.Houses[CurrentHouse].coords.enter.z + 0.2)
-                SetEntityHeading(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.h)
-                TriggerEvent('rs-weed:client:leaveHouse')
-                TriggerServerEvent('rs-houses:server:SetInsideMeta', house, false)
-                CurrentHouse = nil
+            SetEntityHeading(GetPlayerPed(-1), Config.Houses[CurrentHouse].coords.enter.h)
+            TriggerEvent('rs-weed:client:leaveHouse')
+            TriggerServerEvent('rs-houses:server:SetInsideMeta', house, false)
+            CurrentHouse = nil
         end)
     end
 end
