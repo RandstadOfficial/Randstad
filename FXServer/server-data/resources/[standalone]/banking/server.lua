@@ -183,6 +183,7 @@ AddEventHandler('banking:server:GiveHijackCash', function(amount)
   local src = source
   local player = RSCore.Functions.GetPlayer(src)
   player.Functions.AddMoney('cash', amount, "Geld opgepakt van de kraak") -- change text
+  TriggerEvent("rs-log:server:CreateLog", "banking", "ATM Robbery", "yellow", "**"..GetPlayerName(src) .. "** heeft €"..amount.." opgepakt van de kraak.")
 end)
 
 

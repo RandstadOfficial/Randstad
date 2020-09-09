@@ -37,8 +37,8 @@
   "fxRunner": {
     "serverDataPath": "C:/Users/admin/Desktop/Randstad/FXServer/server-data/",
     "cfgPath": "C:/Users/admin/Desktop/Randstad/FXServer/server-data/server.cfg",
-    "commandLine": "+set onesync legacy",
-    "onesync": true,
+    "commandLine": "",
+    "onesync": "legacy",
     "autostart": true,
     "quiet": false
   }
