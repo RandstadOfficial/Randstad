@@ -31,6 +31,9 @@ AddEventHandler('rs-banking:server:UpdateATM', function(id, data) --LLG
   if data.blocked ~= nil then
     sql = sql .. "`blocked` = '".. data.blocked .."', "
   end
+  if data.inUse ~= nil then
+    sql = sql .. "`inUse` = '".. data.inUse .."', "
+  end
 
   sql = sql:sub(1, #sql - 2)
   sql = sql .. " WHERE `id` = '".. id .."'"
@@ -227,7 +230,7 @@ AddEventHandler('banking:server:callCops', function(streetLabel, coords)
 end)
 
 RSCore.Commands.Add("resetatm", "Reset alle geld in geldautomaten", {}, false, function(source, args)
-  RSCore.Functions.ExecuteSql(false, "UPDATE `banking` SET `cashInside` = '100000'", function()
+  RSCore.Functions.ExecuteSql(false, "UPDATE `banking` SET `cashInside` = '100000', `isHijacked` = '0', `inUse` = '0', `blocked` = '0'", function()
   TriggerClientEvent('chatMessage', source, "SYSTEM", "success", "Alle geldautomaten zijn gereset")
   updateClient()
   end)

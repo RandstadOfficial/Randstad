@@ -174,19 +174,20 @@ function SpawnMoney(pos) --LLG
   end)
 end
 
-function PlaceExplosive(pos) --LLG
+function PlaceExplosive(pos, atmId) --LLG
   Citizen.CreateThread(function()
-    local Chance = math.random(1, 20)
-    --print(Chance)
-    if Chance == 5 then
-      Citizen.Wait(1000)
-      AddExplosion(pos.x, pos.y, pos.z, EXPLOSION_GAS_TANK, 1.0, true, false, 1.0)
-      SpawnMoney(pos)
-    else
-      Citizen.Wait(15000)
-      AddExplosion(pos.x, pos.y, pos.z, EXPLOSION_GAS_TANK, 1.0, true, false, 1.0)
-      SpawnMoney(pos)
+    local time = 15000
+    if math.random(1, 20) == 5 then
+      time = 1000
     end
+
+    Citizen.Wait(time)
+    AddExplosion(pos.x, pos.y, pos.z, EXPLOSION_GAS_TANK, 1.0, true, false, 1.0)
+    SpawnMoney(pos)
+
+    local data = {}
+    data.inUse = 0
+    TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
   end)
 end
 
@@ -319,24 +320,29 @@ Citizen.CreateThread(function()
         --print(atmId) -- dit is om ATM id te zien
         if atms[atmId] ~= nil then
           if atms[atmId].blocked == 0 and atms[atmId].cashInside > 0 then
-            if atms[atmId].isHijacked == 0 then
-              DrawText3Ds(pos.x, pos.y, pos.z, '[E] Kaart valideren')
-              if atms[atmId].hijackable == 1 then
-              DrawText3Ds(pos.x, pos.y, pos.z-0.15, '[R] Om een plofkraak te plegen')
-              end
-            else
-              if atms[atmId].hijackable == 1 then
-                DrawText3Ds(pos.x, pos.y, pos.z, '[R] Om geld op te pakken')
+            if atms[atmId].inUse == 0 then
+              if atms[atmId].isHijacked == 0 then
+                DrawText3Ds(pos.x, pos.y, pos.z, '[E] Kaart valideren')
+                if atms[atmId].hijackable == 1 then
+                DrawText3Ds(pos.x, pos.y, pos.z-0.15, '[R] Om een plofkraak te plegen')
+                end
+              else
+                if atms[atmId].hijackable == 1 then
+                  DrawText3Ds(pos.x, pos.y, pos.z, '[R] Om geld op te pakken')
+                end
               end
             end
 
             DisableControlAction(0, 140, true) --LLG
 
-            if IsDisabledControlJustPressed(0, 140) and atms[atmId].hijackable == 1 then
+            if IsDisabledControlJustPressed(0, 140) and atms[atmId].hijackable == 1 and atms[atmId].inUse == 0 then
               if atms[atmId].isHijacked == 0 then
                 if CurrentCops >= 0 then
                   RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
                     if result then 
+                      local data = {}
+                      data.inUse = 1
+                      TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
                       RSCore.Functions.Progressbar("", "Gasbom plaatsen...", 15000, false, true, {
                         disableMovement = true,
                         disableCarMovement = true,
@@ -347,7 +353,7 @@ Citizen.CreateThread(function()
                         anim = "hotwire",
                         flags = 16,
                       }, {}, {}, function() -- Done
-                        PlaceExplosive(pos)
+                        PlaceExplosive(pos, atmId)
                         PoliceAlert()
                         StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
                         local data = {}
@@ -358,9 +364,9 @@ Citizen.CreateThread(function()
                         RSCore.Functions.Notify("Gasbom geplaatst, wacht tot die afgaat...", "success")
                         ClearPedTasksImmediately(ped)
                       end, function() -- Cancel
-                        -- local data = {}
-                        -- data.isHijacked = 0
-                        -- TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
+                        local data = {}
+                        data.inUse = 0
+                        TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
                         ClearPedTasksImmediately(ped)
                         StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
                         RSCore.Functions.Notify("Geannuleerd..", "error")
@@ -374,12 +380,11 @@ Citizen.CreateThread(function()
                   RSCore.Functions.Notify('Niet genoeg agenten..', 'error', 3500)
                 end
               else
-                removeCash()
-                local earning = math.random(3000, 6000)
                 local data = {}
-                data.isHijacked = 0
-                data.blocked = 1 -- Set to 1
+                data.inUse = 1
                 TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
+                removeCash()
+                local earning = math.random(4000, 7000)
                 RSCore.Functions.Progressbar("take_atm_money", "Geld Pakken...", 15000, false, true, {
                   disableMovement = true,
                   disableCarMovement = true,
@@ -390,18 +395,21 @@ Citizen.CreateThread(function()
                   anim = "stand_cash_in_bag_loop",
                   flags = 49,
                 }, {}, {}, function() -- Done
+                  local data = {}
+                  data.isHijacked = 0
+                  data.blocked = 1 -- Set to 1
+                  data.inUse = 0
                   if atms[atmId].cashInside < earning then
                     earning = atms[atmId].cashInside
                   end
                   data.cashInside = atms[atmId].cashInside - earning
                   TriggerServerEvent('banking:server:GiveHijackCash', earning)
-
+                  TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
                   TriggerServerEvent('rs-banking:server:HijackTimer', atmId)
                   StopAnimTask(GetPlayerPed(-1), "mp_take_money_mg", "stand_cash_in_bag_loop", 1.0)
                 end, function() -- Cancel
                   local data = {}
-                  data.isHijacked = 1
-                  data.blocked = 0
+                  data.inUse = 0
                   TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
                   ClearPedTasksImmediately(ped)
                   StopAnimTask(GetPlayerPed(-1), "mp_take_money_mg", "stand_cash_in_bag_loop", 1.0)
@@ -410,7 +418,7 @@ Citizen.CreateThread(function()
               end
             end
             
-            if IsControlJustPressed(1, Keys["E"]) and atms[atmId].isHijacked == 0 then
+            if IsControlJustPressed(1, Keys["E"]) and atms[atmId].isHijacked == 0 and atms[atmId].inUse == 0 then
               if (not IsInVehicle()) then
                 if bankOpen then
                 closeGui()
