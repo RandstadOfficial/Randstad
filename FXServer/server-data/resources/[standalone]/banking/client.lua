@@ -403,7 +403,10 @@ Citizen.CreateThread(function()
                     earning = atms[atmId].cashInside
                   end
                   data.cashInside = atms[atmId].cashInside - earning
-                  TriggerServerEvent('banking:server:GiveHijackCash', earning)
+                  RSCore.Functions.TriggerCallback("banking:server:GiveHijackCash", function(result)
+                  
+                  end, earning)
+                  -- TriggerServerEvent('banking:server:GiveHijackCash', earning)
                   TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
                   TriggerServerEvent('rs-banking:server:HijackTimer', atmId)
                   StopAnimTask(GetPlayerPed(-1), "mp_take_money_mg", "stand_cash_in_bag_loop", 1.0)

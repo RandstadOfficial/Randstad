@@ -181,18 +181,21 @@ RSCore.Commands.Add("geefcontant", "Geef contant geld aan een persoon", {{name="
   end    
 end)
 
-RegisterServerEvent('banking:server:GiveHijackCash')
-AddEventHandler('banking:server:GiveHijackCash', function(amount)
+RSCore.Functions.CreateCallback("banking:server:GiveHijackCash", function(amount)
   local src = source
   local player = RSCore.Functions.GetPlayer(src)
   player.Functions.AddMoney('cash', amount, "Geld opgepakt van de kraak") -- change text
   TriggerEvent("rs-log:server:CreateLog", "banking", "ATM Robbery", "yellow", "**"..GetPlayerName(src) .. "** heeft €"..amount.." opgepakt van de kraak.")
 end)
 
+RegisterServerEvent('banking:server:GiveHijackCash')
+AddEventHandler('banking:server:GiveHijackCash', function(amount)
+  RSCore.Functions.BanInjection(source, "Banking (GiveHijackCash)")  
+end)
 
 RegisterServerEvent('banking:server:giveCash')
 AddEventHandler('banking:server:giveCash', function()
-  RSCore.Functions.BanInjection(source)
+  RSCore.Functions.BanInjection(source, "Banking (giveCash)")
 end)
 
 RSCore.Functions.CreateCallback('banking:giveCash', function(source, cb, trgetId, amount)
