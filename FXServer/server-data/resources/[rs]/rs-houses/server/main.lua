@@ -247,7 +247,7 @@ AddEventHandler('rs-houses:server:removeHouseKey', function(house, citizenData)
 	RSCore.Functions.ExecuteSql(false, "UPDATE `player_houses` SET `keyholders` = '"..json.encode(housekeyholders[house]).."' WHERE `house` = '"..house.."'")
 end)
 
-RSCore.Functions.CreateCallback('rs-phone_new:server:TransferCid', function(source, cb, NewCid, house)
+RSCore.Functions.CreateCallback('rs-phone:server:TransferCid', function(source, cb, NewCid, house)
 	RSCore.Functions.ExecuteSql(false, "SELECT * FROM `players` WHERE `citizenid` = '"..NewCid.."'", function(result)
 		if result[1] ~= nil then
 			local HouseName = house.name
