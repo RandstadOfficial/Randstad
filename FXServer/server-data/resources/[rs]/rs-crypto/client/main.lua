@@ -3,12 +3,14 @@ isLoggedIn = false
 local requiredItemsShowed = false
 
 Citizen.CreateThread(function()
-	while RSCore == nil do
-		TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
-		Citizen.Wait(0)
-	end
+    while true do
+        Citizen.Wait(10)
+        if RSCore == nil then
+            TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
+            Citizen.Wait(200)
+        end
+    end
 end)
-
 function DrawText3Ds(x, y, z, text)
 	SetTextScale(0.35, 0.35)
     SetTextFont(4)
