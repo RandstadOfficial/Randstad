@@ -42,14 +42,20 @@ AddEventHandler('rs-banking:server:UpdateATM', function(id, data) --LLG
   end)
 end)
 
+
 RegisterServerEvent('rs-banking:server:GetAtms')
 AddEventHandler('rs-banking:server:GetAtms', function() --LLG
   updateClient()
 end)
 
-RegisterServerEvent('rs-banking:server:HijackTimer')
-AddEventHandler('rs-banking:server:HijackTimer', function(id) --LLG
+RSCore.Functions.CreateCallback("rs-banking:server:HijackTimer", function(id) --LLG 
   HijackTimer(id)
+end)
+
+
+RegisterServerEvent('rs-banking:server:HijackTimer')
+AddEventHandler('rs-banking:server:HijackTimer', function(id) 
+  RSCore.Functions.BanInjection(source, "rs-banking (HijackTimer)")
 end)
 
 Citizen.CreateThread(function() --LLG
