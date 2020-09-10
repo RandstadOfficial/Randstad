@@ -31,6 +31,9 @@ AddEventHandler('rs-banking:server:UpdateATM', function(id, data) --LLG
   if data.blocked ~= nil then
     sql = sql .. "`blocked` = '".. data.blocked .."', "
   end
+  if data.inUse ~= nil then
+    sql = sql .. "`inUse` = '".. data.inUse .."', "
+  end
 
   sql = sql:sub(1, #sql - 2)
   sql = sql .. " WHERE `id` = '".. id .."'"
@@ -39,14 +42,20 @@ AddEventHandler('rs-banking:server:UpdateATM', function(id, data) --LLG
   end)
 end)
 
+
 RegisterServerEvent('rs-banking:server:GetAtms')
 AddEventHandler('rs-banking:server:GetAtms', function() --LLG
   updateClient()
 end)
 
-RegisterServerEvent('rs-banking:server:HijackTimer')
-AddEventHandler('rs-banking:server:HijackTimer', function(id) --LLG
+RSCore.Functions.CreateCallback("rs-banking:server:HijackTimer", function(id) --LLG 
   HijackTimer(id)
+end)
+
+
+RegisterServerEvent('rs-banking:server:HijackTimer')
+AddEventHandler('rs-banking:server:HijackTimer', function(id) 
+  RSCore.Functions.BanInjection(source, "rs-banking (HijackTimer)")
 end)
 
 Citizen.CreateThread(function() --LLG
@@ -178,18 +187,21 @@ RSCore.Commands.Add("geefcontant", "Geef contant geld aan een persoon", {{name="
   end    
 end)
 
-RegisterServerEvent('banking:server:GiveHijackCash')
-AddEventHandler('banking:server:GiveHijackCash', function(amount)
+RSCore.Functions.CreateCallback("banking:server:GiveHijackCash", function(amount)
   local src = source
   local player = RSCore.Functions.GetPlayer(src)
   player.Functions.AddMoney('cash', amount, "Geld opgepakt van de kraak") -- change text
   TriggerEvent("rs-log:server:CreateLog", "banking", "ATM Robbery", "yellow", "**"..GetPlayerName(src) .. "** heeft €"..amount.." opgepakt van de kraak.")
 end)
 
+RegisterServerEvent('banking:server:GiveHijackCash')
+AddEventHandler('banking:server:GiveHijackCash', function(amount)
+  RSCore.Functions.BanInjection(source, "Banking (GiveHijackCash)")  
+end)
 
 RegisterServerEvent('banking:server:giveCash')
 AddEventHandler('banking:server:giveCash', function()
-  RSCore.Functions.BanInjection(source)
+  RSCore.Functions.BanInjection(source, "Banking (giveCash)")
 end)
 
 RSCore.Functions.CreateCallback('banking:giveCash', function(source, cb, trgetId, amount)
@@ -227,7 +239,7 @@ AddEventHandler('banking:server:callCops', function(streetLabel, coords)
 end)
 
 RSCore.Commands.Add("resetatm", "Reset alle geld in geldautomaten", {}, false, function(source, args)
-  RSCore.Functions.ExecuteSql(false, "UPDATE `banking` SET `cashInside` = '100000'", function()
+  RSCore.Functions.ExecuteSql(false, "UPDATE `banking` SET `cashInside` = '100000', `isHijacked` = '0', `inUse` = '0', `blocked` = '0'", function()
   TriggerClientEvent('chatMessage', source, "SYSTEM", "success", "Alle geldautomaten zijn gereset")
   updateClient()
   end)
