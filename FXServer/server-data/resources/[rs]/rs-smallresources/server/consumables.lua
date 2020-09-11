@@ -7,6 +7,11 @@ RSCore.Functions.CreateUseableItem("joint", function(source, item)
     end
 end)
 
+RSCore.Functions.CreateUseableItem("basic_armor", function(source, item)
+    local Player = RSCore.Functions.GetPlayer(source)
+    TriggerClientEvent("consumables:client:UseArmorBasic", source)
+end)
+
 RSCore.Functions.CreateUseableItem("armor", function(source, item)
     local Player = RSCore.Functions.GetPlayer(source)
     TriggerClientEvent("consumables:client:UseArmor", source)
