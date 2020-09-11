@@ -1,15 +1,17 @@
-RSCore                             = nil
-local PlayerData                = {}
+RSCore = nil
+
+local PlayerData = {}
 local isLoggedIn = false
-percent    = false
-searching  = false
+local percent    = false
+local searching  = false
+
 cachedBins = {}
+
 closestBin = {
     'prop_dumpster_01a',
     'prop_dumpster_02a',
     'prop_dumpster_02b'
 }
-
 
 Citizen.CreateThread(function()
     while true do
@@ -20,27 +22,6 @@ Citizen.CreateThread(function()
         end
     end
 end)
---[[
-Citizen.CreateThread(function()
-    while ESX == nil do
-        Citizen.Wait(5)
-
-		TriggerEvent("mrpx:getSharedObject", function(library)
-			ESX = library
-		end)
-    end
-
-    if ESX.IsPlayerLoaded() then
-		ESX.PlayerData = ESX.GetPlayerData()
-	end
-end)
-
-RegisterNetEvent("mrpx:playerLoaded")
-AddEventHandler("mrpx:playerLoaded", function(response)
-	ESX.PlayerData = response
-end)
-]]--
-
 
 RegisterNetEvent("RSCore:Client:OnPlayerLoaded")
 AddEventHandler("RSCore:Client:OnPlayerLoaded", function()
@@ -49,20 +30,19 @@ AddEventHandler("RSCore:Client:OnPlayerLoaded", function()
 end)
 
 
-function DrawText3Ds(x,y,z, text)
-    local onScreen,_x,_y=World3dToScreen2d(x,y,z)
-    local px,py,pz=table.unpack(GetGameplayCamCoords())
-    
-    SetTextScale(0.35, 0.35)
+DrawText3Ds = function(x, y, z, text)
+	SetTextScale(0.35, 0.35)
     SetTextFont(4)
     SetTextProportional(1)
     SetTextColour(255, 255, 255, 215)
     SetTextEntry("STRING")
-    SetTextCentre(1)
+    SetTextCentre(true)
     AddTextComponentString(text)
-    DrawText(_x,_y)
+    SetDrawOrigin(x,y,z, 0)
+    DrawText(0.0, 0.0)
     local factor = (string.len(text)) / 370
-    DrawRect(_x,_y+0.0125, 0.007+ factor, 0.022, 39, 11, 41, 68)
+    DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
+    ClearDrawOrigin()
 end
 
 Citizen.CreateThread(function()
@@ -86,7 +66,7 @@ Citizen.CreateThread(function()
                         openBin(entity)
                     else
 						
-                        RSCore.Functions.Notify('Je hebt deze dumpster al doorzocht pikkebaas',"error", 3500)
+                        RSCore.Functions.Notify('Ga andere vuilnisbak zoeken zwimpie',"error", 3500)
                     end
                 end
                 break
@@ -136,3 +116,30 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
+openBin = function(entity)
+    RSCore.Functions.Progressbar("search_register", "Graaien..", 5000, false, true, {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {
+        animDict = "amb@prop_human_bum_bin@base",
+        anim = "base",
+        flags = 50,
+    }, {}, {}, function() -- Done
+        searching = true
+        cachedBins[entity] = true
+        RSCore.Functions.TriggerCallback('rs-dumpsearch:getItem', function(result)
+        end)
+        ClearPedTasks(PlayerPedId())
+        StopAnimTask(GetPlayerPed(-1), "amb@prop_human_bum_bin@base", "base", 1.0)
+        searching = false  
+    end, function() -- Cancel
+        GetMoney = false
+        StopAnimTask(GetPlayerPed(-1), "amb@prop_human_bum_bin@base", "base", 1.0)
+        ClearPedTasks(GetPlayerPed(-1))
+        RSCore.Functions.Notify("Proces geannuleerd..", "error")
+    end)
+	
+end
