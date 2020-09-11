@@ -1,12 +1,12 @@
 Keys = {
-    ['ESC'] = 322, ['F1'] = 288, ['F2'] = 289, ['F3'] = 170, ['F5'] = 166, ['F6'] = 167, ['F7'] = 168, ['F8'] = 169, ['F9'] = 56, ['F10'] = 57,
-    ['~'] = 243, ['1'] = 157, ['2'] = 158, ['3'] = 160, ['4'] = 164, ['5'] = 165, ['6'] = 159, ['7'] = 161, ['8'] = 162, ['9'] = 163, ['-'] = 84, ['='] = 83, ['BACKSPACE'] = 177,
-    ['TAB'] = 37, ['Q'] = 44, ['W'] = 32, ['E'] = 38, ['R'] = 45, ['T'] = 245, ['Y'] = 246, ['U'] = 303, ['P'] = 199, ['['] = 39, [']'] = 40, ['ENTER'] = 18,
-    ['CAPS'] = 137, ['A'] = 34, ['S'] = 8, ['D'] = 9, ['F'] = 23, ['G'] = 47, ['H'] = 74, ['K'] = 311, ['L'] = 182,
-    ['LEFTSHIFT'] = 21, ['Z'] = 20, ['X'] = 73, ['C'] = 26, ['V'] = 0, ['B'] = 29, ['N'] = 249, ['M'] = 244, [','] = 82, ['.'] = 81,
-    ['LEFTCTRL'] = 36, ['LEFTALT'] = 19, ['SPACE'] = 22, ['RIGHTCTRL'] = 70,
-    ['HOME'] = 213, ['PAGEUP'] = 10, ['PAGEDOWN'] = 11, ['DELETE'] = 178,
-    ['LEFT'] = 174, ['RIGHT'] = 175, ['TOP'] = 27, ['DOWN'] = 173,
+  ['ESC'] = 322, ['F1'] = 288, ['F2'] = 289, ['F3'] = 170, ['F5'] = 166, ['F6'] = 167, ['F7'] = 168, ['F8'] = 169, ['F9'] = 56, ['F10'] = 57,
+  ['~'] = 243, ['1'] = 157, ['2'] = 158, ['3'] = 160, ['4'] = 164, ['5'] = 165, ['6'] = 159, ['7'] = 161, ['8'] = 162, ['9'] = 163, ['-'] = 84, ['='] = 83, ['BACKSPACE'] = 177,
+  ['TAB'] = 37, ['Q'] = 44, ['W'] = 32, ['E'] = 38, ['R'] = 45, ['T'] = 245, ['Y'] = 246, ['U'] = 303, ['P'] = 199, ['['] = 39, [']'] = 40, ['ENTER'] = 18,
+  ['CAPS'] = 137, ['A'] = 34, ['S'] = 8, ['D'] = 9, ['F'] = 23, ['G'] = 47, ['H'] = 74, ['K'] = 311, ['L'] = 182,
+  ['LEFTSHIFT'] = 21, ['Z'] = 20, ['X'] = 73, ['C'] = 26, ['V'] = 0, ['B'] = 29, ['N'] = 249, ['M'] = 244, [','] = 82, ['.'] = 81,
+  ['LEFTCTRL'] = 36, ['LEFTALT'] = 19, ['SPACE'] = 22, ['RIGHTCTRL'] = 70,
+  ['HOME'] = 213, ['PAGEUP'] = 10, ['PAGEDOWN'] = 11, ['DELETE'] = 178,
+  ['LEFT'] = 174, ['RIGHT'] = 175, ['TOP'] = 27, ['DOWN'] = 173,
 }
 
 RSCore = nil
@@ -144,18 +144,18 @@ function closeGui()
 end
 
 DrawText3Ds = function(x, y, z, text)
-	SetTextScale(0.35, 0.35)
-    SetTextFont(4)
-    SetTextProportional(1)
-    SetTextColour(255, 255, 255, 215)
-    SetTextEntry("STRING")
-    SetTextCentre(true)
-    AddTextComponentString(text)
-    SetDrawOrigin(x,y,z, 0)
-    DrawText(0.0, 0.0)
-    local factor = (string.len(text)) / 370
-    DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
-    ClearDrawOrigin()
+  SetTextScale(0.35, 0.35)
+  SetTextFont(4)
+  SetTextProportional(1)
+  SetTextColour(255, 255, 255, 215)
+  SetTextEntry("STRING")
+  SetTextCentre(true)
+  AddTextComponentString(text)
+  SetDrawOrigin(x,y,z, 0)
+  DrawText(0.0, 0.0)
+  local factor = (string.len(text)) / 370
+  DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
+  ClearDrawOrigin()
 end
 
 function SpawnMoney(pos) --LLG
@@ -174,6 +174,13 @@ function SpawnMoney(pos) --LLG
   end)
 end
 
+-- function StopFire(pos)
+--   Citizen.CreateThread(function()
+--     Citizen.Wait(math.random(0, 5000))
+--     StopFireInRange( pos.x, pos.y, pos.z, 10)
+--   end)
+-- end
+
 function PlaceExplosive(pos, atmId) --LLG
   Citizen.CreateThread(function()
     local time = 15000
@@ -183,6 +190,8 @@ function PlaceExplosive(pos, atmId) --LLG
 
     Citizen.Wait(time)
     AddExplosion(pos.x, pos.y, pos.z, EXPLOSION_GAS_TANK, 1.0, true, false, 1.0)
+    -- StartScriptFire(pos.x, pos.y, pos.z, 5, true)
+    -- StopFire(pos)
     SpawnMoney(pos)
 
     local data = {}
@@ -239,27 +248,27 @@ end
 
 RegisterNetEvent('banking:client:robberyCall')
 AddEventHandler('banking:client:robberyCall', function(msg, streetLabel, coords)
-	PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
-	TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
-		timeOut = 5000,
-		alertTitle = "Plofkraak",
-		coords = {
-			x = coords.x,
-			y = coords.y,
-			z = coords.z,
-		},
-		details = {
-			[1] = {
-				icon = '<i class="far fa-credit-card"></i>',
-				detail = " Geldautomaat",
-			},
-			[2] = {
-				icon = '<i class="fas fa-globe-europe"></i>',
-				detail = streetLabel,
-			},
-		},
-		callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
-	})
+PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
+  TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+    timeOut = 5000,
+    alertTitle = "Plofkraak",
+    coords = {
+      x = coords.x,
+      y = coords.y,
+      z = coords.z,
+    },
+    details = {
+      [1] = {
+        icon = '<i class="far fa-credit-card"></i>',
+        detail = " Geldautomaat",
+      },
+      [2] = {
+        icon = '<i class="fas fa-globe-europe"></i>',
+        detail = streetLabel,
+      },
+    },
+    callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+    })
     local transG = 250
     local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
     SetBlipSprite(blip, 458)
@@ -291,6 +300,7 @@ Citizen.CreateThread(function()
     local pos = GetEntityCoords(GetPlayerPed(-1))
     local nearbank, bankkey = IsNearBank()
     local atmId = GetAtmFromDB(pos)
+    local playerId = GetPlayerServerId(PlayerId())
 
     if nearbank then
       atBank = true
@@ -337,11 +347,12 @@ Citizen.CreateThread(function()
 
             if IsDisabledControlJustPressed(0, 140) and atms[atmId].hijackable == 1 and atms[atmId].inUse == 0 then
               if atms[atmId].isHijacked == 0 then
-                if CurrentCops >= 0 then
+                if CurrentCops >= 3 then
                   RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
                     if result then 
                       local data = {}
                       data.inUse = 1
+                      data.isUsedBy = playerId
                       TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
                       RSCore.Functions.Progressbar("", "Gasbom plaatsen...", 15000, false, true, {
                         disableMovement = true,
@@ -351,21 +362,26 @@ Citizen.CreateThread(function()
                       }, {
                         animDict = "anim@gangops@facility@servers@",
                         anim = "hotwire",
-                        flags = 16,
+                        flags = 50,
                       }, {}, {}, function() -- Done
-                        PlaceExplosive(pos, atmId)
-                        PoliceAlert()
-                        StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
-                        local data = {}
-                        data.isHijacked = 1
-                        TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
-                        TriggerServerEvent("RSCore:Server:RemoveItem", "gasbomb", 1)
-                        TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["gasbomb"], "remove")
-                        RSCore.Functions.Notify("Gasbom geplaatst, wacht tot die afgaat...", "success")
-                        ClearPedTasksImmediately(ped)
+                        if data.isUsedBy == 0 or data.isUsedBy == playerId then
+                          PlaceExplosive(pos, atmId)
+                          PoliceAlert()
+                          ClearPedTasksImmediately(ped)
+                          StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+                          local data = {}
+                          data.isHijacked = 1
+                          TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
+                          TriggerServerEvent("RSCore:Server:RemoveItem", "gasbomb", 1)
+                          TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["gasbomb"], "remove")
+                          RSCore.Functions.Notify("Gasbom geplaatst, wacht tot die afgaat...", "success")
+                        else
+                          RSCore.Functions.Notify("Geldautomaat word al gebruikt..", "error")
+                        end
                       end, function() -- Cancel
                         local data = {}
                         data.inUse = 0
+                        data.isUsedBy = 0
                         TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
                         ClearPedTasksImmediately(ped)
                         StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
@@ -380,47 +396,47 @@ Citizen.CreateThread(function()
                   RSCore.Functions.Notify('Niet genoeg agenten..', 'error', 3500)
                 end
               else
-                local data = {}
-                data.inUse = 1
-                TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
-                removeCash()
-                local earning = math.random(4000, 7000)
-                RSCore.Functions.Progressbar("take_atm_money", "Geld Pakken...", 15000, false, true, {
-                  disableMovement = true,
-                  disableCarMovement = true,
-                  disableMouse = false,
-                  disableCombat = true,
-                }, {
-                  animDict = "mp_take_money_mg",
-                  anim = "stand_cash_in_bag_loop",
-                  flags = 49,
-                }, {}, {}, function() -- Done
+                if atms[atmId].isUsedBy == 0 or atms[atmId].isUsedBy == playerId then
                   local data = {}
-                  data.isHijacked = 0
-                  data.blocked = 1 -- Set to 1
-                  data.inUse = 0
-                  if atms[atmId].cashInside < earning then
-                    earning = atms[atmId].cashInside
-                  end
-                  data.cashInside = atms[atmId].cashInside - earning
-                  RSCore.Functions.TriggerCallback("banking:server:GiveHijackCash", function(result)
-                  
-                  end, earning)
-                  -- TriggerServerEvent('banking:server:GiveHijackCash', earning)
+                  data.inUse = 1
                   TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
-                  RSCore.Functions.TriggerCallback("rs-banking:server:HijackTimer", function(result)
-                  
-                  end, atmId)
-                  -- TriggerServerEvent('rs-banking:server:HijackTimer', atmId)
-                  StopAnimTask(GetPlayerPed(-1), "mp_take_money_mg", "stand_cash_in_bag_loop", 1.0)
-                end, function() -- Cancel
-                  local data = {}
-                  data.inUse = 0
-                  TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
-                  ClearPedTasksImmediately(ped)
-                  StopAnimTask(GetPlayerPed(-1), "mp_take_money_mg", "stand_cash_in_bag_loop", 1.0)
-                  RSCore.Functions.Notify("Geannuleerd..", "error")
-                end)
+                  removeCash()
+                  local earning = math.random(5000, 8000)
+                  RSCore.Functions.Progressbar("take_atm_money", "Geld Pakken...", 15000, false, true, {
+                    disableMovement = true,
+                    disableCarMovement = true,
+                    disableMouse = false,
+                    disableCombat = true,
+                  }, {
+                    animDict = "mp_take_money_mg",
+                    anim = "stand_cash_in_bag_loop",
+                    flags = 49,
+                  }, {}, {}, function() -- Done
+                      local data = {}
+                      data.isHijacked = 0
+                      data.blocked = 1 -- Set to 1
+                      data.inUse = 0
+                      if atms[atmId].cashInside < earning then
+                        earning = atms[atmId].cashInside
+                      end
+                      data.cashInside = atms[atmId].cashInside - earning
+                      RSCore.Functions.TriggerCallback("banking:server:GiveHijackCash", function(result)
+                      end, earning)
+                      TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
+                      RSCore.Functions.TriggerCallback("rs-banking:server:HijackTimer", function(result)
+                      end, atmId)
+                      StopAnimTask(GetPlayerPed(-1), "mp_take_money_mg", "stand_cash_in_bag_loop", 1.0)
+                  end, function() -- Cancel
+                    local data = {}
+                    data.inUse = 0
+                    TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
+                    ClearPedTasksImmediately(ped)
+                    StopAnimTask(GetPlayerPed(-1), "mp_take_money_mg", "stand_cash_in_bag_loop", 1.0)
+                    RSCore.Functions.Notify("Geannuleerd..", "error")
+                  end)
+                else
+                  RSCore.Functions.Notify("Geldautomaat word al gebruikt..", "error")
+                end
               end
             end
             

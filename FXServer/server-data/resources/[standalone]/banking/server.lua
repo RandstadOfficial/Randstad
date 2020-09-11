@@ -28,11 +28,16 @@ AddEventHandler('rs-banking:server:UpdateATM', function(id, data) --LLG
     sql = sql .. "`isHijacked` = '".. data.isHijacked .."', "
   end
   
-  if data.blocked ~= nil then
-    sql = sql .. "`blocked` = '".. data.blocked .."', "
-  end
   if data.inUse ~= nil then
     sql = sql .. "`inUse` = '".. data.inUse .."', "
+  end
+
+  if data.isUsedBy ~= nil then
+    sql = sql .. "`isUsedBy` = '".. data.isUsedBy .."', "
+  end
+
+  if data.blocked ~= nil then
+    sql = sql .. "`blocked` = '".. data.blocked .."', "
   end
 
   sql = sql:sub(1, #sql - 2)
@@ -42,13 +47,12 @@ AddEventHandler('rs-banking:server:UpdateATM', function(id, data) --LLG
   end)
 end)
 
-
 RegisterServerEvent('rs-banking:server:GetAtms')
 AddEventHandler('rs-banking:server:GetAtms', function() --LLG
   updateClient()
 end)
 
-RSCore.Functions.CreateCallback("rs-banking:server:HijackTimer", function(id) --LLG 
+RSCore.Functions.CreateCallback("rs-banking:server:HijackTimer", function(source, cb, id) --LLG 
   HijackTimer(id)
 end)
 
@@ -59,9 +63,9 @@ AddEventHandler('rs-banking:server:HijackTimer', function(id)
 end)
 
 Citizen.CreateThread(function() --LLG
-  RSCore.Functions.ExecuteSql(false, "SELECT * FROM `banking` WHERE `blocked` = '1'", function(result)
+  RSCore.Functions.ExecuteSql(false, "SELECT * FROM `banking` WHERE `blocked` = '1' OR `isUsedBy` != '0' OR `inUse` = '1' OR `isHijacked` = '1'", function(result)
     for k, v in pairs(result) do
-      RSCore.Functions.ExecuteSql(false, "UPDATE `banking` SET `blocked` = '0' WHERE `id` = '".. v.id .."'", function()
+      RSCore.Functions.ExecuteSql(false, "UPDATE `banking` SET `blocked` = '0', `isUsedBy`= '0', `inUse`= '0', `isHijacked`= '0' WHERE `id` = '".. v.id .."'", function()
       end)
     end
   end)
@@ -69,8 +73,8 @@ end)
 
 function HijackTimer(id) --LLG
   Citizen.CreateThread(function()
-    Citizen.Wait(60000 * 30)
-    RSCore.Functions.ExecuteSql(false, "UPDATE `banking` SET `blocked` = '0' WHERE `id` = '".. id .."'", function()
+    Citizen.Wait(60000 * 0.3)
+    RSCore.Functions.ExecuteSql(false, "UPDATE `banking` SET `blocked` = '0', `isUsedBy` = '0'  WHERE `id` = '".. id .."'", function()
       print('ATM ' .. id .. ' Unblocked')
       updateClient()
     end)
@@ -187,11 +191,14 @@ RSCore.Commands.Add("geefcontant", "Geef contant geld aan een persoon", {{name="
   end    
 end)
 
-RSCore.Functions.CreateCallback("banking:server:GiveHijackCash", function(amount)
+RSCore.Functions.CreateCallback("banking:server:GiveHijackCash", function(source, cb, amount)
   local src = source
   local player = RSCore.Functions.GetPlayer(src)
+  local pos = GetEntityCoords(GetPlayerPed(src)) -- LLG
+  local atmId = GetAtmFromDB(pos)
+  
   player.Functions.AddMoney('cash', amount, "Geld opgepakt van de kraak") -- change text
-  TriggerEvent("rs-log:server:CreateLog", "banking", "ATM Robbery", "yellow", "**"..GetPlayerName(src) .. "** heeft €"..amount.." opgepakt van de kraak.")
+  TriggerEvent("rs-log:server:CreateLog", "banking", "ATM Robbery", "yellow", "**"..GetPlayerName(src) .. "** heeft €"..amount.." opgepakt van automaat ID: "..atmId..".")
 end)
 
 RegisterServerEvent('banking:server:GiveHijackCash')
@@ -239,7 +246,7 @@ AddEventHandler('banking:server:callCops', function(streetLabel, coords)
 end)
 
 RSCore.Commands.Add("resetatm", "Reset alle geld in geldautomaten", {}, false, function(source, args)
-  RSCore.Functions.ExecuteSql(false, "UPDATE `banking` SET `cashInside` = '100000', `isHijacked` = '0', `inUse` = '0', `blocked` = '0'", function()
+  RSCore.Functions.ExecuteSql(false, "UPDATE banking SET cashInside = '100000', inUse = '0', isUsedBy = '0'", function()
   TriggerClientEvent('chatMessage', source, "SYSTEM", "success", "Alle geldautomaten zijn gereset")
   updateClient()
   end)
