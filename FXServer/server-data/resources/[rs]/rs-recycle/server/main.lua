@@ -19,7 +19,7 @@ end)
 RSCore.Functions.CreateCallback('rs-recycle:getItem', function(source, cb)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
-    for i = 1, math.random(1, 5), 1 do
+    for i = 1, math.random(2, 5), 1 do
         local randItem = ItemTable[math.random(1, #ItemTable)]
         
         local amount = math.random(2, 6)
