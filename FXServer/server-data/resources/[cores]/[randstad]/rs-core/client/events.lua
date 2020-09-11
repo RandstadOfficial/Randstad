@@ -3,7 +3,7 @@ RegisterNetEvent('RSCore:Command:TeleportToPlayer')
 AddEventHandler('RSCore:Command:TeleportToPlayer', function(othersource)
 	local coords = RSCore.Functions.GetCoords(GetPlayerPed(GetPlayerFromServerId(othersource)))
 	local entity = GetPlayerPed(-1)
-	if IsPedInAnyVehicle(Entity, false) then
+	if IsPedInAnyVehicle(entity, false) then
 		entity = GetVehiclePedIsUsing(entity)
 	end
 	SetEntityCoords(entity, coords.x, coords.y, coords.z)
@@ -13,7 +13,7 @@ end)
 RegisterNetEvent('RSCore:Command:TeleportToCoords')
 AddEventHandler('RSCore:Command:TeleportToCoords', function(x, y, z)
 	local entity = GetPlayerPed(-1)
-	if IsPedInAnyVehicle(Entity, false) then
+	if IsPedInAnyVehicle(entity, false) then
 		entity = GetVehiclePedIsUsing(entity)
 	end
 	SetEntityCoords(entity, x, y, z)
