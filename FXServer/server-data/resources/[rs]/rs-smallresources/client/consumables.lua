@@ -121,6 +121,22 @@ end)
 --     end
 -- end)
 
+
+RegisterNetEvent("consumables:client:UseArmorBasic")
+AddEventHandler("consumables:client:UseArmorBasic", function()
+    RSCore.Functions.Progressbar("use_armor", "Vest aantrekken..", 5000, false, true, {
+        disableMovement = false,
+        disableCarMovement = false,
+		disableMouse = false,
+		disableCombat = true,
+    }, {}, {}, {}, function() -- Done
+        TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["basic_armor"], "remove")
+        TriggerServerEvent('hospital:server:SetArmor', 50)
+        TriggerServerEvent("RSCore:Server:RemoveItem", "basic_armor", 1)
+        SetPedArmour(GetPlayerPed(-1), 50)
+    end)
+end)
+
 RegisterNetEvent("consumables:client:UseArmor")
 AddEventHandler("consumables:client:UseArmor", function()
     RSCore.Functions.Progressbar("use_armor", "Vest aantrekken..", 5000, false, true, {
@@ -135,6 +151,7 @@ AddEventHandler("consumables:client:UseArmor", function()
         SetPedArmour(GetPlayerPed(-1), 75)
     end)
 end)
+
 local currentVest = nil
 local currentVestTexture = nil
 RegisterNetEvent("consumables:client:UseHeavyArmor")
