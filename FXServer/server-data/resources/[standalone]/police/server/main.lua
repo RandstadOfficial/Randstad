@@ -364,21 +364,62 @@ end
 
 RegisterServerEvent('police:server:UpdateBlips')
 AddEventHandler('police:server:UpdateBlips', function()
-    local src = source
+    --print("I was in updateblips server side") 
+    --local src = source --onnodig
     local dutyPlayers = {}
+    local i = 1
     for k, v in pairs(RSCore.Functions.GetPlayers()) do
         local Player = RSCore.Functions.GetPlayer(v)
         if Player ~= nil then 
+            -- Nico: Ik heb alles veranderd naar een numeric table en loop dan ook op die manier erdoor, i.v.m. dit probleem: https://riptutorial.com/lua/example/2258/iterating-tables
+            -- TLDR: Gebruik maken van indexen i.p.v. datarijen, als een datarij nil is, dan stopt de for each daar. data.size of data.length = #data
+            -- Het onstaan van een lege datarij kan dus spontaan gebeuren (als ik het goed begrijp) door table.insert.
+            -- if ((Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance") and Player.PlayerData.job.onduty) then
+            --     table.insert(dutyPlayers, {
+            --         source = Player.PlayerData.source,
+            --         label = Player.PlayerData.metadata["callsign"],
+            --         job = Player.PlayerData.job.name,
+            --     })
+            -- end
             if ((Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance") and Player.PlayerData.job.onduty) then
-                table.insert(dutyPlayers, {
+                dutyPlayers[i] = {
                     source = Player.PlayerData.source,
                     label = Player.PlayerData.metadata["callsign"],
                     job = Player.PlayerData.job.name,
-                })
+                }
+                i = i + 1
             end
         end
     end
     TriggerClientEvent("police:client:UpdateBlips", -1, dutyPlayers)
+    -- for k, v in ipairs(dutyPlayers) do --for each label in dutyPlayers print value
+    --     print(v)
+    --     print("Label: "..dutyPlayers.label)
+    -- end
+    -- for j=1, #dutyPlayers, 1 do
+    --     print(dutyPlayers[j].label)
+    -- end
+end)
+
+--Blip debug, returnt alle players met job ambu of popo om de seconde. De lijst die meegegeven wordt aan de clients via updateblips is deze lijst, maar dan wel onduty.
+-- Citizen.CreateThread(function()
+--     while true do 
+--         Citizen.Wait(1000)
+--         for k, v in pairs(RSCore.Functions.GetPlayers()) do
+--             local Player = RSCore.Functions.GetPlayer(v)
+--             if (Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "ambulance") then
+--                 print("Player callsign: "..Player.PlayerData.metadata["callsign"].." is onduty true/false: "..tostring(Player.PlayerData.job.onduty))
+--             end
+--         end
+--     end
+-- end)
+
+Citizen.CreateThread(function()
+    --Voor het geval er toch nog iets verkeerd mocht gaan, elke 20 seconden wordt de nieuwe spelerlijst doorgegeven aan elke client die in dienst is.
+    while true do
+        Citizen.Wait(20000)
+        TriggerEvent('police:server:UpdateBlips')
+    end
 end)
 
 RegisterServerEvent('police:server:spawnObject')

@@ -176,26 +176,27 @@ local DutyBlips = {}
 RegisterNetEvent('police:client:UpdateBlips')
 AddEventHandler('police:client:UpdateBlips', function(players)
     if PlayerJob ~= nil and (PlayerJob.name == 'police' or PlayerJob.name == 'ambulance') and onDuty then
-        if DutyBlips ~= nil then 
-            for k, v in pairs(DutyBlips) do
-                RemoveBlip(v)
-            end
+        if DutyBlips ~= nil then
+            for i=1, #DutyBlips, 1 do 
+                RemoveBlip(DutyBlips[i])
+            end 
         end
-        DutyBlips = {}
+        DutyBlips = {} 
         if players ~= nil then
-            for k, data in pairs(players) do
-                local id = GetPlayerFromServerId(data.source)
+            for i=1, #players, 1 do 
+                local id = GetPlayerFromServerId(players[i].source)
                 if NetworkIsPlayerActive(id) and GetPlayerPed(id) ~= PlayerPedId() then
-                    CreateDutyBlips(id, data.label, data.job)
+                    CreateDutyBlips(id, players[i].label, players[i].job)
                 end
             end
         end
     else
-        if players ~= nil then
-            for k, data in pairs(players) do
+        if DutyBlips ~= nil then 
+            for k, data in pairs(DutyBlips) do
                 RemoveBlip(DutyBlips[k])
-                DutyBlips = {}
             end
+            
+            DutyBlips = {} 
         end
     end
 end)
