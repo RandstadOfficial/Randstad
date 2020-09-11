@@ -6,7 +6,7 @@ RSCore.Functions.CreateCallback('rs-dumpsearch:getItem', function(source, cb)
 	local src = source
     local ply = RSCore.Functions.GetPlayer(src)
     local luck = math.random(1, 3)
-print(luck)
+
     if luck == 2 then
         local luck2 = math.random(1, 4)
         local luck3 = math.random(1, 1000)
