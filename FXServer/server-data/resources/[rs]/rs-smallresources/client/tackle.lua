@@ -1,11 +1,27 @@
-
+function DoublePressed()
+    Tackle()
+end
 
 Citizen.CreateThread(function()
     while true do 
         if RSCore ~= nil then
             if not IsPedInAnyVehicle(GetPlayerPed(-1), false) and GetEntitySpeed(GetPlayerPed(-1)) > 2.5 then
-                if IsControlJustPressed(1, Keys["LEFTALT"]) and not spacePressed then
-                    Tackle()
+                if (IsControlJustReleased(0, 38)) then
+                    local pressedAgain = false
+                    local timer = GetGameTimer()
+                    while true do
+                        Citizen.Wait(0)
+                        if (IsControlJustPressed(0, 38)) then
+                            pressedAgain = true
+                            break
+                        end
+                        if (GetGameTimer() - timer >= 100) then
+                            break
+                        end
+                    end
+                    if (pressedAgain) then
+                        DoublePressed()
+                    end
                 end
             else
                 Citizen.Wait(250)
