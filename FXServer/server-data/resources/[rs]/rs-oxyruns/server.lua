@@ -43,7 +43,7 @@ RSCore.Functions.CreateCallback('oxydelivery:server:receiveOxey', function(sourc
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
  
-    local price = math.random(325, 375)
+    local price = math.random(275, 325)
 	Player.Functions.AddMoney("cash", price, "oxy-money")
 	Player.Functions.AddItem('painkillers', 1)
     TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['painkillers'], "add")
@@ -53,7 +53,7 @@ RSCore.Functions.CreateCallback('oxydelivery:server:receiveMoney', function(sour
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
  
-    local price = math.random(375, 425)
+    local price = math.random(300, 350)
     Player.Functions.AddMoney("cash", price, "oxy-money")
 end)
 

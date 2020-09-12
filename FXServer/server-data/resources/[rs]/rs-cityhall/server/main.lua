@@ -2,10 +2,7 @@ RSCore = nil
 TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 
 local DrivingSchools = {
-    "YND19022", -- Maestro (Mahmut)
-    "FTL45116", -- Maestro (Admin)
-    "YMK83288", -- Souvereign King
-    "SWX15921", -- MaBo
+    "UQR59037", -- Rowan (Kuipers)
 }
 
 RegisterServerEvent('rs-cityhall:server:requestId')

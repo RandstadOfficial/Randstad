@@ -246,7 +246,7 @@ RSCore.Functions.IsPlayerBanned = function (source)
 end
 
 RSCore.Functions.BanInjection = function(source, script)
-	local reason = "[AUTO BAN] Bedankt voor het uittesten hackertje!"
+	local reason = "[AUTO BAN] Bedankt voor het uittesten van onze anticheat!"
 	local banTime = 2147483647
 	local timeTable = os.date("*t", banTime)
 	TriggerClientEvent('chatMessage', -1, "BANHAMMER", "error", GetPlayerName(source).." is verbannen voor: "..reason.."")

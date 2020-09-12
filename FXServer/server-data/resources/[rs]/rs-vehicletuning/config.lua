@@ -14,9 +14,9 @@ Config.Keys = {
 }
 
 Config.AuthorizedIds = {
-    "FTL45116",
-    "",
-    "",
+    "CAI40658", -- Damian
+    "DYC02569", -- PK
+    "OLX02170", -- Faas
 }
 
 Config.MaxStatusValues = {

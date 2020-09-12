@@ -104,12 +104,33 @@ Citizen.CreateThread(function ()
                         end
                         if IsControlJustReleased(0, Keys["E"]) and not active then
                             active = true
-                            TaskStartScenarioInPlace(GetPlayerPed(-1), "PROP_HUMAN_BUM_BIN", 0, true)
-                            RSCore.Functions.Progressbar("pickup_reycle_package", "Pakket oppakken..", 4000, false, true, {}, {}, {}, {}, function() -- Done
+                            RSCore.Functions.Progressbar("deliver_reycle_package", "Pakket oppakken..", 4000, false, true, {
+                                disableMovement = true,
+                                disableCarMovement = true,
+                                disableMouse = false,
+                                disableCombat = true,
+                            }, {
+                                animDict = "amb@prop_human_bum_bin@base",
+                                anim = "base",
+                                flags = 50,
+                            }, {}, {}, function() -- Done
                                 ClearPedTasks(GetPlayerPed(-1))
                                 PickupPackage()
                                 active = false
+                                StopAnimTask(GetPlayerPed(-1), "amb@prop_human_bum_bin@base", "base", 1.0)
+                            end, function() -- Cancel
+                                active = false
+                                ClearPedTasks(GetPlayerPed(-1))
+                                StopAnimTask(GetPlayerPed(-1), "amb@prop_human_bum_bin@base", "base", 1.0)
+                                RSCore.Functions.Notify("Proces geannuleerd..", "error")
                             end)
+                            -- active = true
+                            -- TaskStartScenarioInPlace(GetPlayerPed(-1), "PROP_HUMAN_BUM_BIN", 0, true)
+                            -- RSCore.Functions.Progressbar("pickup_reycle_package", "Pakket oppakken..", 4000, false, true, {}, {}, {}, {}, function() -- Done
+                            --     ClearPedTasks(GetPlayerPed(-1))
+                            --     PickupPackage()
+                            --     active = false
+                            -- end)
                         end
                     else
                         DrawText3D(packagePos.x, packagePos.y, packagePos.z + 1, "Pakketje")

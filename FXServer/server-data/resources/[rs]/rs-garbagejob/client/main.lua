@@ -265,8 +265,8 @@ Citizen.CreateThread(function()
                                 if not hasZak then
                                     if CanTakeBag then
                                         if Distance < 1.5 then
-                                            DrawText3D2(DeliveryData.coords, "~g~E~w~ - Vuilniszak pakken")
-                                            if IsControlJustPressed(0, 51) then
+                                            DrawText3D2(DeliveryData.coords, "~g~G~w~ - Vuilniszak pakken")
+                                            if IsControlJustPressed(0, 47) then
                                                 if AmountOfBags == 0 then
                                                     -- Hier zet ie hoeveel zakken er moeten worden afgeleverd als het nog niet bepaald is
                                                     AmountOfBags = math.random(3, 5)
@@ -288,14 +288,14 @@ Citizen.CreateThread(function()
                                         local TruckDist = GetDistanceBetweenCoords(pos, Coords.x, Coords.y, Coords.z, true)
 
                                         if TruckDist < 2 then
-                                            DrawText3D(Coords.x, Coords.y, Coords.z, "~g~E~w~ - Vuilniszak wegdouwen")
-                                            if IsControlJustPressed(0, 51) then
+                                            DrawText3D(Coords.x, Coords.y, Coords.z, "~g~G~w~ - Vuilniszak wegdouwen")
+                                            if IsControlJustPressed(0, 47) then
                                                 hasZak = false
                                                 local AmountOfLocations = #Config.Locations["vuilnisbakken"]
                                                 -- Kijkt of je alle zakken hebt afgeleverd
                                                 if (AmountOfBags - 1) == 0 then
                                                     -- Alle zakken afgeleverd
-                                                    Earnings = Earnings + math.random(250, 270)
+                                                    Earnings = Earnings + math.random(200, 250)
                                                     if (GarbageLocation + 1) <= AmountOfLocations then
                                                         -- Hier zet ie je volgende locatie en ben je nog niet klaar met werken.
                                                         GarbageLocation = GarbageLocation + 1

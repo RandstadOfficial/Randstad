@@ -54,7 +54,7 @@ RSCore.Functions.CreateCallback('rs-garbagejob:server:ShiftPayment', function(so
         if location == #Config.Locations["vuilnisbakken"] then
             for i = 1, math.random(3, 5), 1 do
                 local item = Materials[math.random(1, #Materials)]
-                Player.Functions.AddItem(item, math.random(40, 70))
+                Player.Functions.AddItem(item, math.random(30, 60))
                 TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items[item], 'add')
                 Citizen.Wait(500)
             end
