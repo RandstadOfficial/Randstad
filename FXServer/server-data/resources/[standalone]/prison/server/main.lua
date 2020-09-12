@@ -1,6 +1,8 @@
 RSCore = nil
 TriggerEvent('RSCore:GetObject', function(obj) RSCore = obj end)
 
+local AlarmActivated = false
+
 RegisterServerEvent('prison:server:SetJailStatus')
 AddEventHandler('prison:server:SetJailStatus', function(jailTime)
     local src = source
@@ -17,13 +19,13 @@ end)
 RegisterServerEvent('prison:server:SaveJailItems')
 AddEventHandler('prison:server:SaveJailItems', function(jailTime)
     local src = source
-    local Player = RSCore.Functions.GetPlayer(src)---
+    local Player = RSCore.Functions.GetPlayer(src)
+    local amount = 10
     if Player.PlayerData.metadata["jailitems"] == nil or next(Player.PlayerData.metadata["jailitems"]) == nil then 
         Player.Functions.SetMetaData("jailitems", Player.PlayerData.items)
+        Player.Functions.AddMoney('cash', 80)
+        Citizen.Wait(2000)
         Player.Functions.ClearInventory()
-        Citizen.Wait(1000)
-        Player.Functions.AddItem("water_bottle", jailTime)
-        Player.Functions.AddItem("sandwich", jailTime)
     end
 end)
 
@@ -32,10 +34,11 @@ AddEventHandler('prison:server:GiveJailItems', function()
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     Player.Functions.ClearInventory()
-    Citizen.Wait(100)
+    Citizen.Wait(1000)
     for k, v in pairs(Player.PlayerData.metadata["jailitems"]) do
         Player.Functions.AddItem(v.name, v.amount, false, v.info)
     end
+    Citizen.Wait(1000)
     Player.Functions.SetMetaData("jailitems", {})
 end)
 
@@ -88,9 +91,23 @@ AddEventHandler('prison:server:CheckRecordStatus', function()
     end
 end)
 
+RegisterServerEvent('prison:server:JailAlarm')
+AddEventHandler('prison:server:JailAlarm', function()
+    if not AlarmActivated then
+        TriggerClientEvent('prison:client:JailAlarm', -1, true)
+        SetTimeout(5 * (60 * 1000), function()
+            TriggerClientEvent('prison:client:JailAlarm', -1, false)
+        end)
+    end
+end)
+
 RSCore.Functions.CreateUseableItem("electronickit", function(source, item)
     local Player = RSCore.Functions.GetPlayer(source)
 	if Player.Functions.GetItemByName(item.name) then
         TriggerClientEvent("electronickit:UseElectronickit", source)
     end
+end)
+
+RSCore.Functions.CreateCallback('prison:server:IsAlarmActive', function(source, cb)
+    cb(AlarmActivated)
 end)

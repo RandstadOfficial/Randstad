@@ -31,16 +31,19 @@ Config.Locations = {
         },
     },
     ["freedom"] = {
-        coords = {x = 1779.4, y = 2571.18, z = 45.91, h = 278.5},
+        coords = {x = 1782.03, y = 2590.11, z = 45.71, h = 356.5},
     },
     ["outside"] = {
-        coords = {x = 1843.06, y = 2590.65, z = 45.89, h = 184.5},
+        coords = {x = 1839.18, y = 2591.08, z = 45.89, h = 184.5},
     },
     ["yard"] = {
         coords = {x = 1773.85, y = 2677.7, z = 45.61, h = 179.685},
     },
     ["middle"] = {
         coords = {x = 1693.33, y = 2569.51, z = 45.55, h = 123.5},
+    },
+    ["shop"] = {
+        coords = {x = 1775.92, y = 2587.74, z = 45.71, h = 0.5, r = 1.0},
     },
     spawns = {
         [1] = {
@@ -79,5 +82,32 @@ Config.Locations = {
             animation = "smoke",
             coords = {x = 1787.64, y = 2699.92, z = 45.64, h = 146.5},
         },
+        [10] = {
+            animation = "smoke",
+            coords = {x = 1765.29, y = 2577.96, z = 50.54, h = 270.5, r = 1.0}, 
+        },
+        [11] = {
+            animation = "smoke",
+            coords = {x = 1786.14, y = 2577.42, z = 50.54, h = 278.5, r = 1.0}, 
+        },
     }
+}
+
+Config.CanteenItems = {
+    [1] = {
+        name = "sandwich",
+        price = 4,
+        amount = 500,
+        info = {},
+        type = "item",
+        slot = 1,
+    },
+    [2] = {
+        name = "water_bottle",
+        price = 4,
+        amount = 500,
+        info = {},
+        type = "item",
+        slot = 2,
+    },
 }

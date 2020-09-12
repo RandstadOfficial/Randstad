@@ -145,7 +145,7 @@ RSCore.Functions.CreateCallback('police:JailPlayer', function(source, cb, player
                 ["date"] = currentDate
             })
             TriggerClientEvent("police:client:SendToJail", OtherPlayer.PlayerData.source, time)
-            TriggerClientEvent('RSCore:Notify', src, "Je hebt de persoon naar de gevangenis gestuurd voor "..time.." maanden")
+            TriggerClientEvent('RSCore:Notify', src, "Je hebt "..OtherPlayer.PlayerData.charinfo.firstname.." "..OtherPlayer.PlayerData.charinfo.lastname.." naar de gevangenis gestuurd voor "..time.." maanden")
         end
     end
 end)
@@ -163,7 +163,7 @@ AddEventHandler('police:server:UnJailPlayer', function(playerId, time)
             OtherPlayer.Functions.SetMetaData("injail", 0)
 
             TriggerClientEvent("police:client:SendToUnJail", OtherPlayer.PlayerData.source, time)
-            TriggerClientEvent('RSCore:Notify', src, "Je hebt de persoon naar de gevangenis gestuurd voor "..time.." maanden")
+            TriggerClientEvent('RSCore:Notify', src, "Je hebt "..OtherPlayer.PlayerData.charinfo.firstname.." "..OtherPlayer.PlayerData.charinfo.lastname.." vrijgelaten")
         end
     end
 end)
