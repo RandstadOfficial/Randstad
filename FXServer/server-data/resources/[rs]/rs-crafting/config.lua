@@ -158,7 +158,7 @@ Config.CraftingItems = {
         },
         type = "item",
         slot = 3,
-        threshold = 20,
+        threshold = 0,
         points = 3,
     },
     [4] = {
@@ -172,7 +172,7 @@ Config.CraftingItems = {
         },
         type = "item",
         slot = 4,
-        threshold = 50,
+        threshold = 20,
         points = 4,
     },
     [5] = {
