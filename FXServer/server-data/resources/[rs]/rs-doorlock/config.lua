@@ -569,18 +569,244 @@ RS.Doors = {
 		distance = 10,
 		size = 2
 	},
+	-- Entrance 
+	{
+		objName = 'v_ilev_gtdoor',
+		objYaw = 90.0,
+		objCoords  = vector3(1845.3, 2585.87, 45.98),
+		textCoords = vector3(1845.3, 2585.87, 45.98),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = false,
+		pickable = false,
+		distance = 2,
+		size = 2
+	},
+	-- Visitor door 
+	{
+		objName = 'v_ilev_gtdoor',
+		objYaw = 360.0,
+		objCoords  = vector3(1834.753, 2579.517, 46.04625),
+		textCoords = vector3(1834.753, 2579.517, 46.04625),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = false,
+		pickable = false,
+		distance = 2,
+		size = 2
+	},
+	--Lobby Cell Door
+	{
+		objName = 'bobo_prison_cellgate',
+		objCoords  = vector3(1838.603, 2588.299, 45.95181),
+		textCoords = vector3(1838.56, 2588.15, 45.89181),
+		authorizedJobs = {'police'},
+		locking = false,
+		locked = false,
+		pickable = false,
+		distance = 2,
+		size = 2
+	},
+	--  Changingroom
+	{
+		objName = 'v_ilev_gtdoor',
+		objYaw = 270.0,
+		objCoords  = vector3(1841.56, 2593.55, 45.89),
+		textCoords = vector3(1841.56, 2593.55, 45.89),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2,
+		size = 2
+	},
+	-- To Hallway
+	{
+		objName = 'bobo_prison_cellgate',
+		objCoords  = vector3(1836.61, 2593.69, 45.95),
+		textCoords = vector3(1836.61, 2593.69, 45.95),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2,
+		size = 2
+	},
+	-- To Mid hallway
+	{
+		objName = 'bobo_prison_cellgate',
+		objCoords  = vector3(1831.50, 2593.95, 45.95),
+		textCoords = vector3(1831.50, 2593.95, 45.95),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 1.5,
+		size = 2
+	},
+	-- Hallway to Visitor
+	{
+		objName = 'bobo_prison_cellgate',
+		objCoords  = vector3(1829.857, 2591.666, 45.95518),
+		textCoords = vector3(1829.847, 2591.696, 45.89166),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 1.5,
+		size = 2
+	},
+	-- Hallway to outside
+	{
+		objName = 'v_ilev_gtdoor',
+		objYaw = 270.0,
+		objCoords  = vector3(1819.1, 2594.26, 45.89),
+		textCoords = vector3(1819.1, 2594.26, 45.89),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2,
+		size = 2
+	},
+	-- To Main lobby
+	{
+		textCoords = vector3(1791.05, 2593.78, 46.15),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2,
+		doors = {
+			{
+				objName = 'v_ilev_gtdoor',
+				objYaw = 270.0,
+				objCoords = vector3(1791.12, 2594.44, 46.15),				
+			},
 
+			{
+				objName = 'v_ilev_gtdoor',
+				objYaw = 90.0,
+				objCoords = vector3(1791.11, 2593.10, 46.15)		
+			}
+		}
+	},				
+	-- Mainhall to outside
+	{
+		objName = 'v_ilev_gtdoor',
+		objYaw = 180.0,
+		objCoords  = vector3(1785.65, 2600.11, 46.15),
+		textCoords = vector3(1785.65, 2600.11, 46.15),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2,
+		size = 2
+	},
 
+	-- To Isolation room
+	{
+		objName = 'v_ilev_gtdoor',
+		objYaw = 270.0,
+		objCoords  = vector3(1782.60, 2598.22, 45.75),
+		textCoords = vector3(1782.60, 2598.22, 45.75),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2,
+		size = 2
+	},
+
+	-- Entrance to Cell block
+	{
+		objName = 'bobo_prison_cellgate',
+		objCoords  = vector3(1782.59200, 2591.895, 45.77614),
+		textCoords = vector3(1782.70200, 2591.935, 45.72614),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 1.5,
+		size = 2
+	},
+	-- Isolation room
+	-- Cell 1
+	{
+		objName = 'bobo_prison_isolated_gate',
+		objYaw = 360.0,
+		objCoords  = vector3(1779.898, 2597.126, 45.83871),
+		textCoords = vector3(1779.96, 2597.11, 45.72),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 1.0,
+		size = 2
+	},
+	-- Cell 2
+	{
+		objName = 'bobo_prison_isolated_gate',
+		objYaw = 360.0,
+		objCoords  = vector3(1776.96, 2597.123, 45.83838),
+		textCoords = vector3(1777.02, 2597.11, 45.83838),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 1.0,
+		size = 2
+	},
+	-- Cell 3
+	{
+		objName = 'bobo_prison_isolated_gate',
+		objYaw = 360.0,
+		objCoords  = vector3(1774.008, 2597.116, 45.83894),
+		textCoords = vector3(1774.078, 2597.156, 45.83894),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 1.0,
+		size = 2
+	},
+	-- Cell 4
+	{
+		objName = 'bobo_prison_isolated_gate',
+		objYaw = 270.0,
+		objCoords  = vector3(1772.604, 2598.686, 45.8366),
+		textCoords = vector3(1772.620, 2598.620, 45.8389),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 1.0,
+		size = 2
+	},
 	--outside doors
 	{
 		objName = 'prop_fnclink_03gate5',
+		objYaw = 180.0,
 		objCoords = vector3(1796.322, 2596.574, 45.565),
 		textCoords = vector3(1796.322, 2596.574, 45.965),
 		authorizedJobs = { 'police' },
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 2.5,
+		distance = 2,
+		size = 2
+	},
+	{
+		objName = 'prop_fnclink_03gate5',
+		objYaw = 180.0,
+		objCoords = vector3(1796.322, 2591.574, 45.565),
+		textCoords = vector3(1796.322, 2591.574, 45.965),
+		authorizedJobs = { 'police' },
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2,
 		size = 2
 	},
 	{
@@ -591,7 +817,7 @@ RS.Doors = {
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 2.5,
+		distance = 2,
 		size = 2
 	},
 	{
@@ -602,7 +828,7 @@ RS.Doors = {
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 2.5,
+		distance = 2,
 		size = 2
 	},
 	{
@@ -613,7 +839,7 @@ RS.Doors = {
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 2.5,
+		distance = 2,
 		size = 2
 	},
 	{
@@ -624,7 +850,7 @@ RS.Doors = {
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 2.5,
+		distance = 2,
 		size = 2
 	},
 	{
@@ -635,7 +861,7 @@ RS.Doors = {
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 2.5,
+		distance = 2,
 		size = 2
 	},
 	{
@@ -646,7 +872,7 @@ RS.Doors = {
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 2.5,
+		distance = 2,
 		size = 2
 	},
 	{
@@ -657,7 +883,7 @@ RS.Doors = {
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 2.5,
+		distance = 2,
 		size = 2
 	},
 	{
@@ -668,7 +894,7 @@ RS.Doors = {
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 2.5,
+		distance = 2,
 		size = 2
 	},
 	{
@@ -679,7 +905,7 @@ RS.Doors = {
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 2.5,
+		distance = 2,
 		size = 2
 	},
 	{
@@ -690,192 +916,7 @@ RS.Doors = {
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 2.5,
-		size = 2
-	},
-	--
-	-- Bolingbroke Extra
-	--
-	-- To Offices
-	{
-		objName = 'v_ilev_ph_gendoor002',
-		objYaw = 180.0,
-		objCoords  = vector3(1843.3, 2579.39, 45.98),
-		textCoords = vector3(1843.3, 2579.39, 45.98),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = true,
-		pickable = false,
-		distance = 1.0,
-		size = 2
-	},
-	-- To Changingroom
-	{
-		objName = 'v_ilev_ph_gendoor002',
-		objYaw = 270.0,
-		objCoords  = vector3(1835.76, 2583.15, 45.95),
-		textCoords = vector3(1835.76, 2583.15, 45.95),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = true,
-		pickable = false,
-		distance = 1.0,
-		size = 2
-	},
-	-- To CrimChangingroom
-	{
-		objName = 'v_ilev_ph_gendoor002',
-		objYaw = 270.0,
-		objCoords  = vector3(1835.77, 2589.76, 45.95),
-		textCoords = vector3(1835.77, 2589.76, 45.95),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = true,
-		pickable = false,
-		distance = 1.0,
-		size = 2
-	},
-	-- To CheckingRoom
-	{
-		objName = 'v_ilev_arm_secdoor',
-		objYaw = 0.0,
-		objCoords  = vector3(1842.33, 2592.02, 46.18),
-		textCoords = vector3(1842.33, 2592.02, 46.18),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = true,
-		pickable = false,
-		distance = 1.0,
-		size = 2
-	},
-	-- Checking Gate
-	{
-		objName = 'v_ilev_ph_cellgate',
-		objYaw = 270.0,
-		objCoords  = vector3(1836.45, 2594.67, 46.04),
-		textCoords = vector3(1836.45, 2594.67, 46.04),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = true,
-		pickable = false,
-		distance = 1.0,
-		size = 2
-	},
-	-- To CheckingRoomFromCheck
-	{
-		objName = 'v_ilev_arm_secdoor',
-		objYaw = 0.0,
-		objCoords  = vector3(1830.85, 2592.0099999999, 46.17),
-		textCoords = vector3(1830.85, 2592.0099999999, 46.17),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = true,
-		pickable = false,
-		distance = 1.0,
-		size = 2
-	},
-	-- To SecondCheckGate
-	{
-		objName = 'v_ilev_ph_cellgate',
-		objYaw = 270.0,
-		objCoords  = vector3(1826.33, 2594.68, 46.04),
-		textCoords = vector3(1826.33, 2594.68, 46.04),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = true,
-		pickable = false,
-		distance = 1.0,
-		size = 2
-	},
-	-- To MainHall
-	{
-		objName = 'v_ilev_ph_door002',
-		objYaw = 90.0,
-		objCoords  = vector3(1791.18, 2593.11, 46.15),
-		textCoords = vector3(1791.18, 2593.11, 46.15),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = true,
-		pickable = false,
-		distance = 1.0,
-		size = 2
-	},
-	-- To VisitorRoom
-	{
-		objName = 'v_ilev_ph_gendoor002',
-		objYaw = 90.0,
-		objCoords  = vector3(1786.38, 2593.23, 45.97),
-		textCoords = vector3(1786.38, 2593.23, 45.97),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = true,
-		pickable = false,
-		distance = 1.0,
-		size = 2
-	},
-	-- To DoctorRoom
-	{
-		objName = 'v_ilev_ph_gendoor002',
-		objYaw = 90.0,
-		objCoords  = vector3(1786.4, 2579.8, 45.97),
-		textCoords = vector3(1786.4, 2579.8, 45.97),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = true,
-		pickable = false,
-		distance = 1.0,
-		size = 2
-	},
-	-- HallGate
-	{
-		objName = 'v_ilev_ph_cellgate',
-		objYaw = 90.0,
-		objCoords  = vector3(1778.91, 2568.91, 46.07),
-		textCoords = vector3(1778.91, 2568.91, 46.07),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = true,
-		pickable = false,
-		distance = 1.0,
-		size = 2
-	},
-	-- HallGate 2
-	-- {
-	-- 	objName = 'v_ilev_ph_cellgate',
-	-- 	objYaw = 90.0,
-	-- 	objCoords  = vector3(1773.49, 2568.9, 46.07),
-	-- 	textCoords = vector3(1773.49, 2568.9, 46.07),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locking = false,
-	-- 	locked = false,
-	-- 	pickable = false,
-	-- 	distance = 1.0,
-	-- 	size = 2
-	-- },
-	-- Gate To Work
-	{
-		objName = 'v_ilev_ph_cellgate',
-		objYaw = 0.0,
-		objCoords  = vector3(1760.89, 2578.51, 46.07),
-		textCoords = vector3(1760.89, 2578.51, 46.07),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = false,
-		pickable = false,
-		distance = 1.0,
-		size = 2
-	},
-	-- Cell Maindoor
-	{
-		objName = 'prop_ld_jail_door',
-		objYaw = -35.0,
-		objCoords  = vector3(1777.54, 2685.18, 45.52),
-		textCoords = vector3(1777.54, 2685.18, 45.52),
-		authorizedJobs = { 'police' },
-		locking = false,
-		locked = false,
-		pickable = false,
-		distance = 1.0,
+		distance = 2,
 		size = 2
 	},
 	----------------

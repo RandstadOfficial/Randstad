@@ -697,7 +697,7 @@ end)
 
 RegisterNetEvent('police:client:SendToUnJail')
 AddEventHandler('police:client:SendToUnJail', function(time)
-    TriggerEvent("prison:client:unJail")
+    TriggerEvent("prison:client:UnjailPerson")
 end)
 
 function RadarSound()

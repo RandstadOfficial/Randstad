@@ -27,22 +27,38 @@ jailTime = 0
 currentJob = "electrician"
 CellsBlip = nil
 TimeBlip = nil
+ShopBlip = nil
+PlayerJob = {}
 
 Citizen.CreateThread(function()
+	TriggerEvent('prison:client:JailAlarm', false)
 	while true do 
 		Citizen.Wait(7)
 		if jailTime > 0 and inJail then 
 			Citizen.Wait(1000 * 60)
-			jailTime = jailTime - 1
-			if jailTime <= 0 then
-				jailTime = 0
-				RSCore.Functions.Notify("Je tijd zit erop! Check jezelf uit bij het bezoekers centrum", "success", 10000)
+			if jailTime > 0 and inJail then
+				jailTime = jailTime - 1
+				if jailTime <= 0 then
+					jailTime = 0
+					RSCore.Functions.Notify("Je tijd zit erop! Check jezelf uit bij het bezoekers centrum", "success", 10000)
+				end
+				TriggerServerEvent("prison:server:SetJailStatus", jailTime)
 			end
-			TriggerServerEvent("prison:server:SetJailStatus", jailTime)
 		else
 			Citizen.Wait(5000)
 		end
 	end
+end)
+
+RegisterNetEvent('RSCore:Client:OnPlayerLoaded')
+AddEventHandler('RSCore:Client:OnPlayerLoaded', function()
+	RSCore.Functions.TriggerCallback('prison:server:IsAlarmActive', function(active)
+		if active then
+			TriggerEvent('prison:client:JailAlarm', true)
+		end
+	end)
+
+	PlayerJob = RSCore.Functions.GetPlayerData().job
 end)
 
 function CreateCellsBlip()
@@ -75,6 +91,21 @@ function CreateCellsBlip()
 	BeginTextCommandSetBlipName("STRING")
 	AddTextComponentSubstringPlayerName("Tijd checken")
 	EndTextCommandSetBlipName(TimeBlip)
+
+	if ShopBlip ~= nil then
+		RemoveBlip(ShopBlip)
+	end
+	ShopBlip = AddBlipForCoord(Config.Locations["shop"].coords.x, Config.Locations["shop"].coords.y, Config.Locations["shop"].coords.z)
+
+	SetBlipSprite (ShopBlip, 52)
+	SetBlipDisplay(ShopBlip, 4)
+	SetBlipScale  (ShopBlip, 0.5)
+	SetBlipAsShortRange(ShopBlip, true)
+	SetBlipColour(ShopBlip, 0)
+
+	BeginTextCommandSetBlipName("STRING")
+	AddTextComponentSubstringPlayerName("Kantine")
+	EndTextCommandSetBlipName(ShopBlip)
 end
 
 --[[
@@ -93,6 +124,23 @@ Citizen.CreateThread(function()
 					end
 				elseif (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["freedom"].coords.x, Config.Locations["freedom"].coords.y, Config.Locations["freedom"].coords.z, true) < 2.5) then
 					RSCore.Functions.DrawText3D(Config.Locations["freedom"].coords.x, Config.Locations["freedom"].coords.y, Config.Locations["freedom"].coords.z, "Check tijd")
+				end  
+
+				if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["shop"].coords.x, Config.Locations["shop"].coords.y, Config.Locations["shop"].coords.z, true) < 1.5) then
+					RSCore.Functions.DrawText3D(Config.Locations["shop"].coords.x, Config.Locations["shop"].coords.y, Config.Locations["shop"].coords.z, "~g~E~w~ - Kantine")
+					if IsControlJustReleased(0, Keys["E"]) then
+                        local ShopItems = {}
+                        ShopItems.label = "Gevangenis Kantine"
+                        ShopItems.items = Config.CanteenItems
+                        ShopItems.slots = #Config.CanteenItems
+                        TriggerServerEvent("inventory:server:OpenInventory", "shop", "Kantineshop_"..math.random(1, 99), ShopItems)
+					end
+					DrawMarker(2, Config.Locations["shop"].coords.x, Config.Locations["shop"].coords.y, Config.Locations["shop"].coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 255, 55, 22, 222, false, false, false, 1, false, false, false)
+				elseif (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["shop"].coords.x, Config.Locations["shop"].coords.y, Config.Locations["shop"].coords.z, true) < 2.5) then
+					RSCore.Functions.DrawText3D(Config.Locations["shop"].coords.x, Config.Locations["shop"].coords.y, Config.Locations["shop"].coords.z, "Kantine")
+					DrawMarker(2, Config.Locations["shop"].coords.x, Config.Locations["shop"].coords.y, Config.Locations["shop"].coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 255, 55, 22, 222, false, false, false, 1, false, false, false)
+				elseif (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["shop"].coords.x, Config.Locations["shop"].coords.y, Config.Locations["shop"].coords.z, true) < 10) then
+					DrawMarker(2, Config.Locations["shop"].coords.x, Config.Locations["shop"].coords.y, Config.Locations["shop"].coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.2, 255, 55, 22, 222, false, false, false, 1, false, false, false)
 				end  
 			end
 		else
@@ -149,40 +197,12 @@ AddEventHandler('prison:client:Enter', function(time)
 	RSCore.Functions.Notify("Doe wat werk voor strafvermindering, momentele baan: "..Config.Jobs[currentJob])
 end)
 
-RegisterNetEvent('prison:client:unJail')
-AddEventHandler('prison:client:unJail', function()
-	jailTime = 0
-	DoScreenFadeOut(500)
-	while not IsScreenFadedOut() do
-		Citizen.Wait(10)
-	end
-	TriggerServerEvent("prison:server:SetJailStatus", 0)
-	TriggerServerEvent("prison:server:GiveJailItems")
-	TriggerEvent("chatMessage", "SYSTEM", "warning", "Je hebt je bezit weer terug ontvangen..")
-	inJail = false
-	RemoveBlip(currentBlip)
-	RemoveBlip(CellsBlip)
-	CellsBlip = nil
-	RemoveBlip(TimeBlip)
-	TimeBlip = nil
-	RSCore.Functions.Notify("Je bent vervroegd vrijgelaten!")
-	DoScreenFadeOut(500)
-	while not IsScreenFadedOut() do
-		Citizen.Wait(10)
-	end
-	SetEntityCoords(PlayerPedId(), Config.Locations["outside"].coords.x, Config.Locations["outside"].coords.y, Config.Locations["outside"].coords.z, 0, 0, 0, false)
-	SetEntityHeading(PlayerPedId(), Config.Locations["outside"].coords.h)
-
-	Citizen.Wait(500)
-
-	DoScreenFadeIn(1000)
-end)
-
 RegisterNetEvent('prison:client:Leave')
 AddEventHandler('prison:client:Leave', function()
 	if jailTime > 0 then 
 		RSCore.Functions.Notify("Je moet nog "..jailTime.." maanden zitten..")
 	else
+		jailTime = 0
 		TriggerServerEvent("prison:server:SetJailStatus", 0)
 		TriggerServerEvent("prison:server:GiveJailItems")
 		TriggerEvent("chatMessage", "SYSTEM", "warning", "Je hebt je bezit weer terug ontvangen..")
@@ -192,6 +212,36 @@ AddEventHandler('prison:client:Leave', function()
 		CellsBlip = nil
 		RemoveBlip(TimeBlip)
 		TimeBlip = nil
+		RemoveBlip(ShopBlip)
+			ShopBlip = nil
+			RSCore.Functions.Notify("Je bent vrij! Geniet ervan :)")
+		DoScreenFadeOut(500)
+		while not IsScreenFadedOut() do
+			Citizen.Wait(10)
+		end
+		SetEntityCoords(PlayerPedId(), Config.Locations["outside"].coords.x, Config.Locations["outside"].coords.y, Config.Locations["outside"].coords.z, 0, 0, 0, false)
+		SetEntityHeading(PlayerPedId(), Config.Locations["outside"].coords.h)
+
+		Citizen.Wait(500)
+
+		DoScreenFadeIn(1000)
+	end
+end)
+
+RegisterNetEvent('prison:client:UnjailPerson')
+AddEventHandler('prison:client:UnjailPerson', function()
+	if jailTime > 0 then 
+		TriggerServerEvent("prison:server:SetJailStatus", 0)
+		TriggerServerEvent("prison:server:GiveJailItems")
+		TriggerEvent("chatMessage", "SYSTEM", "warning", "Je hebt je bezit weer terug ontvangen..")
+		inJail = false
+		RemoveBlip(currentBlip)
+		RemoveBlip(CellsBlip)
+		CellsBlip = nil
+		RemoveBlip(TimeBlip)
+		TimeBlip = nil
+		RemoveBlip(ShopBlip)
+		ShopBlip = nil
 		RSCore.Functions.Notify("Je bent vrij! Geniet ervan :)")
 		DoScreenFadeOut(500)
 		while not IsScreenFadedOut() do

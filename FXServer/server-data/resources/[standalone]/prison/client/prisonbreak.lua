@@ -8,17 +8,17 @@ local securityLockdown = false
 
 local Gates = {
     [1] = {
-        gatekey = 17,
+        gatekey = 38,
         coords = {x = 1845.99, y = 2604.7, z = 45.58, h = 94.5},  
         hit = false,
     },
     [2] = {
-        gatekey = 18,
+        gatekey = 39,
         coords = {x = 1819.47, y = 2604.67, z = 45.56, h = 98.5},
         hit = false,
     },
     [3] = {
-        gatekey = 19,
+        gatekey = 40,
         coords = {x = 1804.74, y = 2616.311, z = 45.61, h = 335.5},
         hit = false,
     }
@@ -76,9 +76,17 @@ Citizen.CreateThread(function()
 		if (GetDistanceBetweenCoords(pos.x, pos.y, pos.z, Config.Locations["middle"].coords.x, Config.Locations["middle"].coords.y, Config.Locations["middle"].coords.z, false) > 200.0 and inJail) then
 			inJail = false
             jailTime = 0
-		    RemoveBlip(currentBlip)
+            RemoveBlip(currentBlip)
+            RemoveBlip(CellsBlip)
+            CellsBlip = nil
+            RemoveBlip(TimeBlip)
+            TimeBlip = nil
+            RemoveBlip(ShopBlip)
+            ShopBlip = nil
             TriggerServerEvent("prison:server:SecurityLockdown")
-            RSCore.Functions.Notify("Je bent de gevangenis ontsnapt.. Maak dat je weg komt!", "error")
+            TriggerEvent('prison:client:PrisonBreakAlert')
+            TriggerServerEvent("prison:server:SetJailStatus", 0)
+            RSCore.Functions.Notify("Je bent ontsnapt.. Maak dat je weg komt!", "error")
 		end
 	end
 end)
@@ -123,8 +131,25 @@ end)
 
 RegisterNetEvent('prison:client:PrisonBreakAlert')
 AddEventHandler('prison:client:PrisonBreakAlert', function()
-    TriggerEvent("chatMessage", "ALERT", "error", "Attentie alle eenheden! Poging tot uitbraak in de gevangenis!")
+    --TriggerEvent("chatMessage", "ALERT", "error", "Attentie alle eenheden! Poging tot uitbraak in de gevangenis!")
+    TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+        timeOut = 10000,
+        alertTitle = "Gevangenis uitbraak",
+        details = {
+            [1] = {
+                icon = '<i class="fas fa-lock"></i>',
+                detail = "Boilingbroke Penitentiary",
+            },
+            [2] = {
+                icon = '<i class="fas fa-globe-europe"></i>',
+                detail = "Route 68",
+            },
+        },
+        callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+    })
+
     local BreakBlip = AddBlipForCoord(Config.Locations["middle"].coords.x, Config.Locations["middle"].coords.y, Config.Locations["middle"].coords.z)
+    TriggerServerEvent('prison:server:JailAlarm')
 	SetBlipSprite(BreakBlip , 161)
 	SetBlipScale(BreakBlip , 3.0)
 	SetBlipColour(BreakBlip, 3)
