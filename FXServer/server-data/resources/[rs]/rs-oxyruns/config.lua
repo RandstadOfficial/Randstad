@@ -15,7 +15,7 @@ Config.MinimumOxyPolice = 2
 Config.MaxiumStrikes = 30 -- 1 strike = 10 sec
 
 Config.MinimumTime = 9
-Config.MaximumTime = 17
+Config.MaximumTime = 18
 
 Config.OxyChance = 450 -- Percentage chance of getting oxy on the run. Multiplied by 100. 10% = 100, 20% = 200, 50% = 500, etc. Default 55%.
 
