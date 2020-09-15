@@ -84,13 +84,12 @@ Config.Locations = {
 }
 
 Config.ArmoryWhitelist = {
-    "UXO50693", -- Ryan
-    "DTE65403", -- MaBo
-    "YND19022", -- Maestro
-    "UXP35132", -- Cees
-	"LWP29900", -- Nico
-    "BQL92466", -- Goudenaapje (Dwight)
-    "OWU99747", -- Juriaan De Cock
+    "", -- MaBo
+    "CFG02474", -- Maestro
+    "FVX03149", -- Cees
+    "TKL46316", -- Goudenaapje (Dwight)
+    "BPK45400", -- Juriaan De Cock
+    "CNL55625", -- Ryan
 }
 
 Config.Helicopter = "pzulu"

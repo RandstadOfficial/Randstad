@@ -96,7 +96,7 @@ Config.Products = {
         },
         [11] = {
             name = "bandage",
-            price = 100,
+            price = 50,
             amount = 50,
             info = {},
             type = "item",
@@ -154,7 +154,7 @@ Config.Products = {
         },
         [5] = {
             name = "repairkit",
-            price = 500,
+            price = 350,
             amount = 100,
             info = {},
             type = "item",

@@ -145,7 +145,7 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason, deferral
     end
 	deferrals.update("\nChecking whitelist status...")
     if(not RSCore.Functions.IsWhitelisted(src)) then
-        RSCore.Functions.Kick(src, 'Je bent helaas niet gewhitelist.', setKickReason, deferrals)
+        RSCore.Functions.Kick(src, 'Je bent helaas niet gewhitelist of de server is in onderhoud...', setKickReason, deferrals)
         CancelEvent()
         return false
     end

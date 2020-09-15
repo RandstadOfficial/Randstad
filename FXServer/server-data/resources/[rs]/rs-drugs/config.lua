@@ -43,8 +43,8 @@ Config.Dealers = {
             ["z"] = 6.03, 
         },
         ["time"] = {
-            ["min"] = 6,
-            ["max"] = 12,
+            ["min"] = 9,
+            ["max"] = 15,
         },
         ["products"] = {
             [1] = {
@@ -54,7 +54,7 @@ Config.Dealers = {
                 info = {},
                 type = "item",
                 slot = 1,
-                minrep = 100,
+                minrep = 50,
             },
             [2] = {
                 name = "weed_skunk_seed",
@@ -63,7 +63,7 @@ Config.Dealers = {
                 info = {},
                 type = "item",
                 slot = 2,
-                minrep = 120,
+                minrep = 75,
             },
             [3] = {
                 name = "weed_purple-haze_seed",
@@ -72,7 +72,7 @@ Config.Dealers = {
                 info = {},
                 type = "item",
                 slot = 3,
-                minrep = 140,
+                minrep = 100,
             },
             [4] = {
                 name = "weed_og-kush_seed",
@@ -81,7 +81,7 @@ Config.Dealers = {
                 info = {},
                 type = "item",
                 slot = 4,
-                minrep = 160,
+                minrep = 125,
             },
             [5] = {
                 name = "weed_amnesia_seed",
@@ -90,7 +90,7 @@ Config.Dealers = {
                 info = {},
                 type = "item",
                 slot = 5,
-                minrep = 180,
+                minrep = 150,
             },
             [6] = {
                 name = "weed_ak47_seed",
@@ -99,7 +99,7 @@ Config.Dealers = {
                 info = {},
                 type = "item",
                 slot = 6,
-                minrep = 200,
+                minrep = 175,
             }
         },
     },
@@ -111,8 +111,8 @@ Config.Dealers = {
             ["z"] = 4.64, 
         },
         ["time"] = {
-            ["min"] = 6,
-            ["max"] = 12,
+            ["min"] = 20, -- is eigenlijk 21:00
+            ["max"] = 03,
         },
         ["products"] = {
             [1] = {
@@ -122,7 +122,7 @@ Config.Dealers = {
                 info = {},
                 type = "item",
                 slot = 1,
-                minrep = 100,
+                minrep = 50,
             },
             [2] = {
                 name = "weed_skunk_seed",
@@ -131,7 +131,7 @@ Config.Dealers = {
                 info = {},
                 type = "item",
                 slot = 2,
-                minrep = 120,
+                minrep = 75,
             },
             [3] = {
                 name = "weed_purple-haze_seed",
@@ -140,7 +140,7 @@ Config.Dealers = {
                 info = {},
                 type = "item",
                 slot = 3,
-                minrep = 140,
+                minrep = 100,
             },
             [4] = {
                 name = "weed_og-kush_seed",
@@ -149,7 +149,7 @@ Config.Dealers = {
                 info = {},
                 type = "item",
                 slot = 4,
-                minrep = 160,
+                minrep = 125,
             },
             [5] = {
                 name = "weed_amnesia_seed",
@@ -158,7 +158,7 @@ Config.Dealers = {
                 info = {},
                 type = "item",
                 slot = 5,
-                minrep = 180,
+                minrep = 150,
             },
             [6] = {
                 name = "weed_ak47_seed",
@@ -167,7 +167,7 @@ Config.Dealers = {
                 info = {},
                 type = "item",
                 slot = 6,
-                minrep = 200,
+                minrep = 175,
             }
         },
     },

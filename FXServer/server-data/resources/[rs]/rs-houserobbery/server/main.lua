@@ -67,7 +67,7 @@ AddEventHandler('rs-houserobbery:server:searchCabin', function(cabin, house)
 
             local itemInfo = RSCore.Shared.Items[randomItem]
 
-            local RareChange = math.random(1, 1000)
+            local RareChange = math.random(1, 10000)
             if RareChange == 27 then -- 1% chance to get rare item as item per itemcount
                 randomItem = pickSpecialReward()
                 itemInfo = RSCore.Shared.Items[randomItem]
@@ -93,7 +93,7 @@ AddEventHandler('rs-houserobbery:server:searchCabin', function(cabin, house)
             Citizen.Wait(500)
         end
     else
-        TriggerClientEvent('RSCore:Notify', src, 'Het kastje is leeg broooo', 'error', 3500)
+        TriggerClientEvent('RSCore:Notify', src, 'Het kastje is leeg...', 'error', 3500)
     end
 
     Config.Houses[house]["furniture"][cabin]["searched"] = true

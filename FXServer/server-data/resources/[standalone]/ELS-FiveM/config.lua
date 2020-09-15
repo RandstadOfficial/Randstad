@@ -53,7 +53,7 @@ keyboard = {
     },
     warning = 246, -- Y
     secondary = 303, -- U
-    primary = 249, -- N
+    primary = 82, -- N
 }
 
 controller = {

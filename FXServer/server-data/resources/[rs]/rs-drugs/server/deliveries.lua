@@ -129,6 +129,6 @@ function GetCurrentCops()
             end
         end
     end
-    print("COPS DRUGS AMOUNT: " .. amount)
+    -- print("COPS DRUGS AMOUNT: " .. amount)
     return amount
 end

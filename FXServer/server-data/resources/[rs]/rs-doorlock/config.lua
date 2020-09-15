@@ -641,7 +641,7 @@ RS.Doors = {
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 1.5,
+		distance = 2,
 		size = 2
 	},
 	-- Hallway to Visitor
@@ -653,7 +653,7 @@ RS.Doors = {
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 1.5,
+		distance = 2,
 		size = 2
 	},
 	-- Hallway to outside
@@ -728,7 +728,7 @@ RS.Doors = {
 		locking = false,
 		locked = true,
 		pickable = false,
-		distance = 1.5,
+		distance = 2.5,
 		size = 2
 	},
 	-- Isolation room

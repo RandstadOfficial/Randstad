@@ -216,7 +216,7 @@ function RepairVehicle(vehicle)
 		}, {}, {}, function() -- Done
 			StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
 			RSCore.Functions.Notify("Voertuig gemaakt!")
-			SetVehicleEngineHealth(vehicle, GetVehicleEngineHealth(vehicle) + 100.0) 
+			SetVehicleEngineHealth(vehicle, 500.0) 
 			SetVehicleTyreFixed(vehicle, 0)
 			SetVehicleTyreFixed(vehicle, 1)
 			SetVehicleTyreFixed(vehicle, 2)

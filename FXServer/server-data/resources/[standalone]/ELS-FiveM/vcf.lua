@@ -18,6 +18,7 @@ vcf_files = {
 	"PTOURAN.xml",
 	"PTOURAN11.xml",
 	"PYAMAHAMOTOR.xml",
+	"pbmw330",
 	"AEKLASSE.xml",
 	"asprinter.xml",
 }

@@ -21,7 +21,7 @@
   "playerController": {
     "onJoinCheckBan": true,
     "onJoinCheckWhitelist": false,
-    "minSessionTime": 10,
+    "minSessionTime": 5,
     "whitelistRejectionMessage": "Je bent niet Whitelisted.\nJoin: https://discord.gg/2DRbeFy.\n<strong>Your ID: <id></strong>",
     "wipePendingWLOnStart": true
   },
