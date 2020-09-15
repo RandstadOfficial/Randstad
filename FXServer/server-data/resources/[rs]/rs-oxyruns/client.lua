@@ -260,9 +260,9 @@ function DoDropOff()
 			end
 
 			Citizen.Wait(2000)
-			RSCore.Functions.Notify("De levering was goed, je pager wordt bijgewerkt met de volgende drop-off", "success")
+			RSCore.Functions.Notify("De levering was goed, je pager wordt bijgewerkt met de volgende drop-off", "success", 3000)
 		else
-			RSCore.Functions.Notify("De levering is gefaald", "error")
+			RSCore.Functions.Notify("De levering is gefaald", "error", 3000)
 		end
 	
 		DeleteCreatedPed()
@@ -311,7 +311,7 @@ AddEventHandler("oxydelivery:client", function()
 			pedCreated = true
 			DeleteCreatedPed()
 			CreateOxyPed()
-			RSCore.Functions.Notify("Je bent dicht bij de drop-off", "success")
+			RSCore.Functions.Notify("Je bent dicht bij de drop-off", "success", 3000)
 		end
 		toolong = toolong - 1
 		if toolong < 0 then
@@ -319,6 +319,7 @@ AddEventHandler("oxydelivery:client", function()
 			SetEntityAsNoLongerNeeded(oxyVehicle)
 			tasking = false
 			OxyRun = false
+			RSCore.Functions.Notify("Je bent klaar met rondbrengen, het duurt te lang!", "error", 3000)
 			--TriggerClientEvent('RSCore:Notify', source, "Je verkoopt geen oxy meer omdat het lang duurt", "error")
 		end
 		if dstcheck < 2.0 and pedCreated then
@@ -362,7 +363,7 @@ Citizen.CreateThread(function()
 						end
 					end
 				else
-					RSCore.Functions.DrawText3D(Config.Locations["job"].x, Config.Locations["job"].y, Config.Locations["job"].z, "Apotheek is gesloten (09:00 tot 17:00)")
+					RSCore.Functions.DrawText3D(Config.Locations["job"].x, Config.Locations["job"].y, Config.Locations["job"].z, "Apotheek is gesloten (08:00 tot 19:00)")
 				end	
 			end
 		else
@@ -391,16 +392,17 @@ Citizen.CreateThread(function()
 			if not DoesEntityExist(oxyVehicle) or GetVehicleEngineHealth(oxyVehicle) < 200.0 or GetVehicleBodyHealth(oxyVehicle) < 200.0 then
 				OxyRun = false
 				tasking = false
-				RSCore.Functions.Notify("De dealer geeft je geen locatie meer omdat je auto beschadigd is", "error")
+				RSCore.Functions.Notify("De dealer geeft je geen locatie meer omdat je auto beschadigd is", "error", 3000)
 			else
 				if tasking then
-			        Citizen.Wait(30000)
+			        Citizen.Wait(20000)
 			    else
 			        TriggerEvent("oxydelivery:client")  
 				    salecount = salecount + 1
 				    if salecount == Config.RunAmount then
-				    	Citizen.Wait(300000)
-				    	OxyRun = false
+				    	Citizen.Wait(30000)
+						OxyRun = false
+						RSCore.Functions.Notify("Je bent klaar met rondbrengen, ga terug naar de apotheek!", "success", 3000)
 				    end
 				end
 			end
