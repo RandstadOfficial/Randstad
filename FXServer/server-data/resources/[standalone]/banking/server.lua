@@ -73,7 +73,7 @@ end)
 
 function HijackTimer(id) --LLG
   Citizen.CreateThread(function()
-    Citizen.Wait(60000 * 0.3)
+    Citizen.Wait(60000 * 60)
     RSCore.Functions.ExecuteSql(false, "UPDATE `banking` SET `blocked` = '0', `isUsedBy` = '0'  WHERE `id` = '".. id .."'", function()
       print('ATM ' .. id .. ' Unblocked')
       updateClient()

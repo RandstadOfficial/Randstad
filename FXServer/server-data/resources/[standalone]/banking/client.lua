@@ -183,7 +183,7 @@ end
 
 function PlaceExplosive(pos, atmId) --LLG
   Citizen.CreateThread(function()
-    local time = 15000
+    local time = math.random(15000, 20000)
     if math.random(1, 20) == 5 then
       time = 1000
     end
