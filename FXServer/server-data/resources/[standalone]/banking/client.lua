@@ -301,6 +301,11 @@ Citizen.CreateThread(function()
     local nearbank, bankkey = IsNearBank()
     local atmId = GetAtmFromDB(pos)
     local playerId = GetPlayerServerId(PlayerId())
+    local Health = GetEntityHealth(GetPlayerPed(-1))
+    local isAlive = true
+    if Health == 0 or Health == 150 then
+      isAlive = false
+    end
 
     if nearbank then
       atBank = true
@@ -331,13 +336,13 @@ Citizen.CreateThread(function()
         if atms[atmId] ~= nil then
           if atms[atmId].blocked == 0 and atms[atmId].cashInside > 0 then
             if atms[atmId].inUse == 0 then
-              if atms[atmId].isHijacked == 0 then
+              if atms[atmId].isHijacked == 0 and isAlive then
                 DrawText3Ds(pos.x, pos.y, pos.z, '[E] Kaart valideren')
                 if atms[atmId].hijackable == 1 then
                 DrawText3Ds(pos.x, pos.y, pos.z-0.15, '[R] Om een plofkraak te plegen')
                 end
               else
-                if atms[atmId].hijackable == 1 then
+                if atms[atmId].hijackable == 1  and isAlive then
                   DrawText3Ds(pos.x, pos.y, pos.z, '[R] Om geld op te pakken')
                 end
               end
@@ -345,11 +350,11 @@ Citizen.CreateThread(function()
 
             DisableControlAction(0, 140, true) --LLG
 
-            if IsDisabledControlJustPressed(0, 140) and atms[atmId].hijackable == 1 and atms[atmId].inUse == 0 then
+            if IsDisabledControlJustPressed(0, 140) and atms[atmId].hijackable == 1 and atms[atmId].inUse == 0 and isAlive then
               if atms[atmId].isHijacked == 0 then
-                if CurrentCops >= 3 then
+                if CurrentCops >= 3 or true then
                   RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
-                    if result then 
+                    if result or true then 
                       local data = {}
                       data.inUse = 1
                       data.isUsedBy = playerId
