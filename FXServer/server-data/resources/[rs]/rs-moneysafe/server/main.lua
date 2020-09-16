@@ -41,8 +41,6 @@ function AddTransaction(safe, type, amount, Player, Automated)
     local name = nil
     local _source = nil
     if not Automated then
-        local src = source
-        local Player = RSCore.Functions.GetPlayer(src)
         cid = Player.PlayerData.citizenid
         name = Player.PlayerData.name
         _source = Player.PlayerData.source
@@ -93,7 +91,11 @@ RSCore.Functions.CreateCallback('rs-moneysafe:server:DepositMoney', function(sou
             RSCore.Functions.ExecuteSql(false, "INSERT INTO `moneysafes` (`safe`, `money`, `transactions`) VALUES ('"..safe.."', '"..Config.Safes[safe].money.."', '"..json.encode(Config.Safes[safe].transactions).."')")
         end
         TriggerClientEvent('rs-moneysafe:client:UpdateSafe', -1, Config.Safes[safe], safe)
-        TriggerClientEvent('RSCore:Notify', src, "Je hebt €"..amount..",- in de kluis gestopt!", "success")
+        if sender == nil then
+            TriggerClientEvent('RSCore:Notify', src, "Je hebt €"..amount..",- in de kluis gestopt!", "success")
+        else
+            return
+        end
     end)
 end)
 
