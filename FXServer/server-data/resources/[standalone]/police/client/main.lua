@@ -108,6 +108,9 @@ AddEventHandler('police:client:sendBillingMail', function(amount)
             message = "Beste " .. gender .. " " .. charinfo.lastname .. ",<br /><br />Het Centraal Justitieel Incassobureau (CJIB) heeft de boetes die u heeft ontvangen van de politie in rekening gebracht.<br />Er is <strong>€"..amount.."</strong> van uw rekening afgetrokken.<br /><br />Met vriendelijke groet,<br />Dhr. I.K. Graai",
             button = {}
         })
+
+        RSCore.Functions.TriggerCallback('rs-moneysafe:server:DepositMoney', function(result)
+        end, "police", amount, "")
     end)
 end)
 
