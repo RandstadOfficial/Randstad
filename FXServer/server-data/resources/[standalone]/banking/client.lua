@@ -352,9 +352,9 @@ Citizen.CreateThread(function()
 
             if IsDisabledControlJustPressed(0, 140) and atms[atmId].hijackable == 1 and atms[atmId].inUse == 0 and isAlive then
               if atms[atmId].isHijacked == 0 then
-                if CurrentCops >= 3 or true then
+                if CurrentCops >= 3 then
                   RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
-                    if result or true then 
+                    if result then 
                       local data = {}
                       data.inUse = 1
                       data.isUsedBy = playerId
