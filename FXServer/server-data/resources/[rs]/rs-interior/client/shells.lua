@@ -127,3 +127,34 @@ function CreateTier3House(spawn, isBackdoor)
 
     return { objects, POIOffsets }
 end
+
+function CreateWarehouse(spawn, isBackdoor)
+    local objects = {}
+
+    local POIOffsets = {}
+    POIOffsets.exit = json.decode('{"z":2.0,"y":0.01,"x":-8.5}')
+    DoScreenFadeOut(500)
+    while not IsScreenFadedOut() do
+        Citizen.Wait(10)
+    end
+    RequestModel(`warehouse_shell`)
+    while not HasModelLoaded(`warehouse_shell`) do
+        Citizen.Wait(1000)
+    end
+    local shell = CreateObject(`warehouse_shell`, spawn.x, spawn.y, spawn.z, false, false, false)
+    FreezeEntityPosition(shell, true)
+
+    table.insert(objects, shell)
+
+    local dt = CreateObject(V_16_DT, spawn.x-1.21854400, spawn.y-1.04389600, spawn.z + 1.39068600, false, false, false)
+    table.insert(objects, dt)
+
+
+    if not isBackdoor then
+        TeleportToInterior(spawn.x + POIOffsets.exit.x, spawn.y + POIOffsets.exit.y, spawn.z + POIOffsets.exit.z, spawn.h)
+    else
+        TeleportToInterior(spawn.x + POIOffsets.exit.x, spawn.y + POIOffsets.exit.y, spawn.z + POIOffsets.exit.z, spawn.h)
+    end
+
+    return { objects, POIOffsets }
+end

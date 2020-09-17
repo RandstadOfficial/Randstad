@@ -355,7 +355,22 @@ Citizen.CreateThread(function()
                             if(GetDistanceBetweenCoords(pos, stashLocation.x, stashLocation.y, stashLocation.z, true) < 1.5)then
                                 DrawText3Ds(stashLocation.x, stashLocation.y, stashLocation.z, '~g~E~w~ - Stash')
                                 if IsControlJustPressed(0, Keys["E"]) then
-                                    TriggerServerEvent("inventory:server:OpenInventory", "stash", CurrentHouse)
+                                    local other = {}
+                                    other.maxweight = 1000000
+                                    other.slots = 50
+                                    if Config.Houses[CurrentHouse].tier == 3 then -- Villa
+                                        other.maxweight = 1300000
+                                        other.slots = 55
+                                    end
+                                    if Config.Houses[CurrentHouse].tier == 8 then -- Warehouse
+                                        other.maxweight = 1500000
+                                        other.slots = 35
+                                    end
+                                    if Config.Houses[CurrentHouse].tier == 5 then -- caravan
+                                        other.maxweight = 500000
+                                        other.slots = 25
+                                    end
+                                    TriggerServerEvent("inventory:server:OpenInventory", "stash", CurrentHouse, other)
                                     TriggerEvent("inventory:client:SetCurrentStash", CurrentHouse)
                                 end
                             elseif(GetDistanceBetweenCoords(pos, stashLocation.x, stashLocation.y, stashLocation.z, true) < 3)then
@@ -623,6 +638,8 @@ function enterOwnedHouse(house)
         data = exports['rs-interior']:CreateFranklinShell(coords)
     elseif Config.Houses[house].tier == 7 then
         data = exports['rs-interior']:CreateFranklinAuntShell(coords)
+    elseif Config.Houses[house].tier == 8 then
+        data = exports['rs-interior']:CreateWarehouse(coords)
     end
 
     Citizen.Wait(100)
@@ -715,6 +732,8 @@ function enterNonOwnedHouse(house)
         data = exports['rs-interior']:CreateFranklinShell(coords)
     elseif Config.Houses[house].tier == 7 then
         data = exports['rs-interior']:CreateFranklinAuntShell(coords)
+    elseif Config.Houses[house].tier == 8 then
+        data = exports['rs-interior']:CreateWarehouse(coords)
     end
 
     houseObj = data[1]
