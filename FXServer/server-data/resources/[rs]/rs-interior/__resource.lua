@@ -21,6 +21,7 @@ files {
 	'stream/frankelientje/frankelientje.ytyp',
 	'stream/tante_shell/tante.ytyp',
 	'stream/methlab_shell/methlab_shell.ytyp',
+	'stream/warehouse_shell/warehouse_shell.ytyp',
 }
 
 data_file 'DLC_ITYP_REQUEST' 'stream/v_int_20.ytyp'
@@ -38,6 +39,7 @@ data_file 'DLC_ITYP_REQUEST' 'stream/caravan_shell/caravan.ytyp'
 data_file 'DLC_ITYP_REQUEST' 'stream/frankelientje/frankelientje.ytyp'
 data_file 'DLC_ITYP_REQUEST' 'stream/tante_shell/tante.ytyp'
 data_file 'DLC_ITYP_REQUEST' 'stream/methlab_shell/methlab_shell.ytyp'
+data_file 'DLC_ITYP_REQUEST' 'stream/warehouse_shell/warehouse_shell.ytyp'
 
 exports {
 	'DespawnInterior',
@@ -51,6 +53,7 @@ exports {
 	'CreateGunshopShell',
 	'CreateTrapHouseShell',
 	'CreateMethlabShell',
+	'CreateWarehouse',
 	
 	'CreateApartmentShell',
 	'CreateCaravanShell',
