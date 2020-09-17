@@ -631,12 +631,12 @@ RSDiving.CoralTypes = {
     [1] = {
         item = "dendrogyra_coral",
         maxAmount = math.random(2, 7),
-        price = math.random(300, 400),
+        price = math.random(300, 450),
     },
     [2] = {
         item = "antipatharia_coral",
         maxAmount = math.random(2, 7),
-        price = math.random(250, 350),
+        price = math.random(200, 350),
     }
 }
 

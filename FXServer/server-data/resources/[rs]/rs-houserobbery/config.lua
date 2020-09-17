@@ -14,7 +14,7 @@ Config = {}
 
 Config.MinZOffset = 45
 
-Config.MinimumHouseRobberyPolice = 3
+Config.MinimumHouseRobberyPolice = 2
 
 Config.MinimumTime = 22
 Config.MaximumTime = 5

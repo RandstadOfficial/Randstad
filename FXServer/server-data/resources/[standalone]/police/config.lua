@@ -84,7 +84,7 @@ Config.Locations = {
 }
 
 Config.ArmoryWhitelist = {
-    "", -- MaBo
+    "VTC45084", -- MaBo
     "CFG02474", -- Maestro
     "FVX03149", -- Cees
     "TKL46316", -- Goudenaapje (Dwight)
