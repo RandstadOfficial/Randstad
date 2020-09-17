@@ -38,7 +38,7 @@ sets Discord "https://discord.gg/2DRbeFy"
 #sets banner_connecting "https://i.imgur.com/2joLbCa.png"
 
 # Set your server's hostname
-sv_hostname "[NL] ^5Randstad RP ^7| ^0Custom Framework ^7| ^5Realistische Economie ^7| ^0Serieuze RP ^7| ^5Whitelisted ^7| ^0NoPixel Based ^7| ^5discord.gg/2DRbeFy" 
+sv_hostname "[NL] ^5Randstad RP ^7| ^0Custom Framework ^7| ^5Realistische Economie ^7| ^0Serieuze RP ^7| ^5Whitelisted ^7| ^0NoPixel Based" 
 
 # Nested configs!
 #exec server_internal.cfg
@@ -71,8 +71,6 @@ add_principal identifier.steam:1100001062640e8 group.admin # Maestro
 add_principal identifier.steam:11000010dff7a9f group.admin # MaBo
 add_principal identifier.steam:11000011a4f7fef group.admin # Ryan
 add_principal identifier.steam:11000010dc9f9bf group.admin # Jessee
-add_principal identifier.steam:1100001095d0f88 group.admin # Burakint
-
 
 # Hide player endpoints in external log output.
 sv_endpointprivacy true
