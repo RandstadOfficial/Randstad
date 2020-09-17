@@ -16,7 +16,7 @@ Config.ItemTiers = 1
 Config.MinimumPaletoPolice = 5
 Config.MinimumPacificPolice = 6
 Config.MinimumFleecaPolice = 4
-Config.MinimumThermitePolice = 2 
+Config.MinimumThermitePolice = 2
 
 Config.RewardTypes = {
     [1] = {
@@ -512,7 +512,7 @@ Config.BigBanks = {
                 ["y"] = 6475.36,
                 ["z"] = 31.62,
                 ["isOpened"] = false,
-                ["doorId"] = 76,
+                ["doorId"] = 80,
             },
         },
         ["camId"] = 26,
@@ -602,14 +602,14 @@ Config.BigBanks = {
                 ["y"] = 221.15,
                 ["z"] = 101.68,
                 ["isOpened"] = false,
-                ["doorId"] = 78,
+                ["doorId"] = 72,
             },
             [2] = {
                 ["x"] = 261.15,
                 ["y"] = 215.21,
                 ["z"] = 101.68,
                 ["isOpened"] = false,
-                ["doorId"] = 79,
+                ["doorId"] = 73,
             },
         },
         ["camId"] = 26,
