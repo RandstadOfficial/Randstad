@@ -19,7 +19,7 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(1000 * 60 * 30)
+        Citizen.Wait(1000 * 60 * 45)
         TriggerClientEvent("rs-bankrobbery:client:enableAllBankSecurity", -1)
         TriggerClientEvent("police:client:EnableAllCameras", -1)
     end
@@ -219,7 +219,7 @@ AddEventHandler('rs-bankrobbery:server:setTimeout', function()
         if not timeOut then
             timeOut = true
             Citizen.CreateThread(function()
-                Citizen.Wait(60 * (60 * 1000))
+                Citizen.Wait(45 * (60 * 1000))
                 timeOut = false
                 robberyBusy = false
                 TriggerEvent('rs-scoreboard:server:SetActivityBusy', "bankrobbery", false)
@@ -246,7 +246,7 @@ end)
 RegisterServerEvent('rs-bankrobbery:server:SetSmallbankTimeout')
 AddEventHandler('rs-bankrobbery:server:SetSmallbankTimeout', function(BankId)
     if not robberyBusy then
-        SetTimeout(30 * (60 * 1000), function()
+        SetTimeout(45 * (60 * 1000), function()
             Config.SmallBanks[BankId]["isOpened"] = false
             for k, v in pairs(Config.SmallBanks[BankId]["lockers"]) do
                 Config.SmallBanks[BankId]["lockers"][k]["isOpened"] = false
@@ -256,6 +256,7 @@ AddEventHandler('rs-bankrobbery:server:SetSmallbankTimeout', function(BankId)
             robberyBusy = false
             TriggerClientEvent('rs-bankrobbery:client:ResetFleecaLockers', -1, BankId)
             TriggerEvent('rs-banking:server:SetBankClosed', BankId, false)
+            TriggerEvent('rs-scoreboard:server:SetActivityBusy', "bankrobbery", false)
         end)
     end
 end)
