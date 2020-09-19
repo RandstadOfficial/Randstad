@@ -1677,4 +1677,25 @@ RS.Doors = {
 			},
 		}
 	},
+	-- DUBBELE DEUR VANGELICO JUWELIER 
+	{
+		textCoords = vector3(-631.244, -237.405, 38.05),
+		authorizedJobs = { 'police'},
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'p_jewel_door_l',
+				objYaw = 305.0,
+				objCoords = vector3(-631.850, -237.900, 38.500)
+			},
+			{
+				objName = 'p_jewel_door_r1',
+				objYaw = 307.0,
+				objCoords = vector3(-630.850, -237.900, 38.500)
+			}
+		}
+	},
 }

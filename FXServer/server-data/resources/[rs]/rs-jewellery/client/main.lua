@@ -310,3 +310,34 @@ Citizen.CreateThread(function()
     AddTextComponentSubstringPlayerName("Vangelico Juwelier")
     EndTextCommandSetBlipName(Dealer)
 end)
+
+Citizen.CreateThread(function()
+    while true do
+        local ped = GetPlayerPed(-1)
+        local pos = GetEntityCoords(ped)
+        local inRange = true
+        
+        local VangelicoDist = GetDistanceBetweenCoords(pos, Config.JewelleryLocation["coords"]["x"], Config.JewelleryLocation["coords"]["y"], Config.JewelleryLocation["coords"]["z"], true)
+        -- Vangelico Check
+        if VangelicoDist < 50 then
+            inRange = true
+            if Config.JewelleryLocation["isOpened"] then
+                TriggerServerEvent('rs-doorlock:server:updateState', 115, false)
+                TriggerServerEvent('rs-doorlock:server:updateState', 115, false)
+            else
+                TriggerServerEvent('rs-doorlock:server:updateState', 115, true)
+                TriggerServerEvent('rs-doorlock:server:updateState', 115, true)
+            end
+        end
+
+        if VangelicoDist > 15 then
+            inRange = false
+        end
+
+        if not inRange then
+            Citizen.Wait(5000)
+        end
+
+        Citizen.Wait(1000)
+    end
+end)
