@@ -359,16 +359,16 @@ Citizen.CreateThread(function()
                                     other.maxweight = 1000000
                                     other.slots = 50
                                     if Config.Houses[CurrentHouse].tier == 3 then -- Villa
-                                        other.maxweight = 1300000
+                                        other.maxweight = 1250000
                                         other.slots = 55
                                     end
                                     if Config.Houses[CurrentHouse].tier == 8 then -- Warehouse
-                                        other.maxweight = 1500000
-                                        other.slots = 35
+                                        other.maxweight = 750000
+                                        other.slots = 40
                                     end
                                     if Config.Houses[CurrentHouse].tier == 5 then -- caravan
                                         other.maxweight = 500000
-                                        other.slots = 25
+                                        other.slots = 30
                                     end
                                     TriggerServerEvent("inventory:server:OpenInventory", "stash", CurrentHouse, other)
                                     TriggerEvent("inventory:client:SetCurrentStash", CurrentHouse)

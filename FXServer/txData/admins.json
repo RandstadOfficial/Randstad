@@ -45,18 +45,6 @@
     ]
   },
   {
-    "name": "HamzaRandstad",
-    "master": false,
-    "password_hash": "$2a$11$0WZkONRxwwYIDdlCDz0X8uAxSpYcqtI.34Lu737qTUlJNLJn.EkQK",
-    "providers": {},
-    "permissions": [
-      "players.ban",
-      "players.kick",
-      "players.message",
-      "players.warn"
-    ]
-  },
-  {
     "name": "Sovereignking",
     "master": false,
     "password_hash": "$2a$11$V30enEkF5fMCfcZuDbIudeNzv5OXALskO4KI6OAq/fNla59cJzfEi",
@@ -81,31 +69,6 @@
     ]
   },
   {
-    "name": "MCanRandstad",
-    "master": false,
-    "password_hash": "$2a$11$W3QuFHojelwPdYdjdzOnSeGZCuRFKdrMxPz.qfEnIk9JsqZg2Cdze",
-    "providers": {},
-    "permissions": [
-      "players.ban",
-      "players.kick",
-      "players.message",
-      "players.warn"
-    ]
-  },
-  {
-    "name": "JesSee",
-    "master": false,
-    "password_hash": "$2a$11$1XWML/uwmzGypyIH3LVeaOnqef7THkmVo8pmuF8aSXN8x.YW830Xa",
-    "password_temporary": true,
-    "providers": {},
-    "permissions": [
-      "players.ban",
-      "players.kick",
-      "players.message",
-      "players.warn"
-    ]
-  },
-  {
     "name": "Lunkloafgrumble",
     "master": false,
     "password_hash": "$2a$11$rCa0e9ikTn6CKUUsCS0mcekUxAbxod3/RgHSM7yNl9jNrtAs9TxQG",
@@ -119,18 +82,6 @@
       "console.view",
       "console.write",
       "control.server"
-    ]
-  },
-  {
-    "name": "RyanRandstad",
-    "master": false,
-    "password_hash": "$2a$11$zyjBMnknn.Qt6qKzkyIXkut609Za.lJRjduROhFWKcXiCJf/JluXC",
-    "providers": {},
-    "permissions": [
-      "players.ban",
-      "players.kick",
-      "players.message",
-      "players.warn"
     ]
   }
 ]

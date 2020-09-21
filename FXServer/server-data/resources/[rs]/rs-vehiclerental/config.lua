@@ -31,7 +31,12 @@ Config.DeliveryPoints = {
 Config.RentalVehicles = {
     [1] = {
         ["label"] = "Waterscooter",
+        ["model"] = "dinghy",
+        ["price"] = 500,
+    },
+    [2] = {
+        ["label"] = "Waterboot",
         ["model"] = "seashark",
-        ["price"] = 1000,
+        ["price"] = 500,
     },
 }

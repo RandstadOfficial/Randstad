@@ -1278,11 +1278,7 @@
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="true" />
       <requiredExtras />
-      <rewards>
-        <Item>REWARD_WEAPON_SNIPERRIFLE</Item>
-        <Item>REWARD_AMMO_SNIPERRIFLE</Item>
-        <Item>REWARD_STAT_WEAPON</Item>
-      </rewards>
+      <rewards />
       <cinematicPartCamera>
         <Item>HELI_REAR_ROTOR_CAMERA</Item>
       </cinematicPartCamera>
@@ -1401,11 +1397,7 @@
 		<bumpersNeedToCollideWithMap value="false" />
 		<needsRopeTexture value="false" />
 		<requiredExtras />
-		<rewards>
-			<Item>REWARD_WEAPON_PUMPSHOTGUN</Item>
-			<Item>REWARD_AMMO_PUMPSHOTGUN_ENTER_VEHICLE</Item>
-			<Item>REWARD_STAT_WEAPON</Item>
-		</rewards>
+		<rewards />
 		<cinematicPartCamera>
 			<Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
 			<Item>WHEEL_FRONT_LEFT_CAMERA</Item>
@@ -1525,11 +1517,7 @@
 		<bumpersNeedToCollideWithMap value="false" />
 		<needsRopeTexture value="false" />
 		<requiredExtras />
-		<rewards>
-			<Item>REWARD_WEAPON_PUMPSHOTGUN</Item>
-			<Item>REWARD_AMMO_PUMPSHOTGUN_ENTER_VEHICLE</Item>
-			<Item>REWARD_STAT_WEAPON</Item>
-		</rewards>
+		<rewards />
 		<cinematicPartCamera>
 			<Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
 			<Item>WHEEL_FRONT_LEFT_CAMERA</Item>
@@ -2333,11 +2321,7 @@
 			<bumpersNeedToCollideWithMap value="false" />
 			<needsRopeTexture value="false" />
 			<requiredExtras />
-			<rewards>
-				<Item>REWARD_WEAPON_PUMPSHOTGUN</Item>
-				<Item>REWARD_AMMO_PUMPSHOTGUN_ENTER_VEHICLE</Item>
-				<Item>REWARD_STAT_WEAPON</Item>
-			</rewards>
+			<rewards />
 			<cinematicPartCamera>
 				<Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
 				<Item>WHEEL_FRONT_LEFT_CAMERA</Item>
@@ -2457,11 +2441,7 @@
 			<bumpersNeedToCollideWithMap value="false" />
 			<needsRopeTexture value="false" />
 			<requiredExtras />
-			<rewards>
-				<Item>REWARD_WEAPON_PUMPSHOTGUN</Item>
-				<Item>REWARD_AMMO_PUMPSHOTGUN_ENTER_VEHICLE</Item>
-				<Item>REWARD_STAT_WEAPON</Item>
-			</rewards>
+			<rewards />
 			<cinematicPartCamera>
 				<Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
 				<Item>WHEEL_FRONT_LEFT_CAMERA</Item>
@@ -2581,11 +2561,7 @@
 			<bumpersNeedToCollideWithMap value="false" />
 			<needsRopeTexture value="false" />
 			<requiredExtras />
-			<rewards>
-				<Item>REWARD_WEAPON_PUMPSHOTGUN</Item>
-				<Item>REWARD_AMMO_PUMPSHOTGUN_ENTER_VEHICLE</Item>
-				<Item>REWARD_STAT_WEAPON</Item>
-			</rewards>
+			<rewards />
 			<cinematicPartCamera>
 				<Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
 				<Item>WHEEL_FRONT_LEFT_CAMERA</Item>
@@ -2961,11 +2937,7 @@
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
       <requiredExtras />
-      <rewards>
-        <Item>REWARD_WEAPON_PUMPSHOTGUN</Item>
-        <Item>REWARD_AMMO_PUMPSHOTGUN_ENTER_VEHICLE</Item>
-        <Item>REWARD_STAT_WEAPON</Item>
-      </rewards>
+      <rewards />
       <cinematicPartCamera>
         <Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
         <Item>WHEEL_FRONT_LEFT_CAMERA</Item>
@@ -3091,11 +3063,7 @@
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
       <requiredExtras />
-      <rewards>
-        <Item>REWARD_WEAPON_PUMPSHOTGUN</Item>
-        <Item>REWARD_AMMO_PUMPSHOTGUN_ENTER_VEHICLE</Item>
-        <Item>REWARD_STAT_WEAPON</Item>
-      </rewards>
+      <rewards />
       <cinematicPartCamera>
         <Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
         <Item>WHEEL_FRONT_LEFT_CAMERA</Item>
@@ -3451,11 +3419,7 @@
 			<bumpersNeedToCollideWithMap value="false" />
 			<needsRopeTexture value="false" />
 			<requiredExtras />
-			<rewards>
-				<Item>REWARD_WEAPON_PUMPSHOTGUN</Item>
-				<Item>REWARD_AMMO_PUMPSHOTGUN_ENTER_VEHICLE</Item>
-				<Item>REWARD_STAT_WEAPON</Item>
-			</rewards>
+			<rewards />
 			<cinematicPartCamera>
 				<Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
 				<Item>WHEEL_FRONT_LEFT_CAMERA</Item>
@@ -3575,11 +3539,7 @@
 			<bumpersNeedToCollideWithMap value="false" />
 			<needsRopeTexture value="false" />
 			<requiredExtras />
-			<rewards>
-				<Item>REWARD_WEAPON_PUMPSHOTGUN</Item>
-				<Item>REWARD_AMMO_PUMPSHOTGUN_ENTER_VEHICLE</Item>
-				<Item>REWARD_STAT_WEAPON</Item>
-			</rewards>
+			<rewards />
 			<cinematicPartCamera>
 				<Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
 				<Item>WHEEL_FRONT_LEFT_CAMERA</Item>
@@ -3699,11 +3659,7 @@
 			<bumpersNeedToCollideWithMap value="false" />
 			<needsRopeTexture value="false" />
 			<requiredExtras />
-			<rewards>
-				<Item>REWARD_WEAPON_PUMPSHOTGUN</Item>
-				<Item>REWARD_AMMO_PUMPSHOTGUN_ENTER_VEHICLE</Item>
-				<Item>REWARD_STAT_WEAPON</Item>
-			</rewards>
+			<rewards />
 			<cinematicPartCamera>
 				<Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
 				<Item>WHEEL_FRONT_LEFT_CAMERA</Item>
@@ -3827,11 +3783,7 @@
 		<bumpersNeedToCollideWithMap value="false" />
 		<needsRopeTexture value="false" />
 		<requiredExtras />
-		<rewards>
-			<Item>REWARD_WEAPON_PUMPSHOTGUN</Item>
-			<Item>REWARD_AMMO_PUMPSHOTGUN_ENTER_VEHICLE</Item>
-			<Item>REWARD_STAT_WEAPON</Item>
-		</rewards>
+		<rewards />
 		<cinematicPartCamera>
 			<Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
 			<Item>WHEEL_FRONT_LEFT_CAMERA</Item>

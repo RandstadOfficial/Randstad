@@ -221,8 +221,8 @@ function AddStuff()
 			if Config.JobBusy == true then
 				TriggerServerEvent('RSCore:Server:RemoveItem', "taco-box", 1)
 				TriggerEvent("inventory:client:ItemBox", RSCore.Shared.Items["taco-box"], "remove")
-				Config.JobData['stock-lettuce']= Config.JobData['stock-lettuce'] + math.random(1,7)
-				Config.JobData['stock-meat']= Config.JobData['stock-meat'] + math.random(1,7)
+				Config.JobData['stock-lettuce']= Config.JobData['stock-lettuce'] + math.random(4,8)
+				Config.JobData['stock-meat']= Config.JobData['stock-meat'] + math.random(4,8)
 				RSCore.Functions.Notify("Taco Shop is weer aangevuld!", "success")
 				Config.JobBusy = false
 			else

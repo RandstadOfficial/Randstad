@@ -183,7 +183,7 @@ end
 
 function PlaceExplosive(pos, atmId) --LLG
   Citizen.CreateThread(function()
-    local time = math.random(15000, 20000)
+    local time = math.random(20000, 30000)
     if math.random(1, 20) == 5 then
       time = 1000
     end
@@ -352,7 +352,7 @@ Citizen.CreateThread(function()
 
             if IsDisabledControlJustPressed(0, 140) and atms[atmId].hijackable == 1 and atms[atmId].inUse == 0 and isAlive then
               if atms[atmId].isHijacked == 0 then
-                if CurrentCops >= 3 then
+                if CurrentCops >= 4 then
                   RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
                     if result then 
                       local data = {}
