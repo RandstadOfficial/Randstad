@@ -16,10 +16,10 @@ AddEventHandler('oxydelivery:server', function()
     end
 end)
 
-RegisterServerEvent('oxydelivery:receiveBigRewarditem')
-AddEventHandler('oxydelivery:receiveBigRewarditem', function()
-	RSCore.Functions.BanInjection(source, 'rs-oxyruns (receiveBigRewarditem)')
-end)
+-- RegisterServerEvent('oxydelivery:receiveBigRewarditem')
+-- AddEventHandler('oxydelivery:receiveBigRewarditem', function()
+-- 	RSCore.Functions.BanInjection(source, 'rs-oxyruns (receiveBigRewarditem)')
+-- end)
 
 RegisterServerEvent('oxydelivery:receiveoxy')
 AddEventHandler('oxydelivery:receiveoxy', function()
@@ -31,30 +31,43 @@ AddEventHandler('oxydelivery:receivemoneyyy', function()
 	RSCore.Functions.BanInjection(source, 'rs-oxyruns (receivemoneyyy)')
 end)
 
-RSCore.Functions.CreateCallback('oxydelivery:server:receiveBigRewarditem', function(source, cb)
-    local src = source
-    local Player = RSCore.Functions.GetPlayer(src)
+-- RSCore.Functions.CreateCallback('oxydelivery:server:receiveBigRewarditem', function(source, cb)
+--     local src = source
+--     local Player = RSCore.Functions.GetPlayer(src)
  
-	Player.Functions.AddItem('security_card_03', 1)
-    TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['security_card_03'], "add")
-end)
+-- 	Player.Functions.AddItem('security_card_03', 1)
+--     TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['security_card_03'], "add")
+-- end)
  
 RSCore.Functions.CreateCallback('oxydelivery:server:receiveOxey', function(source, cb)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
+    local PurpleCardOxy = math.random(1, 1000)
  
-    local price = math.random(275, 325)
+    local price = math.random(250, 300)
 	Player.Functions.AddMoney("cash", price, "oxy-money")
-	Player.Functions.AddItem('painkillers', 1)
+
+    Player.Functions.AddItem('painkillers', 1)
     TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['painkillers'], "add")
+
+    if PurpleCardOxy <= 50 then
+        Player.Functions.AddItem('security_card_03', 1)
+        TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['security_card_03'], "add")
+    end
 end)
  
 RSCore.Functions.CreateCallback('oxydelivery:server:receiveMoney', function(source, cb)
     local src = source
     local Player = RSCore.Functions.GetPlayer(src)
- 
+    local PurpleCardMoney = math.random(1, 1000)
+    
     local price = math.random(300, 350)
     Player.Functions.AddMoney("cash", price, "oxy-money")
+
+    if PurpleCardMoney <= 50 then
+        Player.Functions.AddItem('security_card_03', 1)
+        TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['security_card_03'], "add")
+    end
 end)
 
 RegisterServerEvent('rs-oxyruns:server:callCops')

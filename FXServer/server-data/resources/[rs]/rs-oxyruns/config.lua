@@ -17,9 +17,9 @@ Config.MaxiumStrikes = 30 -- 1 strike = 10 sec
 Config.MinimumTime = 9
 Config.MaximumTime = 18
 
-Config.OxyChance = 450 -- Percentage chance of getting oxy on the run. Multiplied by 100. 10% = 100, 20% = 200, 50% = 500, etc. Default 55%.
+Config.OxyChance = 400 -- Percentage chance of getting oxy on the run. Multiplied by 100. 10% = 100, 20% = 200, 50% = 500, etc. Default 55%.
 
-Config.BigRewarditemChance = 5 -- Percentage of getting rare item on oxy run. Multiplied by 100. 0.1% = 1, 1% = 10, 20% = 200, 50% = 500, etc. Default 0.1%.
+--Config.BigRewarditemChance = 100 -- Percentage of getting rare item on oxy run. Multiplied by 100. 0.1% = 1, 1% = 10, 20% = 200, 50% = 500, etc. Default 0.1%.
 
 Config.OxyCars = "CHECK THE CODE" -- Cars
 

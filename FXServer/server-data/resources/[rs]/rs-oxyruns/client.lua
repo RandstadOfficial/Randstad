@@ -251,9 +251,6 @@ function DoDropOff()
 			if OxyChance <= Config.OxyChance then
 				RSCore.Functions.TriggerCallback('oxydelivery:server:receiveOxey', function()
 				end)
-			elseif OxyChance <= Config.BigRewarditemChance then
-				RSCore.Functions.TriggerCallback('oxydelivery:server:receiveBigRewarditem', function()
-				end)
 			else
 				RSCore.Functions.TriggerCallback('oxydelivery:server:receiveMoney', function()
 				end)
