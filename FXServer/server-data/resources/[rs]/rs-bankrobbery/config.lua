@@ -13,7 +13,7 @@ Config = Config or {}
 
 Config.ItemTiers = 1
 
-Config.MinimumPaletoPolice = 5
+Config.MinimumPaletoPolice = 4
 Config.MinimumPacificPolice = 6
 Config.MinimumFleecaPolice = 4
 Config.MinimumThermitePolice = 2
@@ -109,13 +109,13 @@ Config.LockerRewardsPaleto = {
 
 Config.LockerRewardsPacific = {
     ["tier1"] = {
-        [1] = {item = "goldbar", minAmount = 5, maxAmount = 7},
+        [1] = {item = "goldbar", minAmount = 4, maxAmount = 8},
     },
     ["tier2"] = {
-        [1] = {item = "goldbar", minAmount = 5, maxAmount = 8},
+        [1] = {item = "goldbar", minAmount = 4, maxAmount = 8},
     },
     ["tier3"] = {
-        [1] = {item = "goldbar", minAmount = 5, maxAmount = 9},
+        [1] = {item = "goldbar", minAmount = 4, maxAmount = 8},
     },
 }
 

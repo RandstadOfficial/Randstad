@@ -401,7 +401,26 @@ end
 RegisterNetEvent('rs-drugs:client:robberyCall')
 AddEventHandler('rs-drugs:client:robberyCall', function(msg, streetLabel, coords)
     PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
-    TriggerEvent("chatMessage", "112-MELDING", "error", msg)
+	TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+		timeOut = 5000,
+		alertTitle = "Illegaal Drugs Handel",
+		coords = {
+			x = coords.x,
+			y = coords.y,
+			z = coords.z,
+		},
+		details = {
+			[1] = {
+				icon = '<i class="fas fa-cannabis"></i>',
+				detail = "Illegaal Drugs Handel",
+			},
+			[2] = {
+				icon = '<i class="fas fa-globe-europe"></i>',
+				detail = streetLabel,
+			},
+		},
+		callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+	})
     local transG = 250
     local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
     SetBlipSprite(blip, 458)
@@ -410,7 +429,7 @@ AddEventHandler('rs-drugs:client:robberyCall', function(msg, streetLabel, coords
     SetBlipAlpha(blip, transG)
     SetBlipScale(blip, 1.0)
     BeginTextCommandSetBlipName('STRING')
-    AddTextComponentString("112: Drugshandel")
+    AddTextComponentString("Drugshandel")
     EndTextCommandSetBlipName(blip)
     while transG ~= 0 do
         Wait(180 * 4)

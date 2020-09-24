@@ -71,6 +71,7 @@ Config.BlacklistedVehs = {
     [`AIRTUG`] = true,
     [`CAMPER`] = true,  
     [`pranger`] = true,  
+    [`cargobob`] = true,
 }
 
 Config.BlacklistedPeds = {

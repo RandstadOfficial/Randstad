@@ -479,7 +479,7 @@ AddEventHandler('rs-oxyruns:client:robberyCall', function(msg, streetLabel, coor
 		},
 		details = {
 			[1] = {
-				icon = '<i class="fas fa-prescription-bottle"></i>',
+				icon = '<i class="fas fa-pills"></i>',
 				detail = "Illegaal Drugs Handel",
 			},
 			[2] = {
@@ -497,7 +497,7 @@ AddEventHandler('rs-oxyruns:client:robberyCall', function(msg, streetLabel, coor
     SetBlipAlpha(blip, transG)
     SetBlipScale(blip, 1.0)
     BeginTextCommandSetBlipName('STRING')
-    AddTextComponentString("112: Oxyhandel")
+    AddTextComponentString("Oxyhandel")
     EndTextCommandSetBlipName(blip)
     while transG ~= 0 do
         Wait(180 * 4)

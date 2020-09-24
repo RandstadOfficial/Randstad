@@ -1,6 +1,6 @@
 Citizen.CreateThread(function()
 	while true do
-		SetVehicleDensityMultiplierThisFrame(0.45)
+		SetVehicleDensityMultiplierThisFrame(0.65)
 	    SetPedDensityMultiplierThisFrame(1.0)
 	    SetParkedVehicleDensityMultiplierThisFrame(1.0)
 		SetScenarioPedDensityMultiplierThisFrame(0.0, 0.0)

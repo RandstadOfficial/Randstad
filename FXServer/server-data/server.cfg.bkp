@@ -38,7 +38,7 @@ sets Discord "https://discord.gg/2DRbeFy"
 #sets banner_connecting "https://i.imgur.com/2joLbCa.png"
 
 # Set your server's hostname
-sv_hostname "[NL] ^5Randstad RP ^7| ^0Custom Framework ^7| ^5Realistische Economie ^7| ^0Serieuze RP ^7| ^5Whitelisted ^7| ^0NoPixel Based" 
+sv_hostname "[NL] ^5Randstad RP ^7| ^0Custom Framework ^7| ^5Realistische Economie ^7| ^0Serieuze RP ^7| ^5Whitelisted ^7| ^0Uniek Scripts" 
 
 # Nested configs!
 #exec server_internal.cfg
@@ -69,8 +69,6 @@ add_ace group.admin resource.els-plus command.add_ace allow
 add_ace group.admin command allow # allow all commands
 add_principal identifier.steam:1100001062640e8 group.admin # Maestro
 add_principal identifier.steam:11000010dff7a9f group.admin # MaBo
-add_principal identifier.steam:11000011a4f7fef group.admin # Ryan
-add_principal identifier.steam:11000010dc9f9bf group.admin # Jessee
 
 # Hide player endpoints in external log output.
 sv_endpointprivacy true
@@ -83,6 +81,10 @@ set steam_webApiKey "EF704645D62F4348BC592E5F2711EC12"
 
 # enable/disable onesync
 set onesync_enabled 1
+
+set onesync_forceMigration true 
+set onesync_distanceCullVehicles true
+set onesync_workaround763185 true
 
 # max clients
 sv_maxclients 64

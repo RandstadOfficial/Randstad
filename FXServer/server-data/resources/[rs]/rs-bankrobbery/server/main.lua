@@ -186,14 +186,14 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
                 end
             else
                 local info = {
-                    crypto = math.random(1, 3)
+                    crypto = math.random(3, 6)
                 }
                 ply.Functions.AddItem("cryptostick", 1, false, info)
                 TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['cryptostick'], "add")
             end
         else
-            local chance = math.random(1, 10)
-            local odd = math.random(1, 10)
+            local chance = math.random(1, 100)
+            local odd = math.random(1, 100)
             if chance == odd then
                 ply.Functions.AddItem('weapon_microsmg', 1)
                 TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['weapon_microsmg'], "add")

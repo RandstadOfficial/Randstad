@@ -139,134 +139,134 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent('electronickit:UseElectronickit')
-AddEventHandler('electronickit:UseElectronickit', function()
-    local ped = GetPlayerPed(-1)
-    local pos = GetEntityCoords(ped)
-    local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][2]["x"], Config.BigBanks["pacific"]["coords"][2]["y"], Config.BigBanks["pacific"]["coords"][2]["z"])
-    if dist < 1.5 then
-        RSCore.Functions.TriggerCallback('rs-bankrobbery:server:isRobberyActive', function(isBusy)
-            if not isBusy then
-                local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][2]["x"], Config.BigBanks["pacific"]["coords"][2]["y"], Config.BigBanks["pacific"]["coords"][2]["z"])
-                if dist < 1.5 then
-                    if CurrentCops >= Config.MinimumPacificPolice then
-                        if not Config.BigBanks["pacific"]["isOpened"] then 
-                            RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
-                                if result then 
-                                    TriggerEvent('inventory:client:requiredItems', requiredItems, false)
-                                    RSCore.Functions.Progressbar("hack_gate", "Electronic kit aansluiten..", math.random(5000, 10000), false, true, {
-                                        disableMovement = true,
-                                        disableCarMovement = true,
-                                        disableMouse = false,
-                                        disableCombat = true,
-                                    }, {
-                                        animDict = "anim@gangops@facility@servers@",
-                                        anim = "hotwire",
-                                        flags = 16,
-                                    }, {}, {}, function() -- Done
-                                        StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
-                                        TriggerEvent("mhacking:show")
-                                        TriggerEvent("mhacking:start", math.random(5, 9), math.random(10, 15), OnHackPacificDone)
-                                        if not copsCalled then
-                                            local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
-                                            local street1 = GetStreetNameFromHashKey(s1)
-                                            local street2 = GetStreetNameFromHashKey(s2)
-                                            local streetLabel = street1
-                                            if street2 ~= nil then 
-                                                streetLabel = streetLabel .. " " .. street2
-                                            end
-                                            if Config.BigBanks["pacific"]["alarm"] then
-                                                TriggerServerEvent("rs-bankrobbery:server:callCops", "pacific", 0, streetLabel, pos)
-                                                copsCalled = true
-                                            end
-                                        end
-                                    end, function() -- Cancel
-                                        StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
-                                        RSCore.Functions.Notify("Geannuleerd..", "error")
-                                    end)
-                                else
-                                    RSCore.Functions.Notify("Je mist een item..", "error")
-                                end
-                            end, "trojan_usb")
-                        else
-                            RSCore.Functions.Notify("Het lijkt erop dat de bank al open is..", "error")
-                        end
-                    else
-                        RSCore.Functions.Notify("Niet genoeg politie.. (6 nodig)", "error")
-                    end
-                end
-            else
-                RSCore.Functions.Notify("Het beveiligingsslot is actief, het openen van de deur is momenteel niet mogelijk..", "error", 5500)
-            end
-        end)
-    end
-end)
+-- RegisterNetEvent('electronickit:UseElectronickit')
+-- AddEventHandler('electronickit:UseElectronickit', function()
+--     local ped = GetPlayerPed(-1)
+--     local pos = GetEntityCoords(ped)
+--     local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][2]["x"], Config.BigBanks["pacific"]["coords"][2]["y"], Config.BigBanks["pacific"]["coords"][2]["z"])
+--     if dist < 1.5 then
+--         RSCore.Functions.TriggerCallback('rs-bankrobbery:server:isRobberyActive', function(isBusy)
+--             if not isBusy then
+--                 local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][2]["x"], Config.BigBanks["pacific"]["coords"][2]["y"], Config.BigBanks["pacific"]["coords"][2]["z"])
+--                 if dist < 1.5 then
+--                     if CurrentCops >= Config.MinimumPacificPolice then
+--                         if not Config.BigBanks["pacific"]["isOpened"] then 
+--                             RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
+--                                 if result then 
+--                                     TriggerEvent('inventory:client:requiredItems', requiredItems, false)
+--                                     RSCore.Functions.Progressbar("hack_gate", "Electronic kit aansluiten..", math.random(5000, 10000), false, true, {
+--                                         disableMovement = true,
+--                                         disableCarMovement = true,
+--                                         disableMouse = false,
+--                                         disableCombat = true,
+--                                     }, {
+--                                         animDict = "anim@gangops@facility@servers@",
+--                                         anim = "hotwire",
+--                                         flags = 16,
+--                                     }, {}, {}, function() -- Done
+--                                         StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+--                                         TriggerEvent("mhacking:show")
+--                                         TriggerEvent("mhacking:start", math.random(5, 9), math.random(10, 15), OnHackPacificDone)
+--                                         if not copsCalled then
+--                                             local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
+--                                             local street1 = GetStreetNameFromHashKey(s1)
+--                                             local street2 = GetStreetNameFromHashKey(s2)
+--                                             local streetLabel = street1
+--                                             if street2 ~= nil then 
+--                                                 streetLabel = streetLabel .. " " .. street2
+--                                             end
+--                                             if Config.BigBanks["pacific"]["alarm"] then
+--                                                 TriggerServerEvent("rs-bankrobbery:server:callCops", "pacific", 0, streetLabel, pos)
+--                                                 copsCalled = true
+--                                             end
+--                                         end
+--                                     end, function() -- Cancel
+--                                         StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+--                                         RSCore.Functions.Notify("Geannuleerd..", "error")
+--                                     end)
+--                                 else
+--                                     RSCore.Functions.Notify("Je mist een item..", "error")
+--                                 end
+--                             end, "trojan_usb")
+--                         else
+--                             RSCore.Functions.Notify("Het lijkt erop dat de bank al open is..", "error")
+--                         end
+--                     else
+--                         RSCore.Functions.Notify("Niet genoeg politie.. (6 nodig)", "error")
+--                     end
+--                 end
+--             else
+--                 RSCore.Functions.Notify("Het beveiligingsslot is actief, het openen van de deur is momenteel niet mogelijk..", "error", 5500)
+--             end
+--         end)
+--     end
+-- end)
 
-RegisterNetEvent('rs-bankrobbery:UseBankcardB')
-AddEventHandler('rs-bankrobbery:UseBankcardB', function()
-    local ped = GetPlayerPed(-1)
-    local pos = GetEntityCoords(ped)
-    local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][1]["x"], Config.BigBanks["pacific"]["coords"][1]["y"],Config.BigBanks["pacific"]["coords"][1]["z"])
-    if math.random(1, 100) <= 85 and not IsWearingHandshoes() then
-        TriggerServerEvent("evidence:server:CreateFingerDrop", pos)
-    end
-    if dist < 1.5 then
-        RSCore.Functions.TriggerCallback('rs-bankrobbery:server:isRobberyActive', function(isBusy)
-            if not isBusy then
-                if CurrentCops >= Config.MinimumPacificPolice then
-                    if not Config.BigBanks["pacific"]["isOpened"] then 
-                        TriggerEvent('inventory:client:requiredItems', requiredItems2, false)
-                        RSCore.Functions.Progressbar("security_pass", "Pas aan het valideren..", math.random(5000, 10000), false, true, {
-                            disableMovement = true,
-                            disableCarMovement = true,
-                            disableMouse = false,
-                            disableCombat = true,
-                        }, {
-                            animDict = "anim@gangops@facility@servers@",
-                            anim = "hotwire",
-                            flags = 16,
-                        }, {}, {}, function() -- Done
-                            StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
-                            TriggerServerEvent('rs-doorlock:server:updateState', 70, false)
-                            TriggerServerEvent("RSCore:Server:RemoveItem", "security_card_02", 1)
-                            if not copsCalled then
-                                local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
-                                local street1 = GetStreetNameFromHashKey(s1)
-                                local street2 = GetStreetNameFromHashKey(s2)
-                                local streetLabel = street1
-                                if street2 ~= nil then 
-                                    streetLabel = streetLabel .. " " .. street2
-                                end
-                                if Config.BigBanks["pacific"]["alarm"] then
-                                    TriggerServerEvent("rs-bankrobbery:server:callCops", "pacific", 0, streetLabel, pos)
-                                    copsCalled = true
-                                end
-                            end
-                        end, function() -- Cancel
-                            StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
-                            RSCore.Functions.Notify("Geannuleerd..", "error")
-                        end)
-                    else
-                        RSCore.Functions.Notify("Het lijkt erop dat de bank al open is..", "error")
-                    end
-                else
-                    RSCore.Functions.Notify("Niet genoeg politie.. (6 nodig)", "error")
-                end
-            else
-                RSCore.Functions.Notify("Het beveiligingsslot is actief, het openen van de deur is momenteel niet mogelijk..", "error", 5500)
-            end
-        end)
-    end 
-end)
+-- RegisterNetEvent('rs-bankrobbery:UseBankcardB')
+-- AddEventHandler('rs-bankrobbery:UseBankcardB', function()
+--     local ped = GetPlayerPed(-1)
+--     local pos = GetEntityCoords(ped)
+--     local dist = GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["coords"][1]["x"], Config.BigBanks["pacific"]["coords"][1]["y"],Config.BigBanks["pacific"]["coords"][1]["z"])
+--     if math.random(1, 100) <= 85 and not IsWearingHandshoes() then
+--         TriggerServerEvent("evidence:server:CreateFingerDrop", pos)
+--     end
+--     if dist < 1.5 then
+--         RSCore.Functions.TriggerCallback('rs-bankrobbery:server:isRobberyActive', function(isBusy)
+--             if not isBusy then
+--                 if CurrentCops >= Config.MinimumPacificPolice then
+--                     if not Config.BigBanks["pacific"]["isOpened"] then 
+--                         TriggerEvent('inventory:client:requiredItems', requiredItems2, false)
+--                         RSCore.Functions.Progressbar("security_pass", "Pas aan het valideren..", math.random(5000, 10000), false, true, {
+--                             disableMovement = true,
+--                             disableCarMovement = true,
+--                             disableMouse = false,
+--                             disableCombat = true,
+--                         }, {
+--                             animDict = "anim@gangops@facility@servers@",
+--                             anim = "hotwire",
+--                             flags = 16,
+--                         }, {}, {}, function() -- Done
+--                             StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+--                             TriggerServerEvent('rs-doorlock:server:updateState', 70, false)
+--                             TriggerServerEvent("RSCore:Server:RemoveItem", "security_card_02", 1)
+--                             if not copsCalled then
+--                                 local s1, s2 = Citizen.InvokeNative(0x2EB41072B4C1E4C0, pos.x, pos.y, pos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
+--                                 local street1 = GetStreetNameFromHashKey(s1)
+--                                 local street2 = GetStreetNameFromHashKey(s2)
+--                                 local streetLabel = street1
+--                                 if street2 ~= nil then 
+--                                     streetLabel = streetLabel .. " " .. street2
+--                                 end
+--                                 if Config.BigBanks["pacific"]["alarm"] then
+--                                     TriggerServerEvent("rs-bankrobbery:server:callCops", "pacific", 0, streetLabel, pos)
+--                                     copsCalled = true
+--                                 end
+--                             end
+--                         end, function() -- Cancel
+--                             StopAnimTask(GetPlayerPed(-1), "anim@gangops@facility@servers@", "hotwire", 1.0)
+--                             RSCore.Functions.Notify("Geannuleerd..", "error")
+--                         end)
+--                     else
+--                         RSCore.Functions.Notify("Het lijkt erop dat de bank al open is..", "error")
+--                     end
+--                 else
+--                     RSCore.Functions.Notify("Niet genoeg politie.. (6 nodig)", "error")
+--                 end
+--             else
+--                 RSCore.Functions.Notify("Het beveiligingsslot is actief, het openen van de deur is momenteel niet mogelijk..", "error", 5500)
+--             end
+--         end)
+--     end 
+-- end)
 
-function OnHackPacificDone(success, timeremaining)
-    if success then
-        TriggerEvent('mhacking:hide')
-        TriggerServerEvent('rs-bankrobbery:server:setBankState', "pacific", true)
-    else
-		TriggerEvent('mhacking:hide')
-	end
-end
+-- function OnHackPacificDone(success, timeremaining)
+--     if success then
+--         TriggerEvent('mhacking:hide')
+--         TriggerServerEvent('rs-bankrobbery:server:setBankState', "pacific", true)
+--     else
+-- 		TriggerEvent('mhacking:hide')
+-- 	end
+-- end
 
 function OpenPacificDoor()
     local object = GetClosestObjectOfType(Config.BigBanks["pacific"]["coords"][2]["x"], Config.BigBanks["pacific"]["coords"][2]["y"], Config.BigBanks["pacific"]["coords"][2]["z"], 20.0, Config.BigBanks["pacific"]["object"], false, false, false)

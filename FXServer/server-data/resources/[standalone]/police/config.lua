@@ -89,7 +89,7 @@ Config.ArmoryWhitelist = {
     "FVX03149", -- Cees
     "TKL46316", -- Goudenaapje (Dwight)
     "BPK45400", -- Juriaan De Cock
-    "CNL55625", -- Ryan
+    "AXS79774", -- Sergio
 }
 
 Config.Helicopter = "pzulu"
@@ -137,7 +137,6 @@ Config.SecurityCameras = {
 Config.Vehicles = {
     [1] = { -- Aspirant
         ["ptouran"] = "Volkswagen Touran",
-        ["ptouran11"] = "Volkswagen Touran 2011",
         ["pbklasse"] = "Mercedes B-Klasse",
         ["pt5"] = "Volkswagen T5",
         ["pamarok"] = "Volkswagen Amarok",
@@ -145,7 +144,6 @@ Config.Vehicles = {
     },
     [2] = { -- Surveillant
         ["ptouran"] = "Volkswagen Touran",
-        ["ptouran11"] = "Volkswagen Touran 2011",
         ["pbklasse"] = "Mercedes B-Klasse",
         ["pt5"] = "Volkswagen T5",
         ["pt6"] = "Volkswagen T6",
@@ -154,7 +152,6 @@ Config.Vehicles = {
     },
     [3] = { -- Agent
         ["ptouran"] = "Volkswagen Touran",
-        ["ptouran11"] = "Volkswagen Touran 2011",
         ["pbklasse"] = "Mercedes B-Klasse",
         ["pt5"] = "Volkswagen T5",
         ["pt6"] = "Volkswagen T6",
@@ -171,7 +168,6 @@ Config.Vehicles = {
     },
     [4] = { -- Hoofdagent
         ["ptouran"] = "Volkswagen Touran",
-        ["ptouran11"] = "Volkswagen Touran 2011",
         ["pbklasse"] = "Mercedes B-Klasse",
         ["pt5"] = "Volkswagen T5",
         ["pt6"] = "Volkswagen T6",
@@ -190,7 +186,6 @@ Config.Vehicles = {
     },
     [5] = { -- Brigadier
         ["ptouran"] = "Volkswagen Touran",
-        ["ptouran11"] = "Volkswagen Touran 2011",
         ["pbklasse"] = "Mercedes B-Klasse",
         ["pt5"] = "Volkswagen T5",
         ["pt6"] = "Volkswagen T6",
@@ -210,7 +205,6 @@ Config.Vehicles = {
     },
     [6] = { -- Inspecteur
         ["ptouran"] = "Volkswagen Touran",
-        ["ptouran11"] = "Volkswagen Touran 2011",
         ["pbklasse"] = "Mercedes B-Klasse",
         ["pt5"] = "Volkswagen T5",
         ["pt6"] = "Volkswagen T6",
@@ -230,7 +224,6 @@ Config.Vehicles = {
     },
     [7] = { -- Hoofdinspecteur
         ["ptouran"] = "Volkswagen Touran",
-        ["ptouran11"] = "Volkswagen Touran 2011",
         ["pbklasse"] = "Mercedes B-Klasse",
         ["pt5"] = "Volkswagen T5",
         ["pt6"] = "Volkswagen T6",
@@ -251,7 +244,6 @@ Config.Vehicles = {
     },
     [8] = { -- Commissaris
         ["ptouran"] = "Volkswagen Touran",
-        ["ptouran11"] = "Volkswagen Touran 2011",
         ["pbklasse"] = "Mercedes B-Klasse",
         ["pt5"] = "Volkswagen T5",
         ["pt6"] = "Volkswagen T6",
@@ -272,7 +264,6 @@ Config.Vehicles = {
     },
     [9] = { -- Hoofdcommissaris
         ["ptouran"] = "Volkswagen Touran",
-        ["ptouran11"] = "Volkswagen Touran 2011",
         ["pbklasse"] = "Mercedes B-Klasse",
         ["pt5"] = "Volkswagen T5",
         ["pt6"] = "Volkswagen T6",
