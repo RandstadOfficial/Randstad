@@ -50,7 +50,7 @@ RSCore.Functions.CreateCallback('oxydelivery:server:receiveOxey', function(sourc
     Player.Functions.AddItem('painkillers', 1)
     TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['painkillers'], "add")
 
-    if PurpleCardOxy <= 50 then
+    if PurpleCardOxy == 1 then
         Player.Functions.AddItem('security_card_03', 1)
         TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['security_card_03'], "add")
     end
@@ -64,7 +64,7 @@ RSCore.Functions.CreateCallback('oxydelivery:server:receiveMoney', function(sour
     local price = math.random(300, 350)
     Player.Functions.AddMoney("cash", price, "oxy-money")
 
-    if PurpleCardMoney <= 50 then
+    if PurpleCardMoney == 1 then
         Player.Functions.AddItem('security_card_03', 1)
         TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['security_card_03'], "add")
     end

@@ -112,9 +112,9 @@ RSCustom.ShowroomPositions = {
             z = 36.05, 
             h = 80.0,
         },
-        vehicle = "schwarzer2",
+        vehicle = "rmodgt63",
         buying = false,
-    }, 
+    },
     [2] = {
         coords = {
             x = -789.57, 
@@ -133,7 +133,7 @@ RSCustom.ShowroomPositions = {
             z = 36.05, 
             h = 74.5,
         },
-        vehicle = "bmci",
+        vehicle = "urus",
         buying = false,
     }, 
     [4] = {
@@ -143,7 +143,7 @@ RSCustom.ShowroomPositions = {
             z = 36.36, 
             h = 138.5,
         },
-        vehicle = "lwgtr",
+        vehicle = "g65amg",
         buying = false,
     },
 }

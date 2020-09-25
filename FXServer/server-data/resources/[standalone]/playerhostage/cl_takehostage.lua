@@ -38,7 +38,7 @@ end)
 function takeHostage()
 	local closestPlayer = GetClosestPlayer(2)
 	target = GetPlayerServerId(closestPlayer)
-	print(target)
+	--print(target)
 	if closestPlayer ~= nil and closestPlayer ~= -1 then
 		ClearPedSecondaryTask(GetPlayerPed(-1))
 		DetachEntity(GetPlayerPed(-1), true, false)

@@ -70,7 +70,7 @@ AddEventHandler('jobs:client:ToggleNpc', function()
             return
         end
         NpcOn = not NpcOn
-        print(NpcOn)
+        --print(NpcOn)
         if NpcOn then
             local randomLocation = getRandomVehicleLocation()
             CurrentLocation.x = Config.Locations["towspots"][randomLocation].coords.x

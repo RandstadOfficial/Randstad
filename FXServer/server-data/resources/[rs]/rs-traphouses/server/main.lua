@@ -320,7 +320,7 @@ RSCore.Functions.CreateCallback('rs-traphouses:server:RobNpc', function(source, 
 	local src = source
     local Player = RSCore.Functions.GetPlayer(src)
     local Chance = math.random(1, 500)
-    print(Chance)
+    --print(Chance)
     if Chance == 17 then
         local info = {
             label = "Traphouse Pincode: "..Config.TrapHouses[Traphouse].pincode

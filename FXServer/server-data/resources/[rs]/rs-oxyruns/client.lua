@@ -153,7 +153,7 @@ function CreateOxyPed()
 end
 
 function DeleteCreatedPed()
-	print("Deleting Ped?")
+	--print("Deleting Ped?")
 	if DoesEntityExist(deliveryPed) then 
 		SetPedKeepTask(deliveryPed, false)
 		TaskSetBlockingOfNonTemporaryEvents(deliveryPed, false)
@@ -360,7 +360,7 @@ Citizen.CreateThread(function()
 						end
 					end
 				else
-					RSCore.Functions.DrawText3D(Config.Locations["job"].x, Config.Locations["job"].y, Config.Locations["job"].z, "Apotheek is gesloten (08:00 tot 19:00)")
+					RSCore.Functions.DrawText3D(Config.Locations["job"].x, Config.Locations["job"].y, Config.Locations["job"].z, "Apotheek is gesloten (09:00 tot 19:00)")
 				end	
 			end
 		else

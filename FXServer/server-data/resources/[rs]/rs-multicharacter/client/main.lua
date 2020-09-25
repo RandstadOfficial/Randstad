@@ -34,7 +34,7 @@ local choosingCharacter = false
 local cam = nil
 
 function openCharMenu(bool)
-    print(bool)
+    --print(bool)
     SetNuiFocus(bool, bool)
     SendNUIMessage({
         action = "ui",

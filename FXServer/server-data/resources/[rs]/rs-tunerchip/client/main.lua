@@ -296,10 +296,10 @@ RegisterNUICallback('SetStancer', function(data, cb)
     local rOffset = data.rOffset * 100 / 1000
     local rRotation = data.rRotation * 100 / 1000
 
-    print(fOffset)
-    print(fRotation)
-    print(rOffset)
-    print(rRotation)
+    -- print(fOffset)
+    -- print(fRotation)
+    -- print(rOffset)
+    -- print(rRotation)
 
     local ped = GetPlayerPed(-1)
     local veh = GetVehiclePedIsIn(ped)

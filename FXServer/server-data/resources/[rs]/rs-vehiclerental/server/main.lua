@@ -29,7 +29,7 @@ AddEventHandler('rs-vehiclerental:server:SetVehicleRented', function(plate, bool
     end
     TriggerClientEvent('RSCore:Notify', src, 'Je hebt je borg van €'..vehicleData.price..' terug gekregen.', 'success', 3500)
     ply.Functions.AddMoney('cash', vehicleData.price, "vehicle-rentail-bail")
-    print(vehicleData.price)
+    --print(vehicleData.price)
     RentedVehicles[plyCid] = nil
 end)
 
