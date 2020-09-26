@@ -178,3 +178,14 @@ $(document).on('click', '#myhouse-option-keys-back', function(e){
         left: 35+"vw"
     }, AnimationDuration);
 });
+
+$(document).on('click', '.mykeys-key', function(e){
+    e.preventDefault();
+
+    var ClickedHouse = $(this).attr('id');
+    var ClickedHouseData = $("#"+ClickedHouse).data('KeyData');
+
+    $.post('http://rs-phone/SetGPSLocation', JSON.stringify({
+        coords: ClickedHouseData.HouseData.coords.enter
+    }))
+});
