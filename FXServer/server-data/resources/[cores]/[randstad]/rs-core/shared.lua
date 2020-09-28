@@ -2907,7 +2907,7 @@ RSShared.Vehicles = {
 		["image"] = "https://vignette.wikia.nocookie.net/gtawiki/images/0/07/FaggioMod-GTAO-front.png",
 		["trunkspace"] = 100000,
 		["trunkslots"] = 20,
-		["shop"] = "custom",
+		["shop"] = "nfs",
 	},
 	["urus"] = {
 		["name"] = "Urus",
@@ -3710,7 +3710,7 @@ RSShared.VehicleModels = {
 		["image"] = "https://vignette.wikia.nocookie.net/gtawiki/images/4/47/Kamacho-GTAO-front.png",
 		["trunkspace"] = 100000,
 		["trunkslots"] = 30,
-		["shop"] = "custom",
+		["shop"] = "nfs",
 	},
 	[GetHashKey("mustang19")] = {
 		["name"] = 'Mustang GT', 

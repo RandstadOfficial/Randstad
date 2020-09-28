@@ -28,7 +28,7 @@ Config.AttachmentCrafting = {
             },
             type = "item",
             slot = 2,
-            threshold = 50,
+            threshold = 30,
             points = 2,
         },
         [3] = {
@@ -42,7 +42,7 @@ Config.AttachmentCrafting = {
             },
             type = "item",
             slot = 3,
-            threshold = 75,
+            threshold = 60,
             points = 3,
         },
         [4] = {
@@ -56,7 +56,7 @@ Config.AttachmentCrafting = {
             },
             type = "item",
             slot = 4,
-            threshold = 100,
+            threshold = 90,
             points = 4,
         },
         [5] = {

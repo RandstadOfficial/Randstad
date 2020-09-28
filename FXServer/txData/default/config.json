@@ -6,9 +6,9 @@
   "logger": {},
   "monitor": {
     "restarterSchedule": [
-      "06:00",
-      "18:00"
+      "01:00"
     ],
+    "disableChatWarnings": false,
     "heartBeat": {
       "failThreshold": 15,
       "failLimit": 30

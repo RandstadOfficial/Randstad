@@ -44,4 +44,15 @@ RS.Spawns = {
         location = "motel",
         label = "Motels",
     },
+
+    ["depot"] = {
+        coords = {
+            x = 478.23, 
+            y = -1280.96, 
+            z = 29.54, 
+            h = 307.5 
+        }, 
+        location = "depot",
+        label = "Depot",
+    },
 }

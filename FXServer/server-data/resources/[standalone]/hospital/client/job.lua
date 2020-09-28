@@ -297,7 +297,7 @@ end
 RegisterNetEvent('hospital:client:RevivePlayer')
 AddEventHandler('hospital:client:RevivePlayer', function()
     RSCore.Functions.GetPlayerData(function(PlayerData)
-        if PlayerJob.name == "ambulance" then
+        if PlayerJob.name == "ambulance" and onDuty then
             local player, distance = GetClosestPlayer()
             if player ~= -1 and distance < 5.0 then
                 local playerId = GetPlayerServerId(player)
@@ -322,6 +322,8 @@ AddEventHandler('hospital:client:RevivePlayer', function()
                     RSCore.Functions.Notify("Mislukt!", "error")
                 end)
             end
+        else
+            RSCore.Functions.Notify("Je bent niet in dienst!", "error")
         end
     end)
 end)
@@ -359,7 +361,7 @@ end)
 RegisterNetEvent('hospital:client:TreatWounds')
 AddEventHandler('hospital:client:TreatWounds', function()
     RSCore.Functions.GetPlayerData(function(PlayerData)
-        if PlayerJob.name == "ambulance" then
+        if PlayerJob.name == "ambulance" and onDuty then
             local player, distance = GetClosestPlayer()
             if player ~= -1 and distance < 5.0 then
                 local playerId = GetPlayerServerId(player)
@@ -384,6 +386,8 @@ AddEventHandler('hospital:client:TreatWounds', function()
                     RSCore.Functions.Notify("Mislukt!", "error")
                 end)
             end
+        else
+            RSCore.Functions.Notify("Je bent niet in dienst!", "error")
         end
     end)
 end)

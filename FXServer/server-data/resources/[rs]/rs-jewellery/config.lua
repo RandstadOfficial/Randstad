@@ -42,8 +42,11 @@ Config.WhitelistedWeapons = {
     [GetHashKey("weapon_microsmg")] = {
         ["timeOut"] = 30000
     },
-    [GetHashKey("weapon_autoshotgun")] = {
+    [GetHashKey("weapon_minismg")] = {
         ["timeOut"] = 31000
+    },
+    [GetHashKey("weapon_autoshotgun")] = {
+        ["timeOut"] = 32000
     },
 }
 

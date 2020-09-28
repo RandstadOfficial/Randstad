@@ -103,7 +103,7 @@ AddEventHandler('hospital:server:SetDoctor', function()
 	for k, v in pairs(RSCore.Functions.GetPlayers()) do
         local Player = RSCore.Functions.GetPlayer(v)
         if Player ~= nil then 
-            if ((Player.PlayerData.job.gradelabel == "Verpleegkundige" or Player.PlayerData.job.gradelabel == "Doctor" or Player.PlayerData.job.gradelabel == "Hoofd Geneeskunde") and Player.PlayerData.job.onduty) then
+            if ((Player.PlayerData.job.gradelabel == "Hulpverlener" or Player.PlayerData.job.gradelabel == "Verpleegkundige" or Player.PlayerData.job.gradelabel == "Doctor" or Player.PlayerData.job.gradelabel == "Hoofd Geneeskunde") and Player.PlayerData.job.onduty) then
                 amount = amount + 1
             end
         end
@@ -136,7 +136,7 @@ AddEventHandler('hospital:server:SendDoctorAlert', function()
 	for k, v in pairs(RSCore.Functions.GetPlayers()) do
 		local Player = RSCore.Functions.GetPlayer(v)
 		if Player ~= nil then 
-			if ((Player.PlayerData.job.gradelabel == "Verpleegkundige" or Player.PlayerData.job.gradelabel == "Doctor" or Player.PlayerData.job.gradelabel == "Hoofd Geneeskunde") and Player.PlayerData.job.onduty) then
+			if ((Player.PlayerData.job.gradelabel == "Hulpverlener" or Player.PlayerData.job.gradelabel == "Verpleegkundige" or Player.PlayerData.job.gradelabel == "Doctor" or Player.PlayerData.job.gradelabel == "Hoofd Geneeskunde") and Player.PlayerData.job.onduty) then
 				TriggerClientEvent("hospital:client:SendAlert", v, "Er is een dokter nodig bij Pillbox Ziekenhuis")
 			end
 		end
@@ -192,7 +192,7 @@ RSCore.Functions.CreateCallback('hospital:GetDoctors', function(source, cb)
 	for k, v in pairs(RSCore.Functions.GetPlayers()) do
 		local Player = RSCore.Functions.GetPlayer(v)
 		if Player ~= nil then 
-			if ((Player.PlayerData.job.gradelabel == "Verpleegkundige" or Player.PlayerData.job.gradelabel == "Doctor" or Player.PlayerData.job.gradelabel == "Hoofd Geneeskunde") and Player.PlayerData.job.onduty) then
+			if ((Player.PlayerData.job.gradelabel == "Hulpverlener" or Player.PlayerData.job.gradelabel == "Verpleegkundige" or Player.PlayerData.job.gradelabel == "Doctor" or Player.PlayerData.job.gradelabel == "Hoofd Geneeskunde") and Player.PlayerData.job.onduty) then
 				amount = amount + 1
 			end
 		end
