@@ -14,11 +14,11 @@ client_scripts {
 }
 
 files {
-    'weaponsnspistol.meta',
+    -- 'weaponsnspistol.meta',
     'weapons.meta',
-    'weaponvintagepistol.meta',
+    -- 'weaponvintagepistol.meta',
 }
 
-data_file 'WEAPONINFO_FILE_PATCH' 'weaponsnspistol.meta'
+-- data_file 'WEAPONINFO_FILE_PATCH' 'weaponsnspistol.meta'
 data_file 'WEAPONINFO_FILE_PATCH' 'weapons.meta'
-data_file 'WEAPONINFO_FILE_PATCH' 'weaponvintagepistol.meta'
+-- data_file 'WEAPONINFO_FILE_PATCH' 'weaponvintagepistol.meta'

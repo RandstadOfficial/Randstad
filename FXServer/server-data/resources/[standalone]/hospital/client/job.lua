@@ -155,6 +155,50 @@ Citizen.CreateThread(function()
                     end
                 end
             end
+
+            for k, v in pairs(Config.Locations["achterdeur"]) do
+                if (GetDistanceBetweenCoords(pos,v.x,v.y,v.z, true) < 1.5) then
+                    DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Lift naar buiten pakken")
+                    if IsControlJustReleased(0, Keys["E"]) then
+                        DoScreenFadeOut(500)
+                        while not IsScreenFadedOut() do
+                            Citizen.Wait(10)
+                        end
+
+                        currentHospital = k
+
+                        local coords = Config.Locations["buiten"][currentHospital]
+                        SetEntityCoords(PlayerPedId(), coords.x, coords.y, coords.z, 0, 0, 0, false)
+                        SetEntityHeading(PlayerPedId(), coords.h)
+
+                        Citizen.Wait(100)
+
+                        DoScreenFadeIn(1000)
+                    end
+                end
+            end
+
+            for k, v in pairs(Config.Locations["buiten"]) do
+                if (GetDistanceBetweenCoords(pos, v.x, v.y, v.z, true) < 1.5) then
+                    DrawText3D(v.x, v.y, v.z, "~g~E~w~ - Lift naar boven pakken")
+                    if IsControlJustReleased(0, Keys["E"]) then
+                        DoScreenFadeOut(500)
+                        while not IsScreenFadedOut() do
+                            Citizen.Wait(10)
+                        end
+
+                        currentHospital = k
+
+                        local coords = Config.Locations["achterdeur"][currentHospital]
+                        SetEntityCoords(PlayerPedId(), coords.x, coords.y, coords.z, 0, 0, 0, false)
+                        SetEntityHeading(PlayerPedId(), coords.h)
+
+                        Citizen.Wait(100)
+
+                        DoScreenFadeIn(1000)
+                    end
+                end
+            end
         else
             Citizen.Wait(1000)
         end

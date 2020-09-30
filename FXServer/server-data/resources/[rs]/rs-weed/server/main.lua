@@ -70,7 +70,7 @@ Citizen.CreateThread(function()
             TriggerClientEvent('rs-weed:client:refreshPlantStats', -1)
         end)
 
-        Citizen.Wait((60 * 1000) * 19.2)
+        Citizen.Wait((60 * 1000) * 17.2)
     end
 end)
 

@@ -1677,4 +1677,31 @@ RS.Doors = {
 			},
 		}
 	},
+	----------------
+	-- Maze Bank doorId 107 & 108
+	----------------
+	{
+		objName = 'maze_hei_v_ilev_bk_gate_pris',			
+		objCoords  = vector3(-1306.2, -820.3, 17.14),
+		textCoords = vector3(-1306.2, -820.3, 17.14),
+		authorizedJobs = { 'police' },
+		objYaw = 217.0,
+		locking = false,
+		locked = true,
+		pickable = true,
+		distance = 1.5,
+		size = 2
+	},
+	{
+		objName = 'maze_hei_v_ilev_bk_safegate_pris',
+		objCoords  = vector3(-1308.32, -813.96, 17.14),
+		textCoords = vector3(-1308.32, -813.96, 17.14),
+		authorizedJobs = { 'police' },
+		objYaw = 37.0,
+		locking = false,
+		locked = true,
+		pickable = false,
+		distance = 1.5,
+		size = 2
+	},
 }

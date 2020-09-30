@@ -30,12 +30,6 @@ Citizen.CreateThread(function()
     end
 end)
 
-Citizen.CreateThread(function()
-    while true do
-        Wait(5)
-        SetPedSuffersCriticalHits(PlayerPedId(), false)
-    end
-end) 
 
 Citizen.CreateThread(function() 
     while true do
@@ -347,4 +341,36 @@ AddEventHandler("addAttachment", function(component)
     local weapon = GetSelectedPedWeapon(ped)
     local WeaponData = RSCore.Shared.Weapons[weapon]
     GiveWeaponComponentToPed(ped, GetHashKey(WeaponData.name), GetHashKey(component))
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        Wait(3)
+        SetPedSuffersCriticalHits(PlayerPedId(), false)
+    end
+end) 
+
+Citizen.CreateThread(function()
+    while true do
+    	N_0x4757f00bc6323cfe(GetHashKey("WEAPON_HEAVYPISTOL"), 0.46) 
+        Wait(0)
+        N_0x4757f00bc6323cfe(GetHashKey("WEAPON_VINTAGEPISTOL"), 0.43) 
+        Wait(0)
+        N_0x4757f00bc6323cfe(GetHashKey("WEAPON_SNSPISTOL"), 0.40) 
+        Wait(0)
+        N_0x4757f00bc6323cfe(GetHashKey("WEAPON_MACHETE"), 0.25) 
+        Wait(0)
+        N_0x4757f00bc6323cfe(GetHashKey("WEAPON_SWITCHBLADE"), 0.25) 
+        Wait(0)
+        N_0x4757f00bc6323cfe(GetHashKey("WEAPON_KNIFE"), 0.25) 
+        Wait(0)
+        N_0x4757f00bc6323cfe(GetHashKey("WEAPON_BAT"), 0.25) 
+        Wait(0)
+        N_0x4757f00bc6323cfe(GetHashKey("WEAPON_HATCHET"), 0.25) 
+        Wait(0)
+        N_0x4757f00bc6323cfe(GetHashKey("WEAPON_HAMMER"), 0.25) 
+        Wait(0)
+        N_0x4757f00bc6323cfe(GetHashKey("WEAPON_WRENCH"), 0.25) 
+    	Wait(0)
+    end
 end)

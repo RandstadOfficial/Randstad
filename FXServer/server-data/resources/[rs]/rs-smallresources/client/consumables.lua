@@ -27,8 +27,10 @@ AddEventHandler("consumables:client:UseJoint", function()
     if (IsInVehicle()) then
         RSCore.Functions.Notify("Actie niet mogelijk!", "error")
     else
-        RSCore.Functions.Progressbar("smoke_joint", "Joint opsteken..", 2000, false, true, {
-            disableMovement = false,
+        SetCurrentPedWeapon(PlayerPedId(), GetHashKey('WEAPON_UNARMED'), true)
+        Citizen.Wait(1000)
+        RSCore.Functions.Progressbar("smoke_joint", "Joint opsteken..", 3000, false, true, {
+            disableMovement = true,
             disableCarMovement = false,
             disableMouse = false,
             disableCombat = true,

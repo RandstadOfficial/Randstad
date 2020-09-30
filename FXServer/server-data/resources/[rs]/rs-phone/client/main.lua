@@ -89,11 +89,19 @@ end)
 
 RegisterNetEvent('RSCore:Client:OnJobUpdate')
 AddEventHandler('RSCore:Client:OnJobUpdate', function(JobInfo)
+    if JobInfo.name == "police" then
     SendNUIMessage({
         action = "UpdateApplications",
         JobData = JobInfo,
         applications = Config.PhoneApplications
     })
+    elseif PlayerJob.name == "police" and JobInfo.name == "unemployed" then
+        SendNUIMessage({
+            action = "UpdateApplications",
+            JobData = JobInfo,
+            applications = Config.PhoneApplications
+        })
+    end
 
     PlayerJob = JobInfo
 end)
@@ -277,6 +285,8 @@ function LoadPhone()
         if pData.CryptoTransactions ~= nil and next(pData.CryptoTransactions) ~= nil then
             PhoneData.CryptoTransactions = pData.CryptoTransactions
         end
+
+        Citizen.Wait(300)
 
         SendNUIMessage({ 
             action = "LoadPhoneData", 

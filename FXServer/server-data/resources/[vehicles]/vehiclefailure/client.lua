@@ -198,7 +198,7 @@ function RepairVehicleFull(vehicle)
 end
 
 function RepairVehicle(vehicle)
-	if GetVehicleEngineHealth(vehicle) + 150 <= 1000.0 then
+	-- if GetVehicleEngineHealth(vehicle) + 150 <= 1000.0 then
 		if (IsBackEngine(GetEntityModel(vehicle))) then
 			SetVehicleDoorOpen(vehicle, 5, false, false)
 		else
@@ -216,7 +216,9 @@ function RepairVehicle(vehicle)
 		}, {}, {}, function() -- Done
 			StopAnimTask(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 1.0)
 			RSCore.Functions.Notify("Voertuig gemaakt!")
-			SetVehicleEngineHealth(vehicle, 500.0) 
+			local engHealth = GetVehicleEngineHealth(vehicle)
+			SetVehicleEngineHealth(vehicle, (engHealth + 150.0))
+			--SetVehicleEngineHealth(vehicle, 500.0) 
 			SetVehicleTyreFixed(vehicle, 0)
 			SetVehicleTyreFixed(vehicle, 1)
 			SetVehicleTyreFixed(vehicle, 2)
@@ -237,9 +239,9 @@ function RepairVehicle(vehicle)
 				SetVehicleDoorShut(vehicle, 4, false)
 			end
 		end)
-	else
-	RSCore.Functions.Notify("Voertuig kan niet nog meer worden gerepareerd..")
-  end 
+-- 	else
+-- 	RSCore.Functions.Notify("Voertuig kan niet nog meer worden gerepareerd..")
+--   end 
 end
 
 function IsBackEngine(vehModel)

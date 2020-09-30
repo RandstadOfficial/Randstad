@@ -6,7 +6,7 @@
   "logger": {},
   "monitor": {
     "restarterSchedule": [
-      "01:00"
+      "02:00"
     ],
     "disableChatWarnings": false,
     "heartBeat": {

@@ -268,6 +268,7 @@ RSShared.Items = {
 	["taco-box"] 	 			 	 = {["name"] = "taco-box",       			    ["label"] = "Taco Box",	 				["weight"] = 500, 		["type"] = "item", 		["image"] = "taco-box.png", 			["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Box met Taco ingredienten"},
 	["taco-bag"] 	 			 	 = {["name"] = "taco-bag",       			    ["label"] = "Taco Bag",	 				["weight"] = 200, 		["type"] = "item", 		["image"] = "taco-bag.png", 			["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Ga dit bezorgen gap"},
 	["gasbomb"] 					 = {["name"] = "gasbomb", 			  			["label"] = "Gasbom", 					["weight"] = 2000, 		["type"] = "item", 		["image"] = "gasbomb.png", 				["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Afsteken en boem..."},
+	["explosive"] 					 = {["name"] = "explosive", 					["label"] = "Explosief", 				["weight"] = 5000, 		["type"] = "item", 		["image"] = "c4.png", 					["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Een geïmproviseerd explosief van vuurwerk en thermiet"},
 }
 
 -- // HASH WEAPON ITEMS, NEED SOMETIMES TO GET INFO FOR CLIENT

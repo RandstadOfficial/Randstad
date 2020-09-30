@@ -131,6 +131,10 @@ Config.SecurityCameras = {
         [32] = {label = "Vangelico Juwelier CAM#2", x = -627.51, y = -229.51, z = 40.24, r = {x = -35.0, y = 0.0, z = -95.78}, canRotate = true, isOnline = true},
         [33] = {label = "Vangelico Juwelier CAM#3", x = -620.3, y = -224.31, z = 40.23, r = {x = -35.0, y = 0.0, z = 165.78}, canRotate = true, isOnline = true},
         [34] = {label = "Vangelico Juwelier CAM#4", x = -622.57, y = -236.3, z = 40.31, r = {x = -35.0, y = 0.0, z = 5.78}, canRotate = true, isOnline = true},
+        [35] = {label = "Maze Bank CAM#1", x = -1314.26, y = -821.44, z = 20.50, r = {x = -35.0, y = 0.0, z = 260.78}, canRotate = true, isOnline = true},
+        [36] = {label = "Maze Bank CAM#2", x = -1302.19, y = -818.19, z = 20.50, r = {x = -35.0, y = 0.0, z = 155.78}, canRotate = true, isOnline = true},
+        [37] = {label = "Maze Bank CAM#3", x = -1297.42, y = -824.77, z = 20.50, r = {x = -35.0, y = 0.0, z = 90.78}, canRotate = true, isOnline = true},
+        [38] = {label = "Maze Bank CAM#4", x = -1293.91, y = -834.94, z = 19.31, r = {x = -35.0, y = 0.0, z = 5.78}, canRotate = true, isOnline = true},
     },
 }
 

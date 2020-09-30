@@ -83,6 +83,17 @@ end
 end)
 
 Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(0)
+        local playerPed = PlayerPedId()
+        if IsHotwiring then
+            DisableControlAction(0, 75, true)  -- Disable exit vehicle
+            DisableControlAction(27, 75, true) -- Disable exit vehicle
+        end
+    end
+end)
+
+Citizen.CreateThread(function()
     while true do
         Citizen.Wait(7)
         if not IsRobbing and isLoggedIn and RSCore ~= nil then
@@ -396,14 +407,18 @@ function LockpickIgnition(isAdvanced)
                     if IsHotwiring then
                         if SucceededAttempts + 1 >= NeededAttempts then
                             StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
-                            RSCore.Functions.Notify("Lockpicken gelukt!")
-                            HasKey = true
-                            TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle))
-                            IsHotwiring = false
-                            FailedAttemps = 0
-                            SucceededAttempts = 0
-                            NeededAttempts = 0
-                            TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 3))
+                            if GetPedInVehicleSeat(vehicle, -1) == GetPlayerPed(-1) then
+                                RSCore.Functions.Notify("Lockpicken gelukt!")
+                                HasKey = true
+                                TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(vehicle))
+                                IsHotwiring = false
+                                FailedAttemps = 0
+                                SucceededAttempts = 0
+                                NeededAttempts = 0
+                                TriggerServerEvent('rs-hud:Server:GainStress', math.random(1, 3))
+                            else
+                                RSCore.Functions.Notify("Je kan niet lockpicken..", "error")
+                            end
                         else
                             if vehicle ~= nil and vehicle ~= 0 then
                                 TaskPlayAnim(GetPlayerPed(-1), dict, anim, 8.0, 8.0, -1, 16, -1, false, false, false)
@@ -467,6 +482,8 @@ function LockpickIgnition(isAdvanced)
                         SetVehicleEngineOn(vehicle, false, false, true)
                         RSCore.Functions.Notify("Lockpicken mislukt!", "error")
                         IsHotwiring = false
+                        DisableControlAction(0, 75, false)  -- Disable exit vehicle
+                        DisableControlAction(27, 75, false) 
                         FailedAttemps = FailedAttemps + 1
                         local c = math.random(2)
                         local o = math.random(2)
