@@ -3,3 +3,5 @@ FXServer/server-data/cache*
 FXServer/txData/default/data*
 FXServer/txData/default/logs*
 FXServer/start_2430_default.bat
+
+FXServer/server-data/mysql.cfg
