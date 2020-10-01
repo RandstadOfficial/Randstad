@@ -174,13 +174,6 @@ function SpawnMoney(pos) --LLG
   end)
 end
 
--- function StopFire(pos)
---   Citizen.CreateThread(function()
---     Citizen.Wait(math.random(0, 5000))
---     StopFireInRange( pos.x, pos.y, pos.z, 10)
---   end)
--- end
-
 function PlaceExplosive(pos, atmId) --LLG
   Citizen.CreateThread(function()
     local time = math.random(20000, 30000)
@@ -190,8 +183,6 @@ function PlaceExplosive(pos, atmId) --LLG
 
     Citizen.Wait(time)
     AddExplosion(pos.x, pos.y, pos.z, EXPLOSION_GAS_TANK, 1.0, true, false, 1.0)
-    -- StartScriptFire(pos.x, pos.y, pos.z, 5, true)
-    -- StopFire(pos)
     SpawnMoney(pos)
 
     local data = {}
@@ -292,6 +283,40 @@ PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
 end)
 
 Citizen.CreateThread(function()
+  local lastAtm = nil
+  while true do
+    local playerId = GetPlayerServerId(PlayerId())
+    local pos = GetEntityCoords(GetPlayerPed(-1))
+    local Health = GetEntityHealth(GetPlayerPed(-1))
+    local atm = nil
+    local isAlive = true
+    if Health == 0 or Health == 150 then
+      isAlive = false
+    end
+
+    atm = GetAtmFromDB(pos)
+    if atm ~= nil and isAlive then
+      lastAtm = atm
+      if atms[atm].isUsedBy == 0 and atms[atm].isUsedBy ~= playerId then
+        local data = {}
+        data.isUsedBy = playerId
+        TriggerServerEvent('rs-banking:server:UpdateATM', atm, data)
+      end
+    else
+      if lastAtm ~= nil then
+        if atms[lastAtm].isUsedBy ~= 0 then
+          local data = {}
+          data.isUsedBy = 0
+          TriggerServerEvent('rs-banking:server:UpdateATM', lastAtm, data)
+        end
+      end
+    end
+    Citizen.Wait(2000)
+  end
+end)
+
+
+Citizen.CreateThread(function()
   while true do
     Citizen.Wait(3)
 
@@ -357,7 +382,6 @@ Citizen.CreateThread(function()
                     if result then 
                       local data = {}
                       data.inUse = 1
-                      data.isUsedBy = playerId
                       TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
                       RSCore.Functions.Progressbar("", "Gasbom plaatsen...", 15000, false, true, {
                         disableMovement = true,
