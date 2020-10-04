@@ -4,10 +4,10 @@
   <residentAnims />
   <InitDatas>
     <Item>
-      <modelName>rijschoolkuipers</modelName>
-      <txdName>rijschoolkuipers</txdName>
+      <modelName>rijschool</modelName>
+      <txdName>rijschool</txdName>
       <handlingId>rijschool</handlingId>
-      <gameName>rijschoolkuipers</gameName>
+      <gameName>rijschool</gameName>
       <vehicleMakeName>Randstad</vehicleMakeName>
       <expressionDictName>null</expressionDictName>
       <expressionName>null</expressionName>
@@ -334,7 +334,7 @@
   <txdRelationships>
     <Item>
       <parent>vehicles_cav_interior</parent>
-      <child>rijschoolkuipers</child>
+      <child>rijschool</child>
     </Item>
     <Item>
       <parent>vehicles_cav_interior</parent>

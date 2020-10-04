@@ -8,6 +8,7 @@ client_scripts {
     'client/powerstation.lua',
     'client/doors.lua',
     'client/paleto.lua',
+    'client/maze.lua',
     'config.lua',
 }
 

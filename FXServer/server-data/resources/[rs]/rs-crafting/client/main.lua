@@ -159,10 +159,11 @@ function ItemsToItemInfo()
 		[9] = {costs = RSCore.Shared.Items["iron"]["label"] .. ": 60x, " ..RSCore.Shared.Items["glass"]["label"] .. ": 30x."},
 		[10] = {costs = RSCore.Shared.Items["aluminum"]["label"] .. ": 60x, " ..RSCore.Shared.Items["glass"]["label"] .. ": 30x."},	
 		[11] = {costs = RSCore.Shared.Items["iron"]["label"] .. ": 33x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 44x, "..RSCore.Shared.Items["plastic"]["label"] .. ": 55x, "..RSCore.Shared.Items["aluminum"]["label"] .. ": 22x."},
-		[12] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 60x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 70x, " ..RSCore.Shared.Items["copper"]["label"] .. ": 50x, "..RSCore.Shared.Items["aluminumoxide"]["label"] .. ": 2x, "..RSCore.Shared.Items["ironoxide"]["label"] .. ": 2x."},
-		[13] = {costs = RSCore.Shared.Items["iron"]["label"] .. ": 50x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 50x, "..RSCore.Shared.Items["screwdriverset"]["label"] .. ": 3x, "..RSCore.Shared.Items["advancedlockpick"]["label"] .. ": 2x."},
-		[14] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 65x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 56x, "..RSCore.Shared.Items["copper"]["label"] .. ": 35x."},
-		[15] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 68x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 60x, "..RSCore.Shared.Items["copper"]["label"] .. ": 42x."},
+		[12] = {costs = RSCore.Shared.Items["iron"]["label"] .. ": 33x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 44x, "..RSCore.Shared.Items["aluminumoxide"]["label"] .. ": 1x, "..RSCore.Shared.Items["ironoxide"]["label"] .. ": 3x."},
+		[13] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 60x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 70x, " ..RSCore.Shared.Items["copper"]["label"] .. ": 50x, "..RSCore.Shared.Items["aluminumoxide"]["label"] .. ": 2x, "..RSCore.Shared.Items["ironoxide"]["label"] .. ": 2x."},
+		[14] = {costs = RSCore.Shared.Items["iron"]["label"] .. ": 50x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 50x, "..RSCore.Shared.Items["screwdriverset"]["label"] .. ": 3x, "..RSCore.Shared.Items["advancedlockpick"]["label"] .. ": 2x."},
+		[15] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 65x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 56x, "..RSCore.Shared.Items["copper"]["label"] .. ": 35x."},
+		[16] = {costs = RSCore.Shared.Items["metalscrap"]["label"] .. ": 68x, " ..RSCore.Shared.Items["steel"]["label"] .. ": 60x, "..RSCore.Shared.Items["copper"]["label"] .. ": 42x."},
 	}
 
 	local items = {}

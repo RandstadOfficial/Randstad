@@ -282,38 +282,38 @@ PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
     end
 end)
 
-Citizen.CreateThread(function()
-  local lastAtm = nil
-  while true do
-    local playerId = GetPlayerServerId(PlayerId())
-    local pos = GetEntityCoords(GetPlayerPed(-1))
-    local Health = GetEntityHealth(GetPlayerPed(-1))
-    local atm = nil
-    local isAlive = true
-    if Health == 0 or Health == 150 then
-      isAlive = false
-    end
+-- Citizen.CreateThread(function()
+--   local lastAtm = nil
+--   while true do
+--     local playerId = GetPlayerServerId(PlayerId())
+--     local pos = GetEntityCoords(GetPlayerPed(-1))
+--     local Health = GetEntityHealth(GetPlayerPed(-1))
+--     local atm = nil
+--     local isAlive = true
+--     if Health == 0 or Health == 150 then
+--       isAlive = false
+--     end
 
-    atm = GetAtmFromDB(pos)
-    if atm ~= nil and isAlive then
-      lastAtm = atm
-      if atms[atm].isUsedBy == 0 and atms[atm].isUsedBy ~= playerId then
-        local data = {}
-        data.isUsedBy = playerId
-        TriggerServerEvent('rs-banking:server:UpdateATM', atm, data)
-      end
-    else
-      if lastAtm ~= nil then
-        if atms[lastAtm].isUsedBy ~= 0 then
-          local data = {}
-          data.isUsedBy = 0
-          TriggerServerEvent('rs-banking:server:UpdateATM', lastAtm, data)
-        end
-      end
-    end
-    Citizen.Wait(2000)
-  end
-end)
+--     atm = GetAtmFromDB(pos)
+--     if atm ~= nil and isAlive then
+--       lastAtm = atm
+--       if atms[atm].isUsedBy == 0 and atms[atm].isUsedBy ~= playerId then
+--         local data = {}
+--         data.isUsedBy = playerId
+--         TriggerServerEvent('rs-banking:server:UpdateATM', atm, data)
+--       end
+--     else
+--       if lastAtm ~= nil then
+--         if atms[lastAtm].isUsedBy ~= 0 then
+--           local data = {}
+--           data.isUsedBy = 0
+--           TriggerServerEvent('rs-banking:server:UpdateATM', lastAtm, data)
+--         end
+--       end
+--     end
+--     Citizen.Wait(2000)
+--   end
+-- end)
 
 
 Citizen.CreateThread(function()
@@ -377,11 +377,12 @@ Citizen.CreateThread(function()
 
             if IsDisabledControlJustPressed(0, 140) and atms[atmId].hijackable == 1 and atms[atmId].inUse == 0 and isAlive then
               if atms[atmId].isHijacked == 0 then
-                if CurrentCops >= 4 then
+                if CurrentCops >= 2 or true then
                   RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
                     if result then 
                       local data = {}
                       data.inUse = 1
+                      data.isUsedBy = playerId
                       TriggerServerEvent('rs-banking:server:UpdateATM', atmId, data)
                       RSCore.Functions.Progressbar("", "Gasbom plaatsen...", 15000, false, true, {
                         disableMovement = true,

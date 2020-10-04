@@ -41,6 +41,13 @@ AddEventHandler('rs-bankrobbery:server:setBankState', function(bankId, state)
             TriggerEvent('rs-scoreboard:server:SetActivityBusy', "pacific", true)
             TriggerEvent('rs-bankrobbery:server:setTimeout')
         end
+    elseif bankId == "maze" then
+        if not robberyBusy then
+            Config.BigBanks["maze"]["isOpened"] = state
+            TriggerClientEvent('rs-bankrobbery:client:setBankState', -1, bankId, state)
+            TriggerEvent('rs-scoreboard:server:SetActivityBusy', "bankrobbery", true)
+            TriggerEvent('rs-bankrobbery:server:setTimeout')
+        end
     else
         if not robberyBusy then
             Config.SmallBanks[bankId]["isOpened"] = state
@@ -59,6 +66,8 @@ AddEventHandler('rs-bankrobbery:server:setLockerState', function(bankId, lockerI
         Config.BigBanks["paleto"]["lockers"][lockerId][state] = bool
     elseif bankId == "pacific" then
         Config.BigBanks["pacific"]["lockers"][lockerId][state] = bool
+    elseif bankId == "maze" then
+        Config.BigBanks["maze"]["lockers"][lockerId][state] = bool
     else
         Config.SmallBanks[bankId]["lockers"][lockerId][state] = bool
     end
@@ -70,6 +79,39 @@ RegisterServerEvent('rs-bankrobbery:server:recieveItem')
 AddEventHandler('rs-bankrobbery:server:recieveItem', function()
     RSCore.Functions.BanInjection(source, 'rs-bankrobbery (recieveItem)')
 end)
+
+
+RegisterServerEvent('rs-bankrobbery:server:setCabinetState')
+AddEventHandler('rs-bankrobbery:server:setCabinetState', function(bankId, cabinetId, state, bool)
+    if bankId == "maze" then
+        Config.BigBanks["maze"]["cabinets"][cabinetId][state] = bool
+    end
+
+    TriggerClientEvent('rs-bankrobbery:client:setCabinetState', -1, bankId, cabinetId, state, bool)
+end)
+
+RegisterServerEvent('rs-bankrobbery:server:cabinetItem')
+AddEventHandler('rs-bankrobbery:server:cabinetItem', function(type)
+    local src = source
+    local ply = QBCore.Functions.GetPlayer(src)
+
+    if type == "maze" then
+        
+        local tierChance = math.random(1, 100)
+        local tier = 1
+        if tierChance < 25 then tier = 1 elseif tierChance >= 25 and tierChance < 50 then tier = 2 elseif tierChance >= 50 and tierChance < 75 then tier = 3 elseif tierChance >=75 and tierChance <85 then tier = 4 elseif tierChance >=85 and tierChance < 88 then tier = 5 elseif tierChance >= 88 and tierChance < 92 then tier = 6 elseif tierChance >= 92 and tierChance < 95 then tier = 7 else tier = 8 end
+            if tier ~= 8 then
+                local item = Config.CabinetRewards["tier"..tier][math.random(#Config.CabinetRewards["tier"..tier])]
+                local itemAmount = math.random(item.maxAmount)
+
+                ply.Functions.AddItem(item.item, itemAmount)
+                TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.item], "add")
+            else
+                ply.Functions.AddItem('rifle_ammo', 2)
+                TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['rifle_ammo'], "add")
+            end
+        end    
+    end)
 
 RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, cb, type)
     local src = source
@@ -153,6 +195,36 @@ RSCore.Functions.CreateCallback('rs-bankrobbery:recieveItem', function(source, c
             ply.Functions.AddItem('weapon_vintagepistol', 1)
             TriggerClientEvent('inventory:client:ItemBox', src, RSCore.Shared.Items['weapon_vintagepistol'], "add")
         end
+    elseif type == "maze" then
+        local itemType = math.random(#Config.RewardTypes)
+        local tierChance = math.random(1, 100)
+        local WeaponChance = math.random(1, 10)
+        local odd1 = math.random(1, 10)
+        local tier = 1
+        if tierChance < 25 then tier = 1 elseif tierChance >= 25 and tierChance < 70 then tier = 2 elseif tierChance >= 70 and tierChance < 95 then tier = 3 else tier = 4 end
+        if WeaponChance ~= odd1 then
+            if tier ~= 4 then
+                if Config.RewardTypes[itemType].type == "item" then
+                    local item = Config.LockerRewardsMaze["tier"..tier][math.random(#Config.LockerRewardsMaze["tier"..tier])]
+                    local itemAmount = math.random(item.maxAmount)
+
+                    ply.Functions.AddItem(item.item, itemAmount)
+                    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item.item], "add")
+                elseif Config.RewardTypes[itemType].type == "money" then
+                    local info = {
+                        worth = math.random(15000, 20000)
+                    }
+                    ply.Functions.AddItem('markedbills', 1, false, info)
+                    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['markedbills'], "add")
+                end
+            else
+                ply.Functions.AddItem('smg_ammo', 2)
+                TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['smg_ammo'], "add")
+            end
+        else
+            ply.Functions.AddItem('weapon_bat', 1)
+            TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['weapon_bat'], "add")
+        end
     elseif type == "pacific" then
         local itemType = math.random(#Config.RewardTypes)
         local WeaponChance = math.random(1, 100)
@@ -224,6 +296,7 @@ AddEventHandler('rs-bankrobbery:server:setTimeout', function()
                 robberyBusy = false
                 TriggerEvent('rs-scoreboard:server:SetActivityBusy', "bankrobbery", false)
                 TriggerEvent('rs-scoreboard:server:SetActivityBusy', "pacific", false)
+                TriggerEvent('rs-scoreboard:server:SetActivityBusy', "maze", false)
 
                 for k, v in pairs(Config.BigBanks["pacific"]["lockers"]) do
                     Config.BigBanks["pacific"]["lockers"][k]["isBusy"] = false
@@ -235,9 +308,20 @@ AddEventHandler('rs-bankrobbery:server:setTimeout', function()
                     Config.BigBanks["paleto"]["lockers"][k]["isOpened"] = false
                 end
 
+                for k, v in pairs(Config.BigBanks["maze"]["lockers"]) do
+                    Config.BigBanks["maze"]["lockers"][k]["isBusy"] = false
+                    Config.BigBanks["maze"]["lockers"][k]["isOpened"] = false
+                end
+
+                for k, v in pairs(Config.BigBanks["maze"]["cabinets"]) do
+                    Config.BigBanks["maze"]["cabinets"][k]["isBusy"] = false
+                    Config.BigBanks["maze"]["cabinets"][k]["isOpened"] = false
+                end
+
                 TriggerClientEvent('rs-bankrobbery:client:ClearTimeoutDoors', -1)
                 Config.BigBanks["paleto"]["isOpened"] = false
                 Config.BigBanks["pacific"]["isOpened"] = false
+                Config.BigBanks["maze"]["isOpened"] = false
             end)
         end
     end
@@ -274,6 +358,9 @@ AddEventHandler('rs-bankrobbery:server:callCops', function(type, bank, streetLab
         cameraId = Config.BigBanks["paleto"]["camId"]
         bankLabel = "Blaine County Savings"
         msg = "Groot alarm! Poging bankoverval bij "..bankLabel.. " Paleto Bay (CAMERA ID: "..cameraId..")"
+    elseif type == "maze" then
+        bankLabel = "Maze Bank"
+        msg = "Groot alarm! Poging bankoverval bij de "..bankLabel.. "(CAMERA ID: 35/36/37/38)"
     elseif type == "pacific" then
         bankLabel = "Pacific Standard Bank"
         msg = "Groot alarm! Poging bankoverval bij "..bankLabel.. " Alta St (CAMERA ID: 1/2/3)"
@@ -388,6 +475,15 @@ RSCore.Functions.CreateUseableItem("thermite", function(source, item)
     end
 end)
 
+RSCore.Functions.CreateUseableItem("explosive", function(source, item)
+    local Player = RSCore.Functions.GetPlayer(source)
+	if Player.Functions.GetItemByName('lighter') ~= nil then
+        TriggerClientEvent("explosive:UseExplosive", source)
+    else
+        TriggerClientEvent('RSCore:Notify', source, "Je mist iets om het mee te vlammen..", "error")
+    end
+end)
+
 RSCore.Functions.CreateUseableItem("security_card_01", function(source, item)
     local Player = RSCore.Functions.GetPlayer(source)
 	if Player.Functions.GetItemByName('security_card_01') ~= nil then
@@ -400,4 +496,9 @@ RSCore.Functions.CreateUseableItem("security_card_02", function(source, item)
 	if Player.Functions.GetItemByName('security_card_02') ~= nil then
         TriggerClientEvent("rs-bankrobbery:UseBankcardB", source)
     end
+end)
+
+RegisterServerEvent('rs-bankrobbery:maze:server:DoSmokePfx')
+AddEventHandler('rs-bankrobbery:maze:server:DoSmokePfx', function()
+    TriggerClientEvent('rs-bankrobbery:maze:client:DoSmokePfx', -1)
 end)

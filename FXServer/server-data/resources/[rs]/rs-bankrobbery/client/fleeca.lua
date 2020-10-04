@@ -19,6 +19,7 @@ local copsCalled = false
 local PlayerJob = {}
 
 currentThermiteGate = 0
+currentExplosiveGate = 0
 
 CurrentCops = 0
 
@@ -237,19 +238,21 @@ RegisterNetEvent('rs-bankrobbery:client:setBankState')
 AddEventHandler('rs-bankrobbery:client:setBankState', function(bankId, state)
     if bankId == "paleto" then
         Config.BigBanks["paleto"]["isOpened"] = state
-        --TriggerServerEvent('rs-bankrobbery:server:setTimeout')
         if state then
             OpenPaletoDoor()
         end
     elseif bankId == "pacific" then
         Config.BigBanks["pacific"]["isOpened"] = state
-        --TriggerServerEvent('rs-bankrobbery:server:setTimeout')
         if state then
             OpenPacificDoor()
         end
+    elseif bankId == "maze" then
+        Config.BigBanks["maze"]["isOpened"] = state
+        if state then
+            OpenMazeDoor()
+        end
     else
         Config.SmallBanks[bankId]["isOpened"] = state
-        --TriggerServerEvent('rs-bankrobbery:server:setTimeout')
         if state then
             OpenBankDoor(bankId)
         end
@@ -337,6 +340,15 @@ function ResetBankDoors()
         local pacificObject = GetClosestObjectOfType(Config.BigBanks["pacific"]["coords"][2]["x"], Config.BigBanks["pacific"]["coords"][2]["y"], Config.BigBanks["pacific"]["coords"][2]["z"], 20.0, Config.BigBanks["pacific"]["object"], false, false, false)
         SetEntityHeading(pacificObject, Config.BigBanks["pacific"]["heading"].open)
     end
+
+    if not Config.BigBanks["maze"]["isOpened"] then
+        local mazeObject = GetClosestObjectOfType(Config.BigBanks["maze"]["coords"]["x"], Config.BigBanks["maze"]["coords"]["y"], Config.BigBanks["maze"]["coords"]["z"], 20.0, Config.BigBanks["maze"]["object"], false, false, false)
+        SetEntityHeading(mazeObject, Config.BigBanks["maze"]["heading"].closed)
+    else
+        local mazeObject = GetClosestObjectOfType(Config.BigBanks["maze"]["coords"]["x"], Config.BigBanks["maze"]["coords"]["y"], Config.BigBanks["maze"]["coords"]["z"], 20.0, Config.BigBanks["maze"]["object"], false, false, false)
+        SetEntityHeading(mazeObject, Config.BigBanks["maze"]["heading"].open)
+    end
+
 end
 
 function openLocker(bankId, lockerId)
@@ -431,6 +443,49 @@ function openLocker(bankId, lockerId)
                 TriggerServerEvent('rs-bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
             end
         end, "drill")
+    elseif bankId == "maze" then
+        RSCore.Functions.TriggerCallback('rs-radio:server:GetItem', function(hasItem)
+            if hasItem then
+                loadAnimDict("anim@heists@fleeca_bank@drilling")
+                TaskPlayAnim(GetPlayerPed(-1), 'anim@heists@fleeca_bank@drilling', 'drill_straight_idle' , 3.0, 3.0, -1, 1, 0, false, false, false)
+                local pos = GetEntityCoords(GetPlayerPed(-1), true)
+                local DrillObject = CreateObject(GetHashKey("hei_prop_heist_drill"), pos.x, pos.y, pos.z, true, true, true)
+                AttachEntityToEntity(DrillObject, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 57005), 0.14, 0, -0.01, 90.0, -90.0, 180.0, true, true, false, true, 1, true)
+                IsDrilling = true
+                RSCore.Functions.Progressbar("open_locker_drill", "Kluis aan het openbreken..", math.random(40000, 60000), false, true, {
+                    disableMovement = true,
+                    disableCarMovement = true,
+                    disableMouse = false,
+                    disableCombat = true,
+                }, {}, {}, {}, function() -- Done
+                    StopAnimTask(GetPlayerPed(-1), "anim@heists@fleeca_bank@drilling", "drill_straight_idle", 1.0)
+                    DetachEntity(DrillObject, true, true)
+                    DeleteObject(DrillObject)
+                    TriggerServerEvent('rs-bankrobbery:server:setLockerState', bankId, lockerId, 'isOpened', true)
+                    TriggerServerEvent('rs-bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
+                    RSCore.Functions.TriggerCallback('rs-bankrobbery:recieveItem', function()                    
+                    end, 'maze')
+                    RSCore.Functions.Notify("Gelukt!", "success")
+                    IsDrilling = false
+                end, function() -- Cancel
+                    StopAnimTask(GetPlayerPed(-1), "anim@heists@fleeca_bank@drilling", "drill_straight_idle", 1.0)
+                    TriggerServerEvent('rs-bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
+                    DetachEntity(DrillObject, true, true)
+                    DeleteObject(DrillObject)
+                    RSCore.Functions.Notify("Geannuleerd..", "error")
+                    IsDrilling = false
+                end)
+                Citizen.CreateThread(function()
+                    while IsDrilling do
+                        TriggerServerEvent('rs-hud:Server:GainStress', math.random(4, 8))
+                        Citizen.Wait(10000)
+                    end
+                end)
+            else
+                RSCore.Functions.Notify("Lijkt erop dat de kluisslot te sterk is..", "error")
+                TriggerServerEvent('rs-bankrobbery:server:setLockerState', bankId, lockerId, 'isBusy', false)
+            end
+        end, "drill")
     else
         IsDrilling = true
         RSCore.Functions.Progressbar("open_locker", "Kluis aan het openbreken..", math.random(8000, 16000), false, true, {
@@ -464,6 +519,42 @@ function openLocker(bankId, lockerId)
         end)
     end
 end
+function openCabinet(bankId, cabinetId)
+    local pos = GetEntityCoords(GetPlayerPed(-1))
+    if math.random(1, 100) <= 65 and not IsWearingHandshoes() then
+        TriggerServerEvent("evidence:server:CreateFingerDrop", pos)
+    end
+    IsDrilling = true
+    RSCore.Functions.Progressbar("open_locker_drill", "Kastje aan het openbreken..", math.random(10000, 20000), false, true, {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {
+        animDict = "anim@amb@clubhouse@tutorial@bkr_tut_ig3@",
+        anim = "machinic_loop_mechandplayer",
+        flags = 1,
+    }, {}, {}, function() -- Done
+        StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
+        TriggerServerEvent('sy-bankrobbery:server:setCabinetState', bankId, cabinetId, 'isOpened', true)
+        TriggerServerEvent('sy-bankrobbery:server:setCabinetState', bankId, cabinetId, 'isBusy', false)
+        RSCore.Functions.TriggerCallback('rs-bankrobbery:recieveItem', function()                    
+        end, 'maze')
+        RSCore.Functions.Notify("Gelukt!", "success")
+        IsDrilling = false
+    end, function() -- Cancel
+        StopAnimTask(GetPlayerPed(-1), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
+        TriggerServerEvent('sy-bankrobbery:server:setCabinetState', bankId, lockerId, 'isBusy', false)
+        RSCore.Functions.Notify("Geannuleerd..", "error")
+        IsDrilling = false
+    end)
+    Citizen.CreateThread(function()
+        while IsDrilling do
+            TriggerServerEvent('sy-hud:Server:GainStress', math.random(2, 4))
+            Citizen.Wait(10000)
+        end
+    end)
+end
 
 RegisterNetEvent('rs-bankrobbery:client:setLockerState')
 AddEventHandler('rs-bankrobbery:client:setLockerState', function(bankId, lockerId, state, bool)
@@ -471,8 +562,17 @@ AddEventHandler('rs-bankrobbery:client:setLockerState', function(bankId, lockerI
         Config.BigBanks["paleto"]["lockers"][lockerId][state] = bool
     elseif bankId == "pacific" then
         Config.BigBanks["pacific"]["lockers"][lockerId][state] = bool
+    elseif bankId == "maze" then
+        Config.BigBanks["maze"]["lockers"][lockerId][state] = bool
     else
         Config.SmallBanks[bankId]["lockers"][lockerId][state] = bool
+    end
+end)
+
+RegisterNetEvent('sy-bankrobbery:client:setCabinetState')
+AddEventHandler('sy-bankrobbery:client:setCabinetState', function(bankId, cabinetId, state, bool)
+    if bankId == "maze" then
+        Config.BigBanks["maze"]["cabinets"][cabinetId][state] = bool
     end
 end)
 
@@ -581,7 +681,41 @@ AddEventHandler('rs-bankrobbery:client:robberyCall', function(type, key, streetL
                 },
                 callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
             })
+        elseif type == "maze" then
+            bank = "Maze Bank"
+            PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
+            Citizen.Wait(100)
+            PlaySoundFrontend( -1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1 )
+            Citizen.Wait(100)
+            PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
+            Citizen.Wait(100)
+            PlaySoundFrontend( -1, "Beep_Red", "DLC_HEIST_HACKING_SNAKE_SOUNDS", 1 )
+            TriggerEvent('rs-policealerts:client:AddPoliceAlert', {
+                timeOut = 10000,
+                alertTitle = "Poging bankoverval",
+                coords = {
+                    x = coords.x,
+                    y = coords.y,
+                    z = coords.z,
+                },
+                details = {
+                    [1] = {
+                        icon = '<i class="fas fa-university"></i>',
+                        detail = bank,
+                    },
+                    [2] = {
+                        icon = '<i class="fas fa-video"></i>',
+                        detail = "35 | 36 | 37 | 38",
+                    },
+                    [3] = {
+                        icon = '<i class="fas fa-globe-europe"></i>',
+                        detail = "Bay City Ave",
+                    },
+                },
+                callSign = RSCore.Functions.GetPlayerData().metadata["callsign"],
+            })
         end
+
         local transG = 250
         local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
         SetBlipSprite(blip, 487)
@@ -633,6 +767,7 @@ AddEventHandler('rs-bankrobbery:client:executeEvents', function()
     TriggerServerEvent('rs-bankrobbery:server:recieveItem', 'paleto')
     TriggerServerEvent('rs-bankrobbery:server:recieveItem', 'pacific')
     TriggerServerEvent('rs-bankrobbery:server:recieveItem', 'small')
+    TriggerServerEvent('rs-bankrobbery:server:recieveItem', 'maze')
 end)
 
 function searchPockets()

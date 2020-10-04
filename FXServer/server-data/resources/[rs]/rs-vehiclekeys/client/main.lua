@@ -482,8 +482,8 @@ function LockpickIgnition(isAdvanced)
                         SetVehicleEngineOn(vehicle, false, false, true)
                         RSCore.Functions.Notify("Lockpicken mislukt!", "error")
                         IsHotwiring = false
-                        DisableControlAction(0, 75, false)  -- Disable exit vehicle
-                        DisableControlAction(27, 75, false) 
+                        DisableControlAction(0, 75, false)  -- Enable exit vehicle
+                        DisableControlAction(27, 75, false) -- Enable exit vehicle
                         FailedAttemps = FailedAttemps + 1
                         local c = math.random(2)
                         local o = math.random(2)

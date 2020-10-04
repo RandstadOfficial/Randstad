@@ -91,6 +91,37 @@ AddEventHandler("thermite:StopFires", function()
     end
 end)
 
+RegisterNetEvent('explosive:UseExplosive')
+AddEventHandler('explosive:UseExplosive', function()
+    local ped = GetPlayerPed(-1)
+    local pos = GetEntityCoords(ped)
+    if currentExplosiveGate ~= 0 then
+        if math.random(1, 100) <= 85 and not IsWearingHandshoes() then
+            TriggerServerEvent("evidence:server:CreateFingerDrop", pos)
+        end
+        if CurrentCops >= Config.MinimumThermitePolice then
+            currentGate = currentExplosiveGate
+           -- loadAnimDict("missfbi_s4mop")
+           -- TaskPlayAnim(GetPlayerPed(-1), "missfbi_s4mop", "plant_bomb_b", 3.0, 3.9, -1, 49, 0, 0, 0, 0)
+            GiveWeaponToPed(ped, GetHashKey("weapon_stickybomb"), 1, false, true)
+            Citizen.Wait(1000)
+            TaskPlantBomb(ped, pos.x, pos.y, pos.z, 218.5)
+            TriggerEvent('inventory:client:requiredItems', requiredItems, false)
+            Citizen.Wait(2700)
+            SetNuiFocus(true, true)
+            SendNUIMessage({
+                action = "openThermite",
+                amount = math.random(5, 10),
+            })
+            TriggerServerEvent('rs-doorlock:server:updateState', 116, false)
+        else
+            RSCore.Functions.Notify("Niet genoeg politie.. (2 nodig)", "error")
+        end
+    end
+end)
+
+
+
 RegisterNetEvent('thermite:UseThermite')
 AddEventHandler('thermite:UseThermite', function()
     local ped = GetPlayerPed(-1)
@@ -148,40 +179,167 @@ RegisterNUICallback('thermiteclick', function()
     PlaySound(-1, "CLICK_BACK", "WEB_NAVIGATION_SOUNDS_PHONE", 0, 0, 1)
 end)
 
+local SmokeAlpha = 1.0
+local SmokePfx = nil
+
 RegisterNUICallback('thermitefailed', function()
-    PlaySound(-1, "Place_Prop_Fail", "DLC_Dmod_Prop_Editor_Sounds", 0, 0, 1)
-    TriggerServerEvent("RSCore:Server:RemoveItem", "thermite", 1)
-    TriggerEvent('inventory:client:ItemBox', RSCore.Shared.Items["thermite"], "remove")
-    ClearPedTasks(GetPlayerPed(-1))
-    local coords = GetEntityCoords(GetPlayerPed(-1))
-    local randTime = math.random(10000, 15000)
-    CreateFire(coords, randTime)
+    local InRangePacific = false
+    local InRangeMaze = false
+    SmokeAlpha = 1.0
+    if currentGate == currentThermiteGate then
+        PlaySound(-1, "Place_Prop_Fail", "DLC_Dmod_Prop_Editor_Sounds", 0, 0, 1)
+        TriggerServerEvent("RSCore:Server:RemoveItem", "thermite", 1)
+        TriggerEvent('inventory:client:ItemBox', RSCore.Shared.Items["thermite"], "remove")
+        ClearPedTasks(GetPlayerPed(-1))
+        local coords = GetEntityCoords(GetPlayerPed(-1))
+        local randTime = math.random(10000, 15000)
+        CreateFire(coords, randTime)
+    elseif currentGate == currentExplosiveGate then
+        local ped = GetPlayerPed(-1)
+        local pos = GetEntityCoords(ped)
+        if GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["thermite"][1]["x"], Config.BigBanks["pacific"]["thermite"][1]["y"], Config.BigBanks["pacific"]["thermite"][1]["z"], true) < 5.0 then
+            PlaySound(-1, "Place_Prop_Fail", "DLC_Dmod_Prop_Editor_Sounds", 0, 0, 1)
+            TriggerServerEvent("RSCore:Server:RemoveItem", "explosive", 1)
+            TriggerEvent('inventory:client:ItemBox', RSCore.Shared.Items["explosive"], "remove")
+            ClearPedTasks(GetPlayerPed(-1))
+            local coords = GetEntityCoords(GetPlayerPed(-1))
+            local randTime = math.random(10000, 15000)
+            ClearAreaOfProjectiles(Config.BigBanks["pacific"]["thermite"][1]["x"], Config.BigBanks["pacific"]["thermite"][1]["y"], Config.BigBanks["pacific"]["thermite"][1]["z"], 5.0, false)
+            loadParticleDict("des_vaultdoor")
+            UseParticleFxAssetNextCall("des_vaultdoor")
+            StartParticleFxLoopedOnEntity("ent_ray_pro1_residual_smoke", GetClosestObjectOfType(Config.BigBanks["pacific"]["thermite"][1]["x"], Config.BigBanks["pacific"]["thermite"][1]["y"], Config.BigBanks["pacific"]["thermite"][1]["z"], 2.0, GetHashKey('hei_v_ilev_bk_safegate_pris'), false, false, false), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, false, false, false)
+            Citizen.Wait(30000)
+            RemoveParticleFxFromEntity(GetClosestObjectOfType(Config.BigBanks["pacific"]["thermite"][1]["x"], Config.BigBanks["pacific"]["thermite"][1]["y"], Config.BigBanks["pacific"]["thermite"][1]["z"], 2.0, GetHashKey('hei_v_ilev_bk_safegate_pris'), false, false, false))
+        elseif GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["thermite"][2]["x"], Config.BigBanks["pacific"]["thermite"][2]["y"], Config.BigBanks["pacific"]["thermite"][2]["z"], true) < 5.0 then
+            PlaySound(-1, "Place_Prop_Fail", "DLC_Dmod_Prop_Editor_Sounds", 0, 0, 1)
+            TriggerServerEvent("RSCore:Server:RemoveItem", "explosive", 1)
+            TriggerEvent('inventory:client:ItemBox', RSCore.Shared.Items["explosive"], "remove")
+            ClearPedTasks(GetPlayerPed(-1))
+            local coords = GetEntityCoords(GetPlayerPed(-1))
+            local randTime = math.random(10000, 15000)
+            ClearAreaOfProjectiles(Config.BigBanks["pacific"]["thermite"][2]["x"], Config.BigBanks["pacific"]["thermite"][2]["y"], Config.BigBanks["pacific"]["thermite"][2]["z"], 5.0, false)
+            loadParticleDict("des_vaultdoor")
+            UseParticleFxAssetNextCall("des_vaultdoor")
+            StartParticleFxLoopedOnEntity("ent_ray_pro1_residual_smoke", GetClosestObjectOfType(Config.BigBanks["pacific"]["thermite"][2]["x"], Config.BigBanks["pacific"]["thermite"][2]["y"], Config.BigBanks["pacific"]["thermite"][2]["z"], 2.0, GetHashKey('hei_v_ilev_bk_safegate_pris'), false, false, false), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, false, false, false)
+            Citizen.Wait(30000)
+            RemoveParticleFxFromEntity(GetClosestObjectOfType(Config.BigBanks["pacific"]["thermite"][2]["x"], Config.BigBanks["pacific"]["thermite"][2]["y"], Config.BigBanks["pacific"]["thermite"][2]["z"], 2.0, GetHashKey('hei_v_ilev_bk_safegate_pris'), false, false, false))
+        elseif GetDistanceBetweenCoords(pos, Config.BigBanks["maze"]["explosive"]["x"], Config.BigBanks["maze"]["explosive"]["y"], Config.BigBanks["maze"]["explosive"]["z"], true) < 5.0 then    
+            PlaySound(-1, "Place_Prop_Fail", "DLC_Dmod_Prop_Editor_Sounds", 0, 0, 1)
+            TriggerServerEvent("RSCore:Server:RemoveItem", "explosive", 1)
+            TriggerEvent('inventory:client:ItemBox', RSCore.Shared.Items["explosive"], "remove")
+            ClearPedTasks(GetPlayerPed(-1))
+            local coords = GetEntityCoords(GetPlayerPed(-1))
+            local randTime = math.random(10000, 15000)
+            ClearAreaOfProjectiles(Config.BigBanks["maze"]["explosive"]["x"], Config.BigBanks["maze"]["explosive"]["y"], Config.BigBanks["maze"]["explosive"]["z"], 5.0, false)
+            TriggerServerEvent('sy-bankrobbery:maze:server:DoSmokePfx')
+        end
+    end
+end)
+
+RegisterNetEvent('rs-bankrobbery:maze:client:DoSmokePfx')
+AddEventHandler('rs-bankrobbery:maze:client:DoSmokePfx', function()
+    if SmokePfx == nil then
+        loadParticleDict("des_vaultdoor")
+        UseParticleFxAssetNextCall("des_vaultdoor")
+        SmokePfx = StartParticleFxLoopedOnEntity("ent_ray_pro1_residual_smoke", GetClosestObjectOfType(Config.BigBanks["maze"]["explosive"]["x"], Config.BigBanks["maze"]["explosive"]["y"], Config.BigBanks["maze"]["explosive"]["z"], 2.0, GetHashKey('maze_hei_v_ilev_bk_safegate_pris'), false, false, false), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, false, false, false)
+        SetTimeout(30000, function()
+            for i = 1, 1000, 1 do
+                SetParticleFxLoopedAlpha(SmokePfx, SmokeAlpha)
+                SmokeAlpha = SmokeAlpha - 0.005
+
+                if SmokeAlpha - 0.005 < 0 then
+                    RemoveParticleFx(SmokePfx, 0)
+                    RemoveParticleFxFromEntity(GetClosestObjectOfType(Config.BigBanks["maze"]["explosive"]["x"], Config.BigBanks["maze"]["explosive"]["y"], Config.BigBanks["maze"]["explosive"]["z"], 2.0, GetHashKey('maze_hei_v_ilev_bk_safegate_pris'), false, false, false))
+                    SmokeAlpha = 1.0
+                    SmokePfx = nil
+                    break
+                end
+                Wait(25)
+            end
+        end)
+    end
 end)
 
 RegisterNUICallback('thermitesuccess', function()
-    ClearPedTasks(GetPlayerPed(-1))
-    local time = 3
-    local coords = GetEntityCoords(GetPlayerPed(-1))
-    while time > 0 do 
-        RSCore.Functions.Notify("Branden over " .. time .. "..")
-        Citizen.Wait(1000)
-        time = time - 1
-    end
-    local randTime = math.random(10000, 15000)
-    CreateFire(coords, randTime)
-    if currentStation ~= 0 then
-        RSCore.Functions.Notify("De zekeringen zijn kapot", "success")
-        TriggerServerEvent("rs-bankrobbery:server:SetStationStatus", currentStation, true)
-    elseif currentGate ~= 0 then
-        RSCore.Functions.Notify("De deur is open gebrand", "success")
-        TriggerServerEvent('rs-doorlock:server:updateState', currentGate, false)
-        currentGate = 0
+    local ped = GetPlayerPed(-1)
+    local pos = GetEntityCoords(ped)
+    if currentGate == currentThermiteGate then
+        ClearPedTasks(GetPlayerPed(-1))
+        local time = 3
+        local coords = GetEntityCoords(GetPlayerPed(-1))
+        while time > 0 do 
+            RSCore.Functions.Notify("Branden over " .. time .. "..")
+            Citizen.Wait(1000)
+            time = time - 1
+        end
+        local randTime = math.random(10000, 15000)
+        CreateFire(coords, randTime)
+        if currentStation ~= 0 then
+            RSCore.Functions.Notify("De zekeringen zijn kapot", "success")
+            TriggerServerEvent("sy-bankrobbery:server:SetStationStatus", currentStation, true)
+        elseif currentGate ~= 0 then
+            RSCore.Functions.Notify("De deur is open gebrand", "success")
+            TriggerServerEvent('sy-doorlock:server:updateState', currentGate, false)
+            currentGate = 0
+        end
+    elseif currentGate == currentExplosiveGate then
+        if GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["thermite"][1]["x"], Config.BigBanks["pacific"]["thermite"][1]["y"], Config.BigBanks["pacific"]["thermite"][1]["z"], true) < 5.0 then
+            ClearPedTasks(GetPlayerPed(-1))
+            local time = 5
+            local coords = GetEntityCoords(GetPlayerPed(-1))
+            while time > 0 do 
+                RSCore.Functions.Notify("Ontploffing over " .. time .. "..")
+                Citizen.Wait(1000)
+                time = time - 1
+            end
+            local randTime = math.random(10000, 15000)
+            AddExplosion(Config.BigBanks["pacific"]["thermite"][1]["x"], Config.BigBanks["pacific"]["thermite"][1]["y"], Config.BigBanks["pacific"]["thermite"][1]["z"], EXPLOSION_STICKYBOMB, 4.0, true, false, 20.0)
+            if currentGate ~= 0 then
+                RSCore.Functions.Notify("De deur is open geknald", "success")
+                TriggerServerEvent('sy-doorlock:server:updateState', currentGate, false)
+                currentGate = 0
+            end 
+        elseif GetDistanceBetweenCoords(pos, Config.BigBanks["pacific"]["thermite"][2]["x"], Config.BigBanks["pacific"]["thermite"][2]["y"], Config.BigBanks["pacific"]["thermite"][2]["z"], true) < 5.0 then
+            ClearPedTasks(GetPlayerPed(-1))
+            local time = 5
+            local coords = GetEntityCoords(GetPlayerPed(-1))
+            while time > 0 do 
+                RSCore.Functions.Notify("Ontploffing over " .. time .. "..")
+                Citizen.Wait(1000)
+                time = time - 1
+            end
+            local randTime = math.random(10000, 15000)
+            AddExplosion(Config.BigBanks["pacific"]["thermite"][2]["x"], Config.BigBanks["pacific"]["thermite"][2]["y"], Config.BigBanks["pacific"]["thermite"][2]["z"], EXPLOSION_STICKYBOMB, 4.0, true, false, 20.0)
+            if currentGate ~= 0 then
+                RSCore.Functions.Notify("De deur is open geknald", "success")
+                TriggerServerEvent('sy-doorlock:server:updateState', currentGate, false)
+                currentGate = 0
+            end
+        else    
+            ClearPedTasks(GetPlayerPed(-1))
+            local time = 5
+            local coords = GetEntityCoords(GetPlayerPed(-1))
+            while time > 0 do 
+                RSCore.Functions.Notify("Ontploffing over " .. time .. "..")
+                Citizen.Wait(1000)
+                time = time - 1
+            end
+            local randTime = math.random(10000, 15000)
+            AddExplosion(Config.BigBanks["maze"]["explosive"]["x"], Config.BigBanks["maze"]["explosive"]["y"], Config.BigBanks["maze"]["explosive"]["z"], EXPLOSION_STICKYBOMB, 4.0, true, false, 20.0)
+            if currentGate ~= 0 then
+                RSCore.Functions.Notify("De deur is open geknald", "success")
+                TriggerServerEvent('sy-doorlock:server:updateState', currentGate, false)
+                currentGate = 0
+            end
+        end
     end
 end)
+
 
 RegisterNUICallback('closethermite', function()
     SetNuiFocus(false, false)
 end)
+
 
 function CreateFire(coords, time)
     for i = 1, math.random(1, 7), 1 do
@@ -190,3 +348,19 @@ function CreateFire(coords, time)
     Citizen.Wait(time)
     TriggerServerEvent("thermite:StopFires")
 end
+
+function loadParticleDict(ParticleDict)
+    -- Request the particle dictionary.
+    RequestNamedPtfxAsset("des_vaultdoor")
+    -- Wait for the particle dictionary to load.
+    while not HasNamedPtfxAssetLoaded("des_vaultdoor") do
+        Citizen.Wait(0)
+    end
+end
+
+function loadAnimDict( dict )
+    while ( not HasAnimDictLoaded( dict ) ) do
+        RequestAnimDict( dict )
+        Citizen.Wait( 5 )
+    end
+end 

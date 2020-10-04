@@ -17,6 +17,7 @@ Config.MinimumPaletoPolice = 4
 Config.MinimumPacificPolice = 6
 Config.MinimumFleecaPolice = 4
 Config.MinimumThermitePolice = 2
+Config.MinimumMazePolice = 4
 
 Config.RewardTypes = {
     [1] = {
@@ -116,6 +117,42 @@ Config.LockerRewardsPacific = {
     },
     ["tier3"] = {
         [1] = {item = "goldbar", minAmount = 4, maxAmount = 8},
+    },
+}
+
+Config.LockerRewardsMaze = {
+    ["tier1"] = {
+        [1] = {item = "goldchain", minAmount = 7, maxAmount = 15},
+    },
+    ["tier2"] = {
+        [1] = {item = "rolex", minAmount = 7, maxAmount = 15},
+    },
+    ["tier3"] = {
+        [1] = {item = "goldbar", minAmount = 3, maxAmount = 6},
+    },
+}
+
+Config.CabinetRewards = {
+    ["tier1"] = {
+        [1] = {item = "painkillers", maxAmount = 1},
+    },
+    ["tier2"] = {
+        [1] = {item = "phone", maxAmount = 1},
+    },
+    ["tier3"] = {
+        [1] = {item = "bandage", maxAmount = 1},
+    },
+    ["tier4"] = {
+        [1] = {item = "security_card_01", maxAmount = 1},
+    },
+    ["tier5"] = {
+        [1] = {item = "cryptostick", maxAmount = 1},
+    },
+    ["tier6"] = {
+        [1] = {item = "cokebaggy", maxAmount = 1},
+    },
+    ["tier7"] = {
+        [1] = {item = "security_card_02", maxAmount = 1},
     },
 }
 
@@ -682,6 +719,131 @@ Config.BigBanks = {
                 x = 262.21, 
                 y = 212.67, 
                 z = 101.68,
+                ["isBusy"] = false,
+                ["isOpened"] = false,
+            },
+        },
+    },
+    ["maze"] = {
+        ["label"] = "Maze Bank",
+        ["coords"] = {
+            ["x"] = -1303.45,
+            ["y"] = -816.64,
+            ["z"] = 17.14,
+        },
+        ["alarm"] = true,
+        ["object"] = GetHashKey("maze_v_ilev_bk_vaultdoor"),
+        ["heading"] = {
+            closed = 37.0,
+            open = 230.0,
+        },
+        ["explosive"] = {
+                ["x"] = -1308.32,
+                ["y"] = -813.96,
+                ["z"] = 17.14,
+                ["isOpened"] = false,
+                ["doorId"] = 116,
+        },
+        ["camId"] = 35,
+        ["isOpened"] = false,
+        ["lockers"] = {
+            [1] = {
+                x = -1310.31, 
+                y = -813.69, 
+                z = 17.14,
+                ["isBusy"] = false,
+                ["isOpened"] = false,
+            },
+            [2] = {
+                x = -1311.13,
+                y = -812.59, 
+                z = 17.14,
+                ["isBusy"] = false,
+                ["isOpened"] = false,
+            },
+            [3] = {
+                x = -1311.43, 
+                y = -811.23, 
+                z = 17.14,
+                ["isBusy"] = false,
+                ["isOpened"] = false,
+            },
+            [4] = {
+                x = -1310.4, 
+                y = -810.48, 
+                z = 17.14,
+                ["isBusy"] = false,
+                ["isOpened"] = false,
+            },
+            [5] = {
+                x = -1309.35, 
+                y = -809.69, 
+                z = 17.14,
+                ["isBusy"] = false,
+                ["isOpened"] = false,
+            },
+            [6] = {
+                x = -1307.27, 
+                y = -811.43, 
+                z = 17.14,
+                ["isBusy"] = false,
+                ["isOpened"] = false,
+            },
+            [7] = {
+                x = -1308.15, 
+                y = -810.3, 
+                z = 17.14,
+                ["isBusy"] = false,
+                ["isOpened"] = false,
+            },
+        },
+        ["cabinets"] = {
+            [1] = {
+                x = -1294.61, 
+                y = -825.55, 
+                z = 17.14,
+                ["isBusy"] = false,
+                ["isOpened"] = false,
+            },
+            [2] = {
+                x = -1291.45, 
+                y = -825.43, 
+                z = 17.14,
+                ["isBusy"] = false,
+                ["isOpened"] = false,
+            },
+            [3] = {
+                x = -1301.02, 
+                y = -830.36, 
+                z = 17.14,
+                ["isBusy"] = false,
+                ["isOpened"] = false,
+            },
+            [4] = {
+                x = -1311.25, 
+                y = -819.85, 
+                z = 17.14,
+                ["isBusy"] = false,
+                ["isOpened"] = false,
+            },
+            [5] = {
+                x = -1313.11, 
+                y = -822.32, 
+                z = 17.14,
+                ["isBusy"] = false,
+                ["isOpened"] = false,
+            },
+            [6] = {
+                x = -1302.08, 
+                y = -831.06, 
+                z = 17.14,
+                ["isBusy"] = false,
+                ["isOpened"] = false,
+            },
+            [7] = {
+                x = -1293.62, 
+                y = -824.81, 
+                z = 17.14,
                 ["isBusy"] = false,
                 ["isOpened"] = false,
             },

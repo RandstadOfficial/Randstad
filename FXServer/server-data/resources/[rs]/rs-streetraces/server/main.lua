@@ -53,20 +53,20 @@ AddEventHandler('rs-streetraces:JoinRace', function(RaceId)
     end
 end)
 
-RSCore.Commands.Add("race", "Een straatrace starten.", {{name="bedrag", help="Het inlegbedrag voor de race."}}, true, function(source, args)
-    local src = source
-    local xPlayer = RSCore.Functions.GetPlayer(src)
-    local amount = tonumber(args[1])
-    if GetJoinedRace(GetPlayerIdentifiers(src)[1]) == 0 then
-        if xPlayer.PlayerData.money.cash >= amount then
-            TriggerClientEvent('rs-streetraces:CreateRace', src, amount)
-        else
-            TriggerClientEvent('RSCore:Notify', src, "Je hebt niet genoeg cash op zak!", 'error')
-        end
-    else
-        TriggerClientEvent('RSCore:Notify', src, "Je zit al in een race!", 'error')
-    end
-end)
+-- RSCore.Commands.Add("race", "Een straatrace starten.", {{name="bedrag", help="Het inlegbedrag voor de race."}}, true, function(source, args)
+--     local src = source
+--     local xPlayer = RSCore.Functions.GetPlayer(src)
+--     local amount = tonumber(args[1])
+--     if GetJoinedRace(GetPlayerIdentifiers(src)[1]) == 0 then
+--         if xPlayer.PlayerData.money.cash >= amount then
+--             TriggerClientEvent('rs-streetraces:CreateRace', src, amount)
+--         else
+--             TriggerClientEvent('RSCore:Notify', src, "Je hebt niet genoeg cash op zak!", 'error')
+--         end
+--     else
+--         TriggerClientEvent('RSCore:Notify', src, "Je zit al in een race!", 'error')
+--     end
+-- end)
 
 RSCore.Commands.Add("stoprace", "Een race stoppen als creator.", {}, false, function(source, args)
     local src = source
