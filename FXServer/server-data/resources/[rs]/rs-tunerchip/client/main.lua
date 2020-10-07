@@ -28,18 +28,18 @@ local RainbowNeon = false
 
 LastEngineMultiplier = 1.0
 
-function setVehData(veh,data)
-    local multp = 0.12
-    local dTrain = 0.0
-    if tonumber(data.drivetrain) == 2 then dTrain = 0.5 elseif tonumber(data.drivetrain) == 3 then dTrain = 1.0 end
-    if not DoesEntityExist(veh) or not data then return nil end
-    SetVehicleHandlingFloat(veh, "CHandlingData", "fInitialDriveForce", data.boost * multp)
-    SetVehicleHandlingFloat(veh, "CHandlingData", "fDriveInertia", data.acceleration * multp)
-    SetVehicleEnginePowerMultiplier(veh, data.gearchange * multp)
-    LastEngineMultiplier = data.gearchange * multp
-    SetVehicleHandlingFloat(veh, "CHandlingData", "fDriveBiasFront", dTrain*1.0)
-    SetVehicleHandlingFloat(veh, "CHandlingData", "fBrakeBiasFront", data.breaking * multp)
-end
+-- function setVehData(veh,data)
+--     local multp = 0.12
+--     local dTrain = 0.0
+--     if tonumber(data.drivetrain) == 2 then dTrain = 0.5 elseif tonumber(data.drivetrain) == 3 then dTrain = 1.0 end
+--     if not DoesEntityExist(veh) or not data then return nil end
+--     SetVehicleHandlingFloat(veh, "CHandlingData", "fInitialDriveForce", data.boost * multp)
+--     SetVehicleHandlingFloat(veh, "CHandlingData", "fDriveInertia", data.acceleration * multp)
+--     SetVehicleEnginePowerMultiplier(veh, data.gearchange * multp)
+--     LastEngineMultiplier = data.gearchange * multp
+--     SetVehicleHandlingFloat(veh, "CHandlingData", "fDriveBiasFront", dTrain*1.0)
+--     SetVehicleHandlingFloat(veh, "CHandlingData", "fBrakeBiasFront", data.breaking * multp)
+-- end
 
 function resetVeh(veh)
     SetVehicleHandlingFloat(veh, "CHandlingData", "fInitialDriveForce", 1.0)
@@ -55,11 +55,11 @@ RegisterNUICallback('save', function(data)
             local ped = GetPlayerPed(-1)
             local veh = GetVehiclePedIsUsing(ped)
 
-            setVehData(veh, data)
-            RSCore.Functions.Notify('Tunerchip v1.10: Voertuig aangepast!', 'success')
+            --setVehData(veh, data)
+            RSCore.Functions.Notify('Tunerchip v1.15: ERROR 404!', 'error')
 
-            RSCore.Functions.TriggerCallback('rs-tunerchip:server:TuneStatus', function(status)            
-            end, GetVehicleNumberPlateText(veh), true)
+            -- RSCore.Functions.TriggerCallback('rs-tunerchip:server:TuneStatus', function(status)            
+            -- end, GetVehicleNumberPlateText(veh), true)
             
         else
             RSCore.Functions.Notify('je hebt geen Tunerchip in je inventory', 'error')

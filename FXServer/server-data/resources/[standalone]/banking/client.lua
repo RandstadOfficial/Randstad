@@ -377,7 +377,7 @@ Citizen.CreateThread(function()
 
             if IsDisabledControlJustPressed(0, 140) and atms[atmId].hijackable == 1 and atms[atmId].inUse == 0 and isAlive then
               if atms[atmId].isHijacked == 0 then
-                if CurrentCops >= 2 or true then
+                if CurrentCops >= 2 then
                   RSCore.Functions.TriggerCallback('RSCore:HasItem', function(result)
                     if result then 
                       local data = {}
